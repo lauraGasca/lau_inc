@@ -796,7 +796,7 @@
         events_source: '{{url('calendario/obtener/'.$emprendedor[0]->user_id)}}',
         view: 'month',
         language: 'es-MX',
-        tmpl_path: 'http://incubamas.com/Orb/bower_components/bootstrap-calendar/tmpls/',
+        tmpl_path: '{{url('Orb/bower_components/bootstrap-calendar/tmpls')}}/',
         tmpl_cache: false,
         day: yyyy+"-"+mm+"-"+dd,
         time_start: '9:00',
