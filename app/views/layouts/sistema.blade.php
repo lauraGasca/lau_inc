@@ -127,6 +127,26 @@
                   href="{{url('calendario')}}" title="Calendario"><i class="entypo-calendar"></i><span> Calendario</span></a>
               </li>
             @endif
+            @if(Auth::user()->id==21)
+              <li class=""> <a class="submenu
+              @section('calendario-down')
+              @show
+              " href="#" data-id="maps-sub" title="Calendarios"><i class="fa fa-4x fa-calendar"></i><span> Todos los Calendarios</span></a>
+                <!-- Maps Sub-Menu -->
+                <ul style="display:
+                @section('calendario-none')
+                        none
+                @show;
+                        " id="maps-sub">
+                  <li class=""><a href="{{url('calendario/index/1')}}" title="Noé Vidal"><i class="fa fa-4x fa-child"></i><span> Noé Vidal</span></a></li>
+                  <li class=""><a href="{{url('calendario/index/16')}}" title="Yosselyn Ruiz"><i class="fa fa-4x fa-female"></i><span> Yosselyn Ruiz</span></a></li>
+                  <li class=""><a href="{{url('calendario/index/19')}}" title="Brenda Medina"><i class="fa fa-4x fa-user"></i><span> Brenda Medina</span></a></li>
+                  <li class=""><a href="{{url('calendario/index/20')}}" title="Francisco Chávez"><i class="fa fa-4x fa-reddit"></i><span> Francisco Chávez</span></a></li>
+                  <li class=""><a href="{{url('calendario/index/22')}}" title="Jazmín Gómez"><i class="fa fa-4x fa-smile-o"></i><span> Jazmín Gómez</span></a></li>
+                  <li class=""><a href="{{url('calendario/index/35')}}" title="Laura Gasca"><i class="fa fa-4x fa-paw"></i><span> Laura Gasca</span></a></li>
+                </ul>
+              </li>
+            @endif
           </ul>
           
         </div>
