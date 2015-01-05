@@ -1,0 +1,19 @@
+@import url(http://fonts.googleapis.com/css?family=Vollkorn);
+@font-face{font-family:'Zurich-Encabezado';src: url("fonts/zurchxc.ttf") format("truetype");font-weight:normal;font-style:normal;}
+@font-face{font-family:'Zurich-Corrido';src: url("fonts/zurch.ttf") format("truetype");font-weight:normal;font-style:normal;}
+@font-face{font-family:'Zurich-Infografia';src: url("fonts/zurchlc.ttf") format("truetype");font-weight:normal;font-style:normal;}
+@font-face{font-family:'Zurich-Banner';src: url("fonts/zurchlxc.ttf") format("truetype");font-weight:normal;font-style:normal;}
+@font-face{font-family:'Zurich-Boton1';src: url("fonts/zurchn.ttf") format("truetype");font-weight:normal;font-style:normal;}
+@font-face{font-family:'Zurich-Boton2';src: url("fonts/zurchbxc.ttf") format("truetype");font-weight:normal;font-style:normal;}
+span.encabezado{font-family:'Zurich-Encabezado';font-size:inherit;}
+span.corrido-normal{font-family:'Zurich-Corrido';color:inherit;font-size:inherit;}
+span.corrido-naranja{font-family:'Zurich-Corrido';color:#F64200;font-size:inherit;}
+span.corrido-azul{font-family:'Zurich-Corrido';color:#279FF7;font-size:inherit;}
+span.infografia{font-family:'Zurich-Infografia';font-size:inherit;}
+span.banner{font-family:'Zurich-Banner';font-size:inherit;}
+span.boton-web1{font-family:'Zurich-Boton1';font-size:inherit;}
+span.boton-web2{font-family:'Zurich-Boton2';font-size:inherit;}
+div.contenido_texto ul li span{display: block;list-style-type: none;margin: 0 0 10px 20px;padding-left: 20px;}
+div.contenido_texto ul li span.check{background: url("../images/bullet-checkmark.png") no-repeat scroll 0 7px transparent;}
+div.contenido_texto ul li span.dot{background: url("../images/bullet-dot.png") no-repeat scroll 0 7px transparent;}
+div.contenido_texto ul li span.cross{background: url("../images/bullet-cross.png") no-repeat scroll 0 7px transparent;}

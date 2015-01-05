@@ -1,0 +1,19 @@
+*.sh
+app/config/database.php
+app/config/mail.php
+web/error_log
+web/Orb/documentos/*
+web/Orb/images/casos_exito/*
+web/Orb/images/chats/*
+web/Orb/images/emprendedores/*
+web/Orb/images/empresas/*
+web/Orb/images/entradas/*
+web/Orb/images/gallery/*
+.env.local.php
+/bootstrap/compiled.php
+/vendor
+composer.phar
+composer.lock  # Remove this one after you create a project
+.env.php
+.DS_Store
+Thumbs.d

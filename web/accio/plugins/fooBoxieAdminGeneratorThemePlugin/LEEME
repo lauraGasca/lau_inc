@@ -1,0 +1,144 @@
+*************************************
+* fooBoxieAdminGeneratorThemePlugin *
+*************************************
+
+Descripción:
+    Este plugin integra el template de BoxieAdmin para crear admin generator de distintos modulos, los admin generator integran de forma
+    nativa las funciones de jQueryTools (tabs y overlay) para mejorar la usabilidad de los formularios y listas.
+    Se integro tambien las opciones de administración que proporciona fooBoxieAdminGeneratorTheme de manera nativa
+
+INSTALACIÓN Y CONFIGURACIÓN:
+
+* Clonar o copiar la carpeta de plugin
+
+* Habilitar en `config/ProjectConfiguration.class.php`
+
+    class ProjectConfiguration extends sfProjectConfiguration
+    {
+      public function setup()
+      {
+        $this->enablePlugins(array(
+          'sfDoctrinePlugin',
+          'fooBoxieAdminGeneratorThemePlugin',
+          '...'
+        ));
+      }
+    }
+
+
+
+* Habilitar el modulo de Administracion la aplicación, settings.yml.
+
+    enabled_modules:        [default, fooBoxieAdminGeneratorTheme]
+
+* Publicar el plugin:
+
+    $ php symfony plugin:publish-assets
+
+* Agregar el encabezado y el pie de pagina en el layout de la aplicación:
+
+    <body>
+      <?php include_component('fooBoxieAdminGeneratorTheme','header'); ?>
+      <?php echo $sf_content ?>
+      <?php include_partial('fooBoxieAdminGeneratorTheme/footer'); ?>
+    </body>
+
+* Agregar la ruta al modulo de Tablero de la aplicación, routing.yml:
+
+    homepage:
+      url:   /
+      param: { module: fooBoxieAdminGeneratorTheme, action: dashboard }
+
+* Configurar los valores globales de la aplicación en fooBoxieAdminGeneratorThemePlugin/config/app.yml:
+
+    all:
+      sf_admin_dash:
+        web_dir:                      /fooBoxieAdminGeneratorThemePlugin
+        image_dir:                    /fooBoxieAdminGeneratorThemePlugin/images/icons/
+        default_image:                config.png
+        resize_mode:                  thumbnail
+        site:                         My Site
+        include_path:                 true
+        include_jquery_no_conflict:   false
+        logout:                       true
+        login_route:                  @sf_guard_signin
+        logout_route:                 @sf_guard_signout
+
+* En el app.yml de cada aplicación configurar el menu principal de la aplicación:
+
+    sf_admin_dash:
+        categories:
+          Almacen:
+            items:
+              Categoria:
+                url:          categoria
+              Articulo:
+                url:          articulo
+          Proveedores:
+            items:
+              Proveedor:
+                url:          proveedor
+          Requisiciones:
+            items:
+              Realizar Requisición:
+                url:          relizar_requisicion
+              Lista de Requisiciones:
+                url:          requisicion
+
+       Para mas información repecto la configuración del menu: http://www.symfony-project.org/plugins/sfAdminDashPlugin
+
+* Incluir en view.yml las dependencias de estilo y js
+
+      stylesheets:
+          - /fooBoxieAdminGeneratorThemePlugin/css/boxie/blue.css
+      javascripts:
+          - jquerytools1.2.5/jquery.tools.min.js
+          - /fooBoxieAdminGeneratorThemePlugin/js/boxie.js
+
+* En cada admin generator incluir el theme correspondiente y la hoja de estilo:
+
+    generator:
+      class: sfDoctrineGenerator
+      param:
+        model_class:           sfGuardUser
+        theme:                 boxieAdmin
+        non_verbose_templates: true
+        with_show:             false
+        singular:              ~
+        plural:                ~
+        route_prefix:          sf_guard_user
+        with_doctrine_route:   true
+        css:                   /fooBoxieAdminGeneratorThemePlugin/css/boxie/blue.css
+
+* Descrición de Arbol de archivos del plugin importantes para futuras modificaciones:
+
+    config/
+        app: configuración generales del sitio
+    data/generator/sfDoctrineModule/boxieAdmin/template/templates/
+        Archivos parciales donde se agregan o se configuran los paraciales que se crearan con el admin generator.
+        Todo lo referente al template esta aquí.
+    lib/
+       fooBoxieAdminGeneratorTheme.class.php: Funciones para usadas en el modulo de adminitracion de sitio, traer valores de cofig, del menu principal, breadcrums
+       fooBoxieAdminGeneratorThemeConfig.class.php : Inicialización de hojas de estilo y js del plugin
+    modules/
+        Todo lo referente a las opciones de administracion del sitio: header,menu principal, breadcrums, footer, etc.
+    web/
+        Librearias publicas con css y las funciones js para tablas, menu principa y transparencias en ie,
+
+* Para agregar componentes a la pagina de inicio basta agregar los detalles de los componentes en el app.yml de la aplicación:
+
+    sf_admin_dash:
+        categories:
+         ....
+        components:
+          articulo: #Nombre de modulo
+            nombre: default #nombre de componente
+            titulo: Prueba de componente   #titulo a mostrar en el h3 del componente
+            talla: 50  #tamaño en css del componente. op: 25, 50, 65, 75, 100
+          inicio:
+            nombre: default
+            titulo: Otro titulo
+            talla: 50
+
+* Para agregar un componente en la parte superior del list de un admin generator, basta con crear dentro del modulo generado un componente con el nombre 'default'
+  este componente es totalmente libre de formato para agregarle lo que se quiera incluir en el modulo (texto, llamadas a parciales/componentes, etc..).

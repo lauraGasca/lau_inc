@@ -1,0 +1,18 @@
+2010-04-05 (version 0.3.0)
+----------
+
+* renamed README in README.markdown
+* Added directory validator and security tests [#4 closed]
+* Changed the validating process to mb_strpos for Windows systems [#10]
+* Updated FileObject to consider Windows directory separator [#5]
+* Changed the loading assets system
+* Added assets_manager.yml for sfAssetsManagerPlugin
+* Fixed broken HTML in list template and adapted css.
+
+
+2010-03-26
+----------
+
+ * added russian translation (by Serg Kalachev)
+ * added symlink README.markdown
+ * added this changelog

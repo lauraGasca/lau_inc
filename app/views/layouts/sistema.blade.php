@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+      @section('titulo')
+        IncubaM&aacute;s | Casos de &Eacute;xito
+      @show
+    </title>
+    @section('css')
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+      <link href="{{ URL::asset('Orb/css/styles.css') }}" rel="stylesheet" type="text/css">
+      <link rel="shortcut icon" type="image/x-icon" href="{{ URL::asset('Orb/favicon.ico') }}" />
+      <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/modernizr/modernizr.custom.js') }}"></script>
+    @show
+  </head>
+      
+  <body>
+    <!--Smooth Scroll-->
+    <div class="smooth-overflow">
+      <!--Navigation-->
+      <nav class="main-header clearfix" role="navigation">
+        <a class="navbar-brand" href="#">
+          <span class="text-blue">Incuba</span>
+        </a>
+        <!--Search
+        <div class="site-search">
+          <form action="#" id="inline-search">
+            <i class="fa fa-search"></i>
+            <input type="search" placeholder="Search">
+          </form>
+        </div>-->
+        <!--Navigation Itself-->
+        <div class="navbar-content"> 
+          @if(Auth::user()->type_id!=3&&Auth::user()->type_id!=4)
+            <!--Sidebar Toggler--> 
+            <a href="#" class="btn btn-default left-toggler">
+              <i class="fa fa-bars"></i>
+            </a> 
+          @endif
+          <!--Right Userbar Toggler--> 
+          <a href="#" class="btn btn-user right-toggler pull-right">
+            <i class="entypo-vcard"></i>
+            <span class="logged-as hidden-xs">Accediste como</span>
+            <span class="logged-as-name hidden-xs">{{Auth::user()->user}}</span>
+          </a> 
+          <!--Fullscreen Trigger-->
+          <button type="button" class="btn btn-default hidden-xs pull-right" id="toggle-fullscreen">
+            <i class=" entypo-popup"></i>
+          </button>
+        </div>
+      </nav>
+      <!--/Navigation--> 
+      <!--MainWrapper-->
+      <div class="main-wrap"> 
+        <!--OffCanvas Menu -->
+        <aside class="user-menu"> 
+          <!-- Tabs -->
+          <div class="tabs-offcanvas">
+            <div class="tab-content"> 
+              <!--User Primary Panel-->
+              <div class="tab-pane active" id="userbar-one">
+                <div class="main-info">
+                  <div class="user-img"><img src="http://placehold.it/150x150" alt="User Picture" /></div>
+                  <h1>{{Auth::user()->user}} <small>
+                    @if(Auth::user()->type_id==1)
+                      Administrador
+                    @else
+                      @if(Auth::user()->type_id==2)
+                        Asesor
+                      @else
+                        @if(Auth::user()->type_id==3)
+                          Emprendedor
+                        @else
+                          @if(Auth::user()->type_id==4)
+                            Practicante
+                          @endif
+                        @endif  
+                      @endif
+                    @endif
+                  </small></h1>
+                </div>
+                <div class="list-group">
+                  <!--<a href="user/perfil/{{Auth::user()->id}}" class="list-group-item"><i class="fa fa-user"></i>Perfil</a>-->
+                  <div class="empthy"></div>
+                  <a data-toggle="modal" href="{{url('sistema/logout')}}" class="list-group-item goaway"><i class="fa fa-power-off"></i>Cerrar Sesi&oacute;n</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /tabs --> 
+        </aside>
+        <!-- /Offcanvas user menu-->
+        @if(Auth::user()->type_id==1||Auth::user()->type_id==2)
+        <!--Main Menu-->
+        <div class="responsive-admin-menu">
+          <div class="responsive-menu">Incuba
+            <div class="menuicon"><i class="fa fa-angle-down"></i></div>
+          </div>
+          
+          <ul id="menu">
+            <li><a
+                  @section('emprendedores')
+                  @show
+                href="{{url('emprendedores')}}" title="Emprendedores"><i class="entypo-user"></i><span>Emprendedores</span></a>
+            </li>
+            <li><a
+                  @section('casos')
+                  @show
+                href="{{url('casos')}}" title="Casos de &Eacute;xito"><i class="entypo-briefcase"></i><span>Casos de &Eacute;xito</span></a>
+            </li>
+            <li><a
+                  @section('blog')
+                  @show
+                href="{{url('blog')}}" title="Blog"><i class="entypo-box"></i><span>Blog</span></a>
+            </li>
+            <li><a
+                  @section('chat')
+                  @show
+                href="{{url('chat')}}" title="Chat"><i class="fa fa-comments"></i><span>Mensajes</span></a>
+            </li>
+            @if(Auth::user()->type_id<>3)
+              <li><a
+                    @section('calendario')
+                    @show
+                  href="{{url('calendario')}}" title="Calendario"><i class="entypo-calendar"></i><span> Calendario</span></a>
+              </li>
+            @endif
+          </ul>
+          
+        </div>
+        <!--/MainMenu-->
+      @endif
+        <!--Content Wrapper-->
+        <div class="content-wrapper"
+          @if(Auth::user()->type_id==3||Auth::user()->type_id==4)
+            style="margin-left: 10px;"
+          @endif 
+        > 
+          <!--Horisontal Dropdown-->
+          <nav class="cbp-hsmenu-wrapper" id="cbp-hsmenu-wrapper"></nav>
+          <!--Breadcrumb-->
+          <div class="breadcrumb clearfix">
+            <ul>
+              @section('mapa')
+              @show
+            </ul>
+          </div>
+          <!--/Breadcrumb-->
+          <div class="page-header">
+            @section('titulo-seccion')
+            @show
+          </div>
+          <!-- Widget Row Start grid -->
+          <div class="row" id="powerwidgets">
+            <div class="col-md-12 bootstrap-grid"> 
+              <!-- New widget -->
+              @section('contenido')
+              @show
+              <!-- End Widget --> 
+            </div>
+            <!-- /Inner Row Col-md-12 --> 
+          </div>
+          <!-- /Widgets Row End Grid--> 
+        </div>
+        <!-- / Content Wrapper --> 
+      </div>
+      <!--/MainWrapper--> 
+    </div>
+    <!--/Smooth Scroll-->
+  
+    @section('scripts')
+      <!--Scripts--> 
+      <!--JQuery-->
+      <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/jquery/jquery.min.js') }}"></script> 
+      <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/jquery/jquery-ui.min.js') }}"></script> 
+      <!--Fullscreen--> 
+      <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/fullscreen/screenfull.min.js') }}"></script> 
+      <!--NanoScroller-->
+      <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/nanoscroller/jquery.nanoscroller.min.js') }}"></script> 
+      <!--Sparkline--> 
+      <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/sparkline/jquery.sparkline.min.js') }}"></script> 
+      <!--Horizontal Dropdown--> 
+      <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/horisontal/cbpHorizontalSlideOutMenu.js') }}"></script> 
+      <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/classie/classie.js') }}"></script> 
+      <!--PowerWidgets--> 
+      <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/powerwidgets/powerwidgets.min.js') }}"></script>
+      <!--Bootstrap--> 
+      <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/bootstrap/bootstrap.min.js') }}"></script> 
+      <!--ToDo--> 
+      <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/todos/todos.js') }}"></script>
+      <!--Bootstrap Animation--> 
+      <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/animation/animation.js') }}"></script>
+      <!--Main App-->
+      <script type="text/javascript" src="{{ URL::asset('Orb/js/scripts.js') }}"></script>      
+      <!--/Scripts-->
+    @show
+        
+  </body>
+</html>

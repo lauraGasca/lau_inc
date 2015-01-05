@@ -1,0 +1,272 @@
+/* Principal */
+
+body {
+    width: 960px;
+    margin: auto;
+    padding: 0;
+    font: 13px/1.231 arial,helvetica,clean,sans-serif;
+    font-family: Arial,Helvetica,sans-serif;
+    text-align: left;
+}
+
+/* Header */
+
+#header {
+    background: #DFD8C8;
+    color: #000;
+}
+
+#header a {
+    color: #545454;
+    text-decoration: none;
+}
+
+#header a:hover {
+    text-decoration: underline;
+}
+
+#header h1 {
+    padding: 10px;
+    margin: 0px;
+    font-size: 20px;
+}
+
+#breadcrumbs
+{
+  height: auto;
+  margin: 0 auto;
+  padding-top: 10px;
+}
+
+#breadcrumbs-contenido {
+    margin-left: 15px;
+    padding-bottom: 5px;
+}
+
+#sitio-publico {
+    float: right;
+    margin-right: 15px;
+    padding-bottom: 5px;
+}
+
+/* Menu */
+
+#menu {
+    margin: 0 auto;
+    margin-top: 10px;
+}
+
+#menu li {
+    list-style: none;
+}
+
+li.node
+{
+  display: block;
+  float: left;
+  position: relative;
+  text-transform: uppercase;
+  padding: 7px 20px 7px 10px;
+  background: url(../sfAdminDashPlugin/images/menubardown.gif) no-repeat right;
+}
+
+li.node a
+{
+    color:#ffffff;
+}
+
+li.item a
+{
+    color:#303880;
+}
+
+li.nodehover
+{
+  background: url(../sfAdminDashPlugin/images/menubardownhover.gif) no-repeat right;
+}
+
+li.node ul
+{
+  position: absolute;
+  top: 10px;
+  left: 0px;
+  display: none;
+  background: #eee;
+  border: #ccc solid 1px;
+  text-transform:none;
+  width: 150px;
+  z-index: 1000;
+}
+li.node ul li
+{
+  padding: 5px;
+}
+li.node img
+{
+  vertical-align: middle;
+}
+
+li.node a, li.node a:visited
+{
+  text-decoration: none;
+}
+
+li.node a:hover
+{
+  color:#C64934;
+}
+
+li.item-menu
+{
+  display: block;
+  float: left;
+  position: relative;
+  padding: 7px 10px 7px 10px;
+}
+
+li.item-menu a, li.item-menu a:visited
+{
+  text-decoration: none;
+  font-weight: bold;
+  color: #222;
+}
+
+li.item-menu a:hover
+{
+  color: #C64934
+}
+
+/* Contenido */
+
+#contenido {
+    padding: 10px;
+    margin: 0 auto;
+    width: 940px;
+    border: #DFD8C8 1px solid;
+}
+
+#contenido h1
+{
+  margin: 0;
+  margin-left: 5px;
+  padding: 0;
+  color: #545454;
+  font-size: 18px;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.cpanel
+{
+  text-align: center;
+  vertical-align: middle;
+  padding: 2px 2px 5px 2px;
+  margin-bottom: 20px;
+}
+
+.cpanel div.icon {
+    margin: 3px;
+}
+
+.cpanel div.icon a {
+  display: block;
+  float: left;
+  color: #545454 !important;
+  height: 97px !important;
+  height: 100px;
+  width: 108px !important;
+  width: 110px;
+  vertical-align: middle;
+  text-decoration: none;
+  padding: 2px 5px 1px 5px;
+}
+
+.cpanel div.icon a:link {
+    color : #808080;
+}
+
+.cpanel div.icon a:hover {
+  color : #333;
+  background-color: #DFD8C8;
+  text-decoration: none !important;
+  border: 1px solid #545454;
+  padding: 3px 4px 0px 6px;
+}
+
+.cpanel div.icon img {
+    margin-top: 13px;
+}
+
+.cpanel div.icon span {
+    display: block;
+    padding-top: 5px;
+}
+
+/* Modulo de modulo/seccion */
+
+#contenedor_lista {
+    border-left: 0.5px solid #CFC0C0;
+    border-right:0.5px solid #CFC0C0;
+    border-bottom:1px solid #CFC0C0;
+    height: 450px;
+
+    }
+
+
+#contenedor_lista ul {
+        border: 1px solid black;
+        margin: 10px;
+        width: 200px;
+        height: 300px;
+        padding: 0;
+        float: left;
+
+    }
+
+#contenedor_lista ul li {
+        background-image: none;
+        list-style-type: none;
+        padding-left: 20px;
+        padding: 5px;
+        margin: 2px;
+        cursor: move;
+
+    }
+
+#contenedor_lista ul li.sortable {
+        background-color: #8DD5E7;
+        border:1px solid #004C6D;
+    }
+
+#contenedor_lista ul li.sortable2 {
+        background-color: #EDFF9F;
+        border:1px solid #004C6D;
+    }
+
+#contenedor_lista ul li.sortable3 {
+        background-color: #FE9A2E;
+        border:1px solid #004C6D;
+    }
+
+/* Pie */
+
+#pie
+{
+  clear:both;
+  text-align: center;
+  font-size: .8em;
+  margin: 0 auto;
+  margin-top: 10px;
+  color: #666;
+  width: 960px;
+}
+
+/* Utilidades */
+
+.clear {
+    clear: both;
+}
+
+.float-left {
+    float: left;
+}
