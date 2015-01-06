@@ -18,3 +18,4 @@ composer.lock  # Remove this one after you create a project
 .DS_Store
 Thumbs.d
 .idea/*
+.idea/workspace.xml

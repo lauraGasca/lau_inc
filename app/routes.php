@@ -7,7 +7,11 @@ Route::get('/', function()
 
 Route::get('pruebas', function()
 {
-    return View::make('emails.confirmacion');
+    /*Mail::send('emails.cancelacion', array(), function ($message) {
+        $message->subject('Confirmación de Cita');
+        $message->to('lau_lost@hotmail.com', 'Laura Gasca');
+    });*/
+    return View::make('emails.cancelacion');
 });
 
 Route::controller('incuba', 'IncubaController');

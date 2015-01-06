@@ -22,39 +22,51 @@
             .jumbotron .btn {padding: 14px 24px;font-size: 21px; }            
             /* Supporting marketing content */
             .marketing {margin: 40px 0;}
-            .marketing p + h4 {margin-top: 28px;}         
+            .marketing p + h4 {margin-top: 28px;}
+            th{
+                color: rgb(121, 61, 61);
+            }
+            td{
+                color: rgb(121, 130, 139);
+            }
         </style>
     </head>
     <body>
         <div class="container">
-            <div class="header">
-                <h3 class="text-muted" style="color: #5CB85C; font-size: 18px;">Su cita ha sido confirmada.</h3>
-            </div>
             <br/>
-            <div class="jumbotron" style="font-size: 14px; ">
-                <strong style="color: rgb(138, 215, 138);">Por favor presentese puntualmente en el horario establecido.</strong><br><br>
-                <dl class="dl-horizontal">
-                    <dt>Consultor</dt>
-                    <dd>Laura Gasca</dd>
-                    <dt>Fecha</dt>
-                    <dd>Lunes 22 de Diciembre del 2014</dd>
-                    <dt>Hora</dt>
-                    <dd>9:00 hrs</dd>
-                    <dt>Asunto</dt>
-                    <dd>Platica Informativa</dd>
-                    <dt>Contacto</dt>
-                    <dd>lgasca@incubamas.com</dd>
-                </dl>
+            <div class="jumbotron" style="background-color: #E8E8E8;">
+                <h2 style="color: #02384b;">Se ha confirmado su cita</h2>
+                <br/>
+                <table class="table" style="font-size: 18px;">
+                    <tbody>
+                    <tr>
+                        <th scope="row" style="border-top: 0px; width: 35%;">Consultor</th>
+                        <td style="border-top: 0px;">{{$consultor}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" style="border-top: 0px; width: 30%;">Solicitante</th>
+                        <td style="border-top: 0px;">{{$emprendedor}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" style="border-top: 0px;">Fecha</th>
+                        <td style="border-top: 0px;">{{$fecha}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" style="border-top: 0px;">Hora</th>
+                        <td style="border-top: 0px;">{{$hora}} hrs</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" style="border-top: 0px;">Asunto</th>
+                        <td style="border-top: 0px;">{{$asunto}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" style="border-top: 0px;">Contacto</th>
+                        <td style="border-top: 0px;">{{$contacto}}</td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
-            <br/>
-            <div class="footer">
-                <address>
-                     <strong>© IncubaM&aacute;s 2014</strong><br>
-                    División del Norte 124, El Vergel<br>
-                    (461) 6121699<br>
-                    hola@incubamas.com<br>
-                </address>
-            </div>    
-        </div> <!-- /container -->  
+        </div> <!-- /container -->
+        <br/>
     </body>
 </html>

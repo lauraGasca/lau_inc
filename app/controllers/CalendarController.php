@@ -106,12 +106,16 @@ class CalendarController extends BaseController
         $from = $this->_formatear(Input::get("from") . " " . $hora);
         $to = $this->_formatear(Input::get("from") . " " . $horaFin);
 
-        if (Input::get("destino") == 'calendario') {
+        if (Input::get("destino") == 'calendario/index/'.$user_id) {
             $tu = $this->asesoresRepo->nombre($user_id);
             $otro = $this->emprendedoresRepo->nombre(Input::get("consultor"));
+            $asesor =  $this->asesoresRepo->usuario($user_id);
+            $emprendedor = $this->emprendedoresRepo->emprendedor(Input::get("consultor"));
         } else {
             $tu = $this->emprendedoresRepo->nombre($user_id);
             $otro = $this->asesoresRepo->nombre(Input::get("consultor"));
+            $emprendedor = $this->emprendedoresRepo->emprendedor($user_id);
+            $asesor= $this->asesoresRepo->usuario(Input::get("consultor"));
         }
 
         if ($this->asesoresRepo->existe($user_id))
@@ -135,7 +139,7 @@ class CalendarController extends BaseController
         $manager = new EventoManager($evento, $data);
         if (!$manager->save())
             return Redirect::back()->withErrors($manager->getErrors())->withInput();
-
+        $ant_id = $evento->id;
         //Crear el evento para el consultor
         $data = array(
             "calendario_id" => $calendario_con->id,
@@ -155,38 +159,149 @@ class CalendarController extends BaseController
         if (!$manager->save())
             return Redirect::back()->withErrors($manager->getErrors())->withInput();
 
+        $consultor = $asesor->nombre . " " . $asesor->apellidos;
+        $emprendedor_nombre = $emprendedor->name . " " . $emprendedor->apellidos;
+        $consultor_nombre = $asesor->nombre . " " . $asesor->apellidos;
+        $correo_emp = $emprendedor->email;
+        $correo_con = $asesor->email;
+        $hora = $this->horariosRepo->hora($evento->horario);
+        $asunto = $evento->cuerpo;
+        setlocale(LC_ALL,"es_ES@euro","es_ES","esp");
+        $fecha = strftime("%d de %B de %Y", strtotime($evento->fecha));
+
         if ($confirmation) {
-            $emprendedor = $this->emprendedoresRepo->emprendedor(Input::get("consultor"));
-            $asesor = $this->asesoresRepo->usuario();
-
-            $correo = $emprendedor->email;
-            $emprendedor_nombre = $emprendedor->name . " " . $emprendedor->apellidos;
-
-            Mail::send('emails.confirmacion', array('consultor' => $asesor->nombre . " " . $asesor->apellidos,
-                'fecha' => strftime("%d de %B de %Y", strtotime($evento->fecha)),
-                'hora' => $this->horariosRepo->hora($evento->horario),
-                'asunto' => $evento->cuerpo, 'contacto' => $asesor->email
-            ), function ($message) use ($correo, $emprendedor_nombre) {
+            //Enviar correo al emprendedor de confirmacion de la cita
+            Mail::send('emails.confirmacion', array('consultor' => $consultor, 'fecha' => $fecha, 'hora' => $hora,
+                'asunto' => $asunto, 'contacto' => $correo_con, 'emprendedor'=>$emprendedor_nombre,
+            ), function ($message) use ($correo_emp, $emprendedor_nombre) {
 
                 $message->subject('Confirmación de Cita');
-                $message->to($correo, $emprendedor_nombre);
+                $message->to($correo_emp, $emprendedor_nombre);
+            });
+            //Enviar correo al consultor de confirmacion de la cita
+            Mail::send('emails.confirmacion', array('consultor' => $consultor, 'fecha' => $fecha, 'hora' => $hora,
+                'asunto' => $asunto, 'contacto' => $correo_emp, 'emprendedor'=>$emprendedor_nombre,
+            ), function ($message) use ($correo_con, $consultor_nombre)
+            {
+                $message->subject('Confirmación de Cita');
+                $message->to($correo_con, $consultor_nombre);
+            });
+        }else{
+            //Enviar correo al consultor de la solicitud de la cita
+            Mail::send('emails.solicitud', array('consultor' => $consultor, 'fecha' => $fecha, 'hora' => $hora,
+                'asunto' => $asunto, 'contacto' => $correo_emp, 'emprendedor'=>$emprendedor_nombre, 'id' =>$evento->id, 'id2' => $ant_id
+            ), function ($message) use ($correo_con, $consultor_nombre)
+            {
+                $message->subject('Solicitud de Cita');
+                $message->to($correo_con, $consultor_nombre);
             });
         }
-        /*
-         *Correo del emprendedor
-         *Nombre del consultor
-         *Fecha de la cita
-         *Hora de la cita
-         *Asunto de la cita
-         *Correo del consultor
-         **/
 
         return Redirect::to(Input::get("destino"))->with(array('confirm' => 'Se ha registrado correctamente.'));
     }
 
+    public function getConfirmar($id, $id2)
+    {
+        if (Auth::user()->type_id != 1 && Auth::user()->type_id != 2)
+            return Redirect::to('sistema');
+
+        if($this->eventoRepo->existe($id)&&$this->eventoRepo->existe($id2)) {
+            if ($this->eventoRepo->confirmado($id) && $this->eventoRepo->confirmado($id2)) {
+                $mensaje = 'El evento ya fue confirmado';
+                $this->layout->content = View::make('calendario/mensaje', compact('mensaje'));
+            } else {
+                $evento1 = $this->eventoRepo->evento($id);
+                $evento2 = $this->eventoRepo->evento($id2);
+
+                if ($this->asesoresRepo->existe($evento1->user_id)){
+                    $asesor= $this->asesoresRepo->usuario($evento1->user_id);
+                    $emprendedor = $this->emprendedoresRepo->emprendedor($evento2->user_id);
+                }else{
+                    $asesor= $this->asesoresRepo->usuario($evento2->user_id);
+                    $emprendedor = $this->emprendedoresRepo->emprendedor($evento1->user_id);
+                }
+                $emprendedor_nombre = $emprendedor->name . " " . $emprendedor->apellidos;
+                $consultor_nombre = $asesor->nombre . " " . $asesor->apellidos;
+                $correo_emp = $emprendedor->email;
+                $correo_con = $asesor->email;
+                $hora = $this->horariosRepo->hora($evento1->horario);
+                $asunto = $evento1->cuerpo;
+                setlocale(LC_ALL,"es_ES@euro","es_ES","esp");
+                $fecha = strftime("%d de %B de %Y", strtotime($evento1->fecha));
+
+                $evento1->confirmation = true;
+                $evento1->save();
+                $evento2->confirmation = true;
+                $evento2->save();
+
+                //Enviar correo al emprendedor de confirmacion de la cita
+                Mail::send('emails.confirmacion', array('consultor' => $consultor_nombre, 'fecha' => $fecha, 'hora' => $hora,
+                    'asunto' => $asunto, 'contacto' => $correo_con, 'emprendedor'=>$emprendedor_nombre,
+                ), function ($message) use ($correo_emp, $emprendedor_nombre)
+                {
+                    $message->subject('Confirmación de Cita');
+                    $message->to($correo_emp, $emprendedor_nombre);
+                });
+                $mensaje = 'El evento ha sido confirmado';
+                $this->layout->content = View::make('calendario/mensaje', compact('mensaje'));
+            }
+        }else {
+            $mensaje = 'El evento ya fue cancelado';
+            $this->layout->content = View::make('calendario/mensaje', compact('mensaje'));
+        }
+    }
+
+    public function getCancelar($id, $id2)
+    {
+        if (Auth::user()->type_id != 1 && Auth::user()->type_id != 2)
+            return Redirect::to('sistema');
+
+        if($this->eventoRepo->existe($id)&&$this->eventoRepo->existe($id2)) {
+            if ($this->eventoRepo->confirmado($id) && $this->eventoRepo->confirmado($id2)) {
+                $mensaje = 'El evento ya fue confirmado';
+                $this->layout->content = View::make('calendario/mensaje', compact('mensaje'));
+            } else {
+                $evento1 = $this->eventoRepo->evento($id);
+                $evento2 = $this->eventoRepo->evento($id2);
+
+                if ($this->asesoresRepo->existe($evento1->user_id)){
+                    $asesor= $this->asesoresRepo->usuario($evento1->user_id);
+                    $emprendedor = $this->emprendedoresRepo->emprendedor($evento2->user_id);
+                }else{
+                    $asesor= $this->asesoresRepo->usuario($evento2->user_id);
+                    $emprendedor = $this->emprendedoresRepo->emprendedor($evento1->user_id);
+                }
+                $emprendedor_nombre = $emprendedor->name . " " . $emprendedor->apellidos;
+                $consultor_nombre = $asesor->nombre . " " . $asesor->apellidos;
+                $correo_emp = $emprendedor->email;
+                $correo_con = $asesor->email;
+                $hora = $this->horariosRepo->hora($evento1->horario);
+                $asunto = $evento1->cuerpo;
+                setlocale(LC_ALL,"es_ES@euro","es_ES","esp");
+                $fecha = strftime("%d de %B de %Y", strtotime($evento1->fecha));
+
+                $evento1->delete();
+                $evento2->delete();
+
+                //Enviar correo al emprendedor sobre la cancelacion de la cita
+                Mail::send('emails.cancelacion', array('consultor' => $consultor_nombre, 'fecha' => $fecha, 'hora' => $hora,
+                    'asunto' => $asunto, 'contacto' => $correo_con, 'emprendedor' => $emprendedor_nombre,
+                ), function ($message) use ($correo_emp, $emprendedor_nombre) {
+
+                    $message->subject('Cancelación de Cita');
+                    $message->to($correo_emp, $emprendedor_nombre);
+                });
+                $mensaje = 'El evento ha sido cancelado';
+                $this->layout->content = View::make('calendario/mensaje', compact('mensaje'));
+            }
+        }else{
+            $mensaje = 'El evento ya fue cancelado';
+            $this->layout->content = View::make('calendario/mensaje', compact('mensaje'));
+        }
+    }
+
     public function postEvento($user_id)
     {
-
         //Verifica si el calendario para este usuario esta creado - Calendario Id
         if (!$this->calendarioRepo->existe($user_id)) {
             $data = array("user_id" => $user_id);
@@ -304,12 +419,22 @@ class CalendarController extends BaseController
     {
         $eventos = $this->calendarioRepo->buscar($user_id)->eventos;
 
+
         if (count($eventos) > 0) {
             foreach ($eventos as $evento) {
                 $hora = strtotime('-6 hour', $evento->start / 1000);
+                $texto = date("H:i", $hora) . " - " . $evento->titulo;
+                if($evento->cuerpo<>'')
+                    $texto.= ": " . $evento->cuerpo;
+                if($evento->horario<>null)
+                    if($evento->confirmation ==1)
+                        $texto.= " / Confirmada";
+                    else
+                        $texto.= " / Sin confirmar";
+
                 $JSON2[] = array(
                     'id' => $evento->id,
-                    'title' => date("H:i", $hora) . " - " . $evento->titulo . ": " . $evento->cuerpo,
+                    'title' => $texto,
                     'url' => $evento->url,
                     'class' => $evento->clase,
                     'start' => $evento->start,

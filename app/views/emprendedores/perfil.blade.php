@@ -534,11 +534,7 @@
         <div class="modal-body">
             <fieldset>
               <div class="col-md-11 espacio_abajo">
-		@if(Auth::user()->type_id == 3)
-		  {{Form::label('consultor', '* Consultor', array('class' => 'label'))}}
-		@else
-		  {{Form::label('consultor', '* Emprendedor', array('class' => 'label'))}}
-		@endif
+		        {{Form::label('consultor', '* Consultor', array('class' => 'label'))}}
                 <label class="select">
                    {{Form::select('consultor', $asesores,  '',array('id' => 'objetivo','onchange'=>'cambiar();'))}}
                 </label>

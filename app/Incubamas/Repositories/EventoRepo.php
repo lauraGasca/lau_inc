@@ -42,5 +42,31 @@ class EventoRepo extends BaseRepo
             return true;
         return false;
     }
+
+    public function existe($evento_id)
+    {
+        $evento = Evento::find($evento_id);
+        if(count($evento)<=0)
+            return false;
+        else
+            return true;
+    }
+
+    public function confirmado($evento_id)
+    {
+        $evento = Evento::find($evento_id);
+        if(count($evento)<=0)
+            return false;
+        else
+            if($evento->confirmation == 0)
+                return false;
+            else
+                return true;
+    }
+
+    public function evento($evento_id)
+    {
+        return Evento::find($evento_id);
+    }
     
 }
