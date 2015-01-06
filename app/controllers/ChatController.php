@@ -477,93 +477,53 @@ class ChatController extends BaseController {
 		return 'error';
 	}
 	
-	public function getBackend()
+	public function getBackend($chat_id)
 	{
-		$chat_id = Session::get('chat');
-		if($chat_id>0)
+		$chat = Chat::find($chat_id);
+		$ultimo_mensaje = $chat->ultimo_mensaje;
+		$miembro = Miembro::where('chat_id','=',$chat_id)
+		->where('user_id','=',\Auth::user()->id)->first();
+		$ultimo_visto = $miembro->ultimo_visto;
+
+		// Bucle infinito hasta que el archivo se modifique
+		$lastmodif    = $ultimo_visto;
+		$currentmodif = $ultimo_mensaje;
+		while ($currentmodif <= $lastmodif) // comprobar si el archivo se ha modificado
 		{
-			if(Input::get('mensaje')!="")
-			{
-				$fecha = date("Y-m-d H:i:s");
-				$chat = $this->chatRepo->find($chat_id);
-				$mensaje = $this->_agregarMensaje($chat, $fecha, $_mensaje);
-				$mensajes = $this->mensajeRepo->ultimo_mensaje($chat_id);
-				$JSON = array();
-				if(count($mensajes) > 0){
-					$JSON[] = array(
-						'id' => $mensajes->id,
-						'chat_id' => $mensajes->chat_id,
-						'asesor' => $mensajes->asesor,
-						'asesor_foto' => $mensajes->asesor_foto,
-						'emprendedor' => $mensajes->emprendedor,
-						'emprendedor_foto' => $mensajes->emprendedor_foto,
-						'cuerpo' => $mensajes->cuerpo,
-						'archivo' => $mensajes->archivo,
-						'original' => $mensajes->original,
-						'created_at' => date("H:i - d/m/Y", strtotime($mensajes->envio)),
-						'user_id' => $mensajes->user_id,
-					);
-				}
-				
-				// Devuelve un array JSON
-				$response = array();
-				$response['msg']       = $JSON;
-				$response['timestamp'] = $currentmodif;
-				$variable = json_encode($response);
-				flush();
-			
-				return $variable;
-			}
-			else
-			{
-				$chat = Chat::find($chat_id);
-				$ultimo_mensaje = $chat->ultimo_mensaje;
-				$miembro = Miembro::where('chat_id','=',$chat_id)
-				->where('user_id','=',\Auth::user()->id)->first();
-				$ultimo_visto = $miembro->ultimo_visto;
-				
-				// Bucle infinito hasta que el archivo se modifique
-				$lastmodif    = $ultimo_visto;
-				$currentmodif = $ultimo_mensaje;
-				while ($currentmodif <= $lastmodif) // comprobar si el archivo se ha modificado
-				{
-				  usleep(10000); // sleep 10ms to unload the CPU
-				  clearstatcache();
-				  $chat = Chat::find($chat_id);
-				  $ultimo_mensaje = $chat->ultimo_mensaje;
-				  $currentmodif = $ultimo_mensaje;
-				}
-				
-				$mensajes = $this->mensajeRepo->ultimo_mensaje($chat_id);
-				$this->chatRepo->leido($chat_id, date("Y-m-d H:i:s"));
-				
-				$JSON = array();
-				if(count($mensajes) > 0){
-					$JSON[] = array(
-						'id' => $mensajes->id,
-						'chat_id' => $mensajes->chat_id,
-						'asesor' => $mensajes->asesor,
-						'asesor_foto' => $mensajes->asesor_foto,
-						'emprendedor' => $mensajes->emprendedor,
-						'emprendedor_foto' => $mensajes->emprendedor_foto,
-						'cuerpo' => $mensajes->cuerpo,
-						'archivo' => $mensajes->archivo,
-						'original' => $mensajes->original,
-						'created_at' => date("H:i - d/m/Y", strtotime($mensajes->envio)),
-						'user_id' => $mensajes->user_id,
-					);
-				}
-				
-				// Devuelve un array JSON
-				$response = array();
-				$response['msg']       = $JSON;
-				$response['timestamp'] = $currentmodif;
-				$variable = json_encode($response);
-				flush();
-			
-				return $variable;
-			}
+		  usleep(10000); // sleep 10ms to unload the CPU
+		  clearstatcache();
+		  $chat = Chat::find($chat_id);
+		  $ultimo_mensaje = $chat->ultimo_mensaje;
+		  $currentmodif = $ultimo_mensaje;
 		}
-		return json_encode(0);
+
+		$mensajes = $this->mensajeRepo->ultimo_mensaje($chat_id);
+		$this->chatRepo->leido($chat_id, date("Y-m-d H:i:s"));
+
+		$JSON = array();
+		if(count($mensajes) > 0){
+			$JSON[] = array(
+				'id' => $mensajes->id,
+				'chat_id' => $mensajes->chat_id,
+				'asesor' => $mensajes->asesor,
+				'asesor_foto' => $mensajes->asesor_foto,
+				'emprendedor' => $mensajes->emprendedor,
+				'emprendedor_foto' => $mensajes->emprendedor_foto,
+				'cuerpo' => $mensajes->cuerpo,
+				'archivo' => $mensajes->archivo,
+				'original' => $mensajes->original,
+				'created_at' => date("H:i - d/m/Y", strtotime($mensajes->envio)),
+				'user_id' => $mensajes->user_id,
+			);
+		}
+
+		// Devuelve un array JSON
+		$response = array();
+		$response['msg']       = $JSON;
+		$response['timestamp'] = $currentmodif;
+		$variable = json_encode($response);
+		flush();
+
+		return $variable;
 	}
 }

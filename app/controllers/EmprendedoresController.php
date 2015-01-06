@@ -207,7 +207,6 @@ class EmprendedoresController extends BaseController
             $dos = Input::get("apellido");
             $p_dos = explode(" ", $dos);
 
-
             // Verifico que el nombre de usuario no est� repetido.
             // En caso de estarlo le concateno un n�mero secuencial hasta que deje de estarlo.
             $username = $p_uno[0] . "." . $p_dos[0];
@@ -231,15 +230,10 @@ class EmprendedoresController extends BaseController
                 $emprendedor->programa = Input::get("programa");
                 $emprendedor->estatus = Input::get("estatus");
                 $emprendedor->genero = Input::get("genero");
-                $datetime = new DateTime();
-                $datetime->createFromFormat('d/m/Y', Input::get("date"));
-                $fecha = $datetime->format('Y-m-d');
-                $emprendedor->fecha_nacimiento = $fecha;
+                $emprendedor->fecha_nacimiento = $this->_mysqlformat(Input::get("date"));
                 $emprendedor->curp = Input::get("curp");
                 $emprendedor->lugar_nacimiento = Input::get("lugar_nac");
-                $datetime->createFromFormat('d/m/Y', Input::get("start"));
-                $fecha = $datetime->format('Y-m-d');;
-                $emprendedor->fecha_ingreso = $fecha;
+                $emprendedor->fecha_ingreso = $this->_mysqlformat(Input::get("start"));;
                 $emprendedor->calle = Input::get("calle");
                 $emprendedor->num_ext = Input::get("num_ext");
                 $emprendedor->num_int = Input::get("num_int");
@@ -1580,5 +1574,14 @@ class EmprendedoresController extends BaseController
     private function _number_format($numero)
     {
         return '$ ' . number_format($numero, 2, '.', ',');
+    }
+
+    //Convierte una fecha al formato Y-d-m
+    private function _mysqlformat($fecha)
+    {
+        if ($fecha <> "")
+            return date_format(date_create(substr($fecha, 3, 2) . '/' . substr($fecha, 0, 2) . '/' . substr($fecha, 6, 4)), 'Y-m-d');
+        else
+            return null;
     }
 }
