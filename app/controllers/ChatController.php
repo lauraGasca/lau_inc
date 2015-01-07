@@ -20,62 +20,13 @@ class ChatController extends BaseController {
 
 	public function __construct(ChatRepo $chatRepo, MensajeRepo $mensajeRepo, AsesoresRepo $asesoresRepo,
 		EmprendedoresRepo $emprendedoresRepo, MiembrosRepo $miembrosRepo)
-        {
+	{
 		$this->beforeFilter('auth');
 		$this->chatRepo = $chatRepo;
 		$this->mensajeRepo = $mensajeRepo;
 		$this->asesoresRepo = $asesoresRepo;
 		$this->emprendedoresRepo = $emprendedoresRepo;
 		$this->miembrosRepo = $miembrosRepo;
-        }
-	
-	public function getPruebas($chat=null,$user=null,$group=null,$name=null)
-	{
-		$active_chat = null;
-		$active_user = null;
-		$active_group = null;
-		$active_nombre = null;
-		$mensajes = null;
-		
-		if(Auth::user()->type_id==3){ //Si es emprendedor
-			$chats = $this->chatRepo->emprendedor();
-			$emprendedores = null;
-			$asesores = null;
-		}else{
-			if(Auth::user()->type_id==2){//Si es consultor
-				$chats = $this->chatRepo->consultor();
-				$emprendedores = $this->emprendedoresRepo->listado();
-				$asesores = $this->asesoresRepo->listado();
-			}else{
-				if(Auth::user()->type_id==1){//Si es incubito
-					$chats = $this->chatRepo->incubito();
-					$emprendedores = null;
-					$asesores = $this->asesoresRepo->listado_incubito();
-				}
-			}
-		}
-		
-		if(count($chats)>0){
-			if($chat == null){
-				$active_chat = $chats[0]->chat;
-				$active_user = $chats[0]->user_id;
-				$active_group = $chats[0]->grupo;
-				$active_nombre = $chats[0]->nombre;
-				$mensajes = $this->mensajeRepo->mensajes($chats[0]->chat);
-				$this->chatRepo->leido($chats[0]->chat, date("Y-m-d H:i:s"));
-			}else{
-				$active_chat = $chat;
-				$active_user = $user;
-				$active_group = $group;
-				$active_nombre = $name;
-				$mensajes = $this->mensajeRepo->mensajes($chat);
-			}
-			Session::put('chat', $active_chat);
-		}
-		
-		return View::make('prueba',compact('chats','mensajes','active_chat',
-			'active_user','active_group','active_nombre','emprendedores','asesores'));
-		//$this->layout->content =
 	}
 	
 	public function getIndex($chat=null,$user=null,$group=null,$name=null)
@@ -122,6 +73,9 @@ class ChatController extends BaseController {
 				$active_nombre = $name;
 				$mensajes = $this->mensajeRepo->mensajes($chat);
 			}
+			Session::put('chat', $active_chat);
+		}else{
+			Session::put('chat', 0);
 		}
 		
 		$this->layout->content = View::make('chat.index',compact('chats','mensajes','active_chat',
@@ -186,8 +140,7 @@ class ChatController extends BaseController {
 			
 		return Response::json(0);
 	}
-	
-	//los metodos deben regresar true o false, y en este metodo hacer la redireccion segun sea el caso :)
+
 	public function postNuevomensaje()
 	{
 		$fecha = date("Y-m-d H:i:s");
@@ -198,6 +151,7 @@ class ChatController extends BaseController {
 		$validation = Validator::make($datos, $rules);
 		if ($validation->fails())
 			return Redirect::back()->withErrors($validation)->withInput();
+
 		if(Input::get('destino')=="Selecciona")
 			return Redirect::back()->with(array('para' => 'Por favor, selecciona a los miembros de la conversacion.'))->withInput();
 		if(Auth::user()->type_id==2)//Si es asesor
@@ -208,12 +162,15 @@ class ChatController extends BaseController {
 				if(count($emprendedor)>0)
 				{
 					$chat = $this->chatRepo->buscar($emprendedor->user_id, 4);
-					if(count($chat)>0)
-						if($this->_agregarMensaje($chat, $fecha)!=null)
-							return Redirect::to('chat/index/'.$chat->id.'/'.$emprendedor->user_id.'/4/'.Input::get('destino'))->with(array('confirm' => 'Mensaje agregado a conversacion existente.'));
+					if(count($chat)>0) {
+						$mensaje =$this->_agregarMensaje($chat, $fecha);
+						$this->chatRepo->leido($chat->id, $fecha);
+						$this->chatRepo->actualizar_mensaje($chat, $fecha);
+						if ($mensaje != null)
+							return Redirect::to('chat/index/' . $chat->id . '/' . $emprendedor->user_id . '/4/' . Input::get('destino'))->with(array('confirm' => 'Mensaje agregado a conversacion existente.'));
 						else
 							return Redirect::back()->with(array('confirm' => 'No se ha guardado correctamente el mensaje.'));
-					else{
+					}else{
 						$chat = $this->_crearConversacion(4,$emprendedor->user_id, $fecha);
 						if($chat != null)
 							return Redirect::to('chat/index/'.$chat->id.'/'.$emprendedor->user_id.'/4/'.Input::get('destino'))->with(array('confirm' => 'Se ha registrado correctamente.'));
@@ -238,12 +195,15 @@ class ChatController extends BaseController {
 					if(count($asesor)>0)
 					{
 						$chat = $this->chatRepo->buscar($asesor->user_id, 2);
-						if(count($chat)>0)
-							if($this->_agregarMensaje($chat, $fecha)!=null)
-								return Redirect::to('chat/index/'.$chat->id.'/'.$asesor->user_id.'/2/'.$destinatarios[1])->with(array('confirm' => 'Mensaje agregado a conversacion existente.'));
+						if(count($chat)>0) {
+							$mensaje = $this->_agregarMensaje($chat, $fecha);
+							$this->chatRepo->leido($chat->id, $fecha);
+							$this->chatRepo->actualizar_mensaje($chat, $fecha);
+							if ($mensaje != null)
+								return Redirect::to('chat/index/' . $chat->id . '/' . $asesor->user_id . '/2/' . $destinatarios[1])->with(array('confirm' => 'Mensaje agregado a conversacion existente.'));
 							else
 								return Redirect::back()->with(array('confirm' => 'No se ha guardado correctamente el mensaje.'));
-						else{
+						}else{
 							$chat = $this->_crearConversacion(2, $asesor->user_id, $fecha);
 							if($chat != null)
 								return Redirect::to('chat/index/'.$chat->id.'/'.$asesor->user_id.'/2/'.Input::get('destino'))->with(array('confirm' => 'Se ha registrado correctamente.'));
@@ -273,36 +233,38 @@ class ChatController extends BaseController {
 	
 	
 	public function postEnviarmensaje()
-	{			
+	{
 		if(Input::get('mensaje')==""&&!Input::hasFile('archivo')&&!Input::hasFile('imagen'))
 			return '<!DOCTYPE html><html><head></head><body><script type="text/javascript">
-					parent.resultadoErroneo("Escribe tu mensaje para continuar");
-				</script></body></html>';
-		
-		if(Input::get('chat_id')<>0)
+						parent.resultadoErroneo("Escribe tu mensaje para continuar");
+					</script></body></html>';
+
+		if(Session::get('chat')<>0)
 		{
 			$fecha = date("Y-m-d H:i:s");
-			$chat = $this->chatRepo->find(Input::get('chat_id'));
+			$_mensaje = "";
+			$chat = $this->chatRepo->find(Session::get('chat'));
 			if(Input::get('mensaje')!="")
 				$_mensaje = Input::get('mensaje');
-			else
-				$_mensaje = "";
 				
 			$mensaje = $this->_agregarMensaje($chat, $fecha, $_mensaje);
 			if($mensaje == null)
 				return '<!DOCTYPE html><html><head></head><body><script type="text/javascript">
-						parent.resultadoErroneo(No se ha podido crear el mensaje.);
-					</script></body></html>';
+							parent.resultadoErroneo(No se ha podido crear el mensaje.);
+						</script></body></html>';
 			
 			//Si tiene un archivo adjunto
 			if(Input::hasFile('archivo'))
 				$this->mensajeRepo->archivo($mensaje, Input::file('archivo'));
 			elseif(Input::hasFile('imagen'))
 				$this->mensajeRepo->archivo($mensaje, Input::file('imagen'));
+
+			$this->chatRepo->leido($chat->id, $fecha);
+			$this->chatRepo->actualizar_mensaje($chat, $fecha);
 			
 			return '<!DOCTYPE html><html><head></head><body><script type="text/javascript">
-					parent.resultadoOk();
-				</script></body></html>';
+						parent.resultadoOk();
+					</script></body></html>';
 		}
 		
 		if(Auth::user()->type_id!=3)
@@ -391,8 +353,6 @@ class ChatController extends BaseController {
 		$manager = new MensajeManager($mensaje, $data);
 		if(!$manager->save())
 			return null;
-		$this->chatRepo->leido($chat->id, $fecha);
-		$this->chatRepo->actualizar_mensaje($chat, $fecha);
 		return $mensaje;
 	}
 	
@@ -477,53 +437,76 @@ class ChatController extends BaseController {
 		return 'error';
 	}
 	
-	public function getBackend($chat_id)
+	public function getBackend()
 	{
+		$chat_id = Session::get('chat');
 		$chat = Chat::find($chat_id);
-		$ultimo_mensaje = $chat->ultimo_mensaje;
-		$miembro = Miembro::where('chat_id','=',$chat_id)
-		->where('user_id','=',\Auth::user()->id)->first();
-		$ultimo_visto = $miembro->ultimo_visto;
-
-		// Bucle infinito hasta que el archivo se modifique
-		$lastmodif    = $ultimo_visto;
-		$currentmodif = $ultimo_mensaje;
-		while ($currentmodif <= $lastmodif) // comprobar si el archivo se ha modificado
+		if(count($chat)>0)
 		{
-		  usleep(10000); // sleep 10ms to unload the CPU
-		  clearstatcache();
-		  $chat = Chat::find($chat_id);
-		  $ultimo_mensaje = $chat->ultimo_mensaje;
-		  $currentmodif = $ultimo_mensaje;
+			//Revisa si se resivio la solicitud de enviar un mensaje
+			/*$msg = isset($_GET['msg']) ? $_GET['msg'] : '';
+			if ($msg != '') {
+				$fecha = date("Y-m-d H:i:s");
+				$data = array('chat_id' => $chat->id, 'cuerpo' => $_GET['msg']);
+				$mensaje = $this->mensajeRepo->newMensaje();
+				$manager = new MensajeManager($mensaje, $data);
+				$manager->save();
+				$this->chatRepo->leido($chat->id, $fecha);
+				$this->chatRepo->actualizar_mensaje($chat, $fecha);
+			}*/
+
+			$ultimo_mensaje = $chat->ultimo_mensaje;
+			$miembro = Miembro::where('chat_id', '=', $chat_id)
+				->where('user_id', '=', \Auth::user()->id)->first();
+			$ultimo_visto = $miembro->ultimo_visto;
+
+			// Bucle infinito hasta que el archivo se modifique
+			$lastmodif = $ultimo_visto;
+			$currentmodif = $ultimo_mensaje;
+			while ($currentmodif <= $lastmodif) // comprobar si el archivo se ha modificado
+			{
+				usleep(10000); // sleep 10ms to unload the CPU
+				clearstatcache();
+				$chat = Chat::find($chat_id);
+				$ultimo_mensaje = $chat->ultimo_mensaje;
+				$currentmodif = $ultimo_mensaje;
+			}
+
+			$mensajes = $this->mensajeRepo->ultimo_mensaje($chat_id);
+			$this->chatRepo->leido($chat_id, date("Y-m-d H:i:s"));
+
+			$JSON = array();
+			if (count($mensajes) > 0) {
+				$JSON[] = array(
+					'id' => $mensajes->id,
+					'chat_id' => $mensajes->chat_id,
+					'asesor' => $mensajes->asesor,
+					'asesor_foto' => $mensajes->asesor_foto,
+					'emprendedor' => $mensajes->emprendedor,
+					'emprendedor_foto' => $mensajes->emprendedor_foto,
+					'cuerpo' => $mensajes->cuerpo,
+					'archivo' => $mensajes->archivo,
+					'original' => $mensajes->original,
+					'created_at' => date("H:i - d/m/Y", strtotime($mensajes->envio)),
+					'user_id' => $mensajes->user_id,
+				);
+			}
+
+			// Devuelve un array JSON
+			$response = array();
+			$response['msg'] = $JSON;
+			$response['timestamp'] = $currentmodif;
+			$variable = json_encode($response);
+
+			return $variable;
+		}else{
+			// Devuelve un array JSON
+			$response = array();
+			$response['msg'] = 0;
+			$response['timestamp'] = 0;
+			$variable = json_encode($response);
+			return $variable;
 		}
 
-		$mensajes = $this->mensajeRepo->ultimo_mensaje($chat_id);
-		$this->chatRepo->leido($chat_id, date("Y-m-d H:i:s"));
-
-		$JSON = array();
-		if(count($mensajes) > 0){
-			$JSON[] = array(
-				'id' => $mensajes->id,
-				'chat_id' => $mensajes->chat_id,
-				'asesor' => $mensajes->asesor,
-				'asesor_foto' => $mensajes->asesor_foto,
-				'emprendedor' => $mensajes->emprendedor,
-				'emprendedor_foto' => $mensajes->emprendedor_foto,
-				'cuerpo' => $mensajes->cuerpo,
-				'archivo' => $mensajes->archivo,
-				'original' => $mensajes->original,
-				'created_at' => date("H:i - d/m/Y", strtotime($mensajes->envio)),
-				'user_id' => $mensajes->user_id,
-			);
-		}
-
-		// Devuelve un array JSON
-		$response = array();
-		$response['msg']       = $JSON;
-		$response['timestamp'] = $currentmodif;
-		$variable = json_encode($response);
-		flush();
-
-		return $variable;
 	}
 }

@@ -9,10 +9,10 @@
       @show
     </title>
     @section('css')
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-      <link href="{{ URL::asset('Orb/css/styles.css') }}" rel="stylesheet" type="text/css">
+      {{ HTML::style('https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css') }}
+      {{ HTML::style('Orb/css/styles.css') }}
+      {{ HTML::script('Orb/js/vendors/modernizr/modernizr.custom.js') }}
       <link rel="shortcut icon" type="image/x-icon" href="{{ URL::asset('Orb/favicon.ico') }}" />
-      <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/modernizr/modernizr.custom.js') }}"></script>
     @show
   </head>
       
@@ -192,28 +192,28 @@
   
     @section('scripts')
       <!--Scripts--> 
-      <!--JQuery-->
-      <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/jquery/jquery.min.js') }}"></script> 
-      <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/jquery/jquery-ui.min.js') }}"></script> 
-      <!--Fullscreen--> 
-      <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/fullscreen/screenfull.min.js') }}"></script> 
-      <!--NanoScroller-->
-      <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/nanoscroller/jquery.nanoscroller.min.js') }}"></script> 
-      <!--Sparkline--> 
-      <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/sparkline/jquery.sparkline.min.js') }}"></script> 
-      <!--Horizontal Dropdown--> 
-      <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/horisontal/cbpHorizontalSlideOutMenu.js') }}"></script> 
-      <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/classie/classie.js') }}"></script> 
-      <!--PowerWidgets--> 
-      <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/powerwidgets/powerwidgets.min.js') }}"></script>
-      <!--Bootstrap--> 
-      <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/bootstrap/bootstrap.min.js') }}"></script> 
-      <!--ToDo--> 
-      <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/todos/todos.js') }}"></script>
-      <!--Bootstrap Animation--> 
-      <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/animation/animation.js') }}"></script>
-      <!--Main App-->
-      <script type="text/javascript" src="{{ URL::asset('Orb/js/scripts.js') }}"></script>      
+        <!--JQuery-->
+        {{ HTML::script('Orb/js/vendors/jquery/jquery.min.js') }}
+        {{ HTML::script('Orb/js/vendors/jquery/jquery-ui.min.js') }}
+        <!--Fullscreen-->
+        {{ HTML::script('Orb/js/vendors/fullscreen/screenfull.min.js') }}
+        <!--NanoScroller-->
+        {{ HTML::script('Orb/js/vendors/nanoscroller/jquery.nanoscroller.min.js') }}
+        <!--Sparkline-->
+        {{ HTML::script('Orb/js/vendors/sparkline/jquery.sparkline.min.js') }}
+        <!--Horizontal Dropdown-->
+        {{ HTML::script('Orb/js/vendors/horisontal/cbpHorizontalSlideOutMenu.js') }}
+        {{ HTML::script('Orb/js/vendors/classie/classie.js') }}
+        <!--PowerWidgets-->
+        {{ HTML::script('Orb/js/vendors/powerwidgets/powerwidgets.min.js') }}
+        <!--Bootstrap-->
+        {{ HTML::script('Orb/js/vendors/bootstrap/bootstrap.min.js') }}
+        <!--ToDo-->
+        {{ HTML::script('Orb/js/vendors/todos/todos.js') }}
+        <!--Bootstrap Animation-->
+        {{ HTML::script('Orb/js/vendors/animation/animation.js') }}
+        <!--Main App-->
+        {{ HTML::script('Orb/js/scripts.js') }}
       <!--/Scripts-->
     @show
         
