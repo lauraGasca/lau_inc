@@ -81,11 +81,12 @@ class ChatRepo extends BaseRepo{
             where grupo = 4 and m2.user_id  = 44 and miembros.user_id = asesores.user_id) as ultimo_mensaje,
             (Select m2.ultimo_visto from miembros Join miembros m2 on miembros.chat_id = m2.chat_id
             join chats on miembros.chat_id = chats.id where grupo = 4 and m2.user_id  = 44
-            and miembros.user_id = asesores.user_id) as ultimo_visto');
+            and miembros.user_id = asesores.user_id) as ultimo_visto, chats.created_at');
                 
         //Conversaciones con Incubito
         return Chat::selectRaw('chats.id as chat, nombre, CONCAT("Orb/images/chats/",foto) as foto,
-                CONCAT("Publico") as puesto, grupo, null as user_id, ultimo_mensaje, null as ultimo_visto')
+                CONCAT("Publico") as puesto, grupo, null as user_id, ultimo_mensaje, null as ultimo_visto,
+                chats.created_at')
                 ->join('miembros','chats.id','=','miembros.chat_id')
                 ->where('chats.grupo','=', 1)
                 ->where('miembros.type_id','=',3)
@@ -98,7 +99,7 @@ class ChatRepo extends BaseRepo{
         //Conversaciones con los emprendedores        
         $first = Miembro::selectRaw('distinct(chats.id) as chat, CONCAT(emprendedores.name, " ", apellidos) AS nombre, 
             CONCAT("Orb/images/emprendedores/",imagen) as foto, CONCAT("Emprendedor") as puesto, grupo,
-            emprendedores.user_id as user_id,ultimo_mensaje, m2.ultimo_visto')
+            emprendedores.user_id as user_id,ultimo_mensaje, m2.ultimo_visto, chats.created_at')
         ->join('chats','miembros.chat_id','=','chats.id')
         ->join('emprendedores','miembros.user_id','=','emprendedores.user_id')
         ->join(\DB::raw('miembros as m2'),'m2.chat_id','=','chats.id')
@@ -107,7 +108,7 @@ class ChatRepo extends BaseRepo{
         
         $second = Miembro::selectRaw('chats.id as chat, CONCAT(asesores.nombre, " ", apellidos) AS nombre, 
             CONCAT("accio/images/equipo/",asesores.foto) as foto,puesto, grupo,
-            asesores.user_id as user_id, ultimo_mensaje, m2.ultimo_visto')
+            asesores.user_id as user_id, ultimo_mensaje, m2.ultimo_visto, chats.created_at')
         ->join('chats','miembros.chat_id','=','chats.id')
         ->join('asesores','miembros.user_id','=','asesores.user_id')
         ->join(\DB::raw('miembros as m2'),'m2.chat_id','=','chats.id')
@@ -117,7 +118,7 @@ class ChatRepo extends BaseRepo{
         
         $third = Miembro::selectRaw('DISTINCT(chats.id) as chat, nombre, 
             CONCAT("Orb/images/chats/",foto) as foto,CONCAT("Grupal") as puesto, grupo,
-            null as user_id, ultimo_mensaje, m2.ultimo_visto')
+            null as user_id, ultimo_mensaje, m2.ultimo_visto, chats.created_at')
         ->join('chats','miembros.chat_id','=','chats.id')
         ->join(\DB::raw('miembros as m2'),'m2.chat_id','=','chats.id')
         ->where('miembros.user_id','!=', \Auth::user()->id)
@@ -126,7 +127,8 @@ class ChatRepo extends BaseRepo{
         
         //Conversaciones con Incubito
         $fourth = Chat::selectRaw('chats.id as chat, nombre, CONCAT("Orb/images/chats/",foto) as foto,
-                CONCAT("Publico") as puesto, grupo, null as user_id,ultimo_mensaje, null as ultimo_visto')
+                CONCAT("Publico") as puesto, grupo, null as user_id,ultimo_mensaje, null as ultimo_visto,
+                chats.created_at')
         ->join('miembros','chats.id','=','miembros.chat_id')
         ->where('chats.grupo','=', 1)
         ->where('miembros.type_id','=',2)
@@ -141,7 +143,7 @@ class ChatRepo extends BaseRepo{
     {
         //Todas las conversaciones globales
         return Chat::selectRaw('chats.id as chat, nombre, CONCAT("Orb/images/chats/",foto) as foto,
-        CONCAT("Publico") as puesto, grupo, null as user_id, ultimo_mensaje, null as ultimo_visto')
+        CONCAT("Publico") as puesto, grupo, null as user_id, ultimo_mensaje, null as ultimo_visto, chats.created_at')
         ->where('chats.grupo','=', 1)->get();
     }
     
@@ -154,81 +156,25 @@ class ChatRepo extends BaseRepo{
             $leido->save();
         }
     }
-}
 
-/*$texto="";
-foreach($this->chatRepo->consultor() as $chat){
-        $texto.= $chat->chat."<br>".$chat->nombre."<br>".$chat->foto."<br>"
-                .$chat->puesto."<br>".$chat->grupo."<br>".$chat->user_id."<br>"
-                .$chat->ultimo_mensaje."<br>".$chat->ultimo_visto;
+    public function ultimo_chat()
+    {
+        switch(\Auth::user()->type_id) {
+            case 3: //Si es emprendedor
+                $chats = $this->emprendedor();
+                break;
+            case 2: //Si es consultor
+                $chats = $this->consultor();
+                break;
+            case 1: //Si es incubito
+                $chats = $this->incubito();
+                break;
+        }
+        $mayor = $chats[0];
+        foreach($chats as $chat){
+            if($mayor->created_at<$chat->created_at)
+                $mayor = $chat;
+        }
+        return $mayor;
+    }
 }
-return $texto;*/
-//Antiguas consultas
-//Conversaciones con asesores
-/*$first = Asesor::select(
-                DB::raw('
-                        (Select id from chats where id =
-                                (SELECT chat_id FROM `miembros` where user_id='.Auth::user()->id.' and chat_id in
-                                        (SELECT chat_id FROM `miembros` where user_id=asesores.user_id)
-                                )
-                        ) as chat,
-                        CONCAT(nombre, " ", apellidos) AS nombre, CONCAT("accio/images/equipo/",foto) as foto,
-                        puesto, CONCAT("4") as grupo, asesores.user_id as user_id'));
-//Conversaciones con Incubito
-$chats = Chat::select(DB::raw('chats.id as chat, nombre, CONCAT("Orb/images/chats/",foto) as foto,
-        CONCAT("Publico") as puesto, grupo, null as user_id, ultimo_mensaje, null as ultimo_visto'))
-        ->join('miembros','chats.id','=','miembros.chat_id')
-        ->where('chats.grupo','=', 1)
-        ->where('miembros.type_id','=',3)
-        ->unionAll($first->getQuery())->get();
-        //->union($first)->get();*/
-//Conversaciones con los emprendedores
-/*$first = Miembro::select(DB::raw("chats.id as chat,
-        CONCAT( name, ' ',apellidos) as nombre, CONCAT('Orb/images/emprendedores/',imagen) as foto,
-        CONCAT('Emprendedor') as puesto, grupo, miembros.user_id"))
-->join('chats', 'chats.id', '=', 'miembros.chat_id')
-->join('emprendedores','miembros.user_id','=','emprendedores.user_id')
-->where('miembros.user_id' ,'<>', Auth::user()->id)
-->where('grupo', '=', 4)
-->whereIn('chat_id', function($query){
-        $query->select('chat_id')
-        ->from(with(new Miembro)->getTable())
-        ->where('user_id','=', Auth::user()->id);
-});
-//Conversaciones de tipo 2 con otros asesores
-$second = Miembro::select(DB::raw("chats.id as chat,CONCAT(asesores.nombre, ' ',apellidos) as nombre,
-        CONCAT('accio/images/equipo/',asesores.foto) as foto, puesto, grupo, miembros.user_id"))
-->join('chats','chats.id','=','miembros.chat_id')
-->join('asesores','miembros.user_id','=','asesores.user_id')
-->where('miembros.user_id','<>',Auth::user()->id)
-->where('grupo','=',2)
-->whereIn('chat_id', function($query){
-        $query->select('chat_id')
-        ->from(with(new Miembro)->getTable())
-        ->where('user_id','=', Auth::user()->id);
-        });
-//Conversaciones de tipo 3 con otros asesores
-$third = Miembro::select(DB::raw("DISTINCT(chats.id) as chat, nombre,
-        CONCAT('Orb/images/chats/',foto) as foto, CONCAT('Grupal') as puesto,
-        grupo, null as user_id"))
-->join('chats','chats.id','=','miembros.chat_id')
-->where('miembros.user_id','<>',Auth::user()->id)
-->where('grupo','=',3)
-->whereIn('chat_id', function($query){
-        $query->select('chat_id')
-        ->from(with(new Miembro)->getTable())
-        ->where('user_id','=', Auth::user()->id);
-        });
-//Conversaciones de tipo 1 con Incubito
-$fourth = Chat::select(DB::raw('chats.id as chat, nombre, CONCAT("Orb/images/chats/",foto) as foto,
-        CONCAT("Publico") as puesto, grupo, null as user_id,ultimo_mensaje, null as ultimo_visto'))
-->join('miembros','chats.id','=','miembros.chat_id')
-->where('chats.grupo','=', 1)
-->where('miembros.type_id','=',2)
-->union($third->getQuery());
-$union  = $fourth->union($first->getQuery());
-$chats = $union->union($second->getQuery())->get();*/
-//Todas las conversaciones globales
-/*$chats = Chat::select(DB::raw('chats.id as chat, nombre, CONCAT("Orb/images/chats/",foto) as foto,
-CONCAT("Publico") as puesto, grupo, null as user_id, null as ultimo_mensaje, null as ultimo_visto'))
-->where('chats.grupo','=', 1)->get();*/

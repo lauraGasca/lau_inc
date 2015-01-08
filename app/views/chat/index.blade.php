@@ -1,4 +1,6 @@
-@extends('layouts.sistema')
+@section('titulo')
+    Incubamas | Chat
+@stop
 
 @section('css')
     @parent
@@ -66,63 +68,89 @@
         //Metodos para commit
         (function ($)
         {
+            //var root = 'http://incubamas.com/';
+            var root = 'http://incuba.local/';
             var timestamp = 0;
             var url = '{{url('chat/backend')}}';
             var noerror = true;
             var ajax;
 
-            function handleResponse(response) {
-                var html = '';
-                var nombre ='';
-                var foto='';
-                if (response['msg'] != 0) {
-                    if (response['msg'][0].asesor == null) {
-                        if (response['msg'][0].emprendedor == null) {
-                            nombre = 'Incubito';
-                            foto = 'Orb/images/emprendedores/generic-emprendedor.png';
+            function handleResponse(response)
+            {
+                if (response['msg'] != 0)
+                {
+                    var html = '';
+                    if (response['msg'] != 1)
+                    {
+                        var nombre ='';
+                        var foto='';
+                        if (response['msg'][0].asesor == null)
+                        {
+                            if (response['msg'][0].emprendedor == null)
+                            {
+                                nombre = 'Incubito';
+                                foto = 'Orb/images/emprendedores/generic-emprendedor.png';
+                            } else {
+                                nombre = response['msg'][0].emprendedor;
+                                foto = 'Orb/images/emprendedores/' + response['msg'][0].emprendedor_foto;
+                            }
                         } else {
-                            nombre = response['msg'][0].emprendedor;
-                            foto = 'Orb/images/emprendedores/' + response['msg'][0].emprendedor_foto;
+                            nombre = response['msg'][0].asesor;
+                            foto = 'accio/images/equipo/' + response['msg'][0].asesor_foto;
                         }
-                    } else {
-                        nombre = response['msg'][0].asesor;
-                        foto = 'accio/images/equipo/' + response['msg'][0].asesor_foto;
+
+                        if (response['msg'][0].user_id != {{Auth::user()->id}})
+                        {
+                            html += '<li class="left clearfix">' +
+                            '<span class="user-img pull-left">' +
+                            '<img src="'+root + foto + '" alt="Foto" class="img-circle" />' +
+                            '</span>' +
+                            '<div class="chat-body clearfix">' +
+                            '<div class="header">' +
+                            '<span class="name">' + nombre + '</span>' +
+                            '<span class="badge"><i class="fa fa-clock-o"></i>' + response['msg'][0].created_at + '</span>' +
+                            '</div>' +
+                            '<p>' + response['msg'][0].cuerpo + '</p>';
+                            if (response['msg'][0].archivo != null)
+                                html += '<span class="borde"><a target="_blank" href="'+root+'Orb/images/adjuntos/' + response['msg'][0].archivo + '">' + response['msg'][0].original + '</a></span>';
+                            html += '</div>' +
+                            '</li>';
+                        } else {
+                            html += '<li class="right clearfix">' +
+                            '<span class="user-img pull-right">' +
+                            '<img src="'+root + foto + '" alt="Foto" class="img-circle" />' +
+                            '</span>' +
+                            '<div class="chat-body clearfix">' +
+                            '<div class="header">' +
+                            '<span class="name">' + nombre + '</span>' +
+                            '<span class="badge"><i class="fa fa-clock-o"></i>' + response['msg'][0].created_at + '</span>' +
+                            '</div>' +
+                            '<p>' + response['msg'][0].cuerpo + '</p>';
+                            if (response['msg'][0].archivo != null)
+                                html += '<span class="borde"><a target="_blank" href="'+root+'Orb/images/adjuntos/' + response['msg'][0].archivo + '">' + response['msg'][0].original + '</a></span>';
+                            html += '</div>' +
+                            '</li>';
+                        }
+                        $("#div_chat").append(html);
+                    }else{
+                        var user = response['chat'][0].user_id;
+                        if(response['chat'][0].user_id==null)
+                            user = 0;
+                        html += '<li>'+
+                                    '<a href="'+root+'chat/index/'+response['chat'][0].chat+'/'+user+'/'+response['chat'][0].grupo+'/'+response['chat'][0].nombre+'">'+
+                                        '<span class="chat-name">'+response['chat'][0].nombre+'<span>'+
+                                        '<span class="user-img"><img src="'+root+response['chat'][0].foto+'" alt="User"/></span><br/>'+
+                                        '<span class="label label-success" style="font-size: 0.6em;">';
+                        if(response['chat'][0].puesto!="")
+                            html +=         response['chat'][0].puesto;
+                        else
+                            html +=         'Emprendedor';
+                        html +=         '</span>';
+                        html +=         '<span class="badge" >Nuevos</span>';
+                        html +=     '</a>';
+                        html += '</li>';
+                        $("#ul_chats").append(html);
                     }
-                    if (response['msg'][0].user_id != {{Auth::user()->id}}) {
-                        html += '<li class="left clearfix">' +
-                        '<span class="user-img pull-left">' +
-                        '<img src="http://incubamas.com/' + foto + '" alt="Foto" class="img-circle" />' +
-                        '</span>' +
-                        '<div class="chat-body clearfix">' +
-                        '<div class="header">' +
-                        '<span class="name">' + nombre + '</span>' +
-                        '<span class="badge"><i class="fa fa-clock-o"></i>' + response['msg'][0].created_at + '</span>' +
-                        '</div>' +
-                        '<p>' + response['msg'][0].cuerpo + '</p>';
-                        if (response['msg'][0].archivo != null)
-                            html += '<span class="borde"><a target="_blank" href="http://incubamas.com/Orb/images/adjuntos/' + response['msg'][0].archivo + '">' + response['msg'][0].original + '</a></span>';
-                        html += '</div>' +
-                        '</li>';
-                    } else {
-                        html += '<li class="right clearfix">' +
-                        '<span class="user-img pull-right">' +
-                        '<img src="http://incubamas.com/' + foto + '" alt="Foto" class="img-circle" />' +
-                        '</span>' +
-                        '<div class="chat-body clearfix">' +
-                        '<div class="header">' +
-                        '<span class="name">' + nombre + '</span>' +
-                        '<span class="badge"><i class="fa fa-clock-o"></i>' + response['msg'][0].created_at + '</span>' +
-                        '</div>' +
-                        '<p>' + response['msg'][0].cuerpo + '</p>';
-                        if (response['msg'][0].archivo != null)
-                            html += '<span class="borde"><a target="_blank" href="http://incubamas.com/Orb/images/adjuntos/' + response['msg'][0].archivo + '">' + response['msg'][0].original + '</a></span>';
-                        html += '</div>' +
-                        '</li>';
-                    }
-                    //$('#cargar').html(response['msg'][0].chat_id+'LOL');
-                    $("#div_chat").append(html);
-                    //$(".nano").nanoScroller({scroll: 'bottom'});
-                    //$("#nuevo" + chat).html('');
                 }
             }
 
@@ -227,7 +255,8 @@
                                     @endif
 
                                     <li>
-                                        <a id="chat{{$i}}" href="#" onclick="cargarChat({{$var_chat}},{{$var_user}},{{$chat->grupo}},{{"'chat".$i."'"}}, {{"'".$chat->nombre."'"}})">
+
+                                        <a href="{{url('chat/index/'.$var_chat.'/'.$var_user.'/'.$chat->grupo.'/'.$chat->nombre)}}">
                                             <span class="chat-name">{{$chat->nombre}}<span>
                                                 <span class="user-img">
                                                     <img src="{{URL::asset($chat->foto)}}" alt="User"/>
@@ -341,9 +370,9 @@
                         </div>
                         <div class="col-md-4 col-sm-4 col-xs-4">
                             @if($active_group==1 && Auth::user()->type_id<>1)
-                                <input type="submit" value="Enviar" id="boton_enviar" class="btn btn-info pull-right" disabled/>
+                                <input type="submit" value="Enviar" id="boton_enviar" class="btn btn-info pull-right" disabled onclick="enviarMensaje();"/>
                             @else
-                                <input type="submit" value="Enviar" id="boton_enviar" class="btn btn-info pull-right"/>
+                                <input type="submit" value="Enviar" id="boton_enviar" class="btn btn-info pull-right" onclick="enviarMensaje();"/>
                             @endif
                         </div>
                     </div>
@@ -433,22 +462,6 @@
 @section('scripts')
     @parent
     <script>
-        //Envia el nuevo mensaje al servidor
-        /*var url = '{{url('chat/backend')}}';
-        $('#cometForm').submit(function (event)
-        {
-            event.preventDefault();
-            doRequest($('#word').val());
-            $('#word').val('');
-            $(".nano").nanoScroller({scroll: 'bottom'});
-        });
-        function doRequest(request)
-        {
-            $.ajax(url, {
-                type: 'get',
-                data: {'msg': request}
-            });
-        }*/
 
         function enviarMensaje()
         {
@@ -464,11 +477,7 @@
             $("#cargar").html('');
             $(".badge").text('');
             $("#div_mensaje").html('');
-        }
-
-        function resultadoOkNew(chat_id, user_id)
-        {
-            location.href = "index/" + chat_id + "/" + user_id + "/4/" + $('#titulo_chat').text();
+            $(".nano").nanoScroller({scroll: 'bottom'});
         }
 
         function resultadoErroneo(mensaje)
