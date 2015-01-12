@@ -22,17 +22,13 @@
 
 @section('css')
     @parent
-    <link rel="stylesheet" href="{{ URL::asset('Orb/bower_components/bootstrap-calendar/css/calendar.css')}}">
-    <script type="text/javascript" src="{{ URL::asset('Orb/bower_components/jquery/jquery.min.js')}}"></script>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-    <script type="text/javascript"
-            src="{{ URL::asset('Orb/bower_components/bootstrap-calendar/js/language/es-MX.js')}}"></script>
-    <script src="{{ URL::asset('Orb/bower_components/moment/moment.js')}}"></script>
-    <script src="{{ URL::asset('Orb/bower_components/eonasdan-bootstrap-datetimepicker/bootstrap/bootstrap.min.js')}}"></script>
-    <script src="{{ URL::asset('Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js')}}"></script>
-    <link rel="stylesheet"
-          href="{{ URL::asset('Orb/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css')}}"/>
-    <script src="{{ URL::asset('Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.es.js')}}"></script>
+    <!---Calendario-->
+        {{ HTML::style('Orb/bower_components/bootstrap-calendar/css/calendar.css') }}
+        {{ HTML::script('Orb/bower_components/bootstrap-calendar/js/language/es-MX.js') }}
+        {{ HTML::style('Orb/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css') }}
+        {{ HTML::script('Orb/bower_components/moment/moment.js') }}
+        {{ HTML::script('Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.es.js') }}
+    <!---/Calendario-->
 @show
 
 @section('titulo-seccion')
@@ -328,131 +324,16 @@
 @stop
 
 @section('scripts')
-    <!--Fullscreen-->
-    <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/fullscreen/screenfull.min.js') }}"></script>
-    <!--NanoScroller-->
-    <script type="text/javascript"
-            src="{{ URL::asset('Orb/js/vendors/nanoscroller/jquery.nanoscroller.min.js') }}"></script>
-    <!--Sparkline-->
-    <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/sparkline/jquery.sparkline.min.js') }}"></script>
-    <!--Horizontal Dropdown-->
-    <script type="text/javascript"
-            src="{{ URL::asset('Orb/js/vendors/horisontal/cbpHorizontalSlideOutMenu.js') }}"></script>
-    <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/classie/classie.js') }}"></script>
-    <!--PowerWidgets-->
-    <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/powerwidgets/powerwidgets.min.js') }}"></script>
-    <!--Bootstrap-->
-    <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/bootstrap/bootstrap.min.js') }}"></script>
-    <!--ToDo-->
-    <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/todos/todos.js') }}"></script>
-    <!--Bootstrap Animation-->
-    <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/animation/animation.js') }}"></script>
-    <!--Main App-->
-    <script type="text/javascript" src="{{ URL::asset('Orb/js/scripts.js') }}"></script>
-    <!--Calendario-->
-    <script src="{{ URL::asset('Orb/bower_components/underscore/underscore-min.js') }}"></script>
-    <script src="{{ URL::asset('Orb/bower_components/bootstrap-calendar/js/calendar.js') }}"></script>
+    <!--Scripts-->
+        @parent
+        <!--Calendario-->
+        {{ HTML::script('Orb/bower_components/underscore/underscore-min.js') }}
+        {{ HTML::script('Orb/bower_components/bootstrap-calendar/js/calendar.js') }}
+        {{ HTML::script('Orb/bower_components/eonasdan-bootstrap-datetimepicker/bootstrap/bootstrap.min.js') }}
+        {{ HTML::script('Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js') }}
+    <!--/Scripts-->
     <script type="text/javascript">
-        function cambiar() {
-            consultor = $('#objetivo').val();
-            fecha = $('#fecha').val();
-            from = $('#from').val();
-            to = $('#to').val();
-            $.ajax({
-                url: '/calendario/horario',
-                type: 'POST',
-                data: {consultor: consultor, fecha: fecha, from: from, to: to},
-                dataType: 'JSON',
-                error: function () {
-                    $("#hora").html('Ha ocurrido un error...');
-                },
-                success: function (respuesta) {
-                    if (respuesta) {
-                        //$("#hora").html(JSON.stringify(respuesta.warning ));
-                        //$("#hora").html(JSON.stringify(respuesta));
-
-                        var html = '';
-                        for (i = 0; i < respuesta.horarios.length; i++) {
-                            html += '<option value="' + respuesta.horarios[i].id + '">' + respuesta.horarios[i].horario + '</option>';
-                        }
-                        $("#horario").html(html);
-                        if (respuesta.warning == "Hay eventos") {
-                            $("#cita").html('<button onClick="return confirm(\'Se han detectado otros eventos en este dia. \u00BFSeguro que deseas continuar?\');" class="btn btn-primary" id="cita_boton">Crear</button>');
-                        } else {
-                            $("#cita").html('<button class="btn btn-primary" id="cita_boton">Crear</button>');
-                        }
-                        if (respuesta.warning_evento == "Hay eventos") {
-                            $("#eventos").html('<button onClick="return confirm(\'Se han detectado otros eventos en este dia. \u00BFSeguro que deseas continuar?\');" class="btn btn-primary" id="evento_boton">Crear</button>');
-                        } else {
-                            $("#eventos").html('<button class="btn btn-primary" id="evento_boton">Crear</button>');
-                        }
-                    }
-                    else {
-                        $("#hora").html('No se que pasa');
-                    }
-                }
-            });
-        }
-        $(function () {
-            $('#fecha').datetimepicker({
-                language: 'es',
-                minDate: @if(date("w", strtotime ('+2 day', strtotime(date('j-m-Y'))))==0)
-                        '{{date ( 'm/j/Y' , strtotime ('+3 day', strtotime(date('j-m-Y'))))}}',
-                @elseif(date("w", strtotime ('+2 day', strtotime(date('j-m-Y'))))==6)
-                '{{date ( 'm/j/Y' , strtotime ('+4 day', strtotime(date('j-m-Y'))))}}',
-                @else
-                  '{{date ( 'm/j/Y' , strtotime ('+2 day', strtotime(date('j-m-Y'))))}}',
-                @endif
-                maxDate: @if(date("w", strtotime ('+30 day', strtotime(date('j-m-Y'))))==0)
-                        '{{date ( 'm/j/Y' , strtotime ('+31 day', strtotime(date('j-m-Y'))))}}',
-                @elseif(date("w", strtotime ('+30 day', strtotime(date('j-m-Y'))))==6)
-                '{{date ( 'm/j/Y' , strtotime ('+32 day', strtotime(date('j-m-Y'))))}}',
-                @else
-                  '{{date ( 'm/j/Y' , strtotime ('+30 day', strtotime(date('j-m-Y'))))}}',
-                @endif
-                pickTime: false,
-                defaultDate: @if(date("w", strtotime ('+2 day', strtotime(date('j-m-Y'))))==0)
-                        '{{date ( 'm/j/Y' , strtotime ('+3 day', strtotime(date('j-m-Y'))))}}',
-                @elseif(date("w", strtotime ('+2 day', strtotime(date('j-m-Y'))))==6)
-                '{{date ( 'm/j/Y' , strtotime ('+4 day', strtotime(date('j-m-Y'))))}}',
-                @else
-                  '{{date ( 'm/j/Y' , strtotime ('+2 day', strtotime(date('j-m-Y'))))}}',
-                @endif
-                //'{{date ( 'm/j/Y' , strtotime ('+2 day', strtotime(date('j-m-Y'))))}}',
-                disabledDates: [
-                    moment("12/25/2014"),
-                    moment("1/1/2015"),
-                    moment("2/2/2015"),
-                    moment("3/16/2015"),
-                    moment("4/3/2015"),
-                    moment("5/1/2015"),
-                    moment("9/16/2015"),
-                    moment("11/16/2015"),
-                    moment("12/25/2015"),
-                ],
-                daysOfWeekDisabled: [0, 6]
-            });
-            $('#from').datetimepicker({
-                language: 'es',
-                defaultDate: new Date(),
-                minDate: '{{date ( 'm/j/Y')}}',
-            });
-            $('#to').datetimepicker({
-                language: 'es',
-                defaultDate: new Date(),
-                minDate: '{{date ( 'm/j/Y')}}'
-            });
-            $("#from").on("dp.change", function (e) {
-                if ($("#from").val() > $('#to').val()) {
-                    $('#to').data("DateTimePicker").setDate(e.date);
-                }
-            });
-            $("#to").on("dp.change", function (e) {
-                if ($("#from").val() > $('#to').val()) {
-                    $('#from').data("DateTimePicker").setDate(e.date);
-                }
-            });
-        });
+        //Configuración del Calendario
         (function ($) {
             //creamos la fecha actual
             var date = new Date();
@@ -519,5 +400,107 @@
                 calendar.view();
             });
         }(jQuery));
+
+        //Configurar las cajas con calendarios
+        $(function () {
+            $('#fecha').datetimepicker({
+                language: 'es',
+                minDate: @if(date("w", strtotime ('+2 day', strtotime(date('j-m-Y'))))==0)
+                        '{{date ( 'm/j/Y' , strtotime ('+3 day', strtotime(date('j-m-Y'))))}}',
+                @elseif(date("w", strtotime ('+2 day', strtotime(date('j-m-Y'))))==6)
+                '{{date ( 'm/j/Y' , strtotime ('+4 day', strtotime(date('j-m-Y'))))}}',
+                @else
+                  '{{date ( 'm/j/Y' , strtotime ('+2 day', strtotime(date('j-m-Y'))))}}',
+                @endif
+                maxDate: @if(date("w", strtotime ('+30 day', strtotime(date('j-m-Y'))))==0)
+                        '{{date ( 'm/j/Y' , strtotime ('+31 day', strtotime(date('j-m-Y'))))}}',
+                @elseif(date("w", strtotime ('+30 day', strtotime(date('j-m-Y'))))==6)
+                '{{date ( 'm/j/Y' , strtotime ('+32 day', strtotime(date('j-m-Y'))))}}',
+                @else
+                  '{{date ( 'm/j/Y' , strtotime ('+30 day', strtotime(date('j-m-Y'))))}}',
+                @endif
+                pickTime: false,
+                defaultDate: @if(date("w", strtotime ('+2 day', strtotime(date('j-m-Y'))))==0)
+                        '{{date ( 'm/j/Y' , strtotime ('+3 day', strtotime(date('j-m-Y'))))}}',
+                @elseif(date("w", strtotime ('+2 day', strtotime(date('j-m-Y'))))==6)
+                '{{date ( 'm/j/Y' , strtotime ('+4 day', strtotime(date('j-m-Y'))))}}',
+                @else
+                  '{{date ( 'm/j/Y' , strtotime ('+2 day', strtotime(date('j-m-Y'))))}}',
+                @endif
+                //'{{date ( 'm/j/Y' , strtotime ('+2 day', strtotime(date('j-m-Y'))))}}',
+                disabledDates: [
+                    moment("12/25/2014"),
+                    moment("1/1/2015"),
+                    moment("2/2/2015"),
+                    moment("3/16/2015"),
+                    moment("4/3/2015"),
+                    moment("5/1/2015"),
+                    moment("9/16/2015"),
+                    moment("11/16/2015"),
+                    moment("12/25/2015"),
+                ],
+                daysOfWeekDisabled: [0, 6]
+            });
+            $('#from').datetimepicker({
+                language: 'es',
+                defaultDate: new Date(),
+                minDate: '{{date ( 'm/j/Y')}}'
+            });
+            $('#to').datetimepicker({
+                language: 'es',
+                defaultDate: new Date(),
+                minDate: '{{date ( 'm/j/Y')}}'
+            });
+            $("#from").on("dp.change", function (e) {
+                if ($("#from").val() > $('#to').val()) {
+                    $('#to').data("DateTimePicker").setDate(e.date);
+                }
+            });
+            $("#to").on("dp.change", function (e) {
+                if ($("#from").val() > $('#to').val()) {
+                    $('#from').data("DateTimePicker").setDate(e.date);
+                }
+            });
+        });
+
+        //Cambiar los horarios de acuerdo al asesor
+        function cambiar()
+        {
+            consultor = $('#objetivo').val();
+            fecha = $('#fecha').val();
+            from = $('#from').val();
+            to = $('#to').val();
+            $.ajax({
+                url: '/calendario/horario',
+                type: 'POST',
+                data: {consultor: consultor, fecha: fecha, from: from, to: to},
+                dataType: 'JSON',
+                error: function () {
+                    $("#hora").html('Ha ocurrido un error...');
+                },
+                success: function (respuesta) {
+                    if (respuesta) {
+                        var html = '';
+                        for (i = 0; i < respuesta.horarios.length; i++) {
+                            html += '<option value="' + respuesta.horarios[i].id + '">' + respuesta.horarios[i].horario + '</option>';
+                        }
+                        $("#horario").html(html);
+                        if (respuesta.warning == "Hay eventos") {
+                            $("#cita").html('<button onClick="return confirm(\'Se han detectado otros eventos en este dia. \u00BFSeguro que deseas continuar?\');" class="btn btn-primary" id="cita_boton">Crear</button>');
+                        } else {
+                            $("#cita").html('<button class="btn btn-primary" id="cita_boton">Crear</button>');
+                        }
+                        if (respuesta.warning_evento == "Hay eventos") {
+                            $("#eventos").html('<button onClick="return confirm(\'Se han detectado otros eventos en este dia. \u00BFSeguro que deseas continuar?\');" class="btn btn-primary" id="evento_boton">Crear</button>');
+                        } else {
+                            $("#eventos").html('<button class="btn btn-primary" id="evento_boton">Crear</button>');
+                        }
+                    }
+                    else {
+                        $("#hora").html('No se que pasa');
+                    }
+                }
+            });
+        }
     </script>
 @stop

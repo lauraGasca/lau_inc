@@ -74,14 +74,16 @@ class ChatRepo extends BaseRepo{
     {
         $first = Asesor::selectRaw('(Select chats.id from miembros Join miembros m2
             on miembros.chat_id = m2.chat_id join chats on miembros.chat_id = chats.id
-            where grupo = 4 and m2.user_id  = 44 and miembros.user_id = asesores.user_id) as chat,
+            where grupo = 4 and m2.user_id  = '.\Auth::user()->id.' and miembros.user_id = asesores.user_id) as chat,
             CONCAT(nombre, " ", apellidos) AS nombre, CONCAT("accio/images/equipo/",foto) as foto, puesto,
             CONCAT("4") as grupo, asesores.user_id as user_id, (Select ultimo_mensaje from miembros
             Join miembros m2 on miembros.chat_id = m2.chat_id join chats on miembros.chat_id = chats.id
-            where grupo = 4 and m2.user_id  = 44 and miembros.user_id = asesores.user_id) as ultimo_mensaje,
+            where grupo = 4 and m2.user_id  = '.\Auth::user()->id.' and miembros.user_id = asesores.user_id) as ultimo_mensaje,
             (Select m2.ultimo_visto from miembros Join miembros m2 on miembros.chat_id = m2.chat_id
-            join chats on miembros.chat_id = chats.id where grupo = 4 and m2.user_id  = 44
-            and miembros.user_id = asesores.user_id) as ultimo_visto, chats.created_at');
+            join chats on miembros.chat_id = chats.id where grupo = 4 and m2.user_id  = '.\Auth::user()->id.'
+            and miembros.user_id = asesores.user_id) as ultimo_visto, (Select chats.created_at from miembros Join miembros m2
+            on miembros.chat_id = m2.chat_id join chats on miembros.chat_id = chats.id
+            where grupo = 4 and m2.user_id  = '.\Auth::user()->id.' and miembros.user_id = asesores.user_id) as created_at');
                 
         //Conversaciones con Incubito
         return Chat::selectRaw('chats.id as chat, nombre, CONCAT("Orb/images/chats/",foto) as foto,

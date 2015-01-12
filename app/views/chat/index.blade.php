@@ -332,6 +332,7 @@
                                                     @endforeach
                                                 @endif
                                             </ul>
+                                            {{Session::get('chat')}}
                                         </div>
                                     </div>
                                 </div>
@@ -466,7 +467,6 @@
         function enviarMensaje()
         {
             $("#cargar").html('Cargando...');
-            $("#mensaje_form").submit();
         }
 
         function resultadoOk()

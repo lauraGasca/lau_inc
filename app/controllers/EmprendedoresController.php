@@ -7,6 +7,8 @@ use Incubamas\Repositories\CalendarioRepo;
 use Incubamas\Repositories\EmprendedoresRepo;
 use Incubamas\Repositories\PagoRepo;
 use Incubamas\Repositories\DocumentoRepo;
+use Incubamas\Repositories\ChatRepo;
+use Incubamas\Repositories\MensajeRepo;
 
 class EmprendedoresController extends BaseController
 {
@@ -18,10 +20,12 @@ class EmprendedoresController extends BaseController
     protected $emprendedoresRepo;
     protected $pagoRepo;
     protected $documentoRepo;
+    protected $chatRepo;
+    protected $mensajeRepo;
 
     public function __construct(CalendarioRepo $calendarioRepo, AsesoresRepo $asesoresRepo,
                                 EventoRepo $eventoRepo, HorariosRepo $horariosRepo, EmprendedoresRepo $emprendedoresRepo,
-                                PagoRepo $pagoRepo, DocumentoRepo $documentoRepo)
+                                PagoRepo $pagoRepo, DocumentoRepo $documentoRepo, ChatRepo $chatRepo, MensajeRepo $mensajeRepo)
     {
         $this->beforeFilter('auth');
         $this->beforeFilter('csrf', array('on' => array('put', 'patch', 'delete')));
@@ -32,6 +36,8 @@ class EmprendedoresController extends BaseController
         $this->emprendedoresRepo = $emprendedoresRepo;
         $this->pagoRepo = $pagoRepo;
         $this->documentoRepo = $documentoRepo;
+        $this->chatRepo = $chatRepo;
+        $this->mensajeRepo = $mensajeRepo;
     }
 
 
@@ -74,7 +80,7 @@ class EmprendedoresController extends BaseController
 
     /**************************Perfil Emprendedores*******************************/
 
-    public function getPerfil($emprendedor_id)
+    public function getPerfil($emprendedor_id, $chat=null,$user=null,$group=null,$name=null)
     {
         if (Auth::user()->type_id == 1 && Auth::user()->type_id != 2 && Auth::user()->type_id != 3)
             return Redirect::to('sistema');
@@ -117,10 +123,51 @@ class EmprendedoresController extends BaseController
         if ($this->eventoRepo->warning_cita($fecha, $id, $emprendedor[0]->user_id))
             $warning_cita = "Hay eventos";
 
-        $this->layout->content = View::make('emprendedores.perfil',
-            compact('asesores', 'horarios', 'warning', 'warning_cita', 'emprendedor', 'empresas',
-                'pagos', 'adeudo', 'num_documentos', 'subidas', 'documentos', 'empresas_listado',
-                'socios_listado', 'horarios_disponibles'));
+        /*Aqui lo que voy a adaptar*/
+
+        if (Auth::user()->type_id == 3)
+        {
+            $active_chat = null;
+            $active_user = null;
+            $active_group = null;
+            $active_nombre = null;
+            $mensajes = null;
+
+            $chats = $this->chatRepo->emprendedor();
+
+            if(count($chats)>0){
+                if($chat == null){
+                    $active_chat = $chats[0]->chat;
+                    $active_user = $chats[0]->user_id;
+                    $active_group = $chats[0]->grupo;
+                    $active_nombre = $chats[0]->nombre;
+                    $mensajes = $this->mensajeRepo->mensajes($chats[0]->chat);
+                    $this->chatRepo->leido($chats[0]->chat, date("Y-m-d H:i:s"));
+                }else{
+                    $active_chat = $chat;
+                    $active_user = $user;
+                    $active_group = $group;
+                    $active_nombre = $name;
+                    $mensajes = $this->mensajeRepo->mensajes($chat);
+                }
+                Session::put('chat', $active_chat);
+                Session::put('num_men', count(0));
+            }else{
+                Session::put('chat', 0);
+            }
+            Session::put('num_chat', count($chats));
+
+            $this->layout->content = View::make('emprendedores.perfil',
+                compact('asesores', 'horarios', 'warning', 'warning_cita', 'emprendedor', 'empresas',
+                    'pagos', 'adeudo', 'num_documentos', 'subidas', 'documentos', 'empresas_listado',
+                    'socios_listado', 'horarios_disponibles','chats','mensajes','active_chat',
+                    'active_user','active_group','active_nombre'));
+        }else {
+            $this->layout->content = View::make('emprendedores.perfil',
+                    compact('asesores', 'horarios', 'warning', 'warning_cita', 'emprendedor', 'empresas',
+                    'pagos', 'adeudo', 'num_documentos', 'subidas', 'documentos', 'empresas_listado',
+                    'socios_listado', 'horarios_disponibles'));
+        }
     }
 
 

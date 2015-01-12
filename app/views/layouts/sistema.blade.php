@@ -11,6 +11,7 @@
     @section('css')
       {{ HTML::style('https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css') }}
       {{ HTML::style('Orb/css/styles.css') }}
+      {{ HTML::script('Orb/bower_components/jquery/jquery.min.js') }}
       {{ HTML::script('Orb/js/vendors/modernizr/modernizr.custom.js') }}
       <link rel="shortcut icon" type="image/x-icon" href="{{ URL::asset('Orb/favicon.ico') }}" />
     @show
@@ -191,10 +192,7 @@
     <!--/Smooth Scroll-->
   
     @section('scripts')
-      <!--Scripts--> 
-        <!--JQuery-->
-        {{ HTML::script('Orb/js/vendors/jquery/jquery.min.js') }}
-        {{ HTML::script('Orb/js/vendors/jquery/jquery-ui.min.js') }}
+      <!--Scripts-->
         <!--Fullscreen-->
         {{ HTML::script('Orb/js/vendors/fullscreen/screenfull.min.js') }}
         <!--NanoScroller-->

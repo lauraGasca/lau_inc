@@ -279,7 +279,7 @@ class ChatController extends BaseController {
 		//Si es emprendedor
 		if(Input::get('user_id')=="")
 			return '<!DOCTYPE html><html><head></head><body><script type="text/javascript">
-					parent.resultadoErroneo("No se ha podido iniciar la conversacion.");
+					parent.resultadoErroneo("No se ha podido iniciar la conversacion. TvT");
 				</script></body></html>';
 				
 		$fecha = date("Y-m-d H:i:s");
@@ -300,7 +300,7 @@ class ChatController extends BaseController {
 			$this->mensajeRepo->archivo($mensaje, Input::file('imagen'));
 			
 		return '<!DOCTYPE html><html><head></head><body><script type="text/javascript">
-				parent.resultadoOkNew('.$mensaje->chat_id.','.Input::get('user_id').');
+				parent.resultadoOk();
 			</script></body></html>';
 	}
 	
@@ -311,7 +311,7 @@ class ChatController extends BaseController {
 		$manager = new ChatManager($chat, $data);
 		if(!$manager->save())
 			return null;
-		
+
 		$data = array('user_id' => $user_id, 'chat_id' => $chat->id, 'ultimo_visto' => date("Y-m-d H:i:s", strtotime ('-1 hour', strtotime($fecha))));
 		$miembro1 = $this->miembrosRepo->newMiembro();
 		$manager = new MiembroManager($miembro1, $data);
@@ -329,8 +329,9 @@ class ChatController extends BaseController {
 			$chat->delete();
 			return null;
 		}
-			
-		
+
+		Session::put('chat', $chat->id);
+
 		if($_mensaje==null)
 			$data = array('chat_id' => $chat->id,'cuerpo' => Input::get('mensaje'));
 		else
@@ -524,6 +525,7 @@ class ChatController extends BaseController {
 				// Devuelve un array JSON
 				$response = array();
 				$response['msg'] = $JSON;
+				$response['chat'] = 0;
 				$response['timestamp'] = $currentmodif;
 			}else
 			{
