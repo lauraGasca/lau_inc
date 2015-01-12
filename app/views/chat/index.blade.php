@@ -332,7 +332,6 @@
                                                     @endforeach
                                                 @endif
                                             </ul>
-                                            {{Session::get('chat')}}
                                         </div>
                                     </div>
                                 </div>
