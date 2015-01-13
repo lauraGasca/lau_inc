@@ -6,6 +6,15 @@
     class="active"
 @stop
 
+@section('css')
+  @parent
+  {{ HTML::style('Orb/bower_components/bootstrap-calendar/css/calendar.css') }}
+  {{ HTML::script('Orb/bower_components/bootstrap-calendar/js/language/es-MX.js') }}
+  {{ HTML::style('Orb/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css') }}
+  {{ HTML::script('Orb/bower_components/moment/moment.js') }}
+  {{ HTML::script('Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.es.js') }}
+@stop
+
 @section('mapa')
   <li><a href="#"><i class="fa fa-home"></i></a></li>
   <li>{{HTML::link('emprendedores','Emprendedores')}}</li>
@@ -110,9 +119,9 @@
             {{Form::label('fecha_nac', '* Fecha de Nacimiento', array('class' => 'label'))}}
             <label class="input">
               <i class="icon-prepend  fa fa-calendar"></i>
-              {{Form::text('date','',array('id'=>'date'))}}
+              {{Form::text('fecha_nac','',array('id'=>'fecha_nac', 'readonly'))}}
             </label>
-            <span class="message-error">{{$errors->first('date')}}</span>
+            <span class="message-error">{{$errors->first('fecha_nac')}}</span>
           </div>
           <div class="col-md-2 espacio_abajo">
             {{Form::label('escolaridad', 'M&aacute;ximo Nivel Escolar ', array('class' => 'label'))}}
@@ -260,9 +269,9 @@
             {{Form::label('fecha_ing', '* Fecha de Ingreso', array('class' => 'label'))}}
             <label class="input">
               <i class="icon-prepend fa fa-calendar"></i>
-              {{Form::text('start','',array('id'=>'start'))}}
+              {{Form::text('fecha_ing','',array('id'=>'fecha_ing', 'readonly'))}}
             </label>
-            <span class="message-error">{{$errors->first('start')}}</span>
+            <span class="message-error">{{$errors->first('fecha_ing')}}</span>
           </div>
           <div class="col-md-6 espacio_abajo">
             {{Form::label('imagen', 'Foto', array('class' => 'label'))}}
@@ -291,19 +300,6 @@
     </div>
   </div>
   <!-- End .powerwidget -->
-  <script>
-    function codigo(){
-      var select = document.getElementById("select"); 
-      var veces = document.getElementById("veces");
-      if(select.selectedIndex == 2){
-        veces.disabled = false;
-      }
-      if(select.selectedIndex == 0 || select.selectedIndex == 1){
-        veces.disabled = true;
-        veces.value = ""
-      }
-    } 
-  </script>
 @stop
 
 @section('scripts')
@@ -311,5 +307,38 @@
     <!--Forms-->
     <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/forms/jquery.form.min.js') }}"></script> 
     <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/forms/jquery.validate.min.js') }}"></script> 
-    <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/forms/jquery.maskedinput.min.js') }}"></script> 
+    <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/forms/jquery.maskedinput.min.js') }}"></script>
+    {{ HTML::script('Orb/bower_components/underscore/underscore-min.js') }}
+    {{ HTML::script('Orb/bower_components/bootstrap-calendar/js/calendar.js') }}
+    {{ HTML::script('Orb/bower_components/eonasdan-bootstrap-datetimepicker/bootstrap/bootstrap.min.js') }}
+    {{ HTML::script('Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js') }}
+    <script type="text/javascript">
+      function codigo(){
+        var select = document.getElementById("select");
+        var veces = document.getElementById("veces");
+        if(select.selectedIndex == 2){
+          veces.disabled = false;
+        }
+        if(select.selectedIndex == 0 || select.selectedIndex == 1){
+          veces.disabled = true;
+          veces.value = ""
+        }
+      }
+      $(function () {
+        $('#fecha_nac').datetimepicker({
+          pickTime: false,
+          language: 'es',
+          minDate:'1/1/1940',
+          defaultDate:'1/1/1980',
+          maxDate: '1/1/2000'
+        });
+        $('#fecha_ing').datetimepicker({
+          pickTime: false,
+          language: 'es',
+          minDate:'1/1/2000',
+          defaultDate: new Date(),
+          maxDate: new Date()
+        });
+      });
+    </script>
 @stop

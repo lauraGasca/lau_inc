@@ -191,11 +191,11 @@ class EmprendedoresController extends BaseController
             "programa" => Input::get("programa"),
             "estatus" => Input::get("estatus"),
             "genero" => Input::get("genero"),
-            "date" => Input::get("date"),
+            "fecha_nac" => Input::get("fecha_nac"),
             "curp" => Input::get("curp"),
             "lugar_nac" => Input::get("lugar_nac"),
             "imagen" => Input::get("imagen"),
-            "start" => Input::get("start"),
+            "fecha_ing" => Input::get("fecha_ing"),
             "calle" => Input::get("calle"),
             "num_ext" => Input::get("num_ext"),
             "num_int" => Input::get("num_int"),
@@ -241,8 +241,8 @@ class EmprendedoresController extends BaseController
             "emprendido" => 'required|min:1|max:2',
             "veces" => 'min:1|max:10',
             "imagen" => 'image',
-            "date" => 'required',
-            "start" => 'required|date'
+            "fecha_nac" => 'required',
+            "fecha_ing" => 'required'
         );
         $messages = array('unique' => 'El campo ya fue usado',);
         $validation = Validator::make(Input::all(), $rules, $messages);
@@ -277,10 +277,10 @@ class EmprendedoresController extends BaseController
                 $emprendedor->programa = Input::get("programa");
                 $emprendedor->estatus = Input::get("estatus");
                 $emprendedor->genero = Input::get("genero");
-                $emprendedor->fecha_nacimiento = $this->_mysqlformat(Input::get("date"));
+                $emprendedor->fecha_nacimiento = $this->_mysqlformat(Input::get("fecha_nac"));
                 $emprendedor->curp = Input::get("curp");
                 $emprendedor->lugar_nacimiento = Input::get("lugar_nac");
-                $emprendedor->fecha_ingreso = $this->_mysqlformat(Input::get("start"));;
+                $emprendedor->fecha_ingreso = $this->_mysqlformat(Input::get("fecha_ing"));;
                 $emprendedor->calle = Input::get("calle");
                 $emprendedor->num_ext = Input::get("num_ext");
                 $emprendedor->num_int = Input::get("num_int");
@@ -364,11 +364,11 @@ class EmprendedoresController extends BaseController
             "about" => Input::get("about"),
             "estatus" => Input::get("estatus"),
             "genero" => Input::get("genero"),
-            "date" => Input::get("date"),
+            "fecha_nac" => Input::get("fecha_nac"),
             "curp" => Input::get("curp"),
             "lugar_nac" => Input::get("lugar_nac"),
             "imagen" => Input::get("imagen"),
-            "start" => Input::get("start"),
+            "fecha_ing" => Input::get("fecha_ing"),
             "calle" => Input::get("calle"),
             "num_ext" => Input::get("num_ext"),
             "num_int" => Input::get("num_int"),
@@ -416,8 +416,8 @@ class EmprendedoresController extends BaseController
             "emprendido" => 'required|min:1|max:2',
             "veces" => 'min:1|max:10',
             "imagen" => 'image',
-            "date" => 'required',
-            "start" => 'required|date'
+            "fecha_nac" => 'required',
+            "fecha_ing" => 'required'
         );
         $messages = array('unique' => 'El campo ya fue usado',);
         $validation = Validator::make(Input::all(), $rules, $messages);
@@ -431,12 +431,10 @@ class EmprendedoresController extends BaseController
             $emprendedor->programa = Input::get("programa");
             $emprendedor->estatus = Input::get("estatus");
             $emprendedor->genero = Input::get("genero");
-            $f = explode("/", Input::get("date"));
-            $fecha = $f[2] . "/" . $f[1] . "/" . $f[0];
-            $emprendedor->fecha_nacimiento = $fecha;
+            $emprendedor->fecha_nacimiento = $this->_mysqlformat(Input::get('fecha_nac'));
             $emprendedor->curp = Input::get("curp");
             $emprendedor->lugar_nacimiento = Input::get("lugar_nac");
-            $emprendedor->fecha_ingreso = Input::get("start");
+            $emprendedor->fecha_ingreso = $this->_mysqlformat(Input::get('fecha_ing'));
             $emprendedor->calle = Input::get("calle");
             $emprendedor->num_ext = Input::get("num_ext");
             $emprendedor->num_int = Input::get("num_int");
