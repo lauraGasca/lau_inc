@@ -55,10 +55,10 @@ class BlogController extends BaseController {
 	}
         
         public function postCrear()
-	{ 
+	{
 		$dataUpload = array(
 			"titulo"   		=>    Input::get("titulo"),
-			"finish"     		=>    Input::get("finish"),
+			"fecha"     		=>    Input::get("fecha"),
 			"categoria" 	        =>    Input::get("categoria"),
 			"entrada"     		=>    Input::get("entrada"),
 			"tags[]" 	        =>    Input::get("tags[]"),
@@ -66,7 +66,7 @@ class BlogController extends BaseController {
 		);
 		$rules = array(
 			"titulo"   		=>    'required|unique:entradas,titulo',
-			"finish" 	        =>    'required',
+			"fecha" 	        =>    'required',
 			"categoria" 	        =>    'required|exists:categorias,id',
 			"entrada"     		=>    'required|min:3',
 			"tags[]"     		=>    'min:3|max:500',
@@ -84,9 +84,7 @@ class BlogController extends BaseController {
 			$blogs->user_id = Auth::user()->id;
 			$blogs->categoria_id = Input::get("categoria");
 			$blogs->titulo = Input::get("titulo");
-			$f=explode(".",Input::get("finish"));
-			$fecha = $f[2]."/".$f[1]."/".$f[0];
-			$blogs->fecha_publicacion = $fecha;
+			$blogs->fecha_publicacion = $this->_mysqlformat(Input::get("fecha"));
 			$blogs->entrada = Input::get("entrada");
 			//Determinar si es activo o no
 			$fecha_actual = strtotime(date("d-m-Y"));
@@ -152,7 +150,7 @@ class BlogController extends BaseController {
 		$dataUpload = array(
 			"blog_id"		=>    Input::get("blog_id"),
 			"titulo"   		=>    Input::get("titulo"),
-			"finish"     		=>    Input::get("finish"),
+			"fecha"     		=>    Input::get("fecha"),
 			"categoria" 	        =>    Input::get("categoria"),
 			"entrada"     		=>    Input::get("entrada"),
 			"tags[]" 	        =>    Input::get("tags[]"),
@@ -161,7 +159,7 @@ class BlogController extends BaseController {
 		$rules = array(
 			"blog_id"		=>    'required|exists:entradas,id',
 			"titulo"   		=>    'required|unique:entradas,titulo,'.Input::get("blog_id"),
-			"finish" 	        =>    'required',
+			"fecha" 	        =>    'required',
 			"categoria" 	        =>    'required|exists:categorias,id',
 			"entrada"     		=>    'required|min:3',
 			"tags[]"     		=>    'min:3|max:500',
@@ -180,9 +178,7 @@ class BlogController extends BaseController {
 			$blogs->categoria_id = Input::get("categoria");
 			$blogs->titulo = Input::get("titulo");
 			$blogs->entrada = Input::get("entrada");
-			$f=explode(".",Input::get("finish"));
-			$fecha = $f[2]."/".$f[1]."/".$f[0];
-			$blogs->fecha_publicacion = $fecha;
+			$blogs->fecha_publicacion = $this->_mysqlformat(Input::get("fecha"));
 			//Determinar si es activo o no
 			$fecha_actual = strtotime(date("d-m-Y"));
 			$date = date_create(Input::get("finish"));
@@ -282,5 +278,14 @@ class BlogController extends BaseController {
 			else
 				return Redirect::to('blog')->with(array('confirm' => "Lo sentimos. No se ha podido eliminar."));
 		}
+	}
+
+	//Convierte una fecha al formato Y-d-m
+	private function _mysqlformat($fecha)
+	{
+		if ($fecha <> "")
+			return date_format(date_create(substr($fecha, 3, 2) . '/' . substr($fecha, 0, 2) . '/' . substr($fecha, 6, 4)), 'Y-m-d');
+		else
+			return null;
 	}
 }

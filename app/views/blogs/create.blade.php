@@ -10,6 +10,11 @@
   <link href="{{ URL::asset('Orb/css/vendors/x-editable/typeahead.js-bootstrap.css') }}" rel="stylesheet" type="text/css">
   <link href="{{ URL::asset('Orb/css/vendors/x-editable/demo-bs3.css') }}" rel="stylesheet" type="text/css">
   <link href="{{ URL::asset('Orb/css/vendors/x-editable/bootstrap-editable.css') }}" rel="stylesheet" type="text/css">
+  {{ HTML::style('Orb/bower_components/bootstrap-calendar/css/calendar.css') }}
+  {{ HTML::script('Orb/bower_components/bootstrap-calendar/js/language/es-MX.js') }}
+  {{ HTML::style('Orb/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css') }}
+  {{ HTML::script('Orb/bower_components/moment/moment.js') }}
+  {{ HTML::script('Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.es.js') }}
 @stop
 
 @section('blog')
@@ -39,14 +44,14 @@
             </label>
             <span class="message-error">{{$errors->first('titulo')}}</span>
           </div>
-          <div class="col-md-2 espacio_abajo">
-            {{Form::label('fecha', '* Fecha de publicaci&oacute;n', array('class' => 'label'))}}
-            <label class="input">
-              <i class="icon-prepend fa fa-calendar"></i>
-              {{Form::text('finish','',array('id'=>'finish'))}}
-            </label>
-            <span class="message-error">{{$errors->first('finish')}}</span>
-          </div>
+            <div class="col-md-2 espacio_abajo">
+                {{Form::label('fecha', '* Fecha de publicaci&oacute;n', array('class' => 'label'))}}
+                <label class="input">
+                    <i class="icon-prepend fa fa-calendar"></i>
+                    {{Form::text('fecha','',array('id'=>'fecha','readonly'))}}
+                </label>
+                <span class="message-error">{{$errors->first('fecha')}}</span>
+            </div>
           <div class="col-md-2 espacio_abajo">
             {{Form::label('cat', '* Categoria', array('class' => 'label'))}}
             <label class="select">
@@ -104,25 +109,19 @@
 
 @section('scripts')
     @parent
-    <!--Forms-->
-    <script type="text/javascript" src="{{ URL::asset('Orb/js/scripts.js') }}"></script>      
-    <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/forms/jquery.form.min.js') }}"></script> 
-    <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/forms/jquery.validate.min.js') }}"></script> 
-    <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/forms/jquery.maskedinput.min.js') }}"></script> 
-    <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/jquery-steps/jquery.steps.min.js')}}"></script> 
-    <!--X-Editable--> 
-    <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/x-editable/bootstrap-editable.min.js') }}"></script> 
-    <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/x-editable/demo.js') }}"></script> 
-    <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/x-editable/demo-mock.js') }}"></script> 
-    <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/x-editable/select2.js') }}"></script> 
-    <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/x-editable/address.js') }}"></script> 
-    <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/x-editable/jquery.mockjax.js') }}"></script> 
-    <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/x-editable/moment.min.js') }}"></script> 
-    <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/x-editable/select2-bootstrap.css') }}"></script> 
-    <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/x-editable/typeahead.js') }}"></script> 
-    <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/x-editable/typeaheadjs.js') }}"></script>
-    <!--iOnRangeSlider--> 
-    <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/ionrangeslider/ion.rangeSlider.min.js') }}"></script> 
-    <!--Knob--> 
-    <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/knob/jquery.knob.js') }}"></script> 
+    {{ HTML::script('Orb/bower_components/underscore/underscore-min.js') }}
+    {{ HTML::script('Orb/bower_components/bootstrap-calendar/js/calendar.js') }}
+    {{ HTML::script('Orb/bower_components/eonasdan-bootstrap-datetimepicker/bootstrap/bootstrap.min.js') }}
+    {{ HTML::script('Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js') }}
+    <script type="text/javascript">
+        $(function () {
+            $('#fecha').datetimepicker({
+                pickTime: false,
+                language: 'es',
+                minDate:'1/1/2000',
+                defaultDate: new Date(),
+                maxDate: new Date()
+            });
+        });
+    </script>
 @stop
