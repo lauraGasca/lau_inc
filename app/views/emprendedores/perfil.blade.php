@@ -165,7 +165,7 @@
 <!-- Widget Row Start grid -->
 <div class="row" id="powerwidgets">
   <!---------------------------------- Detalles de los pagos realizados ------------------------------------->
-  <div class="col-md-6 col-sm-6 bootstrap-grid">
+  <div class="col-md-4 col-sm-6 bootstrap-grid">
     <!-- New widget -->
     <div class="powerwidget powerwidget-as-portlet powerwidget-as-portlet-green-alt" id="widget1" data-widget-editbutton="false">
         <div class="inner-spacer nopadding">
@@ -181,10 +181,20 @@
     </div>
     <!-- /New widget -->
   </div>
-  <!----------------------------------- Detalles de los documentos subidos ----------------------------------->
-  <div class="col-md-6 col-sm-6 bootstrap-grid">
+  <!----------------------------------- Entrar a Iuark ----------------------------------->
+  <div class="col-md-4 col-sm-6 bootstrap-grid">
     <!-- New widget -->
-    <div class="powerwidget powerwidget-as-portlet powerwidget-as-portlet-purple" id="widget2" data-widget-editbutton="false">
+    <div class="powerwidget powerwidget-as-portlet powerwidget-as-portlet-cold-white" id="widget2" data-widget-editbutton="false">
+      <div class="inner-spacer nopadding" style="padding: 15px;">
+        <a href="http://beta.iuark.com/" target="_blank">{{ HTML::image('Orb/images/iuark.png', 'Iuark', array('style' => "width: 100%; padding-top: 10%; padding-bottom: 10%;")) }}</a>
+      </div>
+    </div>
+    <!-- /New widget-->
+  </div>
+  <!----------------------------------- Detalles de los documentos subidos ----------------------------------->
+  <div class="col-md-4 col-sm-6 bootstrap-grid">
+    <!-- New widget -->
+    <div class="powerwidget powerwidget-as-portlet powerwidget-as-portlet-purple" id="widget3" data-widget-editbutton="false">
       <div class="inner-spacer nopadding">
         <div class="portlet-big-icon">
           <i class="fa fa-archive"></i><br/>
@@ -199,23 +209,6 @@
     </div>
     <!-- /New widget -->
   </div>
-  <!--<div class="col-md-6 col-sm-6 bootstrap-grid">
-     New widget
-    <div class="powerwidget powerwidget-as-portlet powerwidget-as-portlet-cold-grey" id="widget3" data-widget-editbutton="false">
-      <div class="inner-spacer nopadding" style="padding: 15px;">
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-      </div>
-    </div>
-    <!-- /New widget
-  </div>     -->
 </div>
 <!------------------------------------------------- Perfil-------------------------------------------------> 
 <div class="powerwidget cold-grey" id="profile" data-widget-editbutton="false">
