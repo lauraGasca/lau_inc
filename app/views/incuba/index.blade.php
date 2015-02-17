@@ -471,7 +471,7 @@
                     </div><!--/ .widget-->
                     <div class="widget widget_contacts opacity">
                         <ul class="contact-details blanco">
-                            <li>Direcci&oacute;n: Divisi&oacute;n del Norte 124 el Vergel, Celaya, Guanajuato, M&eacute;xico </li>
+                            <li>Direcci&oacute;n: Sinaloa Ote 119 Alameda, Celaya, Guanajuato, M&eacute;xico </li>
                             <li>Tel&eacute;fono: (461) 6121699 </li>
                             <li>Email: hola@incubamas.com</li>
                             <li>Horarios : 9:00 - 13:00 / 15:00 - 18:00</li>

@@ -54,7 +54,7 @@
 				<div class="wrapper bg_black" style="position:relative; z-index:9;">
 					<div class="container_12">
 						<article class="grid_5 txt11" style="padding-top:9px;">
-							&nbsp;&copy;&nbsp;  2014
+							&nbsp;&copy;&nbsp;  2015
 							<span class="color_green">Incubamas</span>
 							<a target="_blank" href="{{url('sistema')}}" title="Sistema">
 								<img src="{{ URL::asset('accio/images/favicon.ico')}}" alt="">

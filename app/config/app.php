@@ -122,7 +122,7 @@ return array(
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
                 'Greggilbert\Recaptcha\RecaptchaServiceProvider',
-                'Thujohn\Pdf\PdfServiceProvider',
+           //     'Thujohn\Pdf\PdfServiceProvider',
 
 	),
 
