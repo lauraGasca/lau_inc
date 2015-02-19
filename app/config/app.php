@@ -121,8 +121,8 @@ return array(
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
-                'Greggilbert\Recaptcha\RecaptchaServiceProvider',
-           //     'Thujohn\Pdf\PdfServiceProvider',
+        'Greggilbert\Recaptcha\RecaptchaServiceProvider',
+        'Thujohn\Pdf\PdfServiceProvider',
 
 	),
 
