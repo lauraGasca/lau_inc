@@ -1,4 +1,5 @@
 <?php
+setlocale(LC_ALL,"es_ES@euro","es_ES","esp");
 /**
  * Laravel - A PHP Framework For Web Artisans
  *

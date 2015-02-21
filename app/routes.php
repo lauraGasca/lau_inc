@@ -7,7 +7,11 @@ Route::get('/', function()
 
 Route::get('pruebas', function()
 {
-    return View::make('prueba');
+    /*Mail::send('emails.atendidos', [],function ($message) {
+            $message->subject('Prueba');
+            $message->to('lau_lost@hotmail.com', 'Laura');
+        });*/
+    return View::make('emails.atendidos');
 });
 
 Route::controller('incuba', 'IncubaController');
@@ -18,6 +22,7 @@ Route::controller('casos', 'CasoController');
 Route::controller('emprendedores', 'EmprendedoresController');
 Route::controller('chat', 'ChatController');
 Route::controller('calendario', 'CalendarController');
+Route::controller('atendidos', 'AtendidoController');
 
 //Funcion para mostrar cuando una pagina no se encuentra
 App::missing(function($exception)

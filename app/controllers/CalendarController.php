@@ -106,16 +106,16 @@ class CalendarController extends BaseController
         $from = $this->_formatear(Input::get("from") . " " . $hora);
         $to = $this->_formatear(Input::get("from") . " " . $horaFin);
 
-        if (Input::get("destino") == 'calendario/index/'.$user_id) {
+        if (Input::get("destino") == 'calendario/index/' . $user_id) {
             $tu = $this->asesoresRepo->nombre($user_id);
             $otro = $this->emprendedoresRepo->nombre(Input::get("consultor"));
-            $asesor =  $this->asesoresRepo->usuario($user_id);
+            $asesor = $this->asesoresRepo->usuario($user_id);
             $emprendedor = $this->emprendedoresRepo->emprendedor(Input::get("consultor"));
         } else {
             $tu = $this->emprendedoresRepo->nombre($user_id);
             $otro = $this->asesoresRepo->nombre(Input::get("consultor"));
             $emprendedor = $this->emprendedoresRepo->emprendedor($user_id);
-            $asesor= $this->asesoresRepo->usuario(Input::get("consultor"));
+            $asesor = $this->asesoresRepo->usuario(Input::get("consultor"));
         }
 
         if ($this->asesoresRepo->existe($user_id))
@@ -166,13 +166,13 @@ class CalendarController extends BaseController
         $correo_con = $asesor->email;
         $hora = $this->horariosRepo->hora($evento->horario);
         $asunto = $evento->cuerpo;
-        setlocale(LC_ALL,"es_ES@euro","es_ES","esp");
+        setlocale(LC_ALL, "es_ES@euro", "es_ES", "esp");
         $fecha = strftime("%d de %B de %Y", strtotime($evento->fecha));
 
         if ($confirmation) {
             //Enviar correo al emprendedor de confirmacion de la cita
             Mail::send('emails.confirmacion', array('consultor' => $consultor, 'fecha' => $fecha, 'hora' => $hora,
-                'asunto' => $asunto, 'contacto' => $correo_con, 'emprendedor'=>$emprendedor_nombre,
+                'asunto' => $asunto, 'contacto' => $correo_con, 'emprendedor' => $emprendedor_nombre,
             ), function ($message) use ($correo_emp, $emprendedor_nombre) {
 
                 $message->subject('Confirmación de Cita');
@@ -180,18 +180,16 @@ class CalendarController extends BaseController
             });
             //Enviar correo al consultor de confirmacion de la cita
             Mail::send('emails.confirmacion', array('consultor' => $consultor, 'fecha' => $fecha, 'hora' => $hora,
-                'asunto' => $asunto, 'contacto' => $correo_emp, 'emprendedor'=>$emprendedor_nombre,
-            ), function ($message) use ($correo_con, $consultor_nombre)
-            {
+                'asunto' => $asunto, 'contacto' => $correo_emp, 'emprendedor' => $emprendedor_nombre,
+            ), function ($message) use ($correo_con, $consultor_nombre) {
                 $message->subject('Confirmación de Cita');
                 $message->to($correo_con, $consultor_nombre);
             });
-        }else{
+        } else {
             //Enviar correo al consultor de la solicitud de la cita
             Mail::send('emails.solicitud', array('consultor' => $consultor, 'fecha' => $fecha, 'hora' => $hora,
-                'asunto' => $asunto, 'contacto' => $correo_emp, 'emprendedor'=>$emprendedor_nombre, 'id' =>$evento->id, 'id2' => $ant_id
-            ), function ($message) use ($correo_con, $consultor_nombre)
-            {
+                'asunto' => $asunto, 'contacto' => $correo_emp, 'emprendedor' => $emprendedor_nombre, 'id' => $evento->id, 'id2' => $ant_id
+            ), function ($message) use ($correo_con, $consultor_nombre) {
                 $message->subject('Solicitud de Cita');
                 $message->to($correo_con, $consultor_nombre);
             });
@@ -205,7 +203,7 @@ class CalendarController extends BaseController
         if (Auth::user()->type_id != 1 && Auth::user()->type_id != 2)
             return Redirect::to('sistema');
 
-        if($this->eventoRepo->existe($id)&&$this->eventoRepo->existe($id2)) {
+        if ($this->eventoRepo->existe($id) && $this->eventoRepo->existe($id2)) {
             if ($this->eventoRepo->confirmado($id) && $this->eventoRepo->confirmado($id2)) {
                 $mensaje = 'El evento ya fue confirmado';
                 $this->layout->content = View::make('calendario/mensaje', compact('mensaje'));
@@ -213,11 +211,11 @@ class CalendarController extends BaseController
                 $evento1 = $this->eventoRepo->evento($id);
                 $evento2 = $this->eventoRepo->evento($id2);
 
-                if ($this->asesoresRepo->existe($evento1->user_id)){
-                    $asesor= $this->asesoresRepo->usuario($evento1->user_id);
+                if ($this->asesoresRepo->existe($evento1->user_id)) {
+                    $asesor = $this->asesoresRepo->usuario($evento1->user_id);
                     $emprendedor = $this->emprendedoresRepo->emprendedor($evento2->user_id);
-                }else{
-                    $asesor= $this->asesoresRepo->usuario($evento2->user_id);
+                } else {
+                    $asesor = $this->asesoresRepo->usuario($evento2->user_id);
                     $emprendedor = $this->emprendedoresRepo->emprendedor($evento1->user_id);
                 }
                 $emprendedor_nombre = $emprendedor->name . " " . $emprendedor->apellidos;
@@ -226,7 +224,7 @@ class CalendarController extends BaseController
                 $correo_con = $asesor->email;
                 $hora = $this->horariosRepo->hora($evento1->horario);
                 $asunto = $evento1->cuerpo;
-                setlocale(LC_ALL,"es_ES@euro","es_ES","esp");
+                setlocale(LC_ALL, "es_ES@euro", "es_ES", "esp");
                 $fecha = strftime("%d de %B de %Y", strtotime($evento1->fecha));
 
                 $evento1->confirmation = true;
@@ -236,16 +234,15 @@ class CalendarController extends BaseController
 
                 //Enviar correo al emprendedor de confirmacion de la cita
                 Mail::send('emails.confirmacion', array('consultor' => $consultor_nombre, 'fecha' => $fecha, 'hora' => $hora,
-                    'asunto' => $asunto, 'contacto' => $correo_con, 'emprendedor'=>$emprendedor_nombre,
-                ), function ($message) use ($correo_emp, $emprendedor_nombre)
-                {
+                    'asunto' => $asunto, 'contacto' => $correo_con, 'emprendedor' => $emprendedor_nombre,
+                ), function ($message) use ($correo_emp, $emprendedor_nombre) {
                     $message->subject('Confirmación de Cita');
                     $message->to($correo_emp, $emprendedor_nombre);
                 });
                 $mensaje = 'El evento ha sido confirmado';
                 $this->layout->content = View::make('calendario/mensaje', compact('mensaje'));
             }
-        }else {
+        } else {
             $mensaje = 'El evento ya fue cancelado';
             $this->layout->content = View::make('calendario/mensaje', compact('mensaje'));
         }
@@ -256,7 +253,7 @@ class CalendarController extends BaseController
         if (Auth::user()->type_id != 1 && Auth::user()->type_id != 2)
             return Redirect::to('sistema');
 
-        if($this->eventoRepo->existe($id)&&$this->eventoRepo->existe($id2)) {
+        if ($this->eventoRepo->existe($id) && $this->eventoRepo->existe($id2)) {
             if ($this->eventoRepo->confirmado($id) && $this->eventoRepo->confirmado($id2)) {
                 $mensaje = 'El evento ya fue confirmado';
                 $this->layout->content = View::make('calendario/mensaje', compact('mensaje'));
@@ -264,11 +261,11 @@ class CalendarController extends BaseController
                 $evento1 = $this->eventoRepo->evento($id);
                 $evento2 = $this->eventoRepo->evento($id2);
 
-                if ($this->asesoresRepo->existe($evento1->user_id)){
-                    $asesor= $this->asesoresRepo->usuario($evento1->user_id);
+                if ($this->asesoresRepo->existe($evento1->user_id)) {
+                    $asesor = $this->asesoresRepo->usuario($evento1->user_id);
                     $emprendedor = $this->emprendedoresRepo->emprendedor($evento2->user_id);
-                }else{
-                    $asesor= $this->asesoresRepo->usuario($evento2->user_id);
+                } else {
+                    $asesor = $this->asesoresRepo->usuario($evento2->user_id);
                     $emprendedor = $this->emprendedoresRepo->emprendedor($evento1->user_id);
                 }
                 $emprendedor_nombre = $emprendedor->name . " " . $emprendedor->apellidos;
@@ -277,7 +274,7 @@ class CalendarController extends BaseController
                 $correo_con = $asesor->email;
                 $hora = $this->horariosRepo->hora($evento1->horario);
                 $asunto = $evento1->cuerpo;
-                setlocale(LC_ALL,"es_ES@euro","es_ES","esp");
+                setlocale(LC_ALL, "es_ES@euro", "es_ES", "esp");
                 $fecha = strftime("%d de %B de %Y", strtotime($evento1->fecha));
 
                 $evento1->delete();
@@ -294,7 +291,7 @@ class CalendarController extends BaseController
                 $mensaje = 'El evento ha sido cancelado';
                 $this->layout->content = View::make('calendario/mensaje', compact('mensaje'));
             }
-        }else{
+        } else {
             $mensaje = 'El evento ya fue cancelado';
             $this->layout->content = View::make('calendario/mensaje', compact('mensaje'));
         }
@@ -391,7 +388,7 @@ class CalendarController extends BaseController
         if (!$manager->save())
             return Redirect::back()->withErrors($manager->getErrors())->withInput();
 
-        return Redirect::to('calendario/index/'.$user_id)->with(array('confirm' => 'Se ha registrado correctamente.'));
+        return Redirect::to('calendario/index/' . $user_id)->with(array('confirm' => 'Se ha registrado correctamente.'));
     }
 
     public function getDeletehorario($user_id, $horario_id)
@@ -406,7 +403,7 @@ class CalendarController extends BaseController
             return Redirect::back()->with(array('confirm' => 'No se ha podido eliminar.'));
         else {
             if ($this->nohorarioRepo->eliminar($horario_id))
-                return Redirect::to('calendario/index/'.$user_id)->with(array('confirm' => 'Se ha eliminado correctamente.'));
+                return Redirect::to('calendario/index/' . $user_id)->with(array('confirm' => 'Se ha eliminado correctamente.'));
             else
                 return Redirect::back()->with(array('confirm' => 'No se ha podido eliminar.'));
         }
@@ -424,13 +421,13 @@ class CalendarController extends BaseController
             foreach ($eventos as $evento) {
                 $hora = strtotime('-6 hour', $evento->start / 1000);
                 $texto = date("H:i", $hora) . " - " . $evento->titulo;
-                if($evento->cuerpo<>'')
-                    $texto.= ": " . $evento->cuerpo;
-                if($evento->horario<>null)
-                    if($evento->confirmation ==1)
-                        $texto.= " / Confirmada";
+                if ($evento->cuerpo <> '')
+                    $texto .= ": " . $evento->cuerpo;
+                if ($evento->horario <> null)
+                    if ($evento->confirmation == 1)
+                        $texto .= " / Confirmada";
                     else
-                        $texto.= " / Sin confirmar";
+                        $texto .= " / Sin confirmar";
 
                 $JSON2[] = array(
                     'id' => $evento->id,

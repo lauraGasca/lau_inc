@@ -80,7 +80,7 @@ class EmprendedoresController extends BaseController
 
     /**************************Perfil Emprendedores*******************************/
 
-    public function getPerfil($emprendedor_id, $chat=null,$user=null,$group=null,$name=null)
+    public function getPerfil($emprendedor_id, $chat = null, $user = null, $group = null, $name = null)
     {
         if (Auth::user()->type_id == 1 && Auth::user()->type_id != 2 && Auth::user()->type_id != 3)
             return Redirect::to('sistema');
@@ -125,8 +125,7 @@ class EmprendedoresController extends BaseController
 
         /*Aqui lo que voy a adaptar*/
 
-        if (Auth::user()->type_id == 3)
-        {
+        if (Auth::user()->type_id == 3) {
             $active_chat = null;
             $active_user = null;
             $active_group = null;
@@ -135,15 +134,15 @@ class EmprendedoresController extends BaseController
 
             $chats = $this->chatRepo->emprendedor();
 
-            if(count($chats)>0){
-                if($chat == null){
+            if (count($chats) > 0) {
+                if ($chat == null) {
                     $active_chat = $chats[0]->chat;
                     $active_user = $chats[0]->user_id;
                     $active_group = $chats[0]->grupo;
                     $active_nombre = $chats[0]->nombre;
                     $mensajes = $this->mensajeRepo->mensajes($chats[0]->chat);
                     $this->chatRepo->leido($chats[0]->chat, date("Y-m-d H:i:s"));
-                }else{
+                } else {
                     $active_chat = $chat;
                     $active_user = $user;
                     $active_group = $group;
@@ -152,7 +151,7 @@ class EmprendedoresController extends BaseController
                 }
                 Session::put('chat', $active_chat);
                 Session::put('num_men', count(0));
-            }else{
+            } else {
                 Session::put('chat', 0);
             }
             Session::put('num_chat', count($chats));
@@ -160,11 +159,11 @@ class EmprendedoresController extends BaseController
             $this->layout->content = View::make('emprendedores.perfil',
                 compact('asesores', 'horarios', 'warning', 'warning_cita', 'emprendedor', 'empresas',
                     'pagos', 'adeudo', 'num_documentos', 'subidas', 'documentos', 'empresas_listado',
-                    'socios_listado', 'horarios_disponibles','chats','mensajes','active_chat',
-                    'active_user','active_group','active_nombre'));
-        }else {
+                    'socios_listado', 'horarios_disponibles', 'chats', 'mensajes', 'active_chat',
+                    'active_user', 'active_group', 'active_nombre'));
+        } else {
             $this->layout->content = View::make('emprendedores.perfil',
-                    compact('asesores', 'horarios', 'warning', 'warning_cita', 'emprendedor', 'empresas',
+                compact('asesores', 'horarios', 'warning', 'warning_cita', 'emprendedor', 'empresas',
                     'pagos', 'adeudo', 'num_documentos', 'subidas', 'documentos', 'empresas_listado',
                     'socios_listado', 'horarios_disponibles'));
         }
