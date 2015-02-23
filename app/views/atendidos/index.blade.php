@@ -50,7 +50,7 @@
                     <span class="message-error">{{$errors->first('nombre_completo')}}</span>
                 </div>
                 <div class="col-md-3 espacio_abajo">
-                    {{Form::label('correo', '* Correo electr&oacute;nico', array('class' => 'label'))}}
+                    {{Form::label('correo', 'Correo electr&oacute;nico', array('class' => 'label'))}}
                     <label class="input">
                         <i class="icon-prepend fa fa-envelope"></i>
                         {{Form::email('correo')}}
@@ -66,7 +66,7 @@
                     <span class="message-error">{{$errors->first('telefono')}}</span>
                 </div>
                 <div class="col-md-11 espacio_abajo">
-                    {{Form::label('direccion', '* Domicilio', array('class' => 'label'))}}
+                    {{Form::label('direccion', 'Domicilio', array('class' => 'label'))}}
                     <label class="input">
                         <i class="icon-prepend fa fa-book"></i>
                         {{Form::text('direccion')}}
@@ -74,7 +74,7 @@
                     <span class="message-error">{{$errors->first('direccion')}}</span>
                 </div>
                 <div class="col-md-6 espacio_abajo">
-                    {{Form::label('programa', '* Programa a Vincular', array('class' => 'label'))}}
+                    {{Form::label('programa', 'Programa a Vincular', array('class' => 'label'))}}
                     <label class="select select-multiple">
                         {{Form::select('programa[]', $programas, "", array('multiple'))}}
                     </label>
@@ -87,7 +87,7 @@
                     </div>
                 </div>
                 <div class="col-md-5 espacio_abajo">
-                    {{Form::label('monto', '* Monto a solicitar', array('class' => 'label'))}}
+                    {{Form::label('monto', 'Monto a solicitar', array('class' => 'label'))}}
                     <label class="input">
                         <i class="icon-prepend fa fa-book"></i>
                         {{Form::text('monto',null,['id'=>'monto'])}}
@@ -97,13 +97,10 @@
                 <div class="col-md-12 espacio_abajo">
                 </div>
                 <div class="col-md-4 espacio_abajo">
-                    {{Form::radio('enviar', 0, true)}} Enviar por correo
+                    {{Form::checkbox('enviar', 1)}} Enviar por correo
                 </div>
                 <div class="col-md-3 espacio_abajo">
-                    {{Form::radio('enviar', 1)}} Imprimir
-                </div>
-                <div class="col-md-4 espacio_abajo">
-                    {{Form::radio('enviar', 2)}} Enviar por correo e Imprimir
+                    {{Form::checkbox('imprimir', 1)}} Imprimir
                 </div>
                 <div class="col-md-12 espacio_abajo">
                     <span class="message-error">{{$errors->first('enviar')}}</span>

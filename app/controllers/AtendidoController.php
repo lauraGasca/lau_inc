@@ -31,28 +31,25 @@ class AtendidoController extends BaseController
         if (!$manager->save())
             return Redirect::back()->withErrors($manager->getErrors())->withInput();
 
-        foreach (Input::get("programa") as $programa) {
-            $vinculacion = $this->atendidoRepo->newVinculacion();
-            $manager = new VinculacionManager($vinculacion, ['programa_id'=>$programa, 'persona_id'=>$atendido->id]);
-            $manager->save();
+        if(count(Input::get("programa"))>0)
+            foreach (Input::get("programa") as $programa) {
+                $vinculacion = $this->atendidoRepo->newVinculacion();
+                $manager = new VinculacionManager($vinculacion, ['programa_id'=>$programa, 'persona_id'=>$atendido->id]);
+                $manager->save();
+            }
+
+        if(Input::get("enviar")<>''){
+                Mail::send('emails.atendidos', [],function ($message) {
+                    $message->subject('Prueba');
+                    $message->to('lau_lost@hotmail.com', 'Laura');
+                });
         }
 
-        switch(Input::get("enviar")){
-            case 0:
-                Mail::send('emails.atendidos', [],function ($message) {
-                    $message->subject('Prueba');
-                    $message->to('lau_lost@hotmail.com', 'Laura');
-                });
-                return Redirect::back()->with(array('confirm' => 'Se ha registrado correctamente.'));
-            case 1:
+        if(Input::get("imprimir")<>''){
                 $html = View::make("emails.atendidos");
                 $this->layout->content = PDF::load($html, 'A4', 'portrait')->show();
-            case 2:
-                Mail::send('emails.atendidos', [],function ($message) {
-                    $message->subject('Prueba');
-                    $message->to('lau_lost@hotmail.com', 'Laura');
-                });
-                return View::make('emails.atendidos');
         }
+
+        return Redirect::back()->with(array('confirm' => 'Se ha registrado correctamente.'));
     }
 }

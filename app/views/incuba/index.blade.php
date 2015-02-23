@@ -495,7 +495,7 @@
         <div class="map-wrapper">
             <div class="map-top-overlay"></div>
             <div class="map">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3736.7254046935095!2d-100.80371200000002!3d20.517480000000006!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x842cba80edcb4d4f%3A0xb3d616b3b1093d25!2sIncubaMas!5e0!3m2!1ses-419!2smx!4v1408835533063" width="100%" height="600" frameborder="0" style="border:0"></iframe>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d3736.4576186694894!2d-100.81146974418027!3d20.528448995115742!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sSinaloa+119%2C+alamenda%2C+Celaya%2C+Gto.!5e0!3m2!1ses-419!2smx!4v1424726331422" width="100%" height="600" frameborder="0" style="border:0"></iframe>
             </div>
         </div>
     </section><!--/ .section-->

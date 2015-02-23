@@ -6,12 +6,11 @@ class AtendidosManager extends BaseManager
     public function getRules(){
         $rules = [
             "nombre_completo"   =>    'required|max:100',
-            "correo"            =>    'required|email|max:100',
-            "direccion"   	    =>    'required|max:200',
+            "correo"            =>    'email|max:100',
+            "direccion"   	    =>    'max:200',
             "telefono"   	    =>    'required|max:20',
-            "monto"   	        =>    'required|max:20',
-            "programa"   	    =>    'required',
-            "correo"   	        =>    'required'
+            "monto"   	        =>    'max:20',
+            "programa"   	    =>    ''
         ];
         return $rules;
     }
