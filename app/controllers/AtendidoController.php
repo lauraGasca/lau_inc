@@ -37,13 +37,14 @@ class AtendidoController extends BaseController
                 $manager = new VinculacionManager($vinculacion, ['programa_id'=>$programa, 'persona_id'=>$atendido->id]);
                 $manager->save();
             }
-
-        if(Input::get("enviar")<>''){
-                Mail::send('emails.atendidos', [],function ($message) {
+        $correo =Input::get("correo");
+        $nombre =Input::get("nombre_completo");
+        if(Input::get("enviar")<>'')
+            if(Input::get("correo")<>'')
+                Mail::send('emails.atendidos', [],function ($message) use ($correo,$nombre) {
                     $message->subject('Prueba');
-                    $message->to('lau_lost@hotmail.com', 'Laura');
+                    $message->to($correo, $nombre);
                 });
-        }
 
         if(Input::get("imprimir")<>''){
                 $html = View::make("emails.atendidos");
