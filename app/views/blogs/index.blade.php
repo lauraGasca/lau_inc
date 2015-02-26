@@ -37,8 +37,8 @@
         <div class="col-md-4">
           <div class="input-group">
             {{ Form::open(array('url'=>'blog/busqueda', 'method' => 'post') )}}
-              {{Form::text('buscar', null, array('class'=>'form-control', 'placeholder'=>'Buscar', 'data-provide'=>'typeahead'))}}
               <span class="input-group-btn">
+                {{Form::text('buscar', null, array('class'=>'form-control', 'placeholder'=>'Buscar', 'data-provide'=>'typeahead'))}}
                 {{ Form::submit('Ir!', array('class'=>'btn btn-default')) }}
               </span>
               <span class="message-error">{{$errors->first('buscar')}}</span>

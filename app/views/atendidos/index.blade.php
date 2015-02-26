@@ -6,17 +6,6 @@
     class="active"
 @stop
 
-@section('css')
-    @parent
-    {{ HTML::script('Orb/js/jquery.maskedinput.js')}}
-    <script type="text/javascript">
-        $(function() {
-            $("#telefono").mask("(999) 999-9999? x99999");
-            $("#monto").mask("$999,999.99");
-        });
-    </script>
-@stop
-
 @section('mapa')
     <li><a href="#"><i class="fa fa-home"></i></a></li>
     <li class="active">Personas Atendidas</li>
@@ -30,91 +19,75 @@
 
 @section('contenido')
     @if(Session::get('confirm'))
-        <div class="alert alert-success alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
-                <i class="fa fa-times-circle"></i>
-            </button>
-            {{Session::get('confirm')}}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="breadcrumb clearfix">
+                    {{Session::get('confirm')}}
+                </div>
+            </div>
         </div>
     @endif
-    <div class="powerwidget col-grey" id="user-directory" data-widget-editbutton="false">
-        <div class="inner-spacer">
-            {{ Form::open(array('url'=>'atendidos/crear', 'class'=>'orb-form','method' => 'post') )}}
-            <fieldset>
-                <div class="col-md-5 espacio_abajo">
-                    {{Form::label('nombre_completo', '* Nombre Completo', array('class' => 'label'))}}
-                    <label class="input">
-                        <i class="icon-prepend fa fa-user"></i>
-                        {{Form::text('nombre_completo')}}
-                    </label>
-                    <span class="message-error">{{$errors->first('nombre_completo')}}</span>
-                </div>
-                <div class="col-md-3 espacio_abajo">
-                    {{Form::label('correo', 'Correo electr&oacute;nico', array('class' => 'label'))}}
-                    <label class="input">
-                        <i class="icon-prepend fa fa-envelope"></i>
-                        {{Form::email('correo')}}
-                    </label>
-                    <span class="message-error">{{$errors->first('correo')}}</span>
-                </div>
-                <div class="col-md-3 espacio_abajo">
-                    {{Form::label('telefono', '* Tel&eacute;fono Fijo', array('class' => 'label'))}}
-                    <label class="input">
-                        <i class="icon-prepend fa fa-phone"></i>
-                        {{Form::text('telefono','',array('id'=>'telefono'))}}
-                    </label>
-                    <span class="message-error">{{$errors->first('telefono')}}</span>
-                </div>
-                <div class="col-md-11 espacio_abajo">
-                    {{Form::label('direccion', 'Domicilio', array('class' => 'label'))}}
-                    <label class="input">
-                        <i class="icon-prepend fa fa-book"></i>
-                        {{Form::text('direccion')}}
-                    </label>
-                    <span class="message-error">{{$errors->first('direccion')}}</span>
-                </div>
-                <div class="col-md-6 espacio_abajo">
-                    {{Form::label('programa', 'Programa a Vincular', array('class' => 'label'))}}
-                    <label class="select select-multiple">
-                        {{Form::select('programa[]', $programas, "", array('multiple'))}}
-                    </label>
-                    <span class="message-error">{{$errors->first('programa')}}</span>
-                    <div class="note">
-                        <strong>
-                            Nota:
-                        </strong>
-                        Manten precionado Ctrl para seleccionar multiples programas
+    @if(count($errors)>0)
+        <script>
+            alert("¡Por favor, revise los datos del formulario!");
+        </script>
+        @endif
+                <!-- New widget -->
+        <div class="powerwidget powerwidget-as-portlet-white" id="darkportletdarktable" data-widget-editbutton="false">
+            <div class="inner-spacer">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            {{ Form::open(array('url'=>'atendidos/busqueda', 'method' => 'post') )}}
+                            <span class="input-group-btn">
+                                {{Form::text('buscar', null, array('class'=>'form-control', 'placeholder'=>'Buscar', 'data-provide'=>'typeahead'))}}
+                                {{ Form::submit('Ir!', array('class'=>'btn btn-default')) }}
+                            </span>
+                            <span class="message-error">{{$errors->first('buscar')}}</span>
+                            {{Form::close()}}
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        {{HTML::link('atendidos/crear','Nuevo Registro',array('class'=>'btn btn-default'))}}
                     </div>
                 </div>
-                <div class="col-md-5 espacio_abajo">
-                    {{Form::label('monto', 'Monto a solicitar', array('class' => 'label'))}}
-                    <label class="input">
-                        <i class="icon-prepend fa fa-book"></i>
-                        {{Form::text('monto',null,['id'=>'monto'])}}
-                    </label>
-                    <span class="message-error">{{$errors->first('monto')}}</span>
-                </div>
-                <div class="col-md-12 espacio_abajo">
-                </div>
-                <div class="col-md-4 espacio_abajo">
-                    {{Form::checkbox('enviar', 1)}} Enviar por correo
-                </div>
-                <div class="col-md-3 espacio_abajo">
-                    {{Form::checkbox('imprimir', 1)}} Imprimir
-                </div>
-                <div class="col-md-12 espacio_abajo">
-                    <span class="message-error">{{$errors->first('enviar')}}</span>
-                </div>
-            </fieldset>
-            <footer>
-                <div class="col-md-6 espacio_abajo">
-                    {{ Form::submit('Guardar', array('class'=>'btn btn-default')) }}
-                </div>
-                <div class="col-md-5 espacio_abajo" style="text-align: right;">
-                    * Los campos son obligatorios
-                </div>
-            </footer>
-            {{Form::close()}}
+                <br/>
+                <table class="table table-striped table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th width="15%">Nombre</th>
+                        <th width="15%">Correo</th>
+                        <th width="15%">Telefono</th>
+                        <th width="55%">Direcci&oacute;n</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @if(count($atendidos) > 0)
+                        @foreach($atendidos as $atendido)
+                            <tr>
+                                <td>{{$atendido->nombre_completo}}</td>
+                                <td>{{$atendido->correo}}</td>
+                                <td>{{$atendido->telefono}}</td>
+                                <td>{{$atendido->direccion}}</td>
+                            </tr>
+                        @endforeach
+                    @else
+                        <tr>
+                            <th colspan="4">No hay ninguna entrada registrada</th>
+                        </tr>
+                    @endif
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Correo</th>
+                        <th>Telefono</th>
+                        <th>Direcci&oacute;n</th>
+                    </tr>
+                    </tfoot>
+                </table>
+                {{$atendidos->links();}}
+            </div>
         </div>
-    </div>
-@stop
+        <!-- /New widget -->
+@stop  

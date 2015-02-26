@@ -7,7 +7,8 @@
 	"require": {
 		"laravel/framework": "4.2.*",
 		"greggilbert/recaptcha": "dev-master",
-        "thujohn/pdf": "~1.0"
+        "thujohn/pdf": "~1.0",
+        "hybridauth/hybridauth": "v2.3.0"
 	},
 	"autoload": {
 		"psr-4": {

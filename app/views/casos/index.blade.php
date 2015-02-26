@@ -34,11 +34,11 @@
     <div class="inner-spacer">
       <div id="items" class="items-switcher items-view-grid">
         <div class="row">
-          <div class="col-md-3">
+          <div class="col-md-4">
             <div class="input-group">
               {{ Form::open(array('url'=>'casos/busqueda', 'method' => 'POST') )}}
-                {{Form::text('buscar', null, array('class'=>'form-control', 'placeholder'=>'Buscar', 'data-provide'=>'typeahead'))}}
                 <span class="input-group-btn">
+                  {{Form::text('buscar', null, array('class'=>'form-control', 'placeholder'=>'Buscar', 'data-provide'=>'typeahead'))}}
                   {{ Form::submit('Ir!', array('class'=>'btn btn-default')) }}
                 </span>
                 <span class="message-error">{{$errors->first('buscar')}}</span><br/><br/>
@@ -51,7 +51,7 @@
           <div class="col-md-2">
             {{HTML::link('casos/crear','Nuevo Registro',array('class'=>'btn btn-default'))}}
           </div>
-          <div class="col-md-3" style="text-align: right;">
+          <div class="col-md-2" style="text-align: right;">
             <a href="#Servicios" role="button" data-target="#Servicios" class="btn btn-default" data-toggle="modal"><i class="fa fa-edit">Servicios</i></a>
           </div>
           <div class="col-md-2 items-options">

@@ -1,26 +1,16 @@
 <!DOCTYPE html>
-<!--[if lte IE 8]>
-<html class="ie8 no-js" lang="en"><![endif]-->
-<!--[if lte IE 10]>
-<html class="ie10 no-js" lang="en"><![endif]-->
-<!--[if !IE]>-->
-<html class="not-ie no-js" lang="en"><!--<![endif]-->
-
 <head>
-    <!-- Google Web Fonts
-================================================== -->
+    <!-- Google Web Fonts================================================== -->
     <link href='http://fonts.googleapis.com/css?family=Roboto:100,300,300italic,400,700|Julius+Sans+One|Roboto+Condensed:300,400'
           rel='stylesheet' type='text/css'>
-
     <!-- Basic Page Needs================================================== -->
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>IncubaM&aacute;s | Incubadora de Negocios</title>
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="Incubadora de Negocios">
+    <meta name="author" content="Incubamas">
     <!-- Favicons================================================== -->
     <link rel="shortcut icon" href="{{ URL::asset('accio/images/favicon.ico') }}">
     <!-- Mobile Specific Metas================================================== -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <!-- CSS================================================== -->
     <link rel="stylesheet" href="{{ URL::asset('accio/css/style.css') }}"/>
     <link rel="stylesheet" href="{{ URL::asset('accio/css/grid.css') }}"/>
@@ -33,35 +23,25 @@
     <link rel="stylesheet" href="{{ URL::asset('accio/js/fancybox/jquery.fancybox.css') }}"/>
     <link rel="stylesheet" href="{{ URL::asset('accio/plugins/modal/css/component.css') }}"/>
     <link rel="stylesheet" href="{{ URL::asset('accio/js/layerslider/skins/accio/skin.css') }}"/>
-    <!-- MLML5 Shiv
-    ================================================== -->
-    <script src="{{ URL::asset('accio/js/jquery.modernizr.js') }}"></script>
+    <!-- MLML5 Shiv================================================== -->
+    {{ HTML::script('accio/js/jquery.modernizr.js') }}
 </head>
 
 <body data-spy="scroll" data-target="#navigation" class="home">
 
-<!-- - - - - - - - - - - - - - Header - - - - - - - - - - - - - - - - -->
 @section('menu')
     @show
-            <!-- - - - - - - - - - - - - end Header - - - - - - - - - - - - - - - -->
-
-
-    <!-- - - - - - - - - - - - - - Wrapper - - - - - - - - - - - - - - - - -->
     <div id="wrapper">
-
         @section('contenido')
             @show
-
-                    <!-- - - - - - - - - - - - - - Footer - - - - - - - - - - - - - - - - -->
             <footer id="footer">
-
                 <div class="wrapper bg_black" style="position:relative; z-index:9;">
                     <div class="container_12">
                         <article class="grid_5 txt11" style="padding-top:9px;">
                             &nbsp;&copy;&nbsp; 2015
                             <span class="color_green">Incubamas</span>
                             <a target="_blank" href="{{url('sistema')}}" title="Sistema">
-                                <img src="{{ URL::asset('accio/images/favicon.ico')}}" alt="">
+                                {{HTML::image('accio/images/favicon.ico') }}
                             </a>
                             All Rights Reserved.
                         </article>

@@ -19,8 +19,29 @@ class AtendidoController extends BaseController
 
     public function getIndex()
     {
+        $atendidos = $this->atendidoRepo->atentidas();
+        $this->layout->content = View::make('atendidos.index', compact('atendidos'));
+    }
+
+    public function postBusqueda()
+    {
+        $buscar = Input::get("buscar");
+        $dataUpload = array("buscar" => $buscar);
+        $rules = array("buscar" => 'required|min:3|max:100');
+        $messages = array('required' => 'Por favor, ingresa los parametros de busqueda.');
+        $validation = Validator::make($dataUpload, $rules, $messages);
+        if ($validation->fails())
+            return Redirect::back()->withErrors($validation)->withInput();
+        else {
+            $atendidos = $this->atendidoRepo->buscar($buscar);
+            $this->layout->content = View::make('atendidos.index', compact('atendidos'));
+        }
+    }
+
+    public function getCrear()
+    {
         $programas = $this->atendidoRepo->programas();
-        $this->layout->content = View::make('atendidos.index', compact('programas'));
+        $this->layout->content = View::make('atendidos.create', compact('programas'));
     }
 
     public function postCrear()
@@ -51,6 +72,6 @@ class AtendidoController extends BaseController
                 $this->layout->content = PDF::load($html, 'A4', 'portrait')->show();
         }
 
-        return Redirect::back()->with(array('confirm' => 'Se ha registrado correctamente.'));
+        return Redirect::to('atendidos')->with(array('confirm' => 'Se ha registrado correctamente.'));
     }
 }

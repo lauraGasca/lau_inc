@@ -8,7 +8,7 @@ class AtendidosManager extends BaseManager
             "nombre_completo"   =>    'required|max:100',
             "correo"            =>    'email|max:100',
             "direccion"   	    =>    'max:200',
-            "telefono"   	    =>    'required|max:20',
+            "telefono"   	    =>    'required|max:25',
             "monto"   	        =>    'max:20',
             "programa"   	    =>    ''
         ];

@@ -34,6 +34,16 @@ class User extends \Eloquent implements UserInterface, RemindableInterface {
 	{
 	    return $this->remember_token;
 	}
+
+    public function getNameToken()
+    {
+        return $this->nombre.' '.$this->apellidos;
+    }
+
+    public function getUrlToken()
+    {
+        return 'Orb/images/emprendedores/'.$this->foto;
+    }
 	
 	public function setRememberToken($value)
 	{
