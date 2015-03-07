@@ -51,6 +51,11 @@ App::error(function(Exception $exception, $code)
 	Log::error($exception);
 });
 
+App::error(function(\Incubamas\Managers\ValidationException $exception)
+{
+    return Redirect::back()->withErrors($exception->getErrors())->withInput();
+});
+
 
 /*
 |--------------------------------------------------------------------------

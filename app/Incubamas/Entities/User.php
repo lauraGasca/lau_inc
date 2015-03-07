@@ -16,6 +16,8 @@ class User extends \Eloquent implements UserInterface, RemindableInterface {
 	 */
 	protected $table = 'users';
 
+    protected $guarded = ['id'];
+
 	/**
 	 * The attributes excluded from the model's JSON form.
 	 *
@@ -23,10 +25,11 @@ class User extends \Eloquent implements UserInterface, RemindableInterface {
 	 */
 	protected $hidden = array('password', 'remember_token');
 	
-	public function setPasswordAttribute($value){
+	public function setPasswordAttribute($value)
+    {
 		if(!empty($value))
 		{
-			$this->attributes['password'] = Hash::make($value);
+			$this->attributes['password'] = \Hash::make($value);
 		}
 	}
 	

@@ -267,6 +267,7 @@ class EmprendedoresController extends BaseController
             $user = new User;
             $user->user = $username_num;
             $user->password = '1234';
+            $user->active = 1;
             $user->type_id = 3;
             if ($user->save()) {
                 $emprendedor = new Emprendedor;
@@ -961,18 +962,16 @@ class EmprendedoresController extends BaseController
         $total_servicios = Solicitud::select(DB::raw('SUM(monto) as total'))
             ->where('solicitud.emprendedor_id', '=', $emprendedor->id)->first();
         $pagos = Pago::select('pago.id', 'pago.monto', 'pago.fecha_emision', 'pago.solicitud_id', 'pago.siguiente_pago', 'pago.created_at',
-            DB::raw('CONCAT(asesores.nombre, " ", asesores.apellidos) AS nombre_completo,
+            DB::raw('(select CONCAT(asesores.nombre, " ", asesores.apellidos) AS nombre_completo from asesores WHERE asesores.id = pago.recibido_by) as nombre_completo,
 			CONCAT(empresas.nombre_empresa, " - ", servicios_incuba.nombre) AS nombre_solicitud'))
             ->join('solicitud', 'solicitud.id', '=', 'pago.solicitud_id')
-            ->join('asesores', 'asesores.id', '=', 'pago.recibido_by')
             ->join('empresas', 'empresas.id', '=', 'solicitud.empresa_id')
             ->join('servicios_incuba', 'servicios_incuba.id', '=', 'solicitud.servicio_id')
             ->where('pago.emprendedor_id', '=', $emprendedor->id)->get();
         $pagos_emp = Pago::select('pago.id', 'pago.monto', 'pago.fecha_emision', 'pago.solicitud_id', 'pago.created_at',
-            DB::raw('CONCAT(asesores.nombre, " ", asesores.apellidos) AS nombre_completo,
+            DB::raw('(select CONCAT(asesores.nombre, " ", asesores.apellidos) AS nombre_completo from asesores WHERE asesores.id = pago.recibido_by) as nombre_completo,
 			CONCAT(emprendedores.name, " ", emprendedores.apellidos, " - ", servicios_incuba.nombre) AS nombre_solicitud'))
             ->join('solicitud', 'solicitud.id', '=', 'pago.solicitud_id')
-            ->join('asesores', 'asesores.id', '=', 'pago.recibido_by')
             ->join('emprendedores', 'emprendedores.id', '=', 'solicitud.emprendedor_id')
             ->join('servicios_incuba', 'servicios_incuba.id', '=', 'solicitud.servicio_id')
             ->where('pago.emprendedor_id', '=', $emprendedor->id)->get();
@@ -1317,7 +1316,7 @@ class EmprendedoresController extends BaseController
             "solicitud" => 'exists:solicitud,id',
             "recibido" => 'exists:asesores,id',
             "monto" => 'required|min:1|max:25',
-            "start" => 'required|date',
+            "start" => 'required',
             "finish" => 'date',
             "ultimo" => 'min:1'
         );

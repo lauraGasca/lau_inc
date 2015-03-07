@@ -5,7 +5,7 @@ use Incubamas\Repositories\EmprendedoresRepo;
 class SistemaController extends BaseController
 {
 
-    protected $layout = 'layouts.sistema';
+    protected $layout = 'layouts.login';
     protected $emprendedoresRepo;
 
     public function __construct(EmprendedoresRepo $emprendedoresRepo)
@@ -15,7 +15,8 @@ class SistemaController extends BaseController
 
     public function getIndex()
     {
-        return View::make('sistema.login');
+        $this->layout->content =  View::make('login.index');
+        //return View::make('sistema.login');
     }
 
     public function getLogout()
@@ -36,13 +37,13 @@ class SistemaController extends BaseController
             if (Auth::user()->type_id != '') {
                 $this->_verificat();
                 if (Auth::user()->type_id == 1 || Auth::user()->type_id == 2)
-                    return Redirect::to('emprendedores');
+                    return Redirect::intended('emprendedores');
                 if (Auth::user()->type_id == 3) {
                     $id = $this->emprendedoresRepo->emprendedorid(Auth::user()->id);
-                    return Redirect::to('emprendedores/perfil/' . $id);
+                    return Redirect::intended('emprendedores/perfil/' . $id);
                 }
                 if (Auth::user()->type_id == 4)
-                    return Redirect::to('blog');
+                    return Redirect::intended('blog');
             }
             return Redirect::back()->with(array('confirm' => 'Lo sentimos. No tiene permiso para acceder.'));
         }

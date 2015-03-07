@@ -1,6 +1,5 @@
-<?php
+<?php namespace Incubamas\Repositories;
 
-namespace Incubamas\Repositories;
 use Incubamas\Entities\Emprendedor;
 use Incubamas\Entities\Empresa;
 use Incubamas\Entities\Socios;
@@ -12,6 +11,12 @@ class EmprendedoresRepo extends BaseRepo
     {
         
         return new Emprendedor;
+    }
+
+    public  function newEmprendedor()
+    {
+        $emprendedor = new Emprendedor();
+        return $emprendedor;
     }
     
     public function nombre($user_id)

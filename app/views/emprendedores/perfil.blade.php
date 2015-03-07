@@ -186,7 +186,7 @@
     <!-- New widget -->
     <div class="powerwidget powerwidget-as-portlet powerwidget-as-portlet-cold-white" id="widget2" data-widget-editbutton="false">
       <div class="inner-spacer nopadding" style="padding: 15px;">
-        <a href="http://beta.iuark.com/" target="_blank">{{ HTML::image('Orb/images/iuark.png', 'Iuark', array('style' => "width: 100%; padding-top: 10%; padding-bottom: 10%;")) }}</a>
+        <a href="{{url('plan-negocios')}}" target="_blank">{{ HTML::image('Orb/images/iuark.png', 'Iuark', array('style' => "width: 100%; padding-top: 10%; padding-bottom: 10%;")) }}</a>
       </div>
     </div>
     <!-- /New widget-->

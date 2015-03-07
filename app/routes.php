@@ -7,6 +7,10 @@
 
 Route::get('pruebas', function()
 {
+    $url="http://www.google.co.in/intl/en_com/images/srpr/logo1w.png";
+    $contents=file_get_contents($url);
+    $save_path=public_path()."/Orb/images/emprendedores/google.png";
+    file_put_contents($save_path,$contents);
     /*$asesores = Asesor::all();
     foreach($asesores as $asesor){
         $usuario = User::find($asesor->user_id);
@@ -39,12 +43,14 @@ Route::get('/', ['as' => 'home', 'uses' =>'IncubaController@getIndex']);
 Route::controller('incuba', 'IncubaController');
 Route::controller('blog', 'BlogController');
 Route::controller('usuarios', 'UserController');
-Route::controller('sistema', 'SistemaController');
+Route::controller('sistema', 'LoginController');
+//Route::controller('sistema', 'SistemaController');
 Route::controller('casos', 'CasoController');
 Route::controller('emprendedores', 'EmprendedoresController');
 Route::controller('chat', 'ChatController');
 Route::controller('calendario', 'CalendarController');
 Route::controller('atendidos', 'AtendidoController');
+Route::controller('plan-negocios', 'ProyectoController');
 
 //Funcion para mostrar cuando una pagina no se encuentra
 App::missing(function($exception)

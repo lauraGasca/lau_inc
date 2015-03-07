@@ -1,6 +1,6 @@
 <?php namespace Incubamas\Managers;
 
-class ValidtionException extends \Exception
+class ValidationException extends \Exception
 {
     protected $errors;
     

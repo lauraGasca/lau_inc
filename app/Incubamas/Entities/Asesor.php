@@ -1,7 +1,7 @@
 <?php namespace Incubamas\Entities;
 
-class Asesor extends \Eloquent {
-    
+class Asesor extends \Eloquent
+{
     protected $table = 'asesores';
     
     public function getFullNameAttribute($value)

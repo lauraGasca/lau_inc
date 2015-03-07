@@ -3,6 +3,8 @@
 class Emprendedor extends \Eloquent {
     
     protected $table = 'emprendedores';
+
+    protected $guarded = ['id'];
     
     public function getFullNameAttribute($value)
     {
