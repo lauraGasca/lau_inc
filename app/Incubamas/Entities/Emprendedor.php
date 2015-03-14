@@ -1,23 +1,38 @@
 <?php namespace Incubamas\Entities;
 
-class Emprendedor extends \Eloquent {
-    
+class Emprendedor extends \Eloquent
+{
     protected $table = 'emprendedores';
 
     protected $guarded = ['id'];
-    
-    public function getFullNameAttribute($value)
+
+    public function usuario()
     {
-        return $this->name.' '.$this->apellidos;
+        return $this->belongsTo('User', 'user_id','id');
     }
-    
-    public function scopeOrdenar($query)
-    {
-        return $query->orderBy('name');
-    }
-    
+
     public function empresas()
     {
         return $this->hasMany('Empresa');
+    }
+
+    public function getEdadAttribute()
+    {
+        return floor((((time() - strtotime(date_format(date_create($this->fecha_nacimiento), 'd-m-Y'))) / 3600) / 24) / 360);
+    }
+
+    public function getCumpleAttribute()
+    {
+        return strftime("%d de %B de %Y", strtotime(date_format(date_create($this->fecha_nacimiento), 'd-m-Y')));
+    }
+
+    public function getIngresaAttribute()
+    {
+        return strftime("%d de %B de %Y", strtotime(date_format(date_create($this->fecha_ingreso), 'd-m-Y')));
+    }
+
+    public function getIngresoAttribute()
+    {
+        return strftime("%d/%a/%Y", strtotime(date_format(date_create($this->fecha_ingreso), 'd-m-Y')));
     }
 }

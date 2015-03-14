@@ -1,6 +1,7 @@
 *.sh
 app/config/database.php
 app/config/mail.php
+app/config/facebook.php
 web/error_log
 web/Orb/documentos/*
 web/Orb/images/casos_exito/*

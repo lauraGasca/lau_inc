@@ -938,6 +938,12 @@ ul.popover-tooltip-example li {
  * Bootstrap Panels
  * ======================================================================== */
 
+.estilo{
+    font-family: 'Open Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    color: #555;
+}
 
 .panel {
 	border: 0;
@@ -946,8 +952,8 @@ ul.popover-tooltip-example li {
 
 .panel-default > .panel-heading {
 	color: #fff;
-	background-color: #943737;
-	padding: 20px;
+	background-color: #504E4E;
+	padding: 10px;
 	border: 0;
 	border-top-right-radius: 3px;
 	border-top-left-radius: 3px;

@@ -18,7 +18,26 @@ class EmprendedoresRepo extends BaseRepo
         $emprendedor = new Emprendedor();
         return $emprendedor;
     }
-    
+
+    public function emprendedores()
+    {
+        return Emprendedor::with('usuario')
+        ->with(['empresas' => function($query)
+        {
+            $query->orderBy('created_at', 'desc');
+        }])
+        ->orderBy('created_at', 'desc')->get();
+    }
+
+    public function emprendedor($emprendedor_id)
+    {
+        return Emprendedor::with('usuario')
+            ->with(['empresas' => function($query)
+            {
+                $query->orderBy('created_at', 'desc');
+            }])->where('id','=',$emprendedor_id)->first();
+    }
+
     public function nombre($user_id)
     {
         $emprendedor = Emprendedor::where('user_id','=',$user_id)->first();
@@ -39,15 +58,7 @@ class EmprendedoresRepo extends BaseRepo
         }
     }
     
-    public function emprendedor($user_id)
-    {
-        $emprendedor = Emprendedor::where('user_id','=',$user_id)->first();
-        if(count($emprendedor)<=0){
-            return null;
-        }else{
-            return $emprendedor;
-        }
-    }
+
     
     public function listar()
     {

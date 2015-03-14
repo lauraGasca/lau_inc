@@ -1,11 +1,9 @@
 <?php namespace Incubamas\Repositories;
 
 use Incubamas\Entities\Modulo;
-use Incubamas\Entities\Pregunta;
 
 class ProyectoRepo extends BaseRepo
 {
-        
     public function getModel()
     {
         return new Modulo();
@@ -13,6 +11,9 @@ class ProyectoRepo extends BaseRepo
     
     public function modulos()
     {
-        return Modulo::with('preguntas')->get();
+        return Modulo::with(['preguntas' => function($query)
+            {
+                $query->orderBy('orden', 'asc');
+            }])->with('ejemplos')->get();
     }
 }

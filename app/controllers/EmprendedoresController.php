@@ -45,19 +45,14 @@ class EmprendedoresController extends BaseController
 
     public function getIndex()
     {
-        if (Auth::user()->type_id != 1 && Auth::user()->type_id != 2)
-            return Redirect::to('sistema');
-        $emprendedores = Emprendedor::
-        select(DB::raw('id, estatus, imagen, name, apellidos, email, tel_movil, tel_fijo, fecha_ingreso,
-		(select logo from empresas where emprendedor_id = emprendedores.id limit 1) as logo'))
-            ->orderby("fecha_ingreso", 'desc')->get();
-        $this->layout->content = View::make('emprendedores.index')->with('emprendedores', $emprendedores);
+        $this->_soloAsesores();
+        $emprendedores = $this->emprendedoresRepo->emprendedores();
+        $this->layout->content = View::make('emprendedores.index',compact('emprendedores'));
     }
 
     public function postBusqueda()
     {
-        if (Auth::user()->type_id != 1 && Auth::user()->type_id != 2)
-            return Redirect::to('sistema');
+        $this->_soloAsesores();
         $buscar = Input::get("buscar");
         $dataUpload = array("buscar" => $buscar);
         $rules = array("buscar" => 'required|min:3|max:100');
@@ -93,15 +88,15 @@ class EmprendedoresController extends BaseController
         $warning = "";
         $warning_cita = "";
 
-        $emprendedor = $this->emprendedoresRepo->empresas($emprendedor_id);
+        $emprendedor = $this->emprendedoresRepo->emprendedor($emprendedor_id);
         $asesores = $this->asesoresRepo->listar();
         $asesor = $this->asesoresRepo->primer();
         $id = $asesor->user_id;
 
         //Busca la fecha en la que se puede hacer la cita
         $fecha = $this->_noSD(date('j-m-Y'));
-        $horarios_disponibles = $this->horariosRepo->disponible(
-            $asesor->id, date("w", strtotime($fecha)), $fecha, $id, $emprendedor[0]->user_id);
+        $horarios_disponibles = [];/*$this->horariosRepo->disponible(
+            $asesor->id, date("w", strtotime($fecha)), $fecha, $id, $emprendedor[0]->user_id);*/
         //dd($horarios_disponibles);
         //3,1, "2014-12-22",19
 
@@ -118,10 +113,10 @@ class EmprendedoresController extends BaseController
         $socios_listado = $this->emprendedoresRepo->listar_socios($emprendedor_id);
 
         //Ve si hay eventos para este dia
-        if ($this->eventoRepo->warning(date('Y-m-j'), $emprendedor[0]->user_id))
+        /*if ($this->eventoRepo->warning(date('Y-m-j'), $emprendedor[0]->user_id))
             $warning = "Hay eventos";
         if ($this->eventoRepo->warning_cita($fecha, $id, $emprendedor[0]->user_id))
-            $warning_cita = "Hay eventos";
+            $warning_cita = "Hay eventos";*/
 
         /*Aqui lo que voy a adaptar*/
 
@@ -174,8 +169,7 @@ class EmprendedoresController extends BaseController
 
     public function getCrear()
     {
-        if (Auth::user()->type_id != 1 && Auth::user()->type_id != 2)
-            return Redirect::to('sistema');
+        $this->_soloAsesores();
         $this->layout->content = View::make('emprendedores.create');
     }
 
@@ -1596,6 +1590,13 @@ class EmprendedoresController extends BaseController
             }
             $emprendedor->save();
         }
+    }
+
+    //Filtro para que solo los trabajadores entren a la funcion
+    private function _soloAsesores()
+    {
+        if (Auth::user()->type_id != 1 && Auth::user()->type_id != 2)
+            return Redirect::to('sistema');
     }
 
     //Si la fecha indicada cae en fin de semana, se recorre para el lunes
