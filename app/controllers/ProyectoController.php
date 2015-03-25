@@ -1,4 +1,7 @@
-<?php use Incubamas\Repositories\ProyectoRepo;
+<?php
+
+use Incubamas\Repositories\ProyectoRepo;
+use Incubamas\Managers\ProgresoManager;
 
 class ProyectoController extends BaseController
 {
@@ -15,18 +18,29 @@ class ProyectoController extends BaseController
     public function getIndex($emprendedor_id)
     {
         $modulos = $this->proyectoRepo->modulos();
-        $this->layout->content = View::make('proyecto.index', compact('modulos','emprendedor_id'));
+        $progresos = $this->proyectoRepo->progresos($emprendedor_id);
+        $this->layout->content = View::make('proyecto.index', compact('modulos','emprendedor_id', 'progresos'));
     }
 
-    public function postEnviarmensaje()
+    public function postUpdatePregunta()
     {
-        if (Input::get('mensaje') == "" && !Input::hasFile('archivo') && !Input::hasFile('imagen'))
-            return '<!DOCTYPE html><html><head></head><body><script type="text/javascript">
-						parent.resultadoErroneo("Escribe tu mensaje para continuar");
-					</script></body></html>';
-
+        $pregunta = $this->proyectoRepo->pregunta(Input::get('pregunta_id'));
+        $progreso = $this->proyectoRepo->existe(Input::get('emprendedor_id'), Input::get('pregunta_id'));
+        if($pregunta->archive == 0)
+            if(Input::get('texto')<>'') $estado = 1; else $estado = 0;
+        else
+            if(Input::hasFile('archivo')) $estado = 1; else $estado = 0;
+        if(count($progreso)<=0)
+            $progreso = $this->proyectoRepo->newProgreso();
+        $manager = new ProgresoManager($progreso, Input::all()+['estado'=>$estado]);
+        $manager->save();
+        if(Input::hasfile('archivo'))
+        {
+            $this->proyectoRepo->actualizarArchivo($progreso, $progreso->emprendedor_id.'-'.$progreso->pregunta_id. "." . Input::file('archivo')->getClientOriginalExtension());
+            Input::file('archivo')->move('Orb/images/progresos/', $progreso->archivo);
+        }
         return '<!DOCTYPE html><html><head></head><body><script type="text/javascript">
-				parent.resultadoOk();
+				parent.mensaje('.Input::get('pregunta_id').','.$pregunta->archive.');
 			</script></body></html>';
     }
 

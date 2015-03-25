@@ -37,15 +37,17 @@
                             <div id="collapse{{$modulo->id}}" class="panel-collapse @if($modulo->id <> 1) collapse @else collapse in @endif">
                                 <div class="panel-body">
                                     @foreach($modulo->preguntas as $pregunta)
-                                        @if(Session::get('confirm'.$pregunta->id))
-                                            <div class="alert alert-success alert-dismissable">
-                                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="fa fa-times-circle"></i></button>
-                                                {{Session::get('confirm')}}
-                                            </div>
-                                        @endif
                                         <div class="col-md-12">
                                             <br/><br/>
-                                            <h4>{{Form::label('entrada', $pregunta->pregunta)}}</h4><br/>
+                                            <h4>{{Form::label('entrada', $pregunta->pregunta)}}
+                                                @foreach($progresos as $progreso)
+                                                    @if($progreso->pregunta_id == $pregunta->id)
+                                                        @if($progreso->estado == 1)
+                                                            <i class="fa-3x entypo-check" style="background: none repeat scroll 50% 0% #5EDE5B; color: white; font-size: 20px; margin-left: 10px;"></i>
+                                                        @endif
+                                                    @endif
+                                                @endforeach
+                                            </h4><br/>
                                             <ul class="nav nav-tabs">
                                                 <li class="active"><a href="#one-normal{{$pregunta->id}}" data-toggle="tab">Instrucciones</a></li>
                                                 <li><a href="#two-normal{{$pregunta->id}}" data-toggle="tab"> Ejemplo</a></li>
@@ -53,15 +55,22 @@
                                             <div class="tab-content">
                                                 <div class="tab-pane active" id="one-normal{{$pregunta->id}}">
                                                     {{$pregunta->instruccion}}<br/>
-                                                    {{ Form::open(array('url'=>'plan-negocios/pregunta/'.$pregunta->id.'/'.$emprendedor_id, 'class'=>'orb-form','method' => 'post', 'enctype'=>'multipart/form-data', 'target'=>"subir_archivo") )}}
+                                                    {{ Form::open(array('url'=>'plan-negocios/update-pregunta', 'class'=>'orb-form','method' => 'post', 'enctype'=>'multipart/form-data', 'target'=>"subir_archivo") )}}
+                                                    <!--, 'target'=>"subir_archivo"-->
+                                                        {{Form::hidden('pregunta_id',$pregunta->id)}}
+                                                        {{Form::hidden('emprendedor_id', $emprendedor_id)}}
+                                                        <?php $texto = ""; ?>
+                                                        @foreach($progresos as $progreso)
+                                                            @if($progreso->pregunta_id == $pregunta->id)
+                                                                <?php $texto = $progreso->texto; ?>
+                                                            @endif
+                                                        @endforeach
                                                         <label class="textarea">
-                                                            {{Form::textarea('texto','',['id'=>'texto'.$pregunta->id])}}
+                                                            {{Form::textarea('texto',$texto,['id'=>'texto'.$pregunta->id])}}
                                                             <script type="text/javascript">
                                                                 CKEDITOR.replace('texto{{$pregunta->id}}', {toolbar: 'Incuba'});
                                                             </script>
-                                                        </label>
-                                                        <span class="message-error">{{$errors->first('entrada')}}</span>
-                                                        <br/>
+                                                        </label><br/>
                                                         @if($pregunta->archive==1)
                                                             {{Form::file('archivo',['id'=>'archivo'.$pregunta->id])}}
                                                             <script>
@@ -75,7 +84,8 @@
                                                                     showUpload: false
                                                                 });
                                                             </script>
-                                                        @endif
+                                                        @endif<br/><br/><br/>
+                                                        <div id="correcto{{$pregunta->id}}"></div><br/>
                                                         <div style="text-align: right;">
                                                             <input type="submit" class="btn btn-success" value="Guardar">
                                                         </div>
@@ -106,37 +116,11 @@
 @section('scripts')
     @parent
     <script>
-
-        function enviarMensaje()
+        function mensaje(id, archivo)
         {
-            $("#cargar").html('Cargando...');
+            $("#correcto"+id).html('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="fa fa-times-circle"></i></button>Se ha guardado correctamente </div>');
+            if(archivo != 0)
+                $('#archivo'+id).fileinput('clear');
         }
-
-        function resultadoOk()
-        {
-            $("#text_mensaje").val('');
-            $('#archivo').val(null);
-            $('#imagen').val(null);
-            $("#cargar").html('');
-            $(".badge").text('');
-            $("#div_mensaje").html('');
-            $(".nano").nanoScroller({scroll: 'bottom'});
-        }
-
-        function resultadoErroneo(mensaje)
-        {
-            $("#div_mensaje").html(mensaje);
-            $("#cargar").html('');
-        }
-
-        function nuevoMensaje()
-        {
-            if ($("#radio_asesor").is(':checked')) {
-                $('#destino').val($('#asesores').text());
-                $('#tipo_usuario').val("Asesor");
-            } else {
-                $('#destino').val($('#emprendedores').text());
-                $('#tipo_usuario').val("Emprendedor");
-            }
-        }
+    </script>
 @stop

@@ -126,7 +126,6 @@ class LoginController extends BaseController
                 $message->subject('Confirmación de Cuenta');
                 $message->to($email, $nombre);
             });
-
         return Redirect::back()->with('confirm', 'Revise su correo para poder acceder a su cuenta.'.$password);
     }
 

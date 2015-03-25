@@ -1,6 +1,8 @@
 <?php namespace Incubamas\Repositories;
 
 use Incubamas\Entities\Modulo;
+use Incubamas\Entities\Progreso;
+use Incubamas\Entities\Pregunta;
 
 class ProyectoRepo extends BaseRepo
 {
@@ -16,4 +18,38 @@ class ProyectoRepo extends BaseRepo
                 $query->orderBy('orden', 'asc');
             }])->with('ejemplos')->get();
     }
+
+    public function progresos($emprendedor_id)
+    {
+        return Progreso::where('emprendedor_id','=', $emprendedor_id)->get();
+    }
+
+    public function newProgreso()
+    {
+        return new Progreso();
+    }
+
+    public function actualizarArchivo($progreso, $archivo)
+    {
+        $this->borrarArchivo($progreso->archivo);
+        $progreso->archivo = $archivo;
+        $progreso->save();
+    }
+
+    public function borrarArchivo($archivo)
+    {
+        \File::delete(public_path() . '/Orb/images/progresos/'.$archivo);
+    }
+
+    public function existe($emprendedor_id, $pregunta_id)
+    {
+        return Progreso::where('emprendedor_id','=',$emprendedor_id)
+            ->where('pregunta_id','=',$pregunta_id)->first();
+    }
+
+    public function pregunta($id)
+    {
+        return Pregunta::find($id);
+    }
+
 }

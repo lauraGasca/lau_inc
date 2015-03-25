@@ -1,7 +1,9 @@
 <?php namespace Incubamas\Entities;
 
-class Prograso extends \Eloquent {
-    
+class Progreso extends \Eloquent
+{
     protected $table = 'progresos';
+
+    protected $guarded = ['archivo'];
     
 }

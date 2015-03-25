@@ -1,7 +1,8 @@
 <?php namespace Incubamas\Managers;
 
-abstract class BaseManager{
-    
+abstract class BaseManager
+{
+
     protected $entity;
     protected $data;
     protected $errors;

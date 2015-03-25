@@ -993,7 +993,8 @@ class EmprendedoresController extends BaseController
             return Redirect::to('sistema');
         if ($type == null)
             $pago = Pago::select("pago.id", "pago.fecha_emision", "pago.monto", "pago.siguiente_pago",
-                "asesores.nombre", "asesores.apellidos", "servicios_incuba.nombre as servicios",
+                DB::raw("(select nombre from asesores WHERE asesores.id = pago.recibido_by) as nombre"),
+                DB::raw("(select apellidos from asesores WHERE asesores.id = pago.recibido_by) as apellidos"), "servicios_incuba.nombre as servicios",
                 "empresas.nombre_empresa", "empresas.calle", "empresas.num_ext", "empresas.num_int", "empresas.colonia", "empresas.municipio", "empresas.estado", "empresas.cp",
                 "emprendedores.calle as calle_2", "emprendedores.num_ext as num_ext_2", "emprendedores.num_int as num_int_2",
                 "emprendedores.colonia as colonia_2", "emprendedores.municipio as municipio_2", "emprendedores.estado as estado_2", "emprendedores.cp as cp_2",
@@ -1002,7 +1003,6 @@ class EmprendedoresController extends BaseController
                 ->join('solicitud', 'solicitud.id', '=', 'pago.solicitud_id')
                 ->join('servicios_incuba', 'servicios_incuba.id', '=', 'solicitud.servicio_id')
                 ->join('empresas', 'empresas.id', '=', 'solicitud.empresa_id')
-                ->join('asesores', 'asesores.id', '=', 'pago.recibido_by')
                 ->where("pago.id", "=", $pago_id)->first();
         else
             $pago = Pago::select("pago.id", "pago.fecha_emision", "pago.monto", "pago.siguiente_pago",
