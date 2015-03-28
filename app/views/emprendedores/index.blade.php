@@ -48,53 +48,67 @@
             <br/>
             <div class="row">
                 <ul class="thumbnails">
-                    @foreach($emprendedores as $emprendedor)
-                        <li class="col-md-3 col-sm-6">
-                            <div class="thumbnail">
-                                <div class='hover-fader'>
-                                    <a href="{{url('emprendedores/perfil/'.$emprendedor->id)}}">
-                                        {{ HTML::image('Orb/images/emprendedores/'.$emprendedor->usuario->foto, $emprendedor->usuario->nombre." ".$emprendedor->usuario->apellidos, ['style'=>"width:100%; height: 100%;"]) }}
-                                        <span class='zoom'>
-                                            @foreach($emprendedor->empresas as $empresa)
-                                                {{ HTML::image('Orb/images/empresas/'.$empresa->logo, $empresa->nombre_empresa, ['style'=>"width:100%; height: 100%;"]) }}
-                                                <?php break; ?>
-                                            @endforeach
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="caption">
-                                    <span class="label
-                                        @if($emprendedor->estatus=="Activo") label-success
-                                        @else
-                                            @if($emprendedor->estatus=="Suspendido") label-warning
-                                            @else @if($emprendedor->estatus=="Cancelado") label-danger @endif
+                    @if($parametro<>'')
+                        <li class="col-md-12" style="color: rgb(192, 194, 199);">
+                            Resultados para "{{$parametro}}"
+                        </li>
+                    @endif
+                    @if(count($emprendedores)>0)
+                        @foreach($emprendedores as $emprendedor)
+                            <li class="col-md-3 col-sm-6">
+                                <div class="thumbnail">
+                                    <div class='hover-fader'>
+                                        <a href="{{url('emprendedores/perfil/'.$emprendedor->id)}}">
+                                            {{ HTML::image('Orb/images/emprendedores/'.$emprendedor->usuario->foto, $emprendedor->usuario->nombre." ".$emprendedor->usuario->apellidos, ['style'=>"width:100%; height: 100%;"]) }}
+                                            <span class='zoom'>
+                                                @foreach($emprendedor->empresas as $empresa)
+                                                    {{ HTML::image('Orb/images/empresas/'.$empresa->logo, $empresa->nombre_empresa, ['style'=>"width:100%; height: 100%;"]) }}
+                                                    <?php break; ?>
+                                                @endforeach
+                                            </span>
+                                        </a>
+                                    </div>
+                                    <div class="caption">
+                                        <span class="label
+                                            @if($emprendedor->estatus=="Activo") label-success
+                                            @else
+                                                @if($emprendedor->estatus=="Suspendido") label-warning
+                                                @else @if($emprendedor->estatus=="Cancelado") label-danger @endif
+                                                @endif
                                             @endif
-                                        @endif
-                                            ">{{$emprendedor->estatus}}
-                                    </span>
-                                    <br/><br/>
-                                    <p class="small">
-                                        {{substr (strip_tags($emprendedor->usuario->nombre." ".$emprendedor->usuario->apellidos), 0, 25)}}
-                                        |{{$emprendedor->ingreso}}<br/>
-                                        <i class="fa fa-envelope"> @if($emprendedor->email<>"") {{$emprendedor->email}} @else No dispobible @endif </i><br/>
-                                        <i class="fa fa-phone"> @if($emprendedor->tel_fijo<>"") {{$emprendedor->tel_fijo}} @else No disponible @endif </i>
-                                        | <i class="fa fa-mobile"> @if($emprendedor->tel_movil<>"") {{$emprendedor->tel_movil}} @else No dispobible @endif </i>
-                                    </p>
-                                    <div class="btn-group">
-                                        <div class="btn-group btn-group-xs">
-                                            <a href="{{url('emprendedores/pagos/'.$emprendedor->id)}}" type="button" class="btn btn-default"><i class="fa fa-money"></i> Pagos</a>
-                                        </div>
-                                        <div class="btn-group btn-group-xs">
-                                            <a onClick="return confirm('\u00BFSeguro que deseas eliminar?');" href="{{url('emprendedores/delete/'.$emprendedor->id)}}" type="button" class="btn btn-danger"><i class="fa fa-times-circle"></i> Eliminar</a>
-                                        </div>
-                                        <div class="btn-group btn-group-xs">
-                                            <a href="{{url('emprendedores/editar/'.$emprendedor->id)}}" type="button" class="btn btn-default"><i class="fa fa-pencil"></i>Modificar</a>
+                                                ">{{$emprendedor->estatus}}
+                                        </span>
+                                        <br/><br/>
+                                        <p class="small">
+                                            {{substr (strip_tags($emprendedor->usuario->nombre." ".$emprendedor->usuario->apellidos), 0, 20)}}
+                                            |{{$emprendedor->ingreso}}<br/>
+                                            <i class="fa fa-envelope"> @if($emprendedor->email<>"") {{$emprendedor->email}} @else No dispobible @endif </i><br/>
+                                            <i class="fa fa-phone"> @if($emprendedor->tel_fijo<>"") {{$emprendedor->tel_fijo}} @else No disponible @endif </i>
+                                            | <i class="fa fa-mobile"> @if($emprendedor->tel_movil<>"") {{$emprendedor->tel_movil}} @else No dispobible @endif </i>
+                                        </p>
+                                        <div class="btn-group">
+                                            <div class="btn-group btn-group-xs">
+                                                <a href="{{url('emprendedores/pagos/'.$emprendedor->id)}}" type="button" class="btn btn-default"><i class="fa fa-money"></i> Pagos</a>
+                                            </div>
+                                            <div class="btn-group btn-group-xs">
+                                                <a onClick="return confirm('\u00BFSeguro que deseas eliminar?');" href="{{url('emprendedores/delete/'.$emprendedor->id)}}" type="button" class="btn btn-danger"><i class="fa fa-times-circle"></i> Eliminar</a>
+                                            </div>
+                                            <div class="btn-group btn-group-xs">
+                                                <a href="{{url('emprendedores/editar/'.$emprendedor->id)}}" type="button" class="btn btn-default"><i class="fa fa-pencil"></i>Modificar</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </li>
+                        @endforeach
+                        <li class="col-md-12">
+                            {{$emprendedores->links()}}
                         </li>
-                    @endforeach
+                    @else
+                        <li class="col-md-12" style="font-style: italic;">
+                            No se encontraron resultados
+                        </li>
+                    @endif
                 </ul>
             </div>
         </div>

@@ -9,7 +9,6 @@ class EmprendedoresRepo extends BaseRepo
         
     public function getModel()
     {
-        
         return new Emprendedor;
     }
 
@@ -23,20 +22,41 @@ class EmprendedoresRepo extends BaseRepo
     {
         return Emprendedor::with('usuario')
         ->with(['empresas' => function($query)
-        {
-            $query->orderBy('created_at', 'desc');
-        }])
-        ->orderBy('created_at', 'desc')->get();
+        { $query->orderBy('created_at', 'desc'); }])
+        ->orderBy('fecha_ingreso', 'desc')->paginate(12);;
+    }
+
+    public function burcarEmprendedores($parametro)
+    {
+        return Emprendedor::with('usuario')
+            ->with(['empresas' => function($query)
+            { $query->orderBy('created_at', 'desc'); }])
+            ->whereHas('usuario', function($query) use ($parametro)
+            { $query->whereRaw('nombre LIKE "%'.$parametro.'%"'); })
+            ->orWhereHas('usuario', function($query) use ($parametro)
+            { $query->whereRaw('apellidos LIKE "%'.$parametro.'%"'); })
+            ->orWhereHas('empresas',function($query) use ($parametro)
+            { $query->whereRaw('nombre_empresa LIKE "%'.$parametro.'%"'); })
+            ->orWhereHas('empresas',function($query) use ($parametro)
+            { $query->whereRaw('razon_social LIKE "%'.$parametro.'%"'); })
+            ->orderBy('fecha_ingreso', 'desc')->paginate(12);;
     }
 
     public function emprendedor($emprendedor_id)
     {
         return Emprendedor::with('usuario')
             ->with(['empresas' => function($query)
-            {
-                $query->orderBy('created_at', 'desc');
-            }])->where('id','=',$emprendedor_id)->first();
+            { $query->orderBy('created_at', 'desc');}])
+            ->where('id','=',$emprendedor_id)->first();
     }
+
+
+
+
+
+
+
+
 
     public function nombre($user_id)
     {
@@ -62,12 +82,12 @@ class EmprendedoresRepo extends BaseRepo
     
     public function listar()
     {
-        return Emprendedor::ordenar()->get()->lists('FullName','user_id');
+        return Emprendedor::orderBy('apellidos', 'asc')->get()->lists('FullName','user_id');
     }
     
     public function primer()
     {
-        return Emprendedor::ordenar()->first();
+        return Emprendedor::orderBy('apellidos', 'asc')->first();
     }
     
     public function listado()

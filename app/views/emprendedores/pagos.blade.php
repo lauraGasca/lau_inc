@@ -8,7 +8,10 @@
 
 @section('css')
   @parent
-  <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/jquery/jquery.min.js') }}"></script> 
+  <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/jquery/jquery.min.js') }}"></script>
+  {{ HTML::style('pixit/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css') }}
+  {{ HTML::script('pixit/bower_components/moment/min/moment.min.js') }}
+  {{ HTML::script('pixit/bower_components/moment/locale/es.js') }}
 @show
 
 @section('mapa')
@@ -284,7 +287,7 @@
                 {{Form::label('fecha_limite', '* Fecha Limite de Pago', array('class' => 'label'))}}
                 <label class="input">
                   <i class="icon-prepend  fa fa-calendar"></i>
-                  {{Form::text('date','',array('id'=>'date2'))}}
+                  {{Form::text('date','',array('id'=>'fecha_limite'))}}
                 </label>
                 <span class="message-error">{{$errors->first('date')}}</span>
                 @if(Session::get('fecha'))
@@ -312,7 +315,7 @@
           <h4 class="modal-title" id="titulo_pago">Alta de Pago</h4>
         </div>
         <div class="modal-body" id='editarPago'>
-          {{ Form::open(array('url'=>'emprendedores/crearpago', 'class'=>'orb-form','method' => 'post', 'id'=>'pago_form', 'enctype'=>'multipart/form-data') )}}
+          {{ Form::open(array('url'=>'emprendedores/crear-pago', 'class'=>'orb-form','method' => 'post', 'id'=>'pago_form', 'enctype'=>'multipart/form-data') )}}
             {{Form::hidden('pago_id','',array('id'=>'pago_id'))}}
             {{Form::hidden('emprendedor_id',$emprendedor->id)}}
             <fieldset>
@@ -338,7 +341,7 @@
                 {{Form::label('fecha_emision', '* Fecha de Emision', array('class' => 'label'))}}
                 <label class="input">
                   <i class="icon-prepend fa fa-calendar"></i>
-                  {{Form::text('start','',array('id'=>'start'))}}
+                  {{Form::text('start','',array('id'=>'fecha_emision'))}}
                 </label>
                 <span class="message-error">{{$errors->first('start')}}</span>
                 @if(Session::get('fecha-emision'))
@@ -356,7 +359,7 @@
                 {{Form::checkbox('ultimo', 'yes', '',array('id'=>'ultimo','onchange'=>'evento();'))}} Cuenta Liquidada
                 <label class="input">
                   <i class="icon-prepend  fa fa-calendar"></i>
-                  {{Form::text('finish','',array('id'=>'finish', 'placeholder'=>'Fecha del Siguiente Pago'))}}
+                  {{Form::text('finish','',array('id'=>'terminado', 'placeholder'=>'Fecha del Siguiente Pago'))}}
                 </label>
                 <span class="message-error">{{$errors->first('date')}}</span>
                 @if(Session::get('fecha-siguiente'))
@@ -429,13 +432,13 @@
               $("#pago_id").val(respuesta.pago);
               $("#solicitud_pago").val(respuesta.solicitud);
               $("#monto_pago").val(respuesta.monto);
-              $("#start").val(respuesta.start);
+              $("#fecha_emision").val(respuesta.start);
               $("#recibido").val(respuesta.recibido);
               if (respuesta.finish==null) {
                 $("#ultimo").prop("checked", true);
-                $("#finish").prop('disabled', true);
+                $("#terminado").prop('disabled', true);
               }else{              
-                $("#finish").val(respuesta.finish);
+                $("#terminado").val(respuesta.finish);
               }
            } else {
               $("#editarPago").html('<div> Ha ocurrido un error. </div>');
@@ -444,25 +447,52 @@
       });
     }
     function altaPago() {
-      $("#pago_form").attr("action", "/emprendedores/crearpago");
+      $("#pago_form").attr("action", "/emprendedores/crear-pago");
       $("#titulo_pago").text('Alta de Pago');
       $("#pago_boton").text('Crear'); 
     }
     function evento() {
       if ($("#ultimo").prop("checked")) {
-        $("#finish").prop('disabled', true);
-        $("#finish").val('');
+        $("#terminado").prop('disabled', true);
+        $("#terminado").val('');
       }else{
-        $("#finish").prop('disabled', false);
+        $("#terminado").prop('disabled', false);
       }
     }
+  </script>
+  <script type="text/javascript">
+      $(function () {
+          $('#fecha_limite').datetimepicker({
+              pickTime: false,
+              language: 'es',
+              minDate:'1/1/2000',
+              defaultDate: new Date(),
+              maxDate: '1/1/2100'
+          });
+      });
+      $(function () {
+          $('#fecha_emision').datetimepicker({
+              pickTime: false,
+              language: 'es',
+              minDate:'1/1/2000',
+              defaultDate: new Date(),
+              maxDate: '1/1/2100'
+          });
+      });
+      $(function () {
+          $('#terminado').datetimepicker({
+              pickTime: false,
+              language: 'es',
+              minDate:'1/1/2000',
+              defaultDate: new Date(),
+              maxDate: '1/1/2100'
+          });
+      });
   </script>
 @stop
 
 @section('scripts')
     @parent
-    <!--Forms-->
-    <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/forms/jquery.form.min.js') }}"></script> 
-    <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/forms/jquery.validate.min.js') }}"></script> 
-    <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/forms/jquery.maskedinput.min.js') }}"></script> 
+    {{ HTML::script('pixit/bower_components/jquery/dist/jquery.min.js') }}
+    {{ HTML::script('pixit/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js') }}
 @stop

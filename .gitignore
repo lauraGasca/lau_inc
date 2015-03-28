@@ -11,6 +11,7 @@ web/Orb/images/empresas/*
 web/Orb/images/entradas/*
 web/Orb/images/gallery/*
 web/Orb/images/adjuntos/*
+web/Orb/images/progresos/*
 .env.local.php
 /bootstrap/compiled.php
 /vendor

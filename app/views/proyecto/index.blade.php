@@ -4,6 +4,7 @@
 
 @section('mapa')
     <li><a href="#"><i class="fa fa-home"></i></a></li>
+    <li>{{HTML::link('emprendedores/perfil/'.$emprendedor_id,'Perfil')}}</li>
     <li class="active">Plan de Negocios</li>
 @stop
 

@@ -21,6 +21,11 @@ class ValidatorManager
                     'email' =>  'required|email|max:60|exists:users,email'
                 ];
                 break;
+            case 'buscar':
+                $rules = [
+                    "buscar" => 'required|max:100'
+                ];
+                break;
             case 'registro':
                 $rules = [
                     'user'   	        =>    'required|max:30|unique:users,user',

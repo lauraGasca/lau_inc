@@ -7,10 +7,10 @@
 
 Route::get('pruebas', function()
 {
-    $url="http://www.google.co.in/intl/en_com/images/srpr/logo1w.png";
+    /*$url="http://www.google.co.in/intl/en_com/images/srpr/logo1w.png";
     $contents=file_get_contents($url);
     $save_path=public_path()."/Orb/images/emprendedores/google.png";
-    file_put_contents($save_path,$contents);
+    file_put_contents($save_path,$contents);*/
     /*$asesores = Asesor::all();
     foreach($asesores as $asesor){
         $usuario = User::find($asesor->user_id);
@@ -36,7 +36,7 @@ Route::get('pruebas', function()
             $message->subject('Prueba');
             $message->to('lau_lost@hotmail.com', 'Laura');
         });*/
-    return View::make('emails.atendidos');
+    return View::make('emails.estandar');
 });
 
 Route::get('/', ['as' => 'home', 'uses' =>'IncubaController@getIndex']);

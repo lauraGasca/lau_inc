@@ -16,6 +16,11 @@ class Emprendedor extends \Eloquent
         return $this->hasMany('Empresa');
     }
 
+    public function getFullNameAttribute()
+    {
+        return $this->apellidos.' '.$this->name;
+    }
+
     public function getEdadAttribute()
     {
         return floor((((time() - strtotime(date_format(date_create($this->fecha_nacimiento), 'd-m-Y'))) / 3600) / 24) / 360);
@@ -33,6 +38,6 @@ class Emprendedor extends \Eloquent
 
     public function getIngresoAttribute()
     {
-        return strftime("%d/%a/%Y", strtotime(date_format(date_create($this->fecha_ingreso), 'd-m-Y')));
+        return strftime("%d/%b/%Y", strtotime(date_format(date_create($this->fecha_ingreso), 'd-m-Y')));
     }
 }

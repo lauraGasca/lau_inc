@@ -4,15 +4,16 @@ use Incubamas\Repositories\AsesoresRepo;
 use Incubamas\Repositories\EventoRepo;
 use Incubamas\Repositories\HorariosRepo;
 use Incubamas\Repositories\CalendarioRepo;
-use Incubamas\Repositories\EmprendedoresRepo;
 use Incubamas\Repositories\PagoRepo;
 use Incubamas\Repositories\DocumentoRepo;
 use Incubamas\Repositories\ChatRepo;
 use Incubamas\Repositories\MensajeRepo;
 
+use Incubamas\Repositories\EmprendedoresRepo;
+use Incubamas\Managers\ValidatorManager;
+
 class EmprendedoresController extends BaseController
 {
-
     protected $layout = 'layouts.sistema';
     protected $asesoresRepo;
     protected $eventoRepo;
@@ -47,29 +48,18 @@ class EmprendedoresController extends BaseController
     {
         $this->_soloAsesores();
         $emprendedores = $this->emprendedoresRepo->emprendedores();
-        $this->layout->content = View::make('emprendedores.index',compact('emprendedores'));
+        $parametro = null;
+        $this->layout->content = View::make('emprendedores.index',compact('emprendedores', 'parametro'));
     }
 
     public function postBusqueda()
     {
         $this->_soloAsesores();
-        $buscar = Input::get("buscar");
-        $dataUpload = array("buscar" => $buscar);
-        $rules = array("buscar" => 'required|min:3|max:100');
-        $messages = array('required' => 'Por favor, ingresa los parametros de busqueda.');
-        $validation = Validator::make(Input::all(), $rules, $messages);
-        if ($validation->fails())
-            return Redirect::back()->withErrors($validation)->withInput();
-        else {
-            $emprendedores = Emprendedor::select(
-                DB::raw('id, estatus, imagen, name, apellidos, email, tel_movil, tel_fijo, fecha_ingreso,
-				(select logo from empresas where emprendedor_id = emprendedores.id limit 1) as logo'))
-                ->where('name', 'LIKE', '%' . $buscar . '%')
-                ->orWhere('apellidos', 'LIKE', '%' . $buscar . '%')
-                ->orWhere(DB::raw('(select nombre_empresa from empresas where emprendedor_id = emprendedores.id limit 1)'), 'LIKE', '%' . $buscar . '%')
-                ->orderby("fecha_ingreso", 'desc')->paginate(20);
-            $this->layout->content = View::make('emprendedores.index')->with('emprendedores', $emprendedores);
-        }
+        $parametro = Input::get("buscar");
+        $manager = new ValidatorManager('buscar', ['buscar'=> $parametro]);
+        $manager->validar();
+        $emprendedores = $this->emprendedoresRepo->burcarEmprendedores($parametro);
+        $this->layout->content = View::make('emprendedores.index', compact('emprendedores', 'parametro'));
     }
 
 
@@ -1292,100 +1282,75 @@ class EmprendedoresController extends BaseController
         }
     }
 
-    public function postCrearpago()
+    public function postCrearPago()
     {
-        if (Auth::user()->type_id != 1 && Auth::user()->type_id != 2)
-            return Redirect::to('sistema');
-        $dataUpload = array(
-            "emprendedor" => Input::get("emprendedor_id"),
-            "solicitud" => Input::get("solicitud"),
-            "recibido" => Input::get("recibido"),
-            "monto" => Input::get("monto"),
-            "start" => Input::get("start"),
-            "finish" => Input::get("finish"),
-            "ultimo" => Input::get("ultimo")
-        );
-        $rules = array(
-            "emprendedor" => 'exists:emprendedor,id',
-            "solicitud" => 'exists:solicitud,id',
-            "recibido" => 'exists:asesores,id',
-            "monto" => 'required|min:1|max:25',
-            "start" => 'required',
-            "finish" => 'date',
-            "ultimo" => 'min:1'
-        );
-        $messages = array('required' => 'El campo es obligatorio.',);
-        $validation = Validator::make(Input::all(), $rules, $messages);
-        if ($validation->fails())
-            return Redirect::back()->withErrors($validation)->withInput();
-        else {
-            //Fecha de siguiente pago > Fecha actual | Fecha de siguiente pago <= Fecha de Servicio 
-            $fecha_actual = strtotime(date("Y-m-d"));
-            if (Input::get("ultimo") <> 'yes') {
-                $fecha_siguiente = strtotime(date_format(date_create(Input::get("finish")), 'Y-m-d'));
-                $fecha = Solicitud::select('fecha_limite')->where('id', '=', Input::get("solicitud"))->first();
-                $fecha_servicio = strtotime(date_format(date_create($fecha->fecha_limite), 'Y-m-d'));
-                $solicitud = Solicitud::where('id', '=', Input::get("solicitud"))->first();
-                if ($solicitud->estado <> 'Vencido')
-                    if ($fecha_siguiente > $fecha_servicio) {
-                        return Redirect::back()->withInput()
-                            ->with(array('fecha-siguiente' => 'La fecha de siguiente pago debe ser menor a la fecha de pago del servicio.'));
-                    }
-            }
-            //Fecha de pago <= Fecha actual
-            $fecha_pago = strtotime(date_format(date_create(Input::get("start")), 'Y-m-d'));
-            if ($fecha_pago > $fecha_actual) {
-                return Redirect::back()->withInput()
-                    ->with(array('fecha-emision' => 'La fecha de pago debe ser menor o igual a la fecha de hoy.'));
-            }
-            //Monto > 0 | numero valido | Monto <= Monto de Servicio
-            $monto_formateado = str_replace("$", "", str_replace(",", "", Input::get("monto")));
-            $monto_servicio = Solicitud::select('monto')->where('id', '=', Input::get("solicitud"))->first();
-            $total_pagos = Pago::select(DB::raw('SUM(monto) as total'))
-                ->where('pago.solicitud_id', '=', Input::get("solicitud"))->first();
-            $faltante = $monto_servicio->monto - $total_pagos->total;
-            if (!is_numeric($monto_formateado)) {
-                return Redirect::back()->withInput()
-                    ->with(array('monto-pago' => 'El monto debe ser un numero valido.'));
-            }
-            if ($monto_formateado <= 0) {
-                return Redirect::back()->withInput()
-                    ->with(array('monto-pago' => 'El monto debe ser mayor a 0'));
-            }
-            if ($monto_formateado > $faltante) {
-                return Redirect::back()->withInput()
-                    ->with(array('monto-pago' => 'El monto debe ser menor o igual al faltante para liquidar el servicio.'));
-            }
-            //Verificar que se haya liquidado si asi se indico
-            $nuevo_monto = $faltante - $monto_formateado;
-            if ($nuevo_monto == 0) {
-                $solicitud = Solicitud::where('id', '=', Input::get("solicitud"))->first();
-                $solicitud->estado = "Liquidado";
-                $solicitud->save();
-            } else {
-                if (Input::get("ultimo") == 'yes')
+        $this->_soloAsesores();
+        //Fecha de siguiente pago > Fecha actual | Fecha de siguiente pago <= Fecha de Servicio
+        $fecha_actual = strtotime(date("Y-m-d"));
+        if (Input::get("ultimo") <> 'yes') {
+            $fecha_siguiente = $this->_mysqlformat(Input::get("finish"));
+            $fecha = Solicitud::select('fecha_limite')->where('id', '=', Input::get("solicitud"))->first();
+            $fecha_servicio = strtotime(date_format(date_create($fecha->fecha_limite), 'Y-m-d'));
+            $solicitud = Solicitud::where('id', '=', Input::get("solicitud"))->first();
+            if ($solicitud->estado <> 'Vencido')
+                if ($fecha_siguiente > $fecha_servicio) {
                     return Redirect::back()->withInput()
-                        ->with(array('liquidado' => 'Aun no se ha liquidado la cuenta, indique una fecha de siguiente pago.'));
-            }
-            $pago = new Pago;
-            $pago->emprendedor_id = Input::get("emprendedor_id");
-            $pago->solicitud_id = Input::get("solicitud");
-            $pago->recibido_by = Input::get("recibido");
-            $pago->monto = $monto_formateado;
-            $fecha = date_format(date_create(Input::get("start")), 'Y-m-d');
-            $pago->fecha_emision = $fecha;
-            if ($solicitud->estado <> "Liquidado") {
-                $fecha = date_format(date_create(Input::get("finish")), 'Y-m-d');
-                $pago->siguiente_pago = $fecha;
-            }
-            $autor = Asesor::where('user_id', '=', Auth::user()->id)->first();
-            $pago->created_by = $autor->id;
-            if ($pago->save()) {
-                $this->revision_emprendedor($pago->emprendedor_id);
-                return Redirect::back()->with(array('confirm' => 'Se ha creado correctamente.'));
-            } else {
-                return Redirect::back()->with(array('confirm' => 'No se ha podido realizar el pago.'));
-            }
+                        ->with(array('fecha-siguiente' => 'La fecha de siguiente pago debe ser menor a la fecha de pago del servicio.'));
+                }
+        }
+        //Fecha de pago <= Fecha actual
+        $fecha_pago = $this->_mysqlformat(Input::get("start"));
+        if ($fecha_pago > $fecha_actual) {
+            return Redirect::back()->withInput()
+                ->with(array('fecha-emision' => 'La fecha de pago debe ser menor o igual a la fecha de hoy.'));
+        }
+        //Monto > 0 | numero valido | Monto <= Monto de Servicio
+        $monto_formateado = str_replace("$", "", str_replace(",", "", Input::get("monto")));
+        $monto_servicio = Solicitud::select('monto')->where('id', '=', Input::get("solicitud"))->first();
+        $total_pagos = Pago::select(DB::raw('SUM(monto) as total'))
+            ->where('pago.solicitud_id', '=', Input::get("solicitud"))->first();
+        $faltante = $monto_servicio->monto - $total_pagos->total;
+        if (!is_numeric($monto_formateado)) {
+            return Redirect::back()->withInput()
+                ->with(array('monto-pago' => 'El monto debe ser un numero valido.'));
+        }
+        if ($monto_formateado <= 0) {
+            return Redirect::back()->withInput()
+                ->with(array('monto-pago' => 'El monto debe ser mayor a 0'));
+        }
+        if ($monto_formateado > $faltante) {
+            return Redirect::back()->withInput()
+                ->with(array('monto-pago' => 'El monto debe ser menor o igual al faltante para liquidar el servicio.'));
+        }
+        //Verificar que se haya liquidado si asi se indico
+        $nuevo_monto = $faltante - $monto_formateado;
+        if ($nuevo_monto == 0) {
+            $solicitud = Solicitud::where('id', '=', Input::get("solicitud"))->first();
+            $solicitud->estado = "Liquidado";
+            $solicitud->save();
+        } else {
+            if (Input::get("ultimo") == 'yes')
+                return Redirect::back()->withInput()
+                    ->with(array('liquidado' => 'Aun no se ha liquidado la cuenta, indique una fecha de siguiente pago.'));
+        }
+        $pago = new Pago;
+        $pago->emprendedor_id = Input::get("emprendedor_id");
+        $pago->solicitud_id = Input::get("solicitud");
+        $pago->recibido_by = Input::get("recibido");
+        $pago->monto = $monto_formateado;
+        $fecha = $this->_mysqlformat(Input::get("start"));
+        $pago->fecha_emision = $fecha;
+        if ($solicitud->estado <> "Liquidado") {
+            $fecha = $this->_mysqlformat(Input::get("finish"));
+            $pago->siguiente_pago = $fecha;
+        }
+        $autor = Asesor::where('user_id', '=', Auth::user()->id)->first();
+        $pago->created_by = $autor->id;
+        if ($pago->save()) {
+            $this->revision_emprendedor($pago->emprendedor_id);
+            return Redirect::back()->with(array('confirm' => 'Se ha creado correctamente.'));
+        } else {
+            return Redirect::back()->with(array('confirm' => 'No se ha podido realizar el pago.'));
         }
     }
 

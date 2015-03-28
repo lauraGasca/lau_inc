@@ -145,10 +145,9 @@
         </div>
     @endif
     <div class="row" id="powerwidgets">
-        <!---------------------------------- Detalles de los pagos realizados ------------------------------------->
-        <div class="col-md-4 col-sm-6 bootstrap-grid">
-            <div class="powerwidget powerwidget-as-portlet powerwidget-as-portlet-green-alt" id="widget2" data-widget-editbutton="false">
-                <div class="inner-spacer nopadding">
+        <div class="col-md-4 col-sm-6 bootstrap-grid sortable-grid ui-sortable">
+            <div role="widget" style="" class="powerwidget powerwidget-as-portlet powerwidget-as-portlet-green-alt powerwidget-sortable" id="widget1" data-widget-editbutton="false">
+                <div role="content" class="inner-spacer nopadding">
                     <div class="portlet-big-icon">
                         <i class="fa fa-money"></i><br/>
                         <span style="font-size: 20px;">Estado de Cuenta</span>
@@ -164,10 +163,9 @@
                 </div>
             </div>
         </div>
-        <!----------------------------------- Entrar a Iuark ----------------------------------->
-        <div class="col-md-4 col-sm-6 bootstrap-grid">
-            <div class="powerwidget powerwidget-as-portlet powerwidget-as-portlet-blue" id="widget2" data-widget-editbutton="false">
-                <div class="inner-spacer nopadding">
+        <div class="col-md-4 col-sm-6 bootstrap-grid sortable-grid ui-sortable">
+            <div role="widget" style="" class="powerwidget powerwidget-as-portlet powerwidget-as-portlet-cold-grey powerwidget-sortable" id="widget2" data-widget-editbutton="false">
+                <div role="content" class="inner-spacer nopadding">
                     <div class="portlet-big-icon">
                         {{ HTML::image('Orb/images/photo2.png','',['style'=>"height: 65px;"]) }}<br/>
                         <a href="{{url('plan-negocios/index/'.$emprendedor->id)}}" style="color:#FFF">
@@ -185,10 +183,9 @@
                 </div>
             </div>
         </div>
-        <!----------------------------------- Detalles de los documentos subidos ----------------------------------->
-        <div class="col-md-4 col-sm-6 bootstrap-grid">
-            <div class="powerwidget powerwidget-as-portlet powerwidget-as-portlet-purple" id="widget3" data-widget-editbutton="false">
-                <div class="inner-spacer nopadding">
+        <div class="col-md-4 col-sm-6 bootstrap-grid sortable-grid ui-sortable">
+            <div role="widget" style="" class="powerwidget powerwidget-as-portlet powerwidget-as-portlet-purple powerwidget-sortable" id="widget3" data-widget-editbutton="false">
+                <div role="content" class="inner-spacer nopadding">
                     <div class="portlet-big-icon">
                         <i class="fa fa-archive"></i><br/>
                         <span style="font-size: 20px;">Documentos</span>
