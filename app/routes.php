@@ -36,7 +36,12 @@ Route::get('pruebas', function()
             $message->subject('Prueba');
             $message->to('lau_lost@hotmail.com', 'Laura');
         });*/
-    return View::make('emails.estandar');
+    $titulo = "Titulo para el correo";
+    $mensaje = "El mensaje del correo";
+    $seccion = "Aqui una seccion";
+    $imagen = false;
+    $tabla = "Tabla";
+    return View::make('emails.estandar', compact('titulo', 'mensaje', 'seccion', 'imagen', 'tabla'));
 });
 
 Route::get('/', ['as' => 'home', 'uses' =>'IncubaController@getIndex']);

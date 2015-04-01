@@ -19,20 +19,25 @@
                     </table>
                     <table width="600" border="0" cellspacing="0" cellpadding="0">
                         <tr>
-                            <td align="left" valign="top" bgcolor="#b47feb" style="background-color:#F0522D; font-family:Arial, Helvetica, sans-serif; font-size:13px; color:#ffffff; padding:0px 15px 10px 15px;">
+                            <td align="left" valign="top" bgcolor="#b47feb" style="background-color:#F0522D; font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#ffffff; padding:0px 15px 10px 15px;">
                                 <br/>
                                 <div style="font-size:24px;"><br>
-                                    Titulo
+                                    {{$titulo}}
                                 </div>
-                                <div><br>
-                                    Mensaje <br>
+                                <div>
+                                    {{$mensaje}} <br>
                                     <br>
                                 </div>
                             </td>
                         </tr>
                         <tr>
                             <td height="72" align="center" valign="middle" bgcolor="#353535" style="background-color:#353535; font-family:Georgia, 'Times New Roman', Times, serif; color:#ffffff; font-size:24px;">
-                                <i>Seccion</i>
+                                <i>@if($imagen)
+                                        Imagen de Referencia
+                                    @else
+                                        {{$seccion}}
+                                    @endif
+                                </i>
                             </td>
                         </tr>
                         <tr>
@@ -50,7 +55,11 @@
                                             <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                                 <tr>
                                                     <td align="center" valign="top" style="font-family:Arial, Helvetica, sans-serif; font-size:19px; color:#444444;">
-                                                        tabla[]
+                                                        @if($imagen)
+                                                            {{ HTML::image($tabla,null,['style'=>"width:100%;"]) }}
+                                                        @else
+                                                            {{$tabla}}
+                                                        @endif
                                                     </td>
                                                 </tr>
                                             </table>

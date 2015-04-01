@@ -26,6 +26,12 @@ class ValidatorManager
                     "buscar" => 'required|max:100'
                 ];
                 break;
+            case 'error':
+                $rules = [
+                    'descripcion' =>  'required|max:100',
+                    'foto' =>  'image'
+                ];
+                break;
             case 'registro':
                 $rules = [
                     'user'   	        =>    'required|max:30|unique:users,user',

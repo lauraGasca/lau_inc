@@ -34,16 +34,17 @@ class LoginController extends BaseController
 
         if (Auth::attempt($credentials, Input::get('remember')))
         {
-            switch(Auth::user()->type_id)
-            {
-                case 1: case 2: return Redirect::to('emprendedores');
-                case 3: return Redirect::to('emprendedores/perfil/' . $this->emprendedoreRepo->emprendedorid(Auth::user()->id));
-                case 4: return Redirect::to('blog');
-                default: return Redirect::back()->with(array('confirm' => 'Lo sentimos. No tiene permiso para acceder.'));
-            }
+            if(Auth::user()->active == 1)
+                switch(Auth::user()->type_id)
+                {
+                    case 1: case 2: return Redirect::to('emprendedores');
+                    case 3: return Redirect::to('emprendedores/perfil/' . $this->emprendedoreRepo->emprendedorid(Auth::user()->id));
+                    case 4: return Redirect::to('blog');
+                    default: return Redirect::back()->with(array('confirm' => 'No tiene permiso para acceder.'));
+                }
+            Redirect::back()->with(array('confirm' => 'Su usuario no ha sido activado.'));
         }
         return Redirect::back()->with('login_errors', true)->withInput();
-
     }
 
     public function getFblogin($auth=null)

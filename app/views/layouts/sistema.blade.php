@@ -57,6 +57,10 @@
                             </div><br/>
                             <div class="list-group">
                                 <div class="empthy"></div>
+                                <a data-toggle="modal" href="{{url('usuarios/error')}}" class="list-group-item goaway">
+                                    <i class="fa fa-warning"></i>
+                                    Reportar Error
+                                </a>
                                 <a data-toggle="modal" href="{{url('sistema/logout')}}" class="list-group-item goaway">
                                     <i class="fa fa-power-off"></i>
                                     Cerrar Sesi&oacute;n

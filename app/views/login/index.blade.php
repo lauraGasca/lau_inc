@@ -15,6 +15,13 @@
             Nombre de usuario y/o contrase&ntilde;a incorrectos
         </div>
     @endif
+    @if(Session::get('confirm'))
+        <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <h4>¡Error!</h4>
+            {{Session::get('confirm')}}
+        </div>
+    @endif
     <!-- END ERROR BOX -->
     {{Form::open(array('url'=>'sistema/login','method'=>'post'))}}
         {{Form::text('user', '',['placeholder'=>'Nombre de usuario','class'=>'input-field form-control user'])}}
