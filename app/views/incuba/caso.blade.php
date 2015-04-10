@@ -1,108 +1,107 @@
-@section('menu')
-    <header id="header">
-        <div class="header-in clearfix">
-            <ul class="social-icons" style="display: inline-block; vertical-align: middle;">
-                    <li class="twitter"><a href="https://twitter.com/IncubaMas"><i class="icon-twitter"></i>Twitter</a></li>
-                    <li class="facebook"><a href="https://www.facebook.com/IncubaMas"><i class="icon-facebook"></i>Facebook</a></li>
-                    <br/>
-                    <li class="gplus"><a href="https://plus.google.com/+IncubaM%C3%A1sCelaya/posts"><i class="icon-gplus"></i>Gplus</a></li>
-                    <li class="linkedin"><a href="https://www.linkedin.com/company/incubam%C3%A1s"><i class="icon-linkedin"></i>LinkedIn</a></li>
-            </ul><!--/ .social-icons-->
-            <h1 id="logo">
-                <a href="/"><img alt="Incubamas" src="{{ URL::asset('accio/images/Logo footer.png') }}"  /></a>
-            </h1>
-            <a id="responsive-nav-button" class="responsive-nav-button" href="#"></a>
-            <nav id="navigation" class="navigation">
-                <ul>
-                    <li>{{HTML::link('incuba#inicio','Inicio')}}</li>
-                    <li>{{HTML::link('incuba#incuba','Incuba')}}</li>
-                    <li>{{HTML::link('incuba#servicios','Servicios')}}</li>
-                    <li class="current-menu-item">{{HTML::link('incuba#emprendedores','Emprendedores')}}</li>
-                    <li>{{HTML::link('incuba#blog','Blog')}}</li>
-                    <li>{{HTML::link('incuba#nosotros','Nosotros')}}</li>
-                    <li>{{HTML::link('incuba#contactanos','Cont&aacute;ctanos')}}</li>
-                </ul>
-            </nav><!--/ #navigation-->			    
-        </div><!--/ .header-in-->
-    </header><!--/ #header-->
-@stop
+@section('menu-in') header-in @stop
+
+@section('casos-c') class="current-menu-item" @stop
+
+@section('inicio') href="{{url('/#inicio')}}" @stop
+
+@section('incuba') href="{{url('/#incuba')}}" @stop
+
+@section('servicios') href="{{url('/#servicios')}}" @stop
+
+@section('casos') href="{{url('/#emprendedores')}}" @stop
+
+@section('blog') href="{{url('/#blog')}}" @stop
+
+@section('contacto') href="{{url('/#contactanos')}}" @stop
 
 @section('contenido')
-        <div id="content">
-            <section class="section">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <div class="project-page-header">
-                                <h1 class="project-title">{{$caso->nombre_proyecto}}</h1>
-                                <!--<ul class="project-nav clearfix">
-                                    <li><a class="prev" href="project-single-2.html">Prev</a></li>
-                                    <li><a class="all-projects" href="index.html#folio">All Projects</a></li>
-                                    <li><a class="next" href="project-single-4.html">Next</a></li>
-                                </ul>/ .project-nav-->
-                            </div><!--/ .folio-page-header-->
+    <div id="content">
+        <section class="section">
+            <div class="container">
+                <div class="row">
+                    <h1 class="project-title" style="color: #02384b; font-weight: 400; font-size: 50px; text-transform: uppercase;" >{{$caso->nombre_proyecto}}</h1>
+                    @if(Session::get('confirm'))
+                        <p class="success">¡Gracias por contactarnos, contestaremos tu correo lo m&aacute;s pronto posible!<a class="alert-close" href="#"></a></p>
+                    @endif
+                    @if(count($errors)>0)
+                        <p class="error">¡Por favor revise los datos del formulario!<a class="alert-close" href="#"></a></p>
+                    @endif
+                    <div class="col-md-6 col-xs-12">
+                        <div class="project-single-entry">
+                            <div class="image-slider">
+                                <ul data-timeout="5000" >
+                                    <li>{{ HTML::image('Orb/images/casos_exito/'.$caso->imagen)}}</li>
+                                </ul>
+                            </div>
                         </div>
-                    </div><!--/ .row-->
-                    <?php $nombre_proyecto = $caso->nombre_proyecto;?>
-                    <div class="row">
-                        <div class="col-md-6 col-xs-12">
-                            <div class="project-single-entry">
-                                <div class="image-slider">
-                                    <ul data-timeout="5000">
-                                        <li><img src="{{ URL::asset('Orb/images/casos_exito/'.$caso->imagen) }}" alt="" /></li>
-                                    </ul>
-                                </div><!--/ .image-slider-->
-                            </div><!--/ .folio-single-entry-->
-                        </div>
-                        <div class="col-md-6 col-xs-12">
-                            @if(Session::get('confirm'))
-                               <script>
-                                    alert("¡Gracias por contactarnos, contestaremos tu correo lo m\u00e1s pronto posible!");
-                                </script>
-                            @endif
-                            @if(count($errors)>0)
-                               <script>
-                                    alert("¡Por favor, revise los datos del formulario!");
-                                </script>
-                            @endif
-                            <h2 class="content-title">Acerca del Proyecto</h2>
-                            <p>
-                                {{$caso->about_proyect}}
-                            </p><br/>
-                            <ul class="project-meta">
-                                <li>
-                                    <span class="project-meta-title">Categoria</span>
-                                    <div class="project-meta-date">
-                                        {{HTML::link('incuba/casos/categoria/'.$caso->categoria,$caso->categoria)}}
+                    </div>
+                    <div class="col-md-6 col-xs-12">
+                        <br/><h2 class="content-title" style="color: #02384b;">Acerca del Proyecto</h2>
+                        <p style="color: #5b5e60;">{{$caso->about_proyect}}</p>
+                        <ul class="project-meta">
+                            <li>
+                                <span class="project-meta-title">Categoria</span>
+                                <div class="project-meta-date">
+                                    {{HTML::link('nuestros-emprendedores/'.$caso->categoria,$caso->categoria)}}
+                                </div>
+                            </li>
+                            <li>
+                                <span class="project-meta-title">Servicios</span>
+                                <div class="project-meta-date">
+                                    @if(count($caso->servicios) > 0)
+                                        @foreach($caso->servicios as $servicio)
+                                            {{HTML::link('nuestros-emprendedores/servicio/'.$servicio->id.'/'.$servicio->nombre,$servicio->nombre)}},
+                                        @endforeach
+                                    @endif
+                                </div>
+                            </li><br/>
+                            <li>
+                                <div class="acc-box">
+                                    <span class="acc-trigger @if(count($errors)>0) active @endif" data-mode=""><a href="#">Contactar a este emprendedor</a></span>
+                                    <div class="acc-container" @if(count($errors)>0) style="display: block;" @endif>
+                                        {{Form::open(['url'=>'emprendedor', 'method' => 'post'] )}}
+                                            {{Form::hidden('emprendedor', $caso->nombre_proyecto)}}
+                                            <div class="col-md-12">
+                                                {{Form::text('name', null, ['placeholder'=>'Nombre'])}}
+                                                <span class="message-error">{{$errors->first('name')}}</span>
+                                            </div><br/>
+                                            <div class="col-md-12">
+                                                {{Form::email('email', null, ['placeholder'=>'Correo'])}}
+                                                <span class="message-error">{{$errors->first('email')}}</span>
+                                            </div><br/>
+                                            <div class="col-md-12">
+                                                {{ Form::text('telefono', null, ['placeholder'=>'Telefono']) }}
+                                                <span class="message-error">{{$errors->first('telefono')}}</span>
+                                            </div><br/>
+                                            <div class="col-md-12">
+                                                {{Form::textarea('asunto', null, ['placeholder'=>'Asunto'])}}
+                                                <span class="message-error">{{$errors->first('asunto')}}</span>
+                                            </div><br/>
+                                            <div class="col-md-12">
+                                                {{Form::captcha(array('theme' => 'clean'))}}
+                                                <span class="message-error">{{$errors->first('recaptcha_response_field')}}</span>
+                                            </div><br/>
+                                            <div class="col-md-12">
+                                                <button class="button turquoise submit" type="submit" id="submit">Enviar</button>
+                                            </div>
+                                        {{Form::close()}}
                                     </div>
-                                </li>
-                                <li>
-                                    <span class="project-meta-title">Servicios:</span>
-                                    <div class="project-meta-date">
-                                        @if(count($tags) > 0)
-                                            @foreach($tags as $tag)
-                                                {{HTML::link('incuba/casos/servicio/'.$tag->nombre,$tag->nombre)}},
-                                            @endforeach
-                                        @endif
-                                    </div>
-                                </li><br/>
-                                <li>
-                                    <button class="btn btn-primary button large default" data-modal="modal-19">Deseo contactar a este emprendedor</button>
-                                </li>
-                            </ul><!--/ .project-meta-->
-                        </div>
-                    </div><!--/ .row-->
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <div class="divider"></div>
-                        </div>	
-                    </div><!--/ .row-->
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <h2 class="content-title">Proyectos relacionados</h2>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="divider"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h2 class="content-title">Proyectos relacionados</h2>
+                        @if(count($casos) > 0)
                             <div class="project-similar">
-                                @if(count($casos) > 0)
-                                    <ul id="portfolio-items" class="portfolio-items">
+                                <ul id="portfolio-items" class="portfolio-items">
                                     @foreach($casos as $caso)
                                         <li class="{{$caso->categoria}} mix mix_all opacity2x">
                                             <div class="work-item">
@@ -112,69 +111,22 @@
                                                         <div class="inner-extra">
                                                             <h2 class="extra-title">{{$caso->nombre_proyecto}}</h2>
                                                             <h6 class="extra-category">{{$caso->categoria}}</h6>
-                                                            {{HTML::link('incuba/caso/'.$caso->id,'',array('class'=>'single-image link-icon'))}}
-                                                        </div><!--/ .inner-extra-->	
-                                                    </div><!--/ .extra-content-->
-                                                </div><!--/ .image-extra-->
-                                            </div><!--/ .work-item-->
+                                                            {{HTML::link('nuestros-emprendedores/'.$caso->slug.'/'.$caso->id,'',array('class'=>'single-image link-icon'))}}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </li>
                                     @endforeach
-                                    </ul><!--/ .portfolio-items-->
-                                </div><!--/ .project-similar-->
-                                @else
-                                    </div><!--/ .project-similar-->
-                                        No hay proyectos relacionados
-                                @endif
-                        </div>
-                    </div><!--/ .row-->
-                </div><!--/ .container-->
-            </section><!--/ .section-->
-        </div><!--/ #content-->
-    </section><!--/ .section-->
-    <div id="main-content">
-        <div class="md-modal md-effect-1" id="modal-19">
-            <div class="md-content md-content-white">
-                <h3 style="text-transform:uppercase;  color:#FFF;">Contactar a {{$nombre_proyecto}}</h3>
-                <div>
-                    <p>Ingresa la siguiente informaci&oacute;n:</p>
-                    {{ Form::open(array('url'=>'incuba/emprendedor', 'method' => 'post') )}}
-                        {{Form::hidden('emprendedor', $nombre_proyecto)}}
-                        <div class="col-md-6">
-                            {{Form::text('name', null, array('placeholder'=>'Nombre'))}}
-                            <span class="message-error">{{$errors->first('name')}}</span>
-                        </div>
-                        <div class="col-md-6">
-                            {{Form::email('email', null, array('placeholder'=>'Correo'))}}
-                            <span class="message-error">{{$errors->first('email')}}</span>
-                        </div>
-                        <br/><br/><br/>
-                        <div class="col-md-6">
-                            {{ Form::text('telefono', null, array('placeholder'=>'Telefono')) }}
-                            <span class="message-error">{{$errors->first('telefono')}}</span>
-                            <br/><br/>
-                            {{Form::captcha(array('theme' => 'clean'))}}
-                            <span class="message-error">{{$errors->first('recaptcha_response_field')}}</span>
-                        </div>
-                        <div class="col-md-6">
-                            {{Form::textarea('asunto', null, array('placeholder'=>'Asunto'))}}
-                            <span class="message-error">{{$errors->first('asunto')}}</span>
-                        </div>
-                        <div class="col-md-6">
-                            <button class="button turquoise submit" type="submit" id="submit">Enviar</button>
-                        </div>
-                        <button class="btn btn-default"></button>
-                    {{Form::close()}}	
+                                </ul>
+                            </div>
+                        @else
+                            <div class="project-similar"></div>
+                            No hay proyectos relacionados
+                        @endif
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="md-overlay"></div>
-    </div> 
-@stop
-
-@section('scripts')
-    @parent
-    <!--Forms-->
-    
-    <script src="{{ URL::asset('accio/js/jquery-1.11.js') }}"></script>
-    <script src="{{ URL::asset('accio/plugins/bootstrap/bootstrap.min.js') }}"></script>
+        </section>
+    </div>
 @stop

@@ -1,52 +1,108 @@
 <?php
 
+use Incubamas\Repositories\CasosRepo;
+use Incubamas\Repositories\BlogsRepo;
+use Incubamas\Managers\ValidatorManager;
+
 class IncubaController extends BaseController
 {
-
     protected $layout = 'layouts.incuba';
+    protected $casosRepo;
+    protected $blogsRepo;
 
-    public function getIndex()
+    public function __construct(CasosRepo $casosRepo, BlogsRepo $blogsRepo)
     {
-        $casos = Casos::paginate(10);
-        $blogs = Blogs::select(DB::raw('id, titulo, imagen, entrada, fecha_publicacion, (select count(*) from comentarios where entrada_id = entradas.id) as comentarios'))
-            ->where('fecha_publicacion', '<=', date('Y-m-d'))
-            ->orderBy('fecha_publicacion', 'des')->paginate(3);
-        $this->layout->content = View::make('incuba.index')->with('casos', $casos)->with('blogs', $blogs);
+        $this->casosRepo = $casosRepo;
+        $this->blogsRepo = $blogsRepo;
     }
 
-    public function getCaso($caso_id)
+    public function home()
     {
-        $caso = Casos::find($caso_id);
-        $casos = Casos::where('categoria', '=', $caso->categoria)
-            ->where('id', '<>', $caso_id)->paginate(3);
-        $tags = Servicio::join('relaciones', 'servicios.id', '=', 'relaciones.servicio_id')
-            ->where('casos_exitoso_id', '=', $caso->id)->get();
-        $this->layout->content = View::make('incuba.caso')
-            ->with('caso', $caso)
-            ->with('casos', $casos)
-            ->with('tags', $tags);
+        $casos = $this->casosRepo->ultimos_casos();
+        $blogs = $this->blogsRepo->entradas_recientes();
+        $this->layout->content = View::make('incuba.index', compact('casos', 'blogs'));
     }
 
-    public function getCasos($filtro, $parametro = null)
+    public function contacto()
     {
-        switch ($filtro) {
-            case 'todos':
-                $casos = Casos::all();
-                break;
-            case 'categoria':
-                $casos = Casos::where('categoria', '=', $parametro)->get();
-                break;
-            case 'servicio':
-                $casos = Casos::select('casos_exitosos.id', 'casos_exitosos.categoria', 'casos_exitosos.imagen', 'casos_exitosos.nombre_proyecto')
-                    ->join('relaciones', 'casos_exitosos.id', '=', 'relaciones.casos_exitoso_id')
-                    ->join('servicios', 'relaciones.servicio_id', '=', 'servicios.id')
-                    ->where('servicios.nombre', '=', $parametro)->get();
-                break;
+        $manager = new ValidatorManager('contacto', Input::all());
+        $manager->validar();
+        $this->_mail('emails.estandar',
+            ['titulo'=>Input::get('name'), 'mensaje'=>Input::get('message'), 'seccion'=>"Datos de contacto", 'imagen' => false,
+            'tabla' => "<strong>Correo: </strong> ".Input::get('email')."<br/><br/><strong>Ciudad: </strong>".Input::get('city')],
+            'Contacto desde Sitio Web', 'hola@incubamas.com', 'IncubaMas' );
+        return Redirect::to('incuba')->with(['confirm' => 'Gracias por contactarnos.']);
+    }
+
+    public function caso($slug, $id)
+    {
+        $caso = $this->casosRepo->caso($id);
+        $casos = $this->casosRepo->casos_relacionados($caso->categoria, $id);
+        $this->layout->content = View::make('incuba.caso', compact('caso','casos'));
+    }
+
+    public function casos()
+    {
+        $casos = $this->casosRepo->casos();
+        $filtro = 'todos';
+        $this->layout->content = View::make('incuba.casos', compact('casos', 'filtro'));
+    }
+
+    public function caso_categoria($slug)
+    {
+        $casos = $this->casosRepo->casos_categoria($slug);
+        $filtro = 'categoria';
+        $this->layout->content = View::make('incuba.casos', compact('casos', 'filtro','slug'));
+    }
+
+    public function caso_servicio($id, $slug)
+    {
+        $casos = $this->casosRepo->casos_servicio($id);
+        $filtro = 'servicio';
+        $this->layout->content = View::make('incuba.casos', compact('casos', 'filtro','slug'));
+    }
+
+    public function emprendedor()
+    {
+        $dataUpload = array(
+            "name" => Input::get("name"),
+            "email" => Input::get("email"),
+            "telefono" => Input::get("telefono"),
+            "asunto" => Input::get("asunto"),
+        );
+
+        $rules = array(
+            "name" => 'required|min:3|max:100',
+            "email" => 'required|email',
+            "telefono" => 'required|min:10|max:20',
+            "asunto" => 'required|min:3',
+            'recaptcha_response_field' => 'required|recaptcha',
+        );
+
+        $error_messages = array(
+            'required' => 'El campo es obligatorio.',
+        );
+
+        $validation = Validator::make(Input::all(), $rules, $error_messages);
+        //si la validaci�n falla redirigimos al formulario de registro con los errores
+        //y con los campos que nos habia llenado el usuario
+        if ($validation->fails()) {
+            return Redirect::back()->withErrors($validation)->withInput();
+        } else {
+            $contactName = Input::get('name');
+            $contactEmail = Input::get('email');
+            $contactTelefono = Input::get('telefono');
+            $contactAsunto = Input::get('asunto');
+            $contactEmprendedor = Input::get('emprendedor');
+
+            Mail::send('emails.emprendedor',
+                array('name' => Input::get('name'), 'email' => Input::get('email'), 'telefono' => Input::get('telefono'), 'asunto' => Input::get('asunto'), 'emprendedor' => Input::get('emprendedor')),
+                function ($message) {
+                    $message->subject('Contacto desde Sitio Web');
+                    $message->to('emprendedores@incubamas.com', 'IncubaM�s');
+                });
+            return Redirect::back()->with(array('confirm' => 'Gracias por contactarnos.'));
         }
-        $this->layout->content = View::make('incuba.casos')
-            ->with('filtro', $filtro)
-            ->with('casos', $casos)
-            ->with('parametro', $parametro);
     }
 
     public function getIncubacion()
@@ -202,47 +258,7 @@ class IncubaController extends BaseController
             ->with('titulo', 'Blogs');
     }
 
-    public function postContacto()
-    {
-        $dataUpload = array(
-            "name" => Input::get("name"),
-            "email" => Input::get("email"),
-            "city" => Input::get("city"),
-            "message" => Input::get("message"),
-        );
 
-        $rules = array(
-            "name" => 'required|min:3|max:100',
-            "email" => 'required|email',
-            "city" => 'required|min:3|max:100',
-            "message" => 'required|min:3',
-            'recaptcha_response_field' => 'required|recaptcha',
-        );
-
-        $error_messages = array(
-            'required' => 'El campo es obligatorio.',
-        );
-
-        $validation = Validator::make(Input::all(), $rules, $error_messages);
-        //si la validaci�n falla redirigimos al formulario de registro con los errores
-        //y con los campos que nos habia llenado el usuario
-        if ($validation->fails()) {
-            return Redirect::to('incuba#contactanos')->withErrors($validation)->withInput();
-        } else {
-            $contactName = Input::get('name');
-            $contactEmail = Input::get('email');
-            $contactCity = Input::get('city');
-            $contactMessage = Input::get('message');
-
-            Mail::send('emails.email',
-                array('name' => Input::get('name'), 'email' => Input::get('email'), 'city' => Input::get('city'), 'mensaje' => Input::get('message')),
-                function ($message) {
-                    $message->subject('Contacto desde Sitio Web');
-                    $message->to('hola@incubamas.com', 'IncubaM�s');
-                });
-            return Redirect::to('incuba#contactanos')->with(array('confirm' => 'Gracias por contactarnos.'));
-        }
-    }
 
     public function postComentario()
     {
@@ -277,47 +293,16 @@ class IncubaController extends BaseController
         }
     }
 
-    public function postEmprendedor()
+
+
+    private function _mail($plantilla, $variables, $asunto, $correo, $nombre)
     {
-        $dataUpload = array(
-            "name" => Input::get("name"),
-            "email" => Input::get("email"),
-            "telefono" => Input::get("telefono"),
-            "asunto" => Input::get("asunto"),
-        );
-
-        $rules = array(
-            "name" => 'required|min:3|max:100',
-            "email" => 'required|email',
-            "telefono" => 'required|min:10|max:20',
-            "asunto" => 'required|min:3',
-            'recaptcha_response_field' => 'required|recaptcha',
-        );
-
-        $error_messages = array(
-            'required' => 'El campo es obligatorio.',
-        );
-
-        $validation = Validator::make(Input::all(), $rules, $error_messages);
-        //si la validaci�n falla redirigimos al formulario de registro con los errores
-        //y con los campos que nos habia llenado el usuario
-        if ($validation->fails()) {
-            return Redirect::back()->withErrors($validation)->withInput();
-        } else {
-            $contactName = Input::get('name');
-            $contactEmail = Input::get('email');
-            $contactTelefono = Input::get('telefono');
-            $contactAsunto = Input::get('asunto');
-            $contactEmprendedor = Input::get('emprendedor');
-
-            Mail::send('emails.emprendedor',
-                array('name' => Input::get('name'), 'email' => Input::get('email'), 'telefono' => Input::get('telefono'), 'asunto' => Input::get('asunto'), 'emprendedor' => Input::get('emprendedor')),
-                function ($message) {
-                    $message->subject('Contacto desde Sitio Web');
-                    $message->to('emprendedores@incubamas.com', 'IncubaM�s');
-                });
-            return Redirect::back()->with(array('confirm' => 'Gracias por contactarnos.'));
-        }
+        Mail::send($plantilla, $variables,
+            function ($message) use ($asunto, $correo, $nombre){
+                $message->subject($asunto);
+                $message->to($correo, $nombre);
+            });
     }
+
 }
 	

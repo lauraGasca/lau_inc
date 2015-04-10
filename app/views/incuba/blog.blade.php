@@ -1,3 +1,19 @@
+@section('menu-in') header-in @stop
+
+@section('blog-c') class="current-menu-item" @stop
+
+@section('inicio') href="{{url('/#inicio')}}" @stop
+
+@section('incuba') href="{{url('/#incuba')}}" @stop
+
+@section('servicios') href="{{url('/#servicios')}}" @stop
+
+@section('casos') href="{{url('/#emprendedores')}}" @stop
+
+@section('blog') href="{{url('/#blog')}}" @stop
+
+@section('contacto') href="{{url('/#contactanos')}}" @stop
+
 @section('menu')
     <header id="header">
         <div class="header-in">

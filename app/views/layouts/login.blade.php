@@ -38,7 +38,7 @@
     <body class="login fade-in" data-page="login">
     
         <!-- BEGIN LOGIN BOX -->
-        <div class="container" id="login-block">
+        <div class="container" id="login-block" style="padding-top: 0px;">
             <div class="row">
                 <div class="col-sm-6 col-md-4 col-sm-offset-3 col-md-offset-4">
                     <div class="login-box clearfix animated flipInY">

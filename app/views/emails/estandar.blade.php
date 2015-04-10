@@ -23,7 +23,7 @@
                                 <br/>
                                 <div style="font-size:24px;"><br>
                                     {{$titulo}}
-                                </div>
+                                </div><br>
                                 <div>
                                     {{$mensaje}} <br>
                                     <br>
@@ -41,7 +41,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td align="left" valign="top" bgcolor="#ebfab2" style="background-color:#FFF; padding:15px;">
+                            <td align="left" valign="top" bgcolor="#ebfab2" style="background-color:#FFF; padding:15px;"><br>
                                 <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                     <tr>
                                         <td width="15%" align="left" valign="top">
@@ -72,7 +72,7 @@
                                             </table>
                                         </td>
                                     </tr>
-                                </table>
+                                </table><br>
                             </td>
                         </tr>
                     </table>

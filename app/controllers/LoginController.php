@@ -23,6 +23,18 @@ class LoginController extends BaseController
     
     public function getIndex()
     {
+        if (Auth::check())
+        {
+            if(Auth::user()->active == 1)
+                switch(Auth::user()->type_id)
+                {
+                    case 1: case 2: return Redirect::to('emprendedores');
+                    case 3: return Redirect::to('emprendedores/perfil/' . $this->emprendedoreRepo->emprendedorid(Auth::user()->id));
+                    case 4: return Redirect::to('blog');
+                    default: return Redirect::back()->with(array('confirm' => 'No tiene permiso para acceder.'));
+                }
+            Redirect::back()->with(array('confirm' => 'Su usuario no ha sido activado.'));
+        }
         $this->layout->content = View::make('login.index');
     }
 
@@ -66,10 +78,23 @@ class LoginController extends BaseController
 
         $user = $this->userRepo->buscarxEmail($profile->email);
         if(count($user)>0){
-            if($user->facebook_id=='')
-            {
+            if($user->facebook_id=='') {
                 $user->facebook_id = $profile->identifier;
                 $user->save();
+            }
+            if($user->activate == 1){
+                Auth::login($user);
+                $this->_verificat();
+                switch(Auth::user()->type_id)
+                {
+                    case 1: case 2: $direccion = 'emprendedores'; break;
+                    case 3: $direccion = 'emprendedores/perfil/' . $this->emprendedoreRepo->emprendedorid(Auth::user()->id); break;
+                    case 4: $direccion = 'blog';
+                }
+                return '<html><head></head><body><script>
+                    opener.location.href="' . url($direccion) . '"
+                    window.close()
+                </script></body></html>';
             }
         }else{
             $user = $this->userRepo->newUser();
@@ -79,23 +104,17 @@ class LoginController extends BaseController
                 $genero = 'F';
             else
                 $genero = 'M';
+            $this->userRepo->actualizarImagen($profile->photoURL,$user);
+
             $emprendedor = $this->emprendedoreRepo->newEmprendedor();
             $manager = new EmprendedorManager($emprendedor, ['user_id' => $user->id, 'genero'=> $genero]);
             $manager->save();
-        }
-
-        Auth::login($user);
-        $this->_verificat();
-        switch(Auth::user()->type_id)
-        {
-            case 1: case 2: $direccion = 'emprendedores'; break;
-            case 3: $direccion = 'emprendedores/perfil/' . $this->emprendedoreRepo->emprendedorid(Auth::user()->id); break;
-            case 4: $direccion = 'blog';
-        }
-        return '<html><head></head><body><script>
-                    opener.location.href="' . url($direccion) . '"
+            //Enviar correo para acitvar usuario y regresar un mensaje de que espere el correo de activacion
+            return '<html><head></head><body><script>
+                    opener.location.href="' . url('sistema') . '"
                     window.close()
                 </script></body></html>';
+        }
 
     }
     
@@ -163,8 +182,15 @@ class LoginController extends BaseController
 
             $email = $user->email;
             $nombre = $user->nombre . " " . $user->apellidos;
-            Mail::send('emails.reseteo', array('nombre' => $nombre, 'id' => $user->id, 'user' => $user->user,
-                'password' => $password), function ($message) use ($email, $nombre) {
+            $titulo = "Hola ".$nombre.',';
+            $mensaje = "Tal como lo has solicitado tu contrase&ntilde;a a sido actualizada.";
+            $seccion = "Datos de Inicio de sesi&oacute;n";
+            $imagen = false;
+            $tabla = '<strong>Nombre de usuario: </strong>'.$user->user.'<br/><br/><strong>Contrase&ntilde;a: </strong>'.$password;
+            //return View::make('emails.estandar', compact('titulo', 'mensaje', 'seccion', 'imagen', 'tabla'));
+
+            Mail::send('emails.estandar', compact('titulo', 'mensaje', 'seccion', 'imagen', 'tabla'),
+                function ($message) use ($email, $nombre) {
                 $message->subject('Reseteo de Contraseña');
                 $message->to($email, $nombre);
             });

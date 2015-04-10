@@ -16,6 +16,15 @@ class ValidatorManager
     {
         switch($this->type)
         {
+            case 'contacto':
+                $rules = [
+                    "name"  => 'required|min:3|max:100',
+                    "email" => 'required|email',
+                    "city"  => 'required|min:3|max:100',
+                    "message" => 'required|min:3',
+                    'recaptcha_response_field' => 'required|recaptcha',
+                ];
+                break;
             case 'email':
                 $rules = [
                     'email' =>  'required|email|max:60|exists:users,email'

@@ -30,4 +30,14 @@ class UserRepo extends BaseRepo
         $user->password = $password;
         $user->save();
     }
+
+    public function actualizarImagen($imagen, $user)
+    {
+        $arrContextOptions=["ssl"=>["verify_peer"=>false, "verify_peer_name"=>false,],];
+        $contents=file_get_contents($imagen, false, stream_context_create($arrContextOptions));
+        $save_path=public_path()."/Orb/images/emprendedores/".$user->id.'.jpg';
+        file_put_contents($save_path,$contents);
+        $user->foto = $user->id.'.jpg';
+        $user->save();
+    }
 }
