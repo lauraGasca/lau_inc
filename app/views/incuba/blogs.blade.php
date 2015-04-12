@@ -1,184 +1,151 @@
-@section('menu')
-    <header id="header">
-        <div class="header-in">
-            <ul class="social-icons" style="display: inline-block; vertical-align: middle;">
-                    <li class="twitter"><a href="https://twitter.com/IncubaMas"><i class="icon-twitter"></i>Twitter</a></li>
-                    <li class="facebook"><a href="https://www.facebook.com/IncubaMas"><i class="icon-facebook"></i>Facebook</a></li>
-                    <br/>
-                    <li class="gplus"><a href="https://plus.google.com/+IncubaM%C3%A1sCelaya/posts"><i class="icon-gplus"></i>Gplus</a></li>
-                    <li class="linkedin"><a href="https://www.linkedin.com/company/incubam%C3%A1s"><i class="icon-linkedin"></i>LinkedIn</a></li>
-            </ul><!--/ .social-icons-->
-            <h1 id="logo">
-                <a href="/"><img alt="Incubamas" src="{{ URL::asset('accio/images/Logo footer.png') }}"  /></a>
-            </h1>
-            <a id="responsive-nav-button" class="responsive-nav-button" href="#"></a>
-            <nav id="navigation" class="navigation">
-                <ul>
-                    <li>{{HTML::link('incuba#inicio','Inicio')}}</li>
-                    <li>{{HTML::link('incuba#incuba','Incuba')}}</li>
-                    <li>{{HTML::link('incuba#servicios','Servicios')}}</li>
-                    <li>{{HTML::link('incuba#emprendedores','Emprendedores')}}</li>
-                    <li class="current-menu-item">{{HTML::link('incuba#blog','Blog')}}</li>
-                    <li>{{HTML::link('incuba#nosotros','Nosotros')}}</li>
-                    <li>{{HTML::link('incuba#contactanos','Cont&aacute;ctanos')}}</li>
-                </ul>
-            </nav><!--/ #navigation-->			    
-        </div><!--/ .header-in-->
-    </header><!--/ #header-->
-@stop
+@section('menu-in') header-in @stop
+
+@section('blog-c') class="current-menu-item" @stop
+
+@section('inicio') href="{{url('/#inicio')}}" @stop
+
+@section('incuba') href="{{url('/#incuba')}}" @stop
+
+@section('servicios') href="{{url('/#servicios')}}" @stop
+
+@section('casos') href="{{url('/#emprendedores')}}" @stop
+
+@section('blog') href="{{url('/#blog')}}" @stop
+
+@section('contacto') href="{{url('/#contactanos')}}" @stop
 
 @section('contenido')
     <section id="blog" class="section">
-	<div id="content">
-	    <div class="container">
+        <div id="content">
+            <div class="container">
                 <div class="row">
                     <div class="col-xs-12">
                         <hgroup class="section-title align-center">
-                            <h1>Blog</h1>
-                        </hgroup>	
+                            <h1>Blog @if($slug<>"todos") - {{$slug}} @endif</h1>
+                        </hgroup>
                     </div>
-                </div><!--/ .row-->
+                </div>
                 <div class="row">
-		    <section id="main" class="col-md-8">
+                    <section id="main" class="col-md-8">
                         @if(count($blogs) > 0)
                             @foreach($blogs as $blog)
                                 <article class="entry main-entry">
-				    <div class="entry-image">
-					<div class="work-item">
-                                            <img src="{{ URL::asset('Orb/images/entradas/'.$blog->imagen) }}" alt="" />
+                                    <div class="entry-image">
+                                        <div class="work-item">
+                                            {{HTML::image('Orb/images/entradas/'.$blog->imagen) }}
                                             <div class="image-extra">
-						<div class="extra-content">
-						    <div class="inner-extra">
-							<a class="single-image emo-icon" href="{{URL::asset('incuba/blog/'.$blog->id)}}"></a>
-						    </div><!--/ .inner-extra-->	
-						</div><!--/ .extra-content-->
-					    </div><!--/ .image-extra-->	
-					</div><!--/ .work-item-->	
-				    </div><!--/ .entry-image-->
+                                                <div class="extra-content">
+                                                    <div class="inner-extra">
+                                                        <a class="single-image emo-icon" href="{{URL::asset('blogs/'.$blog->id)}}"></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="entry-meta">
-                                        <?php
-                                            $date = date_create($blog->fecha_publicacion);
-                                            $fecha=date_format($date, 'd-m-Y');
-                                        ?>
-                                        <span class="date"><a href="#">{{$fecha}}</a></span>
-                                        <span>en <a href="#">{{$blog->nombre}}</a></span>
-                                        <span>por <a href="#">IncubaM&aacute;s</a></span>							
+                                        <span class="date"><a style="color: #5b5e60;">{{$blog->publicacion}}</a></span>
+                                        <span>en <a href="{{ URL::asset('blogs/categoria/'.substr(strip_tags(trim(str_replace(' ', '-', $blog->categoria->nombre), '-')), 0, 100).'/'.$blog->categoria->id) }}">{{$blog->categoria->nombre}}</a></span>
+                                        <span>por <a href="#">IncubaM&aacute;s</a></span>
                                         <span>{{$blog->comentarios}} Comentarios</span>
-                                    </div><!--/ .entry-meta-->
+                                    </div>
                                     <h2 class="entry-title">
-                                        <a href="{{URL::asset('incuba/blog/'.$blog->id)}}">{{$blog->titulo}}</a>
-                                    </h2><!--/ .entry-title-->
+                                        <a href="{{URL::asset('blogs/'.$blog->slug.'/'.$blog->id)}}">{{$blog->titulo}}</a>
+                                    </h2>
                                     <div class="entry-body">
-                                        <p>
-                                            {{substr ($blog->entrada , 0, 500)}}
-                                        </p>
-                                    </div><!--/ .entry-body-->
-                                    <strong>{{HTML::link('incuba/blog/'.$blog->id,'Leer mas',array('class'=>'button default'))}}</strong>
-                                </article><!--/ .entry-->
-                                
+                                        <p>{{substr ($blog->entrada , 0, 500)}}</p>
+                                    </div>
+                                    <strong>{{HTML::link('blogs/'.$blog->slug.'/'.$blog->id,'Leer mas',array('class'=>'button default'))}}</strong>
+                                    <span class="tags">
+                                        @foreach($blog->tags as $tag_blog)
+                                            <a href="{{ URL::asset('blogs/tag/'.substr(strip_tags(trim(str_replace(' ', '-', $tag_blog->nombre), '-')), 0, 100).'/'.$tag_blog->id) }}">{{$tag_blog->nombre}}</a>
+                                        @endforeach
+                                    </span>
+                                </article>
                             @endforeach
                         @else
                             No hay ninguna entrada registrada
                         @endif
-                        {{$blogs->links();}}					
-		    </section><!--/ #main-->
-                    <aside id="sidebar" class="col-md-4"> 
+                        {{$blogs->links();}}
+                    </section>
+                    <aside id="sidebar" class="col-md-4">
                         <div class="widget widget_search">
-                            {{ Form::open(array('url'=>'incuba/blogs/buscar', 'method' => 'post', 'id' => 'searchform') )}}
-				<p>
-				    {{Form::text('buscar', null, array('placeholder'=>'Buscar'))}}
-				    <button class="submit-search" type="submit">Buscar</button>
-				    <span class="message-error">{{$errors->first('buscar')}}</span>
-				</p>
-			    {{Form::close()}}	
-                        </div><!--/ .widget-->
+                            {{ Form::open(array('url'=>'blogs/buscar', 'method' => 'post', 'id' => 'searchform') )}}
+                                <p>
+                                    {{Form::text('buscar', null, array('placeholder'=>'Buscar'))}}
+                                    <button class="submit-search" type="submit">Buscar</button>
+                                    <span class="message-error">{{$errors->first('buscar')}}</span>
+                                </p>
+                            {{Form::close()}}
+                        </div>
                         <div class="widget widget_text">
-			    <a href="{{URL::asset('incuba/incubacion')}}"><img alt="" src="{{ URL::asset('accio/images/body/taller en linea INADEM.png') }}" style="width:100%;"/></a>
-			</div><!--/ .widget-->
+                            <a href="{{URL::asset('incubacion')}}"><img alt="" src="{{ URL::asset('accio/images/body/taller en linea INADEM.png') }}" style="width:100%;"/></a>
+                        </div>
                         <div class="widget widget_categories">
                             <h3 class="widget-title">Categorias</h3>
                             @if(count($categorias) > 0)
                                 <ul>
-                                @foreach($categorias as $categoria)
-                                    <li><a href="{{ URL::asset('incuba/blogs/categoria/'.$categoria->id) }}">{{$categoria->nombre}}</a></li>
-                                @endforeach
+                                    @foreach($categorias as $categoria)
+                                        <li><a href="{{ URL::asset('blogs/categoria/'.substr(strip_tags(trim(str_replace(' ', '-', $categoria->nombre), '-')), 0, 100).'/'.$categoria->id) }}">{{$categoria->nombre}}</a></li>
+                                    @endforeach
                                 </ul>
                             @else
                                 No hay ninguna categoria registrada
                             @endif
-                        </div><!--/ .widget-->
+                        </div>
                         <div class="widget widget_tag_cloud">
                             <h3 class="widget-title">Tags</h3>
                             @if(count($tags) > 0)
                                 <div class="tagcloud">
-                                @foreach($tags as $tag)
-                                    <a href="{{ URL::asset('incuba/blogs/tag/'.$tag->id) }}">{{$tag->nombre}}</a>
-                                @endforeach
+                                    @foreach($tags as $tag)
+                                        <a href="{{ URL::asset('blogs/tag/'.substr(strip_tags(trim(str_replace(' ', '-', $tag->nombre), '-')), 0, 100).'/'.$tag->id) }}">{{$tag->nombre}}</a>
+                                    @endforeach
                                 </div>
                             @else
                                 No hay ningun tag registrado
                             @endif
-                        </div><!--/ .widget-->
+                        </div>
                         <div class="widget widget_recent_posts">
-			    @if(count($recent_blogs) > 0)
+                            @if(count($recent_blogs) > 0)
                                 <h3 class="widget-title">Entradas Recientes</h3>
-				<section>
-                                @foreach($recent_blogs as $recent_blog)
-                                    <article class="entry"> 
-				    <div class="entry-image">
-					<a href="{{URL::asset('incuba/blog/'.$recent_blog->id)}}" class="single-image">
-					    <img alt="" src="{{ URL::asset('Orb/images/entradas/'.$recent_blog->imagen) }}" style="width:90px;"/>
-					</a>	
-				    </div><!--/ .entry-image-->
-				    <div class="post-holder">
-					<div class="entry-meta">
-					    <?php
-						$date = date_create($recent_blog->fecha_publicacion);
-						$fecha=date_format($date, 'd-m-Y');
-					    ?>
-					    <span class="date"><a href="#">{{$fecha}}</a></span>
-					    <span>{{$recent_blog->comentarios}} Comentarios</span>
-					</div><!--/ .entry-meta-->
-					<h6 class="entry-title">
-					    <a href="{{URL::asset('incuba/blog/'.$recent_blog->id)}}">{{$recent_blog->titulo}}</a>
-					</h6>
-				    </div><!--/ .post-holder-->
-				</article><!--/ .entry-->
-                                @endforeach
+                                <section>
+                                    @foreach($recent_blogs as $recent_blog)
+                                        <article class="entry">
+                                            <div class="entry-image">
+                                                <a href="{{URL::asset('blogs/'.$recent_blog->slug.'/'.$recent_blog->id)}}" class="single-image">
+                                                    <img alt="" src="{{ URL::asset('Orb/images/entradas/'.$recent_blog->imagen) }}" style="width:90px;"/>
+                                                </a>
+                                            </div>
+                                            <div class="post-holder">
+                                                <div class="entry-meta">
+                                                    <span class="date"><a style="color: #5b5e60;">{{$blog->publicacion}}</a></span>
+                                                    <span>{{$recent_blog->comentarios}} Comentarios</span>
+                                                </div>
+                                                <h6 class="entry-title">
+                                                    <a href="{{URL::asset('blogs/'.$recent_blog->slug.'/'.$recent_blog->id)}}">{{$recent_blog->titulo}}</a>
+                                                </h6>
+                                            </div>
+                                        </article>
+                                    @endforeach
                                 </section>
                             @endif
-			</div><!--/ .widget-->
+                        </div>
                         <div class="widget widget_archive">
                             @if(count($archive_blogs) > 0)
                                 <h3 class="widget-title">Archivos</h3>
-				<ul>
-                                @foreach($archive_blogs as $archive_blog)
-                                    <li><a href="{{URL::asset('incuba/blogs/archivos/'.$archive_blog->month.'-'.$archive_blog->year)}}">
-					<?php
-					    switch($archive_blog->month){
-						case 1: echo "Enero"; break;
-						case 2: echo "Febrero"; break;
-						case 3: echo "Marzo"; break;
-						case 4: echo "Abril"; break;
-						case 5: echo "Mayo"; break;
-						case 6: echo "Junio"; break;
-						case 7: echo "Julio"; break;
-						case 8: echo "Agosto"; break;
-						case 9: echo "Septiembre"; break;
-						case 10: echo "Octubre"; break;
-						case 11: echo "Noviembre"; break;
-						case 12: echo "Diciembre"; break;
-					    }
-					?>
-					{{$archive_blog->year}}
-				    </a></li>
-                                @endforeach
+                                <ul>
+                                    @for($i=0; $i<count($archive_blogs); $i++)
+                                        <li>
+                                            <a href="{{URL::asset('blogs/archivos/'.$archive_blogs[$i]['month'].'/'.$archive_blogs[$i]['year'])}}">
+                                                {{$archive_blogs[$i]['month']}} {{$archive_blogs[$i]['year']}}
+                                            </a>
+                                        </li>
+                                    @endfor
                                 </ul>
                             @endif
-                        </div><!--/ .widget-->
-                    </aside><!--/ #sidebar-->
-		</div><!--/ .row-->
-	    </div><!--/ .container-->
-	</div><!--/ #content-->
-    </section><!--/ .section-->
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </section>
 @stop

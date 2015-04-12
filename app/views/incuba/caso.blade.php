@@ -42,7 +42,7 @@
                             <li>
                                 <span class="project-meta-title">Categoria</span>
                                 <div class="project-meta-date">
-                                    {{HTML::link('nuestros-emprendedores/'.$caso->categoria,$caso->categoria)}}
+                                    {{HTML::link('nuestros-emprendedores/categoria/'.$caso->categoria.'/1',$caso->categoria)}}
                                 </div>
                             </li>
                             <li>
@@ -50,7 +50,7 @@
                                 <div class="project-meta-date">
                                     @if(count($caso->servicios) > 0)
                                         @foreach($caso->servicios as $servicio)
-                                            {{HTML::link('nuestros-emprendedores/servicio/'.$servicio->id.'/'.$servicio->nombre,$servicio->nombre)}},
+                                            {{HTML::link('nuestros-emprendedores/servicio/'.$servicio->nombre.'/'.$servicio->id,$servicio->nombre)}},
                                         @endforeach
                                     @endif
                                 </div>

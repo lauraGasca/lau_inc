@@ -314,15 +314,15 @@
                                         </div>
                                     </div>
                                     <div class="entry-meta">
-                                        <span class="date"><a href="#">{{$blog->publicacion}}</a></span>
+                                        <span class="date"><a style="color: #5b5e60;">{{$blog->publicacion}}</a></span>
                                         <span class="comments">{{$blog->comentarios}} Comentarios</span>
                                     </div>
                                     <h2 class="entry-title">
-                                        <a href="{{URL::asset('blogs/'.$blog->id)}}">{{$blog->titulo}}</a>
+                                        <a href="{{URL::asset('blogs/'.$blog->slug.'/'.$blog->id)}}">{{$blog->titulo}}</a>
                                     </h2>
                                     <div class="entry-body">
                                         <p>
-                                            {{substr (strip_tags($blog->entrada), 0, 220)}}...<strong> {{HTML::link('blogs/'.$blog->id,'Ver más', ['class'=>'azul'])}}</strong>
+                                            {{substr (strip_tags($blog->entrada), 0, 220)}}...<strong> {{HTML::link('blogs/'.$blog->slug.'/'.$blog->id,'Ver más', ['class'=>'azul'])}}</strong>
                                         </p>
                                     </div>
                                 </article>

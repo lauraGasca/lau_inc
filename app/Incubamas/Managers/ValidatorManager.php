@@ -25,6 +25,25 @@ class ValidatorManager
                     'recaptcha_response_field' => 'required|recaptcha',
                 ];
                 break;
+            case 'emprendedor':
+                $rules = [
+                    "name" => 'required|min:3|max:100',
+                    "email" => 'required|email',
+                    "telefono" => 'required|min:10|max:20',
+                    "asunto" => 'required|min:3',
+                    'recaptcha_response_field' => 'required|recaptcha',
+                ];
+                break;
+            case 'incubacion':
+                $rules = [
+                    "name" => 'required|min:3|max:100',
+                    "email" => 'required|email',
+                    "telefono" => 'required|min:10|max:20',
+                    "estado" => 'required',
+                    "proy" => 'required|min:3|max:100',
+                    'recaptcha_response_field' => 'required|recaptcha',
+                ];
+                break;
             case 'email':
                 $rules = [
                     'email' =>  'required|email|max:60|exists:users,email'

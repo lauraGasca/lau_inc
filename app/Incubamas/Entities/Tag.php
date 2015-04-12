@@ -1,5 +1,6 @@
 <?php namespace Incubamas\Entities;
  
-class Tag extends \Eloquent {
+class Tag extends \Eloquent
+{
 
 }

@@ -23,12 +23,12 @@
                     <div class="row">
                         <div class="col-xs-12">
                             <hgroup class="section-title align-center opacity">
-                                <h1>Nuestras empresas @if($filtro<>"todos") - {{$slug}} @endif </h1>
+                                <h1>Nuestras empresas @if($tipo<>"todos") - {{$slug}} @endif </h1>
                                 <h2>&quot;Si puedes so&ntilde;arlo, puedes hacerlo&quot;</h2>
                             </hgroup>
                         </div>
                     </div>
-                    @if($filtro=="todos")
+                    @if($tipo=="todos")
                         <div class="row">
                             <div class="col-xs-12">
                                 <ul id="portfolio-filter" class="portfolio-filter opacity">
@@ -66,7 +66,7 @@
                 @else
                     No hay ningun Casos de &Eacute;xito registrado
                 @endif
-                @if($filtro<>"todos")
+                @if($tipo<>"todos")
                     <br/><br/>
                     <div class="col-xs-12">
                         <div class="align-center opacity">

@@ -3,16 +3,14 @@
 Route::get('/', ['as' => 'home', 'uses' =>'IncubaController@home']);
 Route::post('contacto', ['as' => 'contacto', 'uses' =>'IncubaController@contacto']);
 Route::post('emprendedor', ['as' => 'contacto', 'uses' =>'IncubaController@emprendedor']);
-
-//Route::controller('incuba', 'IncubaController');
 Route::get('nuestros-emprendedores', ['as' => 'todos', 'uses' =>'IncubaController@casos']);
 Route::get('nuestros-emprendedores/{slug}/{id}', ['as' => 'emprendedores', 'uses' =>'IncubaController@caso']);
-Route::get('nuestros-emprendedores/{slug}', ['as' => 'categoria', 'uses' =>'IncubaController@caso_categoria']);
-Route::get('nuestros-emprendedores/servicio/{id}/{slug}', ['as' => 'servicio', 'uses' =>'IncubaController@caso_servicio']);
-
-//Categorias de los blogs
-Route::post('blogs/{slug}/{id}', ['as' => 'blog', 'uses' =>'IncubaController@getBlog']);
-
+Route::get('nuestros-emprendedores/{tipo}/{slug}/{id?}', ['as' => 'servicio', 'uses' =>'IncubaController@caso_tipo']);
+Route::get('blogs', ['as' => 'todos', 'uses' =>'IncubaController@blogs']);
+Route::get('blogs/{slug}/{id}', ['as' => 'blogs', 'uses' =>'IncubaController@blog']);
+Route::any('blogs/{tipo}/{slug?}/{id?}', ['as' => 'categoria', 'uses' =>'IncubaController@blog_tipo']);
+Route::get('incubacion', ['as' => 'incubacion', 'uses' =>'IncubaController@incubacion']);
+Route::post('incubacion', ['as' => 'incubacion', 'uses' =>'IncubaController@enviar_incubacion']);
 
 
 
@@ -39,6 +37,25 @@ App::missing(function($exception)
 
 Route::get('pruebas', function()
 {
+
+    /*$blogs = Blogs::all();
+    foreach($blogs as $blog){
+
+        $palabra = $blog->titulo;
+        $palabra = strip_tags($palabra);
+        $buscar = array("á", "é", "í", "ó", "ú", "ä", "ë", "ï", "ö", "ü", "à", "è", "ì", "ò", "ù", "ñ", ".", ";", ":", "¡", "!", "¿", "?", "/", "*", "+", "´", "{", "}", "¨", "â", "ê", "î", "ô", "û", "^", "#", "|", "°", "=", "[", "]", "<", ">", "`", "(", ")", "&", "%", "$", "¬", "@", "Á", "É", "Í", "Ó", "Ú", "Ä", "Ë", "Ï", "Ö", "Ü", "Â", "Ê", "Î", "Ô", "Û", "~", "À", "È", "Ì", "Ò", "Ù", "_", "\\", ",", "'", "²", "º", "ª");
+        $rempl = array("a", "e", "i", "o", "u", "a", "e", "i", "o", "u", "a", "e", "i", "o", "u", "n", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "a", "e", "i", "o", "u", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "A", "E", "I", "O", "U", "A", "E", "I", "O", "U", "A", "E", "I", "O", "U", "", "A", "E", "I", "O", "U", "_", " ", " ", " ", " ", " ", " ");
+        $palabra = str_replace($buscar, $rempl, $palabra);
+        $find = array(' ',);
+        $palabra = str_replace($find, '-', $palabra);
+        $palabra = preg_replace('/--+/', '-', $palabra);
+        $palabra = trim($palabra, '-');
+        $palabra = substr (strip_tags($palabra), 0, 100);
+
+        $blog->slug = $palabra;
+        $blog->save();
+    }*/
+
     /*$casos = Casos::all();
     foreach($casos as $caso){
 

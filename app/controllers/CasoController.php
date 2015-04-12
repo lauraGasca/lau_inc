@@ -28,7 +28,7 @@ class CasoController extends BaseController
 
     public function getIndex()
     {
-        $casos = $this->casosRepo->paginar();
+        $casos = $this->casosRepo->casos_paginados();
         $servicios_all = $this->servicioRepo->all_Order();
         $this->layout->content = View::make('casos.index', compact('casos', 'servicios_all'));
     }
