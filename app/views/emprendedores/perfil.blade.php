@@ -167,8 +167,10 @@
             <div role="widget" style="" class="powerwidget powerwidget-as-portlet powerwidget-as-portlet-cold-grey powerwidget-sortable" id="widget2" data-widget-editbutton="false">
                 <div role="content" class="inner-spacer nopadding">
                     <div class="portlet-big-icon">
-                        <i class="fa fa-child"></i><br/>
-                        <span style="font-size: 20px;">Mi Modelo de Negocio</span>
+                        <a href="{{url('plan-negocios/index/'.$emprendedor->id)}}" style="color: #FFF;">
+                            <i class="fa fa-child"></i><br/>
+                            <span style="font-size: 20px;">Mi Modelo de Negocio</span>
+                        </a>
                     </div>
                     <ul class="portlet-bottom-block">
                         <li class="col-md-6 col-sm-6 col-xs-6"><strong>5</strong>

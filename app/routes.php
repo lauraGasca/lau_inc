@@ -6,6 +6,7 @@ Route::post('emprendedor', ['as' => 'contacto', 'uses' =>'IncubaController@empre
 Route::get('nuestros-emprendedores', ['as' => 'todos', 'uses' =>'IncubaController@casos']);
 Route::get('nuestros-emprendedores/{slug}/{id}', ['as' => 'emprendedores', 'uses' =>'IncubaController@caso']);
 Route::get('nuestros-emprendedores/{tipo}/{slug}/{id?}', ['as' => 'servicio', 'uses' =>'IncubaController@caso_tipo']);
+Route::get('incuba/blog/{id}', ['as' => 'blog_ant', 'uses' =>'IncubaController@blog_ant']);
 Route::get('blogs', ['as' => 'todos', 'uses' =>'IncubaController@blogs']);
 Route::get('blogs/{slug}/{id}', ['as' => 'blogs', 'uses' =>'IncubaController@blog']);
 Route::any('blogs/{tipo}/{slug?}/{id?}', ['as' => 'categoria', 'uses' =>'IncubaController@blog_tipo']);

@@ -30,10 +30,10 @@ class IncubaController extends BaseController
         $manager = new ValidatorManager('contacto', Input::all());
         $manager->validar();
         $this->_mail('emails.estandar',
-            ['titulo'=>Input::get('name'), 'mensaje'=>Input::get('message'), 'seccion'=>"Datos de contacto", 'imagen' => false,
-            'tabla' => "<strong>Correo: </strong> ".Input::get('email')."<br/><br/><strong>Ciudad: </strong>".Input::get('city')],
+            ['titulo'=>Input::get('name').' escribe,', 'mensaje'=>Input::get('message'), 'seccion'=>"Datos de contacto", 'imagen' => false,
+            'tabla' => "<strong>Correo: </strong><br/> ".Input::get('email')."<br/><br/><strong>Ciudad: </strong><br/>".Input::get('city')],
             'Contacto desde Sitio Web', 'hola@incubamas.com', 'IncubaMas' );
-        return Redirect::to('incuba')->with(['confirm' => 'Gracias por contactarnos.']);
+        return Redirect::back()->with(['confirm' => 'Gracias por contactarnos.']);
     }
 
     public function caso($slug, $id)
@@ -65,11 +65,22 @@ class IncubaController extends BaseController
         $manager->validar();
 
         $this->_mail('emails.estandar',
-            ['titulo'=>Input::get('name'), 'mensaje'=>Input::get('asunto'), 'seccion'=>"Datos de contacto", 'imagen' => false,
-                'tabla' => "<strong>Correo: </strong> ".Input::get('email')."<br/><br/><strong>Telefono: </strong>".Input::get('telefono')],
+            ['titulo'=>Input::get('name').' escribe,', 'mensaje'=>Input::get('asunto'), 'seccion'=>"Datos de contacto", 'imagen' => false,
+                'tabla' => "<strong>Correo: </strong><br/> ".Input::get('email')."<br/><br/><strong>Telefono: </strong><br/>".Input::get('telefono')],
             'Contacto para '.Input::get('emprendedor'), 'emprendedores@incubamas.com', 'IncubaMas' );
 
         return Redirect::back()->with(array('confirm' => 'Gracias por contactarnos.'));
+    }
+
+    public function blog_ant($id)
+    {
+        $blog = $this->blogsRepo->blog($id);
+        $slug = $blog->slug;
+        $tags = $this->blogsRepo->tags();
+        $categorias = $this->blogsRepo->categorias();
+        $recent_blogs = $this->blogsRepo->entradas_recientes();
+        $archive_blogs = $this->blogsRepo->archive();
+        $this->layout->content = View::make('incuba.blog', compact('blog', 'tags', 'categorias', 'recent_blogs', 'archive_blogs', 'slug'));
     }
 
     public function blog($slug, $id)
@@ -136,8 +147,8 @@ class IncubaController extends BaseController
         $manager->validar();
 
         $this->_mail('emails.estandar',
-            ['titulo'=>Input::get('name'), 'mensaje'=>Input::get('proy')+' '+Input::get('dudas'), 'seccion'=>"Datos de contacto", 'imagen' => false,
-                'tabla' => "<strong>Correo: </strong> ".Input::get('email')."<br/><br/><strong>Telefono: </strong>".Input::get('telefono').'<br/><br/><strong>Estado: </strong> '.Input::get('estado')],
+            ['titulo'=>Input::get('name'), 'mensaje'=>Input::get('proy').' '.Input::get('dudas'), 'seccion'=>"Datos de contacto", 'imagen' => false,
+                'tabla' => "<strong>Correo: </strong><br/> ".Input::get('email')."<br/><br/><strong>Telefono: </strong><br/>".Input::get('telefono').'<br/><br/><strong>Estado: </strong><br/> '.Input::get('estado')],
             'Inscripcion al Taller de Incubacion en Linea', 'hola@incubamas.com', 'IncubaMas' );
 
         return Redirect::back()->with(array('confirm' => 'Gracias por contactarnos.'));

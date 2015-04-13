@@ -172,7 +172,6 @@ class LoginController extends BaseController
         $user = $this->userRepo->find($user_id);
         if($user->active == 0) {
             $user->active = 1;
-            $user->autentication = 'register';
             $user->save();
             return View::make('login.mensaje')->with(['titulo'=>'Activado', 'subtitulo' => 'Su cuenta ha sido activada.',
                 'recomendacion' => 'De click en el siguiente enlace para ingresar.','boton' =>'Ingresar']);
