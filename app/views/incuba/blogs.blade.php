@@ -36,7 +36,7 @@
                                             <div class="image-extra">
                                                 <div class="extra-content">
                                                     <div class="inner-extra">
-                                                        <a class="single-image emo-icon" href="{{URL::asset('blogs/'.$blog->id)}}"></a>
+                                                        <a class="single-image emo-icon" href="{{URL::asset('blogs/'.$blog->slug.'/'.$blog->id)}}"></a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -117,7 +117,7 @@
                                             </div>
                                             <div class="post-holder">
                                                 <div class="entry-meta">
-                                                    <span class="date"><a style="color: #5b5e60;">{{$blog->publicacion}}</a></span>
+                                                    <span class="date"><a style="color: #5b5e60;">{{$recent_blog->publicacion}}</a></span>
                                                     <span>{{$recent_blog->comentarios}} Comentarios</span>
                                                 </div>
                                                 <h6 class="entry-title">

@@ -307,7 +307,7 @@
                                             <div class="image-extra">
                                                 <div class="extra-content">
                                                     <div class="inner-extra">
-                                                        {{ HTML::link('incuba/blog/'.$blog->id, null, ['class'=>"single-image emo-icon"]) }}
+                                                        {{ HTML::link('blogs/'.$blog->slug.'/'.$blog->id, null, ['class'=>"single-image emo-icon"]) }}
                                                     </div>
                                                 </div>
                                             </div>
@@ -318,7 +318,7 @@
                                         <span class="comments">{{$blog->comentarios}} Comentarios</span>
                                     </div>
                                     <h2 class="entry-title">
-                                        <a href="{{URL::asset('blogs/'.$blog->slug.'/'.$blog->id)}}">{{$blog->titulo}}</a>
+                                        {{ HTML::link('blogs/'.$blog->slug.'/'.$blog->id, $blog->titulo)}}
                                     </h2>
                                     <div class="entry-body">
                                         <p>

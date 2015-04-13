@@ -24,13 +24,6 @@
                             <div class="entry-image">
                                 <div class="work-item">
                                     {{HTML::image('Orb/images/entradas/'.$blog->imagen) }}
-                                    <div class="image-extra">
-                                        <div class="extra-content">
-                                            <div class="inner-extra">
-                                                <a class="single-image emo-icon" href="{{URL::asset('blogs/'.$blog->id)}}"></a>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                             <div class="entry-meta">
@@ -53,7 +46,7 @@
                         </article>
                         <div class="col-xs-12">
                             <div class="align-center opacity">
-                            {{HTML::link('blogs','Ver todas las entradas',array('class'=>'button large default'))}}
+                                {{HTML::link('blogs','Ver todas las entradas',array('class'=>'button large default'))}}
                             </div>
                         </div>
                         <section id="comments">
@@ -63,11 +56,11 @@
                                     @foreach($blog->comentario as $comentario)
                                         <li class="comment">
                                             <article>
-                                                <div class="gravatar"><img alt="" src="{{ URL::asset('accio/images/avatars/'.$comentario->foto) }}" style="width:60px;"></div>
+                                                <div class="gravatar">{{HTML::image('accio/images/avatars/'.$comentario->foto, null, ['style'=>"width:60px;"]) }}</div>
                                                 <div class="comment-body">
                                                     <div class="comment-meta">
-                                                        <div class="comment-author"><h6><a href="#">{{$comentario->nombre}}</a></h6></div>
-                                                        <div class="comment-date"><a href="#">{{date_format(date_create($comentario->created_at), 'd-m-Y \a \l\a\s H:m:s')}}</a></div>
+                                                        <div class="comment-author"><h6><a style="color: #5b5e60;">{{$comentario->nombre}}</a></h6></div>
+                                                        <div class="comment-date"><a style="color: #5b5e60;">{{date_format(date_create($comentario->created_at), 'd-m-Y \a \l\a\s H:m:s')}}</a></div>
                                                     </div>
                                                     <p>{{$comentario->comentario}}</p>
                                                 </div>
@@ -81,46 +74,55 @@
                         </section>
                         <section id="respond">
                             <h3>Deja tu comentario</h3>
+                            @if(Session::get('confirm')||count($errors)>0)
+                                <script>
+                                    location.href = "#comments"
+                                </script>
+                            @endif
                             @if(Session::get('confirm'))
-                                {{Session::get('confirm')}}
+                                <p class="success">¡Gracias por tu comentario!<a class="alert-close" href="#"></a></p><br/>
+                            @endif
+                            @if(count($errors)>0)
+                                <p class="error">¡Por favor, revise los datos del formulario!<a class="alert-close" href="#"></a></p><br/>
                             @endif
                             <span class="message-error">{{$errors->first('entrada')}}</span>
-                            {{Form::open(array('url'=>'blogs/comentario', 'method' => 'post', 'class'=>'comments-form') )}}
+                            {{Form::open(['url'=>'blogs/comentario', 'method' => 'post', 'class'=>'comments-form'])}}
                                 {{Form::hidden('entrada_id',$blog->id)}}
                                 <p class="input-block">
-                                    {{Form::text('nombre', null, array('placeholder'=>'Nombre'))}}
+                                    {{Form::text('nombre', null, ['placeholder'=>'Nombre'])}}<br/>
+                                    <span class="message-error">{{$errors->first('nombre')}}</span>
                                 </p>
-                                <span class="message-error">{{$errors->first('nombre')}}</span>
                                 <p class="input-block">
-                                    {{ Form::textarea('comentario', null, array('placeholder'=>'comentario')) }}
-                                </p><br/>
+                                    {{ Form::textarea('comentario', null, ['placeholder'=>'comentario']) }}<br/>
+                                    <span class="message-error">{{$errors->first('comentario')}}</span>
+                                </p>
                                 <p class="input-block">
                                     <span class="col-md-2 align-center">
-                                        <img alt="" src="{{ URL::asset('accio/images/avatars/avatar1_big.png') }}" style="width:60px;">
-                                        <br/>{{Form::radio('foto', 'avatar1_big.png', true)}}
+                                        {{HTML::image('accio/images/avatars/avatar1_big.png', null, ['style'=>"width:60px;"])}}<br/>
+                                        {{Form::radio('foto', 'avatar1_big.png', true)}}
                                     </span>
                                     <span class="col-md-2 align-center">
-                                        <img alt="" src="{{ URL::asset('accio/images/avatars/avatar2_big.png') }}" style="width:60px;">
-                                        <br/>{{Form::radio('foto', 'avatar2_big.png')}}
+                                        {{HTML::image('accio/images/avatars/avatar2_big.png', null, ['style'=>"width:60px;"])}}<br/>
+                                        {{Form::radio('foto', 'avatar2_big.png')}}
                                     </span>
                                     <span class="col-md-2 align-center">
-                                        <img alt="" src="{{ URL::asset('accio/images/avatars/avatar3_big.png') }}" style="width:60px;">
-                                        <br/>{{Form::radio('foto', 'avatar3_big.png')}}
+                                        {{HTML::image('accio/images/avatars/avatar3_big.png', null, ['style'=>"width:60px;"])}}<br/>
+                                        {{Form::radio('foto', 'avatar3_big.png')}}
                                     </span>
                                     <span class="col-md-2 align-center">
-                                        <img alt="" src="{{ URL::asset('accio/images/avatars/avatar4_big.png') }}" style="width:60px;">
-                                        <br/>{{Form::radio('foto', 'avatar4_big.png')}}
+                                        {{HTML::image('accio/images/avatars/avatar4_big.png', null, ['style'=>"width:60px;"])}}<br/>
+                                        {{Form::radio('foto', 'avatar4_big.png')}}
                                     </span>
                                     <span class="col-md-2 align-center">
-                                        <img alt="" src="{{ URL::asset('accio/images/avatars/avatar5_big.png') }}" style="width:60px;">
-                                        <br/>{{Form::radio('foto', 'avatar5_big.png')}}
+                                        {{HTML::image('accio/images/avatars/avatar5_big.png', null, ['style'=>"width:60px;"])}}<br/>
+                                        {{Form::radio('foto', 'avatar5_big.png')}}
                                     </span>
-                                </p><br/><br/><br/><br/>
-                                <span class="message-error">{{$errors->first('message')}}</span>
+                                </p>
+                                <br/><br/><br/><br/>
                                 <p class="input-block">
                                     {{Form::captcha()}}
+                                    <span class="message-error">{{$errors->first('recaptcha_response_field')}}</span><br/>
                                 </p>
-                                <span class="message-error">{{$errors->first('recaptcha_response_field')}}</span>
                                 <p class="input-block">
                                     <button class="button default middle" type="submit" id="submit">Enviar comentario</button>
                                 </p>
@@ -129,9 +131,9 @@
 		            </section>
                     <aside id="sidebar" class="col-md-4">
                         <div class="widget widget_search">
-                            {{ Form::open(array('url'=>'blogs/buscar', 'method' => 'post', 'id' => 'searchform') )}}
+                            {{ Form::open(['url'=>'blogs/buscar', 'method' => 'post', 'id' => 'searchform'])}}
                             <p>
-                                {{Form::text('buscar', null, array('placeholder'=>'Buscar'))}}
+                                {{Form::text('buscar', null, ['placeholder'=>'Buscar'])}}
                                 <button class="submit-search" type="submit">Buscar</button>
                                 <span class="message-error">{{$errors->first('buscar')}}</span>
                             </p>
