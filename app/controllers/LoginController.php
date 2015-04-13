@@ -1,15 +1,15 @@
 <?php
 
-use \Incubamas\Managers\FacebookManager;
-use \Incubamas\Managers\EmprendedorManager;
+use Incubamas\Repositories\UserRepo;
+use Incubamas\Repositories\EmprendedoresRepo;
+
+use Incubamas\Managers\FacebookManager;
+use Incubamas\Managers\EmprendedorManager;
 use Incubamas\Managers\UserManager;
-use \Incubamas\Repositories\UserRepo;
-use \Incubamas\Repositories\EmprendedoresRepo;
-use \Incubamas\Managers\ValidatorManager;
+use Incubamas\Managers\ValidatorManager;
 
 class LoginController extends BaseController
 {
-	
     protected $layout = 'layouts.login';
     protected $userRepo;
     protected $emprendedoreRepo;
@@ -21,21 +21,28 @@ class LoginController extends BaseController
         $this->emprendedoreRepo = $emprendedoresRepo;
     }
     
-    public function getIndex()
+    public function getIndex($error=null)
     {
-        if (Auth::check())
-        {
-            if(Auth::user()->active == 1)
-                switch(Auth::user()->type_id)
-                {
-                    case 1: case 2: return Redirect::to('emprendedores');
-                    case 3: return Redirect::to('emprendedores/perfil/' . $this->emprendedoreRepo->emprendedorid(Auth::user()->id));
-                    case 4: return Redirect::to('blog');
-                    default: return Redirect::back()->with(array('confirm' => 'No tiene permiso para acceder.'));
-                }
-            Redirect::back()->with(array('confirm' => 'Su usuario no ha sido activado.'));
+        if($error!=null) {
+            $this->layout->content = View::make('login.index', compact("error"));
+        }else {
+            if (Auth::check()) {
+                if (Auth::user()->active == 1)
+                    switch (Auth::user()->type_id) {
+                        case 1:
+                        case 2:
+                            return Redirect::to('emprendedores');
+                        case 3:
+                            return Redirect::to('emprendedores/perfil/' . $this->emprendedoreRepo->emprendedorid(Auth::user()->id));
+                        case 4:
+                            return Redirect::to('blog');
+                        default:
+                            return Redirect::back()->with(array('confirm' => 'No tiene permiso para acceder.'));
+                    }
+                Redirect::back()->with(array('confirm' => 'Su usuario no ha sido activado.'));
+            }
+            $this->layout->content = View::make('login.index');
         }
-        $this->layout->content = View::make('login.index');
     }
 
     public function postLogin()
@@ -82,7 +89,7 @@ class LoginController extends BaseController
                 $user->facebook_id = $profile->identifier;
                 $user->save();
             }
-            if($user->activate == 1){
+            if($user->active == 1) {
                 Auth::login($user);
                 $this->_verificat();
                 switch(Auth::user()->type_id)
@@ -93,6 +100,12 @@ class LoginController extends BaseController
                 }
                 return '<html><head></head><body><script>
                     opener.location.href="' . url($direccion) . '"
+                    window.close()
+                </script></body></html>';
+            }else {
+                Session::put('resultado', 'error');
+                return '<html><head></head><body><script>
+                    opener.location.href="' . url('sistema') . '"
                     window.close()
                 </script></body></html>';
             }
@@ -109,13 +122,18 @@ class LoginController extends BaseController
             $emprendedor = $this->emprendedoreRepo->newEmprendedor();
             $manager = new EmprendedorManager($emprendedor, ['user_id' => $user->id, 'genero'=> $genero]);
             $manager->save();
-            //Enviar correo para acitvar usuario y regresar un mensaje de que espere el correo de activacion
+
+            $this->_mail('emails.estandar',
+                ['titulo'=>'Nuevo Registro, ', 'mensaje'=>$profile->firstName.' '.$profile->lastName.' se ha registrado mediante Facebook con el correo '.$profile->email,
+                    'seccion'=>"Por favor indique la accion a tomar", 'imagen' => false,
+                    'tabla' => "<div><a href=\"".url('sistema/confirmar/'.$user->id)."\" type='button' class='btn btn-success' style='text-decoration:none;'>Confirmar</a>&nbsp;&nbsp;&nbsp;<a href=\"".url('sistema/cancelar/'.$user->id)."\" type='button' class='btn btn-danger' style='text-decoration:none;'>Cancelar</a></div>"],
+                'Nuevo Usuario', 'hola@incubamas.com', 'IncubaMas' );
+            Session::put('resultado', 'correcto');
             return '<html><head></head><body><script>
                     opener.location.href="' . url('sistema') . '"
                     window.close()
                 </script></body></html>';
         }
-
     }
     
     public function getRegistrar()
@@ -306,5 +324,14 @@ class LoginController extends BaseController
 
             }
         }
+    }
+
+    private function _mail($plantilla, $variables, $asunto, $correo, $nombre)
+    {
+        Mail::send($plantilla, $variables,
+            function ($message) use ($asunto, $correo, $nombre){
+                $message->subject($asunto);
+                $message->to($correo, $nombre);
+            });
     }
 }

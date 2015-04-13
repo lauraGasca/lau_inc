@@ -7,22 +7,40 @@
 @stop
 
 @section('contenido')
-    <!-- BEGIN ERROR BOX -->
-    @if(Session::has('login_errors'))
-        <div class="alert alert-danger">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <h4>¡Error!</h4>
-            Nombre de usuario y/o contrase&ntilde;a incorrectos
-        </div>
+    @if(Session::has('resultado'))
+        @if(Session::get('resultado')=='error')
+            <div class="alert alert-danger">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <h4>¡Error!</h4>
+                Su usuario no ha sido activado.
+            </div>
+        @else
+            @if(Session::get('resultado')=='correcto')
+                <div class="alert alert-success">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <h4>¡Registro Correcto!</h4>
+                    Recibira un correo cuando activemos su usuario y pueda ingresar al sistema.
+                </div>
+            @endif
+        @endif
+
+    @else
+        @if(Session::get('confirm'))
+            <div class="alert alert-danger">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <h4>¡Error!</h4>
+                {{Session::get('confirm')}}
+            </div>
+        @else
+            @if(Session::has('login_errors'))
+                <div class="alert alert-danger">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <h4>¡Error!</h4>
+                    Nombre de usuario y/o contrase&ntilde;a incorrectos
+                </div>
+            @endif
+        @endif
     @endif
-    @if(Session::get('confirm'))
-        <div class="alert alert-danger">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <h4>¡Error!</h4>
-            {{Session::get('confirm')}}
-        </div>
-    @endif
-    <!-- END ERROR BOX -->
     {{Form::open(array('url'=>'sistema/login','method'=>'post'))}}
         {{Form::text('user', '',['placeholder'=>'Nombre de usuario','class'=>'input-field form-control user'])}}
         <br/>

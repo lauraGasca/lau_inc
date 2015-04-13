@@ -13,6 +13,7 @@ class IncubaController extends BaseController
 
     public function __construct(CasosRepo $casosRepo, BlogsRepo $blogsRepo)
     {
+        $this->beforeFilter('csrf', array('on' => array('post', 'put', 'patch', 'delete')));
         $this->casosRepo = $casosRepo;
         $this->blogsRepo = $blogsRepo;
     }
