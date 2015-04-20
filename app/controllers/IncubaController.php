@@ -74,23 +74,41 @@ class IncubaController extends BaseController
 
     public function blog_ant($id)
     {
-        $blog = $this->blogsRepo->blog($id);
-        $slug = $blog->slug;
-        $tags = $this->blogsRepo->tags();
-        $categorias = $this->blogsRepo->categorias();
-        $recent_blogs = $this->blogsRepo->entradas_recientes();
-        $archive_blogs = $this->blogsRepo->archive();
-        $this->layout->content = View::make('incuba.blog', compact('blog', 'tags', 'categorias', 'recent_blogs', 'archive_blogs', 'slug'));
+        if (Auth::check()&&(Auth::user()->type_id == 1 || Auth::user()->type_id == 2 || Auth::user()->type_id == 4))
+            $blog = $this->blogsRepo->blogAdmin($id);
+        else
+            $blog = $this->blogsRepo->blog($id);
+
+        if(count($blog)>0)
+        {
+            $slug = $blog->slug;
+            $tags = $this->blogsRepo->tags();
+            $categorias = $this->blogsRepo->categorias();
+            $recent_blogs = $this->blogsRepo->entradas_recientes();
+            $archive_blogs = $this->blogsRepo->archive();
+            $this->layout->content = View::make('incuba.blog', compact('blog', 'tags', 'categorias', 'recent_blogs', 'archive_blogs', 'slug'));
+        }
+        else
+            return Response::view('errors.missing', array(), 404);
     }
 
     public function blog($slug, $id)
     {
-        $blog = $this->blogsRepo->blog($id);
-        $tags = $this->blogsRepo->tags();
-        $categorias = $this->blogsRepo->categorias();
-        $recent_blogs = $this->blogsRepo->entradas_recientes();
-        $archive_blogs = $this->blogsRepo->archive();
-        $this->layout->content = View::make('incuba.blog', compact('blog', 'tags', 'categorias', 'recent_blogs', 'archive_blogs', 'slug'));
+        if (Auth::check()&&(Auth::user()->type_id == 1 || Auth::user()->type_id == 2 || Auth::user()->type_id == 4))
+            $blog = $this->blogsRepo->blogAdmin($id);
+        else
+            $blog = $this->blogsRepo->blog($id);
+
+        if(count($blog)>0)
+        {
+            $tags = $this->blogsRepo->tags();
+            $categorias = $this->blogsRepo->categorias();
+            $recent_blogs = $this->blogsRepo->entradas_recientes();
+            $archive_blogs = $this->blogsRepo->archive();
+            $this->layout->content = View::make('incuba.blog', compact('blog', 'tags', 'categorias', 'recent_blogs', 'archive_blogs', 'slug'));
+        }
+        else
+            return Response::view('errors.missing', array(), 404);
     }
 
     public function blogs()
@@ -127,6 +145,7 @@ class IncubaController extends BaseController
                 $comentario = $this->blogsRepo->newComentario();
                 $manager = new ComentarioManager($comentario, Input::all());
                 $manager->save();
+                $this->blogsRepo->actualizaComentarios($comentario->entrada_id);
                 return Redirect::back()->with(array('confirm' => 'Gracias por tu comentario.'));
         }
         $tags = $this->blogsRepo->tags();

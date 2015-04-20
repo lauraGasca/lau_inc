@@ -8,7 +8,7 @@
         <meta name="description" content="Incubadora de Negocios">
         <meta name="author" content="Incubamas">
         <!-- Favicons================================================== -->
-        <link rel="shortcut icon" href="{{ URL::asset('accio/images/favicon.ico') }}">
+        <link rel="shortcut icon" href="{{{asset('accio/images/favicon.ico')}}}">
         <!-- CSS================================================== -->
         {{ HTML::style('accio/css/style.css') }}
         {{ HTML::style('accio/css/grid.css') }}

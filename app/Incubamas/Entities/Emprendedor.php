@@ -4,7 +4,7 @@ class Emprendedor extends \Eloquent
 {
     protected $table = 'emprendedores';
 
-    protected $guarded = ['id'];
+    protected $guarded = ['id', 'nombre', 'apellidos','imagen'];
 
     public function usuario()
     {
@@ -16,9 +16,20 @@ class Emprendedor extends \Eloquent
         return $this->hasMany('Empresa');
     }
 
-    public function getFullNameAttribute()
+    public function setFechaNacimientoAttribute($value)
     {
-        return $this->apellidos.' '.$this->name;
+        if(!empty($value))
+        {
+            $this->attributes['fecha_nacimiento'] = date_format(date_create(substr($value, 3, 2) . '/' . substr($value, 0, 2) . '/' . substr($value, 6, 4)), 'Y-m-d');
+        }
+    }
+
+    public function setFechaIngresoAttribute($value)
+    {
+        if(!empty($value))
+        {
+            $this->attributes['fecha_ingreso'] = date_format(date_create(substr($value, 3, 2) . '/' . substr($value, 0, 2) . '/' . substr($value, 6, 4)), 'Y-m-d');
+        }
     }
 
     public function getEdadAttribute()
@@ -39,5 +50,11 @@ class Emprendedor extends \Eloquent
     public function getIngresoAttribute()
     {
         return strftime("%d/%b/%Y", strtotime(date_format(date_create($this->fecha_ingreso), 'd-m-Y')));
+    }
+
+    //borrar
+    public function getFullNameAttribute()
+    {
+        return $this->apellidos.' '.$this->name;
     }
 }

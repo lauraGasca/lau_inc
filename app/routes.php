@@ -116,4 +116,5 @@ Route::get('pruebas', function()
     $imagen = false;
     $tabla = "<strong>Nombre de usuario: </strong>Este es su nombre<br/><br/><strong>Contrase&ntilde;a: </strong>contraseña";
     return View::make('emails.estandar', compact('titulo', 'mensaje', 'seccion', 'imagen', 'tabla'));*/
+    return View::make('emails.incubacion');
 });

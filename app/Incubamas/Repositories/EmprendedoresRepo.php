@@ -23,7 +23,7 @@ class EmprendedoresRepo extends BaseRepo
         return Emprendedor::with('usuario')
         ->with(['empresas' => function($query)
         { $query->orderBy('created_at', 'desc'); }])
-        ->orderBy('fecha_ingreso', 'desc')->paginate(12);;
+        ->orderBy('created_at', 'desc')->paginate(12);;
     }
 
     public function burcarEmprendedores($parametro)

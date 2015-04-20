@@ -1,12 +1,11 @@
-<?php
+<?php namespace Incubamas\Repositories;
 
-namespace Incubamas\Repositories;
-
-abstract class BaseRepo {   
+abstract class BaseRepo
+{
     protected $model;
     
-    public function __construct(){
-        
+    public function __construct()
+    {
         $this->model = $this->getModel();
     }
     

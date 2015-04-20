@@ -17,8 +17,13 @@ class BlogsRepo extends BaseRepo
         return Blogs::with('tags')->with('comentario')->with('categoria')
             ->where('id', '=', $id)
             ->where('fecha_publicacion', '<=', date('Y-m-d'))
-            ->where('activo', '=', 1)
-            ->orderBy('fecha_publicacion', 'des')->first();
+            ->where('activo', '=', 1)->first();
+    }
+
+    public function blogAdmin($id)
+    {
+        return Blogs::with('tags')->with('comentario')->with('categoria')
+            ->where('id', '=', $id)->first();
     }
 
     public function blogs()
@@ -134,6 +139,13 @@ class BlogsRepo extends BaseRepo
     public function newComentario()
     {
         return new Comentarios();
+    }
+
+    public function actualizaComentarios($blog_id)
+    {
+        $blog = Blogs::find($blog_id);
+        $blog->comentarios++;
+        $blog->save();
     }
     
 }

@@ -8,7 +8,7 @@ use Incubamas\Repositories\PagoRepo;
 use Incubamas\Repositories\DocumentoRepo;
 use Incubamas\Repositories\ChatRepo;
 use Incubamas\Repositories\MensajeRepo;
-
+use Incubamas\Repositories\UserRepo;
 use Incubamas\Repositories\EmprendedoresRepo;
 use Incubamas\Managers\ValidatorManager;
 
@@ -16,6 +16,7 @@ class EmprendedoresController extends BaseController
 {
     protected $layout = 'layouts.sistema';
     protected $asesoresRepo;
+    protected $userRepo;
     protected $eventoRepo;
     protected $horariosRepo;
     protected $emprendedoresRepo;
@@ -26,7 +27,8 @@ class EmprendedoresController extends BaseController
 
     public function __construct(CalendarioRepo $calendarioRepo, AsesoresRepo $asesoresRepo,
                                 EventoRepo $eventoRepo, HorariosRepo $horariosRepo, EmprendedoresRepo $emprendedoresRepo,
-                                PagoRepo $pagoRepo, DocumentoRepo $documentoRepo, ChatRepo $chatRepo, MensajeRepo $mensajeRepo)
+                                PagoRepo $pagoRepo, DocumentoRepo $documentoRepo, ChatRepo $chatRepo, MensajeRepo $mensajeRepo,
+                                UserRepo $userRepo)
     {
         $this->beforeFilter('auth');
         $this->beforeFilter('csrf', array('on' => array('put', 'patch', 'delete')));
@@ -39,6 +41,25 @@ class EmprendedoresController extends BaseController
         $this->documentoRepo = $documentoRepo;
         $this->chatRepo = $chatRepo;
         $this->mensajeRepo = $mensajeRepo;
+        $this->userRepo = $userRepo;
+    }
+
+    public function getActivar($user_id)
+    {
+        $this->_soloAsesores();
+        $user = $this->userRepo->find($user_id);
+        if($user->active == 0) {
+            $user->active = 1;
+            $user->save();
+            $this->_mail('emails.estandar',
+                ['titulo'=>'¡Tu cuenta ha sido activada! ', 'mensaje'=>'Gracias por registrarte, a partir de ahora ya puedes ingresar con el usuario y contrase&ntilde;a que registraste.',
+                    'seccion'=>"Activar Usuario", 'imagen' => false,
+                    'tabla' => "Si desea activar al usuario de click en el siguiente enlace <br/><div align='center'><a href=\"".url('sistema/activar/'.$user->id)."\"
+                    style='text-decoration:none; padding: 14px 24px; font-size: 21px;color: #fff; background-color: #5cb85c; display: inline-block; margin-bottom: 0;font-weight: 400; line-height: 1.42857143; text-align: center; white-space: nowrap; vertical-align: middle; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; background-image: none; border: 1px solid transparent; border-radius: 4px;'>Activar</a></div>"],
+                'Cuenta Activada', $user->email, 'IncubaMas' );
+        }else
+            return View::make('login.mensaje')->with(['titulo'=>'Error', 'subtitulo' => 'Esta cuenta ya esta activa.',
+                'recomendacion' => 'De click en el siguiente enlace para ingresar.','boton' =>'Ingresar']);
     }
 
 
@@ -167,71 +188,10 @@ class EmprendedoresController extends BaseController
     {
         if (Auth::user()->type_id != 1 && Auth::user()->type_id != 2)
             return Redirect::to('sistema');
-        $dataUpload = array(
-            "nombre" => Input::get("nombre"),
-            "apellido" => Input::get("apellido"),
-            "about" => Input::get("about"),
-            "programa" => Input::get("programa"),
-            "estatus" => Input::get("estatus"),
-            "genero" => Input::get("genero"),
-            "fecha_nac" => Input::get("fecha_nac"),
-            "curp" => Input::get("curp"),
-            "lugar_nac" => Input::get("lugar_nac"),
-            "imagen" => Input::get("imagen"),
-            "fecha_ing" => Input::get("fecha_ing"),
-            "calle" => Input::get("calle"),
-            "num_ext" => Input::get("num_ext"),
-            "num_int" => Input::get("num_int"),
-            "colonia" => Input::get("colonia"),
-            "cp" => Input::get("cp"),
-            "estado" => Input::get("estado"),
-            "municipio" => Input::get("municipio"),
-            "email" => Input::get("email"),
-            "estado_civil" => Input::get("estado_civil"),
-            "tel_fijo" => Input::get("tel_fijo"),
-            "tel_movil" => Input::get("tel_movil"),
-            "salario" => Input::get("salario"),
-            "escolaridad" => Input::get("escolaridad"),
-            "trabajando" => Input::get("trabajando"),
-            "personas" => Input::get("personas"),
-            "emprendido" => Input::get("emprendido"),
-            "veces" => Input::get("veces")
-        );
-        $rules = array(
-            "nombre" => 'required|min:3|max:50',
-            "apellido" => 'required|min:3|max:50',
-            "programa" => 'required|min:3|max:50',
-            "about" => 'min:3|max:500',
-            "estatus" => 'required|min:3|max:10',
-            "genero" => 'min:1|max:1',
-            "curp" => 'required|min:3|max:19|unique:emprendedores,curp',
-            "lugar_nac" => 'min:3|max:50',
-            "calle" => 'required|min:3|max:50',
-            "num_ext" => 'required|min:1|max:50',
-            "num_int" => 'min:1|max:50',
-            "colonia" => 'required|min:3|max:50',
-            "cp" => 'required|min:3|max:10',
-            "estado" => 'required|min:3|max:50',
-            "municipio" => 'required|min:3|max:50',
-            "email" => 'min:3|email|max:50',
-            "estado_civil" => 'min:3|max:50',
-            "tel_fijo" => 'min:3|max:20',
-            "tel_movil" => 'min:3|max:20',
-            "salario" => 'min:3|max:50',
-            "escolaridad" => 'min:3|max:50',
-            "trabajando" => 'min:3|max:50',
-            "personas" => 'min:1|max:10',
-            "emprendido" => 'required|min:1|max:2',
-            "veces" => 'min:1|max:10',
-            "imagen" => 'image',
-            "fecha_nac" => 'required',
-            "fecha_ing" => 'required'
-        );
-        $messages = array('unique' => 'El campo ya fue usado',);
-        $validation = Validator::make(Input::all(), $rules, $messages);
-        if ($validation->fails())
-            return Redirect::back()->withErrors($validation)->withInput();
-        else {
+        $manager = new ValidatorManager('user', Input::all());
+        $manager->validar();
+        return Redirect::back()->with(array('confirm' => 'Se ha registrado correctamente.'));
+        /*
             $uno = Input::get("nombre");
             $p_uno = explode(" ", $uno);
             $dos = Input::get("apellido");
@@ -301,7 +261,7 @@ class EmprendedoresController extends BaseController
                     return Redirect::to('emprendedores')->with(array('confirm' => 'Lo sentimos. No se ha registrado correctamente.'));
             } else
                 return Redirect::to('emprendedores')->with(array('confirm' => 'Lo sentimos. No se ha registrado correctamente.'));
-        }
+        }*/
     }
 
     public function getEditar($emprendedor_id)

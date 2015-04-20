@@ -125,9 +125,11 @@ class LoginController extends BaseController
 
             $this->_mail('emails.estandar',
                 ['titulo'=>'Nuevo Registro, ', 'mensaje'=>$profile->firstName.' '.$profile->lastName.' se ha registrado mediante Facebook con el correo '.$profile->email,
-                    'seccion'=>"Por favor indique la accion a tomar", 'imagen' => false,
-                    'tabla' => "<div><a href=\"".url('sistema/confirmar/'.$user->id)."\" type='button' class='btn btn-success' style='text-decoration:none;'>Confirmar</a>&nbsp;&nbsp;&nbsp;<a href=\"".url('sistema/cancelar/'.$user->id)."\" type='button' class='btn btn-danger' style='text-decoration:none;'>Cancelar</a></div>"],
+                    'seccion'=>"Activar Usuario", 'imagen' => false,
+                    'tabla' => "Si desea activar al usuario de click en el siguiente enlace <br/><div align='center'><a href=\"".url('emprendedores/activar/'.$user->id)."\"
+                    style='text-decoration:none; padding: 14px 24px; font-size: 21px;color: #fff; background-color: #5cb85c; display: inline-block; margin-bottom: 0;font-weight: 400; line-height: 1.42857143; text-align: center; white-space: nowrap; vertical-align: middle; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; background-image: none; border: 1px solid transparent; border-radius: 4px;'>Activar</a></div>"],
                 'Nuevo Usuario', 'hola@incubamas.com', 'IncubaMas' );
+
             Session::put('resultado', 'correcto');
             return '<html><head></head><body><script>
                     opener.location.href="' . url('sistema') . '"
@@ -155,30 +157,17 @@ class LoginController extends BaseController
         $manager = new EmprendedorManager($emprendedor, ['user_id'=>$user->id, 'fecha_nacimiento' => $this->_mysqlformat(Input::get('fecha_nacimiento'))]);
         $manager->save();
 
-        $email = $user->email;
-        $nombre = $user->nombre." ".$user->apellidos;
-        Mail::send('emails.confirmar',
-            ['nombre' => $nombre, 'id' => $user->id, 'user' => $user->user, 'password' => $password, ],
-            function ($message) use ($email, $nombre)
-            {
-                $message->subject('Confirmación de Cuenta');
-                $message->to($email, $nombre);
-            });
+        $this->_mail('emails.estandar',
+            ['titulo'=>'Nuevo Registro, ', 'mensaje'=>Input::get('nombre')." ".Input::get('apellidos').' se ha registrado en la pagina con el correo '.Input::get('email'),
+                'seccion'=>"Activar Usuario", 'imagen' => false,
+                'tabla' => "Si desea activar al usuario de click en el siguiente enlace <br/><div align='center'><a href=\"".url('emprendedores/activar/'.$user->id)."\"
+                    style='text-decoration:none; padding: 14px 24px; font-size: 21px;color: #fff; background-color: #5cb85c; display: inline-block; margin-bottom: 0;font-weight: 400; line-height: 1.42857143; text-align: center; white-space: nowrap; vertical-align: middle; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; background-image: none; border: 1px solid transparent; border-radius: 4px;'>Activar</a></div>"],
+            'Nuevo Usuario', 'hola@incubamas.com', 'IncubaMas' );
+
         return Redirect::back()->with('confirm', 'Revise su correo para poder acceder a su cuenta.'.$password);
     }
 
-    public function getConfirmar($user_id)
-    {
-        $user = $this->userRepo->find($user_id);
-        if($user->active == 0) {
-            $user->active = 1;
-            $user->save();
-            return View::make('login.mensaje')->with(['titulo'=>'Activado', 'subtitulo' => 'Su cuenta ha sido activada.',
-                'recomendacion' => 'De click en el siguiente enlace para ingresar.','boton' =>'Ingresar']);
-        }else
-            return View::make('login.mensaje')->with(['titulo'=>'Error', 'subtitulo' => 'Esta cuenta ya esta activa.',
-                'recomendacion' => 'De click en el siguiente enlace para ingresar.','boton' =>'Ingresar']);
-    }
+
     
     public function getOlvidar()
     {
