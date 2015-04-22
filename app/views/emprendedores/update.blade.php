@@ -59,7 +59,7 @@
                 <div class="tabs-white">
                     <ul id="myTab" class="nav nav-tabs nav-justified">
                         <li class="active"><a href="#emprendedor" data-toggle="tab">Emprendedor</a></li>
-                        <li><a href="#empresa" data-toggle="tab">Empresas</a></li>
+                        <li><a href="#empresas" data-toggle="tab">Empresas</a></li>
                         <li><a href="#socios" data-toggle="tab">Socios</a></li>
                         <li><a href="#documentos" data-toggle="tab">Documentos</a></li>
                     </ul>
@@ -308,7 +308,7 @@
                             {{Form::close()}}
                         </div>
                         <!----------------------------------------Empresas---------------------------------------->
-                        <div class="tab-pane" id="empresa">
+                        <div class="tab-pane" id="empresas">
                             <div class="profile-header">
                                 Editar Empresas&nbsp;&nbsp;
                                 {{HTML::link('emprendedores/crearempresa/'.$emprendedor->id,'Añadir Empresa',array('class'=>'btn btn-default', 'style'=>'color:#FFF'))}}
@@ -680,7 +680,7 @@
                                 </table>
                             </fieldset>
                         </div>
-                                <!----------------------------------------Documentos---------------------------------------->
+                        <!----------------------------------------Documentos---------------------------------------->
                         <div class="tab-pane" id="documentos">
                             <div class="profile-header">
                                 Editar Documentos
@@ -868,6 +868,7 @@
                 </div>
             </div>
         </div>
+    </div>
         <script>
             function evento(i) {
                 switch (i) {
@@ -962,47 +963,40 @@
         <!-- End .powerwidget -->
         @stop
 
-        @section('scripts')
-            @parent
-                    <!--Forms-->
-            <script type="text/javascript" src="{{ URL::asset('Orb/js/scripts.js') }}"></script>
-            <script type="text/javascript" src="{{ URL::asset('Orb/js/vendors/forms/jquery.form.min.js') }}"></script>
-            <script type="text/javascript"
-                    src="{{ URL::asset('Orb/js/vendors/forms/jquery.validate.min.js') }}"></script>
-            <script type="text/javascript"
-                    src="{{ URL::asset('Orb/js/vendors/forms/jquery.maskedinput.min.js') }}"></script>
-            {{ HTML::script('Orb/bower_components/underscore/underscore-min.js') }}
-            {{ HTML::script('Orb/bower_components/bootstrap-calendar/js/calendar.js') }}
-            {{ HTML::script('Orb/bower_components/eonasdan-bootstrap-datetimepicker/bootstrap/bootstrap.min.js') }}
-            {{ HTML::script('Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js') }}
-            <script type="text/javascript">
-                $(function () {
-                    $('#fecha_nac').datetimepicker({
-                        pickTime: false,
-                        language: 'es',
-                        minDate: '1/1/1940',
-                        defaultDate: '1/1/1980',
-                        maxDate: '1/1/2000'
-                    });
-                    $('#fecha_ing').datetimepicker({
-                        pickTime: false,
-                        language: 'es',
-                        minDate: '1/1/2000',
-                        defaultDate: new Date(),
-                        maxDate: new Date()
-                    });
-                });
-                $("#foto").fileinput({
-                    previewFileType: "image",
-                    initialPreview: [
-                        "<img src='{{url('Orb/images/emprendedores/'.$emprendedor->usuario->foto)}}' class='file-preview-image'>"
-                    ],
-                    browseClass: "btn btn-success",
-                    browseLabel: " Seleccionar otra foto",
-                    browseIcon: '<i class="glyphicon glyphicon-picture"></i>',
-                    showCaption: false,
-                    showRemove: false,
-                    showUpload: false
-                });
-            </script>
+@section('scripts')
+    @parent
+    {{ HTML::script('Orb/bower_components/underscore/underscore-min.js') }}
+    {{ HTML::script('Orb/bower_components/bootstrap-calendar/js/calendar.js') }}
+    {{ HTML::script('Orb/bower_components/eonasdan-bootstrap-datetimepicker/bootstrap/bootstrap.min.js') }}
+    {{ HTML::script('Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js') }}
+    <script type="text/javascript">
+        $(function () {
+            $('#fecha_nac').datetimepicker({
+                pickTime: false,
+                language: 'es',
+                minDate: '1/1/1940',
+                defaultDate: '1/1/1980',
+                maxDate: '1/1/2000'
+            });
+            $('#fecha_ing').datetimepicker({
+                pickTime: false,
+                language: 'es',
+                minDate: '1/1/2000',
+                defaultDate: new Date(),
+                maxDate: new Date()
+            });
+        });
+        $("#foto").fileinput({
+            previewFileType: "image",
+            initialPreview: [
+                "<img src='{{url('Orb/images/emprendedores/'.$emprendedor->usuario->foto)}}' class='file-preview-image'>"
+            ],
+            browseClass: "btn btn-success",
+            browseLabel: " Seleccionar otra foto",
+            browseIcon: '<i class="glyphicon glyphicon-picture"></i>',
+            showCaption: false,
+            showRemove: false,
+            showUpload: false
+        });
+    </script>
 @stop
