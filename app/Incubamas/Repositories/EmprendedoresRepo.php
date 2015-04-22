@@ -43,6 +43,8 @@ class EmprendedoresRepo extends BaseRepo
             { $query->whereRaw('nombre LIKE "%'.$parametro.'%"'); })
             ->orWhereHas('usuario', function($query) use ($parametro)
             { $query->whereRaw('apellidos LIKE "%'.$parametro.'%"'); })
+            ->orWhereHas('usuario', function($query) use ($parametro)
+            { $query->whereRaw('email LIKE "%'.$parametro.'%"'); })
             ->orWhereHas('empresas',function($query) use ($parametro)
             { $query->whereRaw('nombre_empresa LIKE "%'.$parametro.'%"'); })
             ->orWhereHas('empresas',function($query) use ($parametro)
