@@ -2,12 +2,12 @@
 <html class="no-js sidebar-large">
 <head>
     <meta charset="utf-8">
-    <title>Iuark | Pagina no Encontrada</title>
+    <title>IncubaM&aacute;s | Incubadora de Negocios</title>
+    <link rel="shortcut icon" href="{{{asset('/accio/images/favicon.ico')}}}">
     {{ HTML::style('pixit/css/icons/icons.min.css') }}
     {{ HTML::style('pixit/css/bootstrap.min.css') }}
     {{ HTML::style('pixit/css/plugins.min.css') }}
     {{ HTML::style('pixit/css/style.min.css') }}
-    <link rel="shortcut icon" href="{{ asset('favicon.png') }}">
     {{ HTML::script('/plugins/modernizr/modernizr-2.6.2-respond-1.1.0.min.js') }}
 </head>
 

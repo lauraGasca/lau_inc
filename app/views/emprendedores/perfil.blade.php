@@ -259,7 +259,11 @@
                                         <td><strong>Genero:</strong></td>
                                         <td>
                                             @if($emprendedor->genero=="M") Masculino
-                                            @else Femenino @endif
+                                            @else
+                                                @if($emprendedor->genero=="F") Femenino
+                                                @else
+                                                @endif
+                                            @endif
                                         </td>
                                         <td><strong>Calle:</strong></td>
                                         <td>{{$emprendedor->calle}}</td>
