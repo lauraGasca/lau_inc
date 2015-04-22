@@ -29,9 +29,6 @@ class UserController extends BaseController
         $manager = new ValidatorManager('error', Input::all());
         $manager->validar();
 
-        $titulo = "Reporte de eror";
-        $mensaje = '<p><strong>'.Auth::user()->nombre.' '.Auth::user()->apellidos.'</strong> reporta el siguiente error:</p> <p>'.Input::get('descripcion').'</p>';
-        $seccion = "Imagen del error";
         if(Input::hasfile('foto'))
         {
             $archivo = 'error.' . Input::file('foto')->getClientOriginalExtension();
@@ -43,11 +40,10 @@ class UserController extends BaseController
             $imagen = false;
             $tabla = 'No disponible';
         }
-        Mail::send('emails.estandar', compact('titulo', 'mensaje', 'seccion', 'imagen', 'tabla'),
-            function ($message) {
-                $message->subject('Error de Incubamas');
-                $message->to('lau_lost@hotmail.com', 'Laura Gasca');
-            });
+
+        $this->_mail('emails.estandar',
+            ['titulo'=>'Reporte de eror', 'mensaje'=>'<p><strong>'.Auth::user()->nombre.' '.Auth::user()->apellidos.'</strong> reporta el siguiente error:</p> <p>'.Input::get('descripcion').'</p>', 'seccion'=>"Imagen del error", 'imagen' => $imagen,
+                'tabla' => $tabla], 'Error de Incubamas', 'lau_lost@hotmail.com', 'Laura Gasca');
         return Redirect::back()->with(array('confirm' => 'Se ha enviado el correo, resolveremos el problema a la brevedad.'));
     }
 
@@ -105,6 +101,15 @@ class UserController extends BaseController
     {
         if (Auth::user()->type_id != 1 && Auth::user()->type_id != 2)
             return Redirect::to('sistema');
+    }
+
+    private function _mail($plantilla, $variables, $asunto, $correo, $nombre)
+    {
+        Mail::send($plantilla, $variables,
+            function ($message) use ($asunto, $correo, $nombre){
+                $message->subject($asunto);
+                $message->to($correo, $nombre);
+            });
     }
 
 }
