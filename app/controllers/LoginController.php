@@ -117,7 +117,7 @@ class LoginController extends BaseController
             $this->userRepo->guardarFoto($profile->photoURL,$user);
 
             $emprendedor = $this->emprendedoreRepo->newEmprendedor();
-            $manager = new EmprendedorManager($emprendedor, ['user_id' => $user->id, 'genero'=> $genero]);
+            $manager = new EmprendedorManager($emprendedor, ['user_id' => $user->id, 'genero'=> $genero, 'fecha_nacimiento'=>date("d/m/y"), 'fecha_ingreso'=>date("d/m/y")]);
             $manager->save();
 
             $this->_mail('emails.estandar',
@@ -144,13 +144,13 @@ class LoginController extends BaseController
         $registret = new ValidatorManager('registro',Input::all());
         $registret->validar();
 
-        $password = '';
+        $password = '1234';
         $user = $this->userRepo->newUser();
         $manager = new UserManager($user, Input::all()+['password'=>$password]);
         $manager->save();
 
         $emprendedor = $this->emprendedoreRepo->newEmprendedor();
-        $manager = new EmprendedorManager($emprendedor, ['user_id'=>$user->id, 'fecha_nacimiento' => Input::get('fecha_nacimiento')]);
+        $manager = new EmprendedorManager($emprendedor, ['user_id'=>$user->id, 'fecha_nacimiento' => Input::get('fecha_nacimiento'), 'fecha_ingreso'=>date("d/m/y")]);
         $manager->save();
 
        $this->_mail('emails.estandar',

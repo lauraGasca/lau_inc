@@ -13,6 +13,8 @@ use Incubamas\Repositories\EmprendedoresRepo;
 use Incubamas\Managers\ValidatorManager;
 use Incubamas\Managers\UserEmpManager;
 use Incubamas\Managers\EmprendedoresManager;
+use Incubamas\Managers\UserEmpEditManager;
+use Incubamas\Managers\EmprendedoresEditarManager;
 
 class EmprendedoresController extends BaseController
 {
@@ -187,193 +189,72 @@ class EmprendedoresController extends BaseController
             return Redirect::to('emprendedores/crearempresa/' . $emprendedor->id);
         else
             return Redirect::to('emprendedores/editar/'.$emprendedor->id)->with(array('confirm' => 'Se ha registrado correctamente.'));
-
     }
 
     public function getEditar($emprendedor_id)
     {
         $this->_soloAsesores();
-        $emprendedor = Emprendedor::find($emprendedor_id);
-        $empresas = Empresa::where('emprendedor_id', '=', $emprendedor->id)->get();
-        $documentos = Documento::all()->lists('nombre', 'id');
-        $empresas_listado = Empresa::where('emprendedor_id', '=', $emprendedor->id)->lists('nombre_empresa', 'id');
-        $socios = Socios::select('socios.id', 'socios.nombre', 'socios.apellidos', 'socios.telefono', 'socios.email', 'empresas.nombre_empresa')
-            ->join('empresas', 'empresas.id', '=', 'socios.empresa_id')
-            ->where('socios.emprendedor_id', '=', $emprendedor_id)->get();
-        $socios_listado = Socios::select('id', DB::raw('CONCAT(nombre, " ", apellidos) AS nombre_completo'))
-            ->where('socios.emprendedor_id', '=', $emprendedor_id)->lists('nombre_completo', 'id');
-        $subidas = Subidas::select('subidas.id', 'subidas.created_at', 'emprendedores.name',
-            'emprendedores.apellidos', 'documentos.nombre', 'subidas.documento',
-            DB::raw('subidas.nombre as nombre_sub, subidas.socio_id, CONCAT("Empresa") as nombre_empresa,
+        $emprendedor = $this->emprendedoresRepo->emprendedor($emprendedor_id);
+        if(count($emprendedor)>0)
+        {
+            $empresas = Empresa::where('emprendedor_id', '=', $emprendedor->id)->get();
+            $documentos = Documento::all()->lists('nombre', 'id');
+            $empresas_listado = Empresa::where('emprendedor_id', '=', $emprendedor->id)->lists('nombre_empresa', 'id');
+            $socios = Socios::select('socios.id', 'socios.nombre', 'socios.apellidos', 'socios.telefono', 'socios.email', 'empresas.nombre_empresa')
+                ->join('empresas', 'empresas.id', '=', 'socios.empresa_id')
+                ->where('socios.emprendedor_id', '=', $emprendedor_id)->get();
+            $socios_listado = Socios::select('id', DB::raw('CONCAT(nombre, " ", apellidos) AS nombre_completo'))
+                ->where('socios.emprendedor_id', '=', $emprendedor_id)->lists('nombre_completo', 'id');
+            $subidas = Subidas::select('subidas.id', 'subidas.created_at', 'emprendedores.name',
+                'emprendedores.apellidos', 'documentos.nombre', 'subidas.documento',
+                DB::raw('subidas.nombre as nombre_sub, subidas.socio_id, CONCAT("Empresa") as nombre_empresa,
 				(Select CONCAT(nombre, " ", apellidos) from socios where id=subidas.socio_id) as nombre_socio'))
-            ->join('documentos', 'documentos.id', '=', 'subidas.id_documento')
-            ->join('emprendedores', 'emprendedores.id', '=', 'subidas.id_emprendedor')
-            ->where('id_emprendedor', '=', $emprendedor->id)
-            ->get();
-        $this->layout->content = View::make('emprendedores.update')
-            ->with('emprendedor', $emprendedor)
-            ->with('empresas', $empresas)
-            ->with('empresas_listado', $empresas_listado)
-            ->with('documentos', $documentos)
-            ->with('subidas', $subidas)
-            ->with('socios', $socios)
-            ->with('socios_listado', $socios_listado);
+                ->join('documentos', 'documentos.id', '=', 'subidas.id_documento')
+                ->join('emprendedores', 'emprendedores.id', '=', 'subidas.id_emprendedor')
+                ->where('id_emprendedor', '=', $emprendedor->id)
+                ->get();
+            $this->layout->content = View::make('emprendedores.update', compact('emprendedor'))
+                ->with('empresas', $empresas)
+                ->with('empresas_listado', $empresas_listado)
+                ->with('documentos', $documentos)
+                ->with('subidas', $subidas)
+                ->with('socios', $socios)
+                ->with('socios_listado', $socios_listado);
+        }
+        else
+            return Response::view('errors.missing', array(), 404);
     }
 
     public function postEditar()
     {
         $this->_soloAsesores();
-        $dataUpload = array(
-            "emprendedor_id" => Input::get("emprendedor_id"),
-            "user_id" => Input::get("user_id"),
-            "nombre" => Input::get("nombre"),
-            "apellido" => Input::get("apellido"),
-            "programa" => Input::get("programa"),
-            "about" => Input::get("about"),
-            "estatus" => Input::get("estatus"),
-            "genero" => Input::get("genero"),
-            "fecha_nac" => Input::get("fecha_nac"),
-            "curp" => Input::get("curp"),
-            "lugar_nac" => Input::get("lugar_nac"),
-            "imagen" => Input::get("imagen"),
-            "fecha_ing" => Input::get("fecha_ing"),
-            "calle" => Input::get("calle"),
-            "num_ext" => Input::get("num_ext"),
-            "num_int" => Input::get("num_int"),
-            "colonia" => Input::get("colonia"),
-            "cp" => Input::get("cp"),
-            "estado" => Input::get("estado"),
-            "municipio" => Input::get("municipio"),
-            "email" => Input::get("email"),
-            "estado_civil" => Input::get("estado_civil"),
-            "tel_fijo" => Input::get("tel_fijo"),
-            "tel_movil" => Input::get("tel_movil"),
-            "salario" => Input::get("salario"),
-            "escolaridad" => Input::get("escolaridad"),
-            "trabajando" => Input::get("trabajando"),
-            "personas" => Input::get("personas"),
-            "emprendido" => Input::get("emprendido"),
-            "veces" => Input::get("veces")
-        );
-        $rules = array(
-            "emprendedor_id" => 'required|exists:emprendedores,id',
-            "user_id" => 'required|exists:users,id',
-            "nombre" => 'required|min:3|max:50',
-            "apellido" => 'required|min:3|max:50',
-            "programa" => 'required|min:3|max:50',
-            "about" => 'min:3|max:500',
-            "estatus" => 'required|min:3|max:10',
-            "genero" => 'min:1|max:1',
-            "curp" => 'required|min:3|max:19|unique:emprendedores,curp,' . Input::get("emprendedor_id"),
-            "lugar_nac" => 'min:3|max:50',
-            "calle" => 'required|min:3|max:50',
-            "num_ext" => 'required|min:1|max:50',
-            "num_int" => 'min:1|max:50',
-            "colonia" => 'required|min:3|max:50',
-            "cp" => 'required|min:3|max:10',
-            "estado" => 'required|min:3|max:50',
-            "municipio" => 'required|min:3|max:50',
-            "email" => 'min:3|email|max:50',
-            "estado_civil" => 'min:3|max:50',
-            "tel_fijo" => 'min:3|max:20',
-            "tel_movil" => 'min:3|max:20',
-            "salario" => 'min:3|max:50',
-            "escolaridad" => 'min:3|max:50',
-            "trabajando" => 'min:3|max:50',
-            "personas" => 'min:1|max:10',
-            "emprendido" => 'required|min:1|max:2',
-            "veces" => 'min:1|max:10',
-            "imagen" => 'image',
-            "fecha_nac" => 'required',
-            "fecha_ing" => 'required'
-        );
-        $messages = array('unique' => 'El campo ya fue usado',);
-        $validation = Validator::make(Input::all(), $rules, $messages);
-        if ($validation->fails())
-            return Redirect::back()->withErrors($validation)->withInput();
-        else {
-            $emprendedor = Emprendedor::find(Input::get("emprendedor_id"));
-            $emprendedor->name = Input::get("nombre");
-            $emprendedor->apellidos = Input::get("apellido");
-            $emprendedor->about = Input::get("about");
-            $emprendedor->programa = Input::get("programa");
-            $emprendedor->estatus = Input::get("estatus");
-            $emprendedor->genero = Input::get("genero");
-            $emprendedor->fecha_nacimiento = $this->_mysqlformat(Input::get('fecha_nac'));
-            $emprendedor->curp = Input::get("curp");
-            $emprendedor->lugar_nacimiento = Input::get("lugar_nac");
-            $emprendedor->fecha_ingreso = $this->_mysqlformat(Input::get('fecha_ing'));
-            $emprendedor->calle = Input::get("calle");
-            $emprendedor->num_ext = Input::get("num_ext");
-            $emprendedor->num_int = Input::get("num_int");
-            $emprendedor->colonia = Input::get("colonia");
-            $emprendedor->cp = Input::get("cp");
-            $emprendedor->estado = Input::get("estado");
-            $emprendedor->municipio = Input::get("municipio");
-            $emprendedor->email = Input::get("email");
-            $emprendedor->estado_civil = Input::get("estado_civil");
-            $emprendedor->tel_fijo = Input::get("tel_fijo");
-            $emprendedor->tel_movil = Input::get("tel_movil");
-            $emprendedor->salario_mensual = Input::get("salario");
-            $emprendedor->escolaridad = Input::get("escolaridad");
-            $emprendedor->tiempo_trabajando = Input::get("trabajando");
-            $emprendedor->personas_dependen = Input::get("personas");
-            $emprendedor->emprendido_ant = Input::get("emprendido");
-            if ($emprendedor->emprendido_ant == 1)
-                $emprendedor->veces_emprendido = Input::get("veces");
-            else
-                $emprendedor->veces_emprendido = '';
-            $autor = Asesor::where('user_id', '=', Auth::user()->id)->first();
-            $emprendedor->updated_by = $autor->id;
-            if ($emprendedor->save()) {
-                if (Input::hasFile('imagen')) {
-                    if ($emprendedor->imagen <> 'generic-emprendedor.png') {
-                        File::delete(public_path() . '\\Orb\\images\\emprendedores\\' . $emprendedor->imagen);
-                    }
-                    $emprendedor->imagen = $emprendedor->id . "." . Input::file("imagen")->getClientOriginalExtension();
-                    Input::file('imagen')->move('Orb/images/emprendedores', $emprendedor->imagen);
-                    $emprendedor->save();
-                } else
-                    if (Input::get("empresa") == 'yes') {
-                        if ($emprendedor->imagen <> 'generic-emprendedor.png') {
-                            File::delete(public_path() . '\\Orb\\images\\emprendedores\\' . $emprendedor->imagen);
-                            $emprendedor->imagen = 'generic-emprendedor.png';
-                            $emprendedor->save();
-                        }
-                    }
-                return Redirect::back()->with(array('confirm' => 'Se ha guardado correctamente.'));
-            } else
-                return Redirect::back()->with(array('confirm' => 'Lo sentimos. No se ha guardar correctamente.'));
+        $emprendedor = $this->emprendedoresRepo->emprendedor(Input::get('id'));
+        if(count($emprendedor)>0)
+        {
+            $manager = new EmprendedoresEditarManager($emprendedor, Input::all());
+            $manager->save();
+            $user = $this->userRepo->usuario($emprendedor->user_id);
+            $manager = new UserEmpEditManager($user, Input::all());
+            $manager->save();
+            if(Input::hasfile('foto'))
+            {
+                $this->userRepo->actualizarFoto($user, $user->id."." . Input::file('foto')->getClientOriginalExtension());
+                Input::file('foto')->move('Orb/images/emprendedores/', $user->foto);
+            }elseif (Input::get("empresa") == 'yes')
+                    $this->userRepo->actualizarFoto($user, 'generic-emprendedor.png');
+            return Redirect::back()->with(array('confirm' => 'Se ha guardado correctamente.'));
         }
+        else
+            return Response::view('errors.missing', array(), 404);
     }
 
-    public function getDelete($emprendedor_id)
+    public function getDelete($user_id)
     {
         $this->_soloAsesores();
-        $dataUpload = array("emprendedor_id" => $emprendedor_id);
-        $rules = array("emprendedor_id" => 'required|exists:emprendedores,id');
-        $messages = array('exists' => 'El emprendedor indicado no existe.');
-        $validation = Validator::make($dataUpload, $rules, $messages);
-        if ($validation->fails())
-            return Redirect::back()->with(array('confirm' => 'No se ha podido eliminar.'));
-        else {
-            $emprendedor = Emprendedor::find($emprendedor_id);
-            $empresas = Empresa::where('emprendedor_id', '=', $emprendedor->id)->get();
-            if (count($empresas) > 0)
-                foreach ($empresas as $empresa) {
-                    if ($empresa->logo <> 'generic-empresa.png')
-                        File::delete(public_path() . '/Orb/images/empresas/' . $empresa->logo);
-                }
-            $user_id = User::join('emprendedores', 'user_id', '=', 'users.id')
-                ->where('emprendedores.id', '=', $emprendedor->id)->select('users.id')->first();
-            $user = User::find($user_id->id);
-            if ($user->delete()) {
-                if ($emprendedor->imagen <> 'generic-emprendedor.png')
-                    File::delete(public_path() . '/Orb/images/emprendedores/' . $emprendedor->imagen);
-                return Redirect::to('emprendedores')->with(array('confirm' => 'Se ha eliminado correctamente.'));
-            } else
-                return Redirect::to('emprendedores')->with(array('confirm' => 'No se ha podido eliminar.'));
-        }
+        $manager = new ValidatorManager('usuario', ['user_id'=>$user_id]);
+        $manager->validar();
+        $this->userRepo->borrarUsuario($user_id);
+        return Redirect::to('emprendedores')->with(array('confirm' => 'Se ha eliminado correctamente.'));
     }
 
     /**************************Empresas*******************************/

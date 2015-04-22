@@ -77,7 +77,13 @@ class ValidatorManager
                     'acepto'            =>    'accepted'
                 ];
                 break;
-            //
+            //Para eliminar un usuario
+            case 'usuario':
+                $rules = [
+                    'user_id'   	    =>    'required|exists:users,id',
+                ];
+                break;
+            //Crear un emprendedor desde el panel de administrador
             case 'user':
                 $rules = [
                     'nombre'	        => 'required|max:30',

@@ -27,7 +27,7 @@
         <div class="alert alert-danger">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
             <h4>¡Error!</h4>
-            Revise los datos del formulario{{dd($errors)}}
+            Revise los datos del formulario
         </div>
     @endif
     <!-- End Error box -->

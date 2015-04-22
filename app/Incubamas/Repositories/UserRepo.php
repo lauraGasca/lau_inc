@@ -25,6 +25,11 @@ class UserRepo extends BaseRepo
         return $user;
     }
 
+    public function usuario($id)
+    {
+        return User::find($id);
+    }
+
     public function buscarxEmail($email)
     {
         if($email<>'')
@@ -65,9 +70,17 @@ class UserRepo extends BaseRepo
         $user->save();
     }
 
+    public function borrarUsuario($id)
+    {
+        $user = User::find($id);
+        $this->borrarFoto($user->foto);
+        $user->delete();
+    }
+
     public function borrarFoto($foto)
     {
-        \File::delete(public_path() . '/Orb/images/emprendedores/'.$foto);
+        if ($foto <> 'generic-emprendedor.png')
+            \File::delete(public_path() . '/Orb/images/emprendedores/'.$foto);
     }
 
     //Genera una contraseña aleatoriamente

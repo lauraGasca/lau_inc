@@ -52,7 +52,7 @@ class CasoController extends BaseController
 
     public function getCrear()
     {
-        $servicios = $this->servicioRepo->listar_todos();
+        $servicios = $this->servicioRepo->servicios();
         $this->layout->content = View::make('casos.create', compact('servicios'));
     }
 
@@ -120,10 +120,10 @@ class CasoController extends BaseController
 
     public function getEditar($caso_id)
     {
-        $casos = $this->casosRepo->find($caso_id);
-        $servicios = $this->servicioRepo->listar_todos();
+        $caso = $this->casosRepo->find($caso_id);
+        $servicios = $this->servicioRepo->servicios();
         $relaciones = Relacion::where('casos_exitoso_id', '=', $caso_id)->lists('servicio_id');
-        $this->layout->content = View::make('casos.update', compact('casos', 'servicios', 'relaciones'));
+        $this->layout->content = View::make('casos.update', compact('caso', 'servicios', 'relaciones'));
     }
 
     public function postEditar()

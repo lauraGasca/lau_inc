@@ -219,6 +219,7 @@
                         {{ HTML::image('Orb/images/emprendedores/'.$emprendedor->usuario->foto, $emprendedor->usuario->nombre." ".$emprendedor->usuario->apellidos) }}
                     </div>
                     <h1>{{$emprendedor->usuario->nombre." ".$emprendedor->usuario->apellidos}}</h1>
+                    Nombre de Usuario | {{$emprendedor->usuario->user}}
                 </div>
                 <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner">
@@ -280,7 +281,7 @@
                                     </tr>
                                     <tr>
                                         <td><strong>Email:</strong></td>
-                                        <td>{{$emprendedor->email}}</td>
+                                        <td>{{$emprendedor->usuario->email}}</td>
                                         <td><strong>Colonia o Fraccionamiento:</strong></td>
                                         <td>{{$emprendedor->colonia}}</td>
                                     </tr>

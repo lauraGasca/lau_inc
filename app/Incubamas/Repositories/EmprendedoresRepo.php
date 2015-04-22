@@ -18,6 +18,14 @@ class EmprendedoresRepo extends BaseRepo
         return $emprendedor;
     }
 
+    public function emprendedor($emprendedor_id)
+    {
+        return Emprendedor::with('usuario')
+            ->with(['empresas' => function($query)
+            { $query->orderBy('created_at', 'desc');}])
+            ->where('id','=',$emprendedor_id)->first();
+    }
+
     public function emprendedores()
     {
         return Emprendedor::with('usuario')
@@ -40,14 +48,6 @@ class EmprendedoresRepo extends BaseRepo
             ->orWhereHas('empresas',function($query) use ($parametro)
             { $query->whereRaw('razon_social LIKE "%'.$parametro.'%"'); })
             ->orderBy('fecha_ingreso', 'desc')->paginate(12);;
-    }
-
-    public function emprendedor($emprendedor_id)
-    {
-        return Emprendedor::with('usuario')
-            ->with(['empresas' => function($query)
-            { $query->orderBy('created_at', 'desc');}])
-            ->where('id','=',$emprendedor_id)->first();
     }
 
 
