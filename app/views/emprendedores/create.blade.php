@@ -20,6 +20,8 @@
         $(function() {
             $("#tel_movil").mask("(999) 999-9999");
             $("#tel_fijo").mask("(999) 999-9999");
+            $("#curp").mask("aaaa999999aaaaaa**");
+            $("#cp").mask("99999");
         });
     </script>
 @stop
@@ -35,12 +37,6 @@
 @stop
 
 @section('contenido')
-    @if(Session::get('confirm'))
-        <div class="alert alert-success alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="fa fa-times-circle"></i></button>
-            {{Session::get('confirm')}}
-        </div>
-    @endif
     @if(count($errors)>0)
         <div class="alert alert-danger alert-dismissable">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="fa fa-times-circle"></i></button>
@@ -75,7 +71,7 @@
                     <div class="col-md-5 espacio_abajo">
                         {{Form::label('about', 'Acerca de mi', ['class' => 'label'])}}
                         <label class="textarea">
-                            {{Form::textarea('about','', ['style'=>'height: 170px;'])}}
+                            {{Form::textarea('about',null, ['style'=>'height: 170px;'])}}
                             <span class="message-error">{{$errors->first('about')}}</span>
                         </label>
                         <div class="note"><strong>Nota:</strong>Maximo 500 caracteres</div>
@@ -90,14 +86,14 @@
                     <div class="col-md-5 espacio_abajo">
                         {{Form::label('tel_fijo', 'Tel&eacute;fono Fijo', ['class' => 'label'])}}
                         <label class="input">
-                            <i class="icon-prepend fa fa-phone"></i>{{Form::text('tel_fijo','', ['id'=>'tel_fijo'])}}
+                            <i class="icon-prepend fa fa-phone"></i>{{Form::text('tel_fijo',null, ['id'=>'tel_fijo'])}}
                             <span class="message-error">{{$errors->first('tel_fijo')}}</span>
                         </label>
                     </div>
                     <div class="col-md-5 espacio_abajo">
                         {{Form::label('tel_movil', 'Tel&eacute;fono Movil', ['class' => 'label'])}}
                         <label class="input">
-                            <i class="icon-prepend fa fa-mobile"></i>{{Form::text('tel_movil','', ['id'=>'tel_movil'])}}
+                            <i class="icon-prepend fa fa-mobile"></i>{{Form::text('tel_movil',null, ['id'=>'tel_movil'])}}
                             <span class="message-error">{{$errors->first('tel_movil')}}</span>
                         </label>
                     </div>
@@ -111,7 +107,7 @@
                     <div class="col-md-3 espacio_abajo">
                         {{Form::label('curp', '* CURP', ['class' => 'label'])}}
                         <label class="input">
-                            <i class="icon-prepend fa fa-database"></i>{{Form::text('curp')}}
+                            <i class="icon-prepend fa fa-database"></i>{{Form::text('curp',null,['id'=>'curp'])}}
                             <span class="message-error">{{$errors->first('curp')}}</span>
                         </label>
                     </div>
@@ -180,7 +176,7 @@
                     <div class="col-md-2 espacio_abajo">
                         {{Form::label('cp', '* C&oacute;digo Postal', ['class' => 'label'])}}
                         <label class="input">
-                            <i class="icon-prepend fa fa-book"></i>{{Form::text('cp')}}
+                            <i class="icon-prepend fa fa-book"></i>{{Form::text('cp',null,['id'=>'cp'])}}
                             <span class="message-error">{{$errors->first('cp')}}</span>
                         </label>
                     </div>
@@ -232,17 +228,16 @@
                     <div class="col-md-5 espacio_abajo">
                         {{Form::label('emprendido_ant', '* ¿Has emprendido alguna vez?', ['class' => 'label'])}}
                         <label class="select">
-                            {{Form::select('emprendido_ant', [null => 'Selecciona', false=>'No',true=>'Si'], null,
-                            ['id'=>'select', 'onchange'=>'codigo();'])}}
+                            {{Form::select('emprendido_ant', [null => 'Selecciona', 1=>'No', 2=>'Si'], null, ['id'=>'select'])}}
                             <span class="message-error">{{$errors->first('emprendido_ant')}}</span>
                         </label>
                     </div>
-                    <div class="col-md-5 espacio_abajo">
-                        {{Form::label('veces_emprendido', '¿Cuántas veces has emprendido un negocio?', ['class' => 'label'])}}
+                    <div class="col-md-5 espacio_abajo" id="emprendido" @if(!$errors->first('veces_emprendido')) style="visibility: hidden" @endif >
+                        {{Form::label('veces_emprendido', '* ¿Cuántas veces has emprendido un negocio?', ['class' => 'label'])}}
                         <label class="select">
                             {{Form::select('veces_emprendido', [null=>'Selecciona','0'=>'0','1'=>'1','2...'=>'2...',
-                            '...4'=>'...4','5'=>'5','Más de 10'=>'Más de 10'], null, ['id'=>'veces','disabled'=>''])}}
-                            <span class="message-error">{{$errors->first('veces')}}</span>
+                            '...4'=>'...4','5'=>'5','Más de 10'=>'Más de 10'], null)}}
+                            <span class="message-error">{{$errors->first('veces_emprendido')}}</span>
                         </label>
                     </div>
                 </fieldset>
@@ -264,7 +259,7 @@
                     <div class="col-md-3 espacio_abajo">
                         {{Form::label('fecha_ingreso', '* Fecha de Ingreso', ['class' => 'label'])}}
                         <label class="input">
-                            <i class="icon-prepend fa fa-calendar"></i>{{Form::text('fecha_ingreso','', ['id'=>'fecha_ing', 'readonly'])}}
+                            <i class="icon-prepend fa fa-calendar"></i>{{Form::text('fecha_ingreso',null, ['id'=>'fecha_ing', 'readonly'])}}
                             <span class="message-error">{{$errors->first('fecha_ingreso')}}</span>
                         </label>
                     </div>
@@ -299,20 +294,12 @@
     {{ HTML::script('Orb/bower_components/eonasdan-bootstrap-datetimepicker/bootstrap/bootstrap.min.js') }}
     {{ HTML::script('Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js') }}
     <script type="text/javascript">
-        function codigo()
-        {
-            var select = document.getElementById("select");
-            var veces = document.getElementById("veces");
+        $( "#select" ).change(function() {
             if(select.selectedIndex == 2)
-            {
-                veces.disabled = false;
-            }
-            if(select.selectedIndex == 0 || select.selectedIndex == 1)
-            {
-                veces.disabled = true;
-                veces.value = ""
-            }
-        }
+                $( "#emprendido" ).css('visibility', 'visible');
+            else
+                $( "#emprendido" ).css('visibility', 'hidden');
+        });
         $(function ()
         {
             $('#fecha_nac').datetimepicker(

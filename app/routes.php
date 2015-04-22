@@ -13,8 +13,6 @@ Route::any('blogs/{tipo}/{slug?}/{id?}', ['as' => 'categoria', 'uses' =>'IncubaC
 Route::get('incubacion', ['as' => 'incubacion', 'uses' =>'IncubaController@incubacion']);
 Route::post('incubacion', ['as' => 'incubacion', 'uses' =>'IncubaController@enviar_incubacion']);
 
-
-
 Route::controller('blog', 'BlogController');
 Route::controller('usuarios', 'UserController');
 Route::controller('sistema', 'LoginController');
@@ -31,13 +29,15 @@ App::missing(function($exception)
     return Response::view('errors.missing', array(), 404);
 });
 
-/*Route::get('/', function()
-{
-    return Redirect::to('incuba');
-});*/
-
 Route::get('pruebas', function()
 {
+    /*$blogs = Blogs::all();
+    foreach($blogs as $blog)
+    {
+        $comentarios = \Incubamas\Entities\Comentarios::where('entrada_id','=',$blog->id)->get();
+        $blog->comentarios = count($comentarios);
+        $blog->save();
+    }*/
 
     /*$blogs = Blogs::all();
     foreach($blogs as $blog){
@@ -110,11 +110,19 @@ Route::get('pruebas', function()
             $message->subject('Prueba');
             $message->to('lau_lost@hotmail.com', 'Laura');
         });*/
-    /*$titulo = "Laura Gasca escribe,";
-    $mensaje = "Lorem ipsum dolor amet, consectetur adipiscing elit. Pellentesque ut lacus at velit consequat sodales. Ut posuere neque in molestie gravida. Integer neque lementum posuere purus. Nam convallis ipsum. Maecenas a vulputate ipsum. ";
-    $seccion = "Datos de contacto";
+
+    /*$titulo = "¡Su cuenta ha sido activada!";
+    $mensaje = '<p>Hola Laura Gasca: </p> <p>Tu registro a concluido exitosamente, a partir de este momento puedes acceder a nuestro sistema.</p><p>Si tienes dudas no dudes en ponerte en contacto con nosotros.</p>';
+    $seccion = "Datos de Acceso";
     $imagen = false;
-    $tabla = "<strong>Nombre de usuario: </strong>Este es su nombre<br/><br/><strong>Contrase&ntilde;a: </strong>contraseña";
-    return View::make('emails.estandar', compact('titulo', 'mensaje', 'seccion', 'imagen', 'tabla'));*/
-    return View::make('emails.incubacion');
+    $tabla = "<div align='center'><table style='font-family:Arial, Helvetica, sans-serif; font-size:19px; color:#444444; text-align: center;'><tr><td width='50%'><strong>Nombre de Usuario: </strong></td><td>Laura</td></tr><tr><td colspan='2'></td></tr><tr><td><strong>Contrase&ntilde;a: </strong></td><td>Hola</td></tr></table><br/><br/>
+            <a target='_blank' href=\"".url('sistema')."\"style='text-decoration:none; padding: 14px 24px; font-size: 21px;color: #fff; background-color: #02384B; display: inline-block; margin-bottom: 0;font-weight: 400; line-height: 1.42857143; text-align: center; white-space: nowrap; vertical-align: middle; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; background-image: none; border: 1px solid transparent; border-radius: 4px;'>Acceso al Sistema</a></div>";*/
+
+    $titulo = "Contrase&ntilde;a Actualizada";
+    $mensaje = '<p>Hola <strong>Laura Gasca</strong>:</p><p>Tal como lo solicitaste, tu contrase&ntilde;a para entrar al sistema ha sido actualizada.</p><p>Si tienes dudas no dudes en ponerte en contacto con nosotros.</p>';
+    $seccion = "Datos de Acceso";
+    $imagen = false;
+    $tabla = "<div align='center'><table style='font-family:Arial, Helvetica, sans-serif; font-size:19px; color:#444444; text-align: center;'><tr><td width='50%'><strong>Nombre de Usuario: </strong></td><td>Laura</td></tr><tr><td colspan='2'></td></tr><tr><td><strong>Contrase&ntilde;a: </strong></td><td>password</td></tr></table><br/><br/><a target='_blank' href=\"".url('sistema')."\"style='text-decoration:none; padding: 14px 24px; font-size: 21px;color: #fff; background-color: #02384B; display: inline-block; margin-bottom: 0;font-weight: 400; line-height: 1.42857143; text-align: center; white-space: nowrap; vertical-align: middle; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; background-image: none; border: 1px solid transparent; border-radius: 4px;'>Acceso al Sistema</a></div>";
+
+    return View::make('emails.estandar', compact('titulo', 'mensaje', 'seccion', 'imagen', 'tabla'));
 });

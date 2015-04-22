@@ -80,15 +80,16 @@ class ValidatorManager
             //
             case 'user':
                 $rules = [
-                    "nombre"            => 'required|max:50',
-                    "apellidos"          => 'required|max:50',
-                    "foto"              => 'image',
+                    'nombre'	        => 'required|max:30',
+                    'apellidos'	        => 'required|max:30',
+                    'foto'	            => 'image',
+                    'email'	            => 'email|max:60|unique:users,email',
                     "about"             => 'max:500',
                     "programa"          => 'required|max:50',
                     "estatus"           => 'required|max:10',
                     "genero"            => 'size:1',
                     "fecha_nacimiento"  => 'required|date_format:d/m/Y',
-                    "curp"              => 'required|size:19|unique:emprendedores,curp',
+                    "curp"              => 'required|size:18|unique:emprendedores,curp',
                     "lugar_nacimiento"  => 'max:50',
                     "fecha_ingreso"     => 'required|date_format:d/m/Y',
                     "calle"             => 'required|max:50',
@@ -106,7 +107,7 @@ class ValidatorManager
                     "tiempo_trabajando" => 'max:50',
                     "personas_dependen" => 'max:10',
                     "emprendido_ant"    => 'required',
-                    "veces_emprendido"  => 'max:10'
+                    "veces_emprendido"  => 'required_if:emprendido_ant,2|max:10'
                 ];
                 break;
         }

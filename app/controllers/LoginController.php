@@ -2,7 +2,6 @@
 
 use Incubamas\Repositories\UserRepo;
 use Incubamas\Repositories\EmprendedoresRepo;
-
 use Incubamas\Managers\FacebookManager;
 use Incubamas\Managers\EmprendedorManager;
 use Incubamas\Managers\UserManager;
@@ -27,17 +26,13 @@ class LoginController extends BaseController
             $this->layout->content = View::make('login.index', compact("error"));
         }else {
             if (Auth::check()) {
-                if (Auth::user()->active == 1)
+                if (Auth::user()->active == 1|| Auth::user()->active == 2)
                     switch (Auth::user()->type_id) {
                         case 1:
-                        case 2:
-                            return Redirect::to('emprendedores');
-                        case 3:
-                            return Redirect::to('emprendedores/perfil/' . $this->emprendedoreRepo->emprendedorid(Auth::user()->id));
-                        case 4:
-                            return Redirect::to('blog');
-                        default:
-                            return Redirect::back()->with(array('confirm' => 'No tiene permiso para acceder.'));
+                        case 2: return Redirect::to('emprendedores');
+                        case 3: return Redirect::to('emprendedores/perfil/' . $this->emprendedoreRepo->emprendedorid(Auth::user()->id));
+                        case 4: return Redirect::to('blog');
+                        default: return Redirect::back()->with(array('confirm' => 'No tiene permiso para acceder.'));
                     }
                 Redirect::back()->with(array('confirm' => 'Su usuario no ha sido activado.'));
             }
@@ -48,19 +43,23 @@ class LoginController extends BaseController
     public function postLogin()
     {
         $data = Input::all();
-
         $credentials = ['user' => $data['user'], 'password' => $data['password']];
-
         if (Auth::attempt($credentials, Input::get('remember')))
         {
-            if(Auth::user()->active == 1)
-                switch(Auth::user()->type_id)
-                {
-                    case 1: case 2: return Redirect::to('emprendedores');
-                    case 3: return Redirect::to('emprendedores/perfil/' . $this->emprendedoreRepo->emprendedorid(Auth::user()->id));
-                    case 4: return Redirect::to('blog');
-                    default: return Redirect::back()->with(array('confirm' => 'No tiene permiso para acceder.'));
+            if(Auth::user()->active == 1 || Auth::user()->active == 2) {
+                $this->_verificat();
+                switch (Auth::user()->type_id) {
+                    case 1:
+                    case 2:
+                        return Redirect::to('emprendedores');
+                    case 3:
+                        return Redirect::to('emprendedores/perfil/' . $this->emprendedoreRepo->emprendedorid(Auth::user()->id));
+                    case 4:
+                        return Redirect::to('blog');
+                    default:
+                        return Redirect::back()->with(array('confirm' => 'No tiene permiso para acceder.'));
                 }
+            }
             Redirect::back()->with(array('confirm' => 'Su usuario no ha sido activado.'));
         }
         return Redirect::back()->with('login_errors', true)->withInput();
@@ -68,13 +67,10 @@ class LoginController extends BaseController
 
     public function getFblogin($auth=null)
     {
-        if($auth == 'auth')
-        {
-            try
-            {
+        if($auth == 'auth') {
+            try {
                 Hybrid_Endpoint::process();
-            }catch(Exception $e)
-            {
+            }catch(Exception $e){
                 return Redirect::to('sistema/fblogin');
             }
             return;
@@ -89,7 +85,8 @@ class LoginController extends BaseController
                 $user->facebook_id = $profile->identifier;
                 $user->save();
             }
-            if($user->active == 1) {
+            if($user->active == 1 ||$user->active == 1)
+            {
                 Auth::login($user);
                 $this->_verificat();
                 switch(Auth::user()->type_id)
@@ -117,17 +114,16 @@ class LoginController extends BaseController
                 $genero = 'F';
             else
                 $genero = 'M';
-            $this->userRepo->actualizarImagen($profile->photoURL,$user);
+            $this->userRepo->guardarFoto($profile->photoURL,$user);
 
             $emprendedor = $this->emprendedoreRepo->newEmprendedor();
             $manager = new EmprendedorManager($emprendedor, ['user_id' => $user->id, 'genero'=> $genero]);
             $manager->save();
 
             $this->_mail('emails.estandar',
-                ['titulo'=>'Nuevo Registro, ', 'mensaje'=>$profile->firstName.' '.$profile->lastName.' se ha registrado mediante Facebook con el correo '.$profile->email,
-                    'seccion'=>"Activar Usuario", 'imagen' => false,
-                    'tabla' => "Si desea activar al usuario de click en el siguiente enlace <br/><div align='center'><a href=\"".url('emprendedores/activar/'.$user->id)."\"
-                    style='text-decoration:none; padding: 14px 24px; font-size: 21px;color: #fff; background-color: #5cb85c; display: inline-block; margin-bottom: 0;font-weight: 400; line-height: 1.42857143; text-align: center; white-space: nowrap; vertical-align: middle; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; background-image: none; border: 1px solid transparent; border-radius: 4px;'>Activar</a></div>"],
+                ['titulo'=>"Nuevo Registro a trav&eacute;s de <strong style='color: rgb(58, 87, 149);'>Facebook</strong> ", 'mensaje'=>'<p>Hola: </p> <p>Se ha registrado el usuario <strong>'.$user->nombre.' '.$user->apellidos.'</strong> usando la aplicaci&oacute;n de facebook.</p> <p>El correo de registro es <strong>'.$user->email.'</strong></p><p>Active el usuario para que pueda acceder libremente al sistema o bloquealo para que acceda, pero no podra realizar ninguna acci&oacute;n en el sistema.</p>',
+                    'seccion'=>"Selecciona la acci&oacute;n que desees realizar", 'imagen' => false,
+                    'tabla' => "<div align='center'><a href=\"".url('usuarios/activar/1')."\"style='text-decoration:none; padding: 14px 24px; font-size: 21px;color: #fff; background-color: #5cb85c; display: inline-block; margin-bottom: 0;font-weight: 400; line-height: 1.42857143; text-align: center; white-space: nowrap; vertical-align: middle; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; background-image: none; border: 1px solid transparent; border-radius: 4px;'>Activar</a> &nbsp;&nbsp;<a href=\"".url('usuarios/bloquear/1')."\" style='text-decoration:none; padding: 14px 24px; font-size: 21px;color: #fff; background-color: #B33C3C; display: inline-block; margin-bottom: 0;font-weight: 400; line-height: 1.42857143; text-align: center; white-space: nowrap; vertical-align: middle; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; background-image: none; border: 1px solid transparent; border-radius: 4px;'>Bloquear</a></div>"],
                 'Nuevo Usuario', 'hola@incubamas.com', 'IncubaMas' );
 
             Session::put('resultado', 'correcto');
@@ -148,26 +144,23 @@ class LoginController extends BaseController
         $registret = new ValidatorManager('registro',Input::all());
         $registret->validar();
 
+        $password = '';
         $user = $this->userRepo->newUser();
-        $password = $this->_password();
-        $manager = new UserManager($user, Input::all()+array('password'=>$password));
+        $manager = new UserManager($user, Input::all()+['password'=>$password]);
         $manager->save();
 
         $emprendedor = $this->emprendedoreRepo->newEmprendedor();
-        $manager = new EmprendedorManager($emprendedor, ['user_id'=>$user->id, 'fecha_nacimiento' => $this->_mysqlformat(Input::get('fecha_nacimiento'))]);
+        $manager = new EmprendedorManager($emprendedor, ['user_id'=>$user->id, 'fecha_nacimiento' => Input::get('fecha_nacimiento')]);
         $manager->save();
 
-        $this->_mail('emails.estandar',
-            ['titulo'=>'Nuevo Registro, ', 'mensaje'=>Input::get('nombre')." ".Input::get('apellidos').' se ha registrado en la pagina con el correo '.Input::get('email'),
-                'seccion'=>"Activar Usuario", 'imagen' => false,
-                'tabla' => "Si desea activar al usuario de click en el siguiente enlace <br/><div align='center'><a href=\"".url('emprendedores/activar/'.$user->id)."\"
-                    style='text-decoration:none; padding: 14px 24px; font-size: 21px;color: #fff; background-color: #5cb85c; display: inline-block; margin-bottom: 0;font-weight: 400; line-height: 1.42857143; text-align: center; white-space: nowrap; vertical-align: middle; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; background-image: none; border: 1px solid transparent; border-radius: 4px;'>Activar</a></div>"],
-            'Nuevo Usuario', 'hola@incubamas.com', 'IncubaMas' );
+       $this->_mail('emails.estandar',
+            ['titulo'=>"Nuevo Registro", 'mensaje'=>'<p>Hola: </p> <p>Se ha registrado el usuario <strong>'.$user->nombre.' '.$user->apellidos.'</strong> a trav&eacute;z de la p&aacute;gina.</p> <p>El correo de registro es <strong>'.$user->email.'</strong></p><p>Active el usuario para que pueda acceder libremente al sistema o bloquealo para que acceda, pero no podra realizar ninguna acci&oacute;n en el sistema.</p>',
+                'seccion'=>"Selecciona la acci&oacute;n que desees realizar", 'imagen' => false,
+                'tabla' => "<div align='center'><a href=\"".url('usuarios/activar/'.$user->id)."\"style='text-decoration:none; padding: 14px 24px; font-size: 21px;color: #fff; background-color: #5cb85c; display: inline-block; margin-bottom: 0;font-weight: 400; line-height: 1.42857143; text-align: center; white-space: nowrap; vertical-align: middle; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; background-image: none; border: 1px solid transparent; border-radius: 4px;'>Activar</a> &nbsp;&nbsp;<a href=\"".url('usuarios/bloquear/'.$user->id)."\" style='text-decoration:none; padding: 14px 24px; font-size: 21px;color: #fff; background-color: #B33C3C; display: inline-block; margin-bottom: 0;font-weight: 400; line-height: 1.42857143; text-align: center; white-space: nowrap; vertical-align: middle; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; background-image: none; border: 1px solid transparent; border-radius: 4px;'>Bloquear</a></div>"],
+            'Registro', 'hola@incubamas.com', 'IncubaMas' );
 
-        return Redirect::back()->with('confirm', 'Revise su correo para poder acceder a su cuenta.'.$password);
+        return Redirect::back()->with('confirm', 'Recibira un correo con sus datos de acceso cuando su usuario haya sido activado.');
     }
-
-
     
     public function getOlvidar()
     {
@@ -180,31 +173,20 @@ class LoginController extends BaseController
         $olvidar->validar();
 
         $user = $this->userRepo->buscarxEmail(Input::get('email'));
-        if($user->password<>'')
-        {
-            $password = $this->_password();
+        if(count($user)>0){
+            if($user->password<>'')
+            {
+                $password = $this->userRepo->actualizarPassword($user);
+                $this->_mail('emails.estandar',
+                    ['titulo'=>'Contrase&ntilde;a Actualizada', 'mensaje'=>'<p>Hola '.$user->nombre.' '.$user->apellidos.': </p> <p>Tal como lo solicitaste, tu contrase&ntilde;a para entrar al sistema ha sido actualizada.</p><p>Si tienes dudas no dudes en ponerte en contacto con nosotros.</p>', 'seccion'=>"Datos de Acceso", 'imagen' => false,
+                        'tabla' => "<div align='center'><table style='font-family:Arial, Helvetica, sans-serif; font-size:19px; color:#444444; text-align: center;'><tr><td width='50%'><strong>Nombre de Usuario: </strong></td><td>".$user->user."</td></tr><tr><td colspan='2'></td></tr><tr><td><strong>Contrase&ntilde;a: </strong></td><td>".$password."</td></tr></table><br/><br/><a target='_blank' href=\"".url('sistema')."\"style='text-decoration:none; padding: 14px 24px; font-size: 21px;color: #fff; background-color: #02384B; display: inline-block; margin-bottom: 0;font-weight: 400; line-height: 1.42857143; text-align: center; white-space: nowrap; vertical-align: middle; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; background-image: none; border: 1px solid transparent; border-radius: 4px;'>Acceso al Sistema</a></div>"],
+                    'Reseteo de Contraseña', $user->email, $user->nombre . " " . $user->apellidos);
 
-            $this->userRepo->actualizarPassword($user,$password);
-
-            $email = $user->email;
-            $nombre = $user->nombre . " " . $user->apellidos;
-            $titulo = "Hola ".$nombre.',';
-            $mensaje = "Tal como lo has solicitado tu contrase&ntilde;a a sido actualizada.";
-            $seccion = "Datos de Inicio de sesi&oacute;n";
-            $imagen = false;
-            $tabla = '<strong>Nombre de usuario: </strong>'.$user->user.'<br/><br/><strong>Contrase&ntilde;a: </strong>'.$password;
-            //return View::make('emails.estandar', compact('titulo', 'mensaje', 'seccion', 'imagen', 'tabla'));
-
-            Mail::send('emails.estandar', compact('titulo', 'mensaje', 'seccion', 'imagen', 'tabla'),
-                function ($message) use ($email, $nombre) {
-                $message->subject('Reseteo de Contraseña');
-                $message->to($email, $nombre);
-            });
-
-            return Redirect::back()->with('confirm', 'Revise su correo para poder acceder a su cuenta.');
-        }
-
-        return Redirect::back()->with('contra', 'Su contrase&ntilde;a no puede ser actualizada. Acceso incorrecto.');
+                return Redirect::back()->with('confirm', 'Revise su correo para poder acceder a su cuenta.');
+            }
+            return Redirect::back()->with('contra', 'Su contrase&ntilde;a no puede ser actualizada. Acceso incorrecto.');
+        }else
+            return Redirect::back()->with('contra', 'Su contrase&ntilde;a no puede ser actualizada. Acceso incorrecto.');
     }
 
     public function getLogout()
@@ -213,26 +195,6 @@ class LoginController extends BaseController
         $tauth = new Hybrid_Auth(app_path().'/config/facebook.php');
         $tauth->logoutAllProviders();
         return Redirect::to('sistema');
-    }
-
-    //Genera una contraseña aleatoriamente
-    private function _password()
-    {
-        $val_permitidos = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890?!*-+_%#/=()";
-        $cad = "";
-        for($i=0;$i<8;$i++) {
-            $cad .= substr($val_permitidos,rand(0,62),1);
-        }
-        return $cad;
-    }
-
-    //Convierte una fecha al formato Y-d-m
-    private function _mysqlformat($fecha)
-    {
-        if ($fecha <> "")
-            return date_format(date_create(substr($fecha, 3, 2) . '/' . substr($fecha, 0, 2) . '/' . substr($fecha, 6, 4)), 'Y-m-d');
-        else
-            return null;
     }
 
     private function _verificat()

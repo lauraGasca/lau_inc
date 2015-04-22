@@ -5,11 +5,10 @@ class EmprendedorManager extends BaseManager{
 
     public function getRules()
     {
-        $rules = array(
-            'user_id'  	        =>    'required|exists:users,id',
-            'genero'  	        =>    '',
-            'fecha_nacimiento'  =>    'date'
-        );
+        $rules = [
+            "fecha_nacimiento"  => 'required|date_format:d/m/Y',
+            "user_id"           => 'required|exists:users,id'
+        ];
 
         return $rules;
     }

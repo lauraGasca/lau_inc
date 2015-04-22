@@ -82,7 +82,7 @@
                                         <p class="small">
                                             {{substr (strip_tags($emprendedor->usuario->nombre." ".$emprendedor->usuario->apellidos), 0, 20)}}
                                             |{{$emprendedor->ingreso}}<br/>
-                                            <i class="fa fa-envelope"> @if($emprendedor->email<>"") {{$emprendedor->email}} @else No dispobible @endif </i><br/>
+                                            <i class="fa fa-envelope"> @if($emprendedor->usuario->email<>"") {{$emprendedor->usuario->email}} @else No dispobible @endif </i><br/>
                                             <i class="fa fa-phone"> @if($emprendedor->tel_fijo<>"") {{$emprendedor->tel_fijo}} @else No disponible @endif </i>
                                             | <i class="fa fa-mobile"> @if($emprendedor->tel_movil<>"") {{$emprendedor->tel_movil}} @else No dispobible @endif </i>
                                         </p>

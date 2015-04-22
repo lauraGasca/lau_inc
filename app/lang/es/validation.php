@@ -62,7 +62,7 @@ return array(
 "numeric"               => "El campo :attribute debe ser un numero.",
 "regex"                 => "El formato del campo :attribute es inválido.",
 "required"              => "El campo es obligatorio",
-"required_if"           => "El campo :attribute es requerido cuando el campo :other es :value.",
+"required_if"           => "El campo es obligatorio.",
 "required_with"         => "El campo :attribute es requerido cuando :values está presente.",
 "required_with_all"     => "El campo :attribute es requerido cuando :values está presente.",
 "required_without"      => "El campo :attribute es requerido cuando :values no está presente.",

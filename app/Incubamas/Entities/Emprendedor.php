@@ -4,7 +4,7 @@ class Emprendedor extends \Eloquent
 {
     protected $table = 'emprendedores';
 
-    protected $guarded = ['id', 'nombre', 'apellidos','imagen'];
+    protected $guarded = ['id'];
 
     public function usuario()
     {
@@ -31,7 +31,6 @@ class Emprendedor extends \Eloquent
             $this->attributes['fecha_ingreso'] = date_format(date_create(substr($value, 3, 2) . '/' . substr($value, 0, 2) . '/' . substr($value, 6, 4)), 'Y-m-d');
         }
     }
-
     public function getEdadAttribute()
     {
         return floor((((time() - strtotime(date_format(date_create($this->fecha_nacimiento), 'd-m-Y'))) / 3600) / 24) / 360);

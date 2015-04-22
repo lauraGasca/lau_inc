@@ -10,7 +10,6 @@
                         <tr>
                             <td width="50%" align="left" valign="middle" style="font-family:Arial, Helvetica, sans-serif; color:#ffffff; font-size:13px;">
                                 {{ HTML::image('accio/images/Logo footer.png', 'Top',['height'=>"60"]) }}<br/><br/>
-
                             </td>
                             <td style="font-family:Arial, Helvetica, sans-serif; color:#ffffff; font-size:13px;" valign="middle" align="right">
                                 {{strftime("%d de %B, %Y", strtotime(date("Y-m-d H:i:s")))}}
@@ -21,13 +20,41 @@
                         <tr>
                             <td align="left" valign="top" bgcolor="#b47feb" style="background-color:#F0522D; font-family:Arial, Helvetica, sans-serif; font-size:16px; color:#ffffff; padding:0px 15px 10px 15px;">
                                 <br/>
-                                <div style="font-size:24px;"><br>
+                                <div style="font-size:24px; text-align: center"><br>
                                     {{$titulo}}
-                                </div><br>
-                                <div>
-                                    {{$mensaje}} <br>
-                                    <br>
                                 </div>
+                                <br/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="left" valign="top" bgcolor="#ebfab2" style="background-color:#FFF; padding:15px;"><br>
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                        <td width="5%" align="left" valign="top">
+                                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                <tr>
+                                                    <td align="left" valign="top" style="font-family:Arial, Helvetica, sans-serif; font-size:19px; color:#444444;"></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td width="90%" align="center" valign="top">
+                                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                <tr>
+                                                    <td valign="top" style="font-family:Arial, Helvetica, sans-serif; font-size:19px; color:#444444;">
+                                                        {{$mensaje}}
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td width="5%" align="center" valign="top">
+                                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                <tr>
+                                                    <td align="left" valign="top" style="font-family:Arial, Helvetica, sans-serif; font-size:19px; color:#444444;"></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table><br>
                             </td>
                         </tr>
                         <tr>
@@ -44,14 +71,14 @@
                             <td align="left" valign="top" bgcolor="#ebfab2" style="background-color:#FFF; padding:15px;"><br>
                                 <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                     <tr>
-                                        <td width="15%" align="left" valign="top">
-                                            <table width="165" border="0" cellspacing="0" cellpadding="0">
+                                        <td width="5%" align="left" valign="top">
+                                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                                 <tr>
                                                     <td align="left" valign="top" style="font-family:Arial, Helvetica, sans-serif; font-size:19px; color:#444444;"></td>
                                                 </tr>
                                             </table>
                                         </td>
-                                        <td width="70%" align="center" valign="top">
+                                        <td width="90%" align="center" valign="top">
                                             <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                                 <tr>
                                                     <td align="center" valign="top" style="font-family:Arial, Helvetica, sans-serif; font-size:19px; color:#444444;">
@@ -64,8 +91,8 @@
                                                 </tr>
                                             </table>
                                         </td>
-                                        <td width="15%" align="center" valign="top">
-                                            <table width="165" border="0" cellspacing="0" cellpadding="0">
+                                        <td width="5%" align="center" valign="top">
+                                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                                 <tr>
                                                     <td align="left" valign="top" style="font-family:Arial, Helvetica, sans-serif; font-size:19px; color:#444444;"></td>
                                                 </tr>

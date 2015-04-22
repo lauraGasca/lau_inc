@@ -11,6 +11,8 @@ use Incubamas\Repositories\MensajeRepo;
 use Incubamas\Repositories\UserRepo;
 use Incubamas\Repositories\EmprendedoresRepo;
 use Incubamas\Managers\ValidatorManager;
+use Incubamas\Managers\UserEmpManager;
+use Incubamas\Managers\EmprendedoresManager;
 
 class EmprendedoresController extends BaseController
 {
@@ -44,25 +46,6 @@ class EmprendedoresController extends BaseController
         $this->userRepo = $userRepo;
     }
 
-    public function getActivar($user_id)
-    {
-        $this->_soloAsesores();
-        $user = $this->userRepo->find($user_id);
-        if($user->active == 0) {
-            $user->active = 1;
-            $user->save();
-            $this->_mail('emails.estandar',
-                ['titulo'=>'¡Tu cuenta ha sido activada! ', 'mensaje'=>'Gracias por registrarte, a partir de ahora ya puedes ingresar con el usuario y contrase&ntilde;a que registraste.',
-                    'seccion'=>"Activar Usuario", 'imagen' => false,
-                    'tabla' => "Si desea activar al usuario de click en el siguiente enlace <br/><div align='center'><a href=\"".url('sistema/activar/'.$user->id)."\"
-                    style='text-decoration:none; padding: 14px 24px; font-size: 21px;color: #fff; background-color: #5cb85c; display: inline-block; margin-bottom: 0;font-weight: 400; line-height: 1.42857143; text-align: center; white-space: nowrap; vertical-align: middle; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; background-image: none; border: 1px solid transparent; border-radius: 4px;'>Activar</a></div>"],
-                'Cuenta Activada', $user->email, 'IncubaMas' );
-        }else
-            return View::make('login.mensaje')->with(['titulo'=>'Error', 'subtitulo' => 'Esta cuenta ya esta activa.',
-                'recomendacion' => 'De click en el siguiente enlace para ingresar.','boton' =>'Ingresar']);
-    }
-
-
     /**************************Listar Emprendedores*******************************/
 
     public function getIndex()
@@ -82,7 +65,6 @@ class EmprendedoresController extends BaseController
         $emprendedores = $this->emprendedoresRepo->burcarEmprendedores($parametro);
         $this->layout->content = View::make('emprendedores.index', compact('emprendedores', 'parametro'));
     }
-
 
     /**************************Perfil Emprendedores*******************************/
 
@@ -186,88 +168,31 @@ class EmprendedoresController extends BaseController
 
     public function postCrear()
     {
-        if (Auth::user()->type_id != 1 && Auth::user()->type_id != 2)
-            return Redirect::to('sistema');
+        $this->_soloAsesores();
         $manager = new ValidatorManager('user', Input::all());
         $manager->validar();
-        return Redirect::back()->with(array('confirm' => 'Se ha registrado correctamente.'));
-        /*
-            $uno = Input::get("nombre");
-            $p_uno = explode(" ", $uno);
-            $dos = Input::get("apellido");
-            $p_dos = explode(" ", $dos);
+        $user = $this->userRepo->newUserAct();
+        $manager = new UserEmpManager($user, Input::all());
+        $manager->save();
+        $this->userRepo->crearNomUser($user);
+        if(Input::hasfile('foto'))
+        {
+            $this->userRepo->actualizarFoto($user, $user->id."." . Input::file('foto')->getClientOriginalExtension());
+            Input::file('foto')->move('Orb/images/emprendedores/', $user->foto);
+        }
+        $emprendedor = $this->emprendedoresRepo->newEmprendedor();
+        $manager = new EmprendedoresManager($emprendedor, Input::all()+['user_id'=>$user->id]);
+        $manager->save();
+        if (Input::get("empresa") == 'yes')
+            return Redirect::to('emprendedores/crearempresa/' . $emprendedor->id);
+        else
+            return Redirect::to('emprendedores/editar/'.$emprendedor->id)->with(array('confirm' => 'Se ha registrado correctamente.'));
 
-            // Verifico que el nombre de usuario no est� repetido.
-            // En caso de estarlo le concateno un n�mero secuencial hasta que deje de estarlo.
-            $username = $p_uno[0] . "." . $p_dos[0];
-            $username_num = $username;
-            $i = 0;
-            $repetido = User::where('user', '=', $username)->first();
-            while (count($repetido) > 0) {
-                $username_num = $username . $i;
-                $repetido = User::where('user', '=', $username_num)->first();
-                $i++;
-            }
-            $user = new User;
-            $user->user = $username_num;
-            $user->password = '1234';
-            $user->active = 1;
-            $user->type_id = 3;
-            if ($user->save()) {
-                $emprendedor = new Emprendedor;
-                $emprendedor->name = Input::get("nombre");
-                $emprendedor->apellidos = Input::get("apellido");
-                $emprendedor->about = Input::get("about");
-                $emprendedor->programa = Input::get("programa");
-                $emprendedor->estatus = Input::get("estatus");
-                $emprendedor->genero = Input::get("genero");
-                $emprendedor->fecha_nacimiento = $this->_mysqlformat(Input::get("fecha_nac"));
-                $emprendedor->curp = Input::get("curp");
-                $emprendedor->lugar_nacimiento = Input::get("lugar_nac");
-                $emprendedor->fecha_ingreso = $this->_mysqlformat(Input::get("fecha_ing"));;
-                $emprendedor->calle = Input::get("calle");
-                $emprendedor->num_ext = Input::get("num_ext");
-                $emprendedor->num_int = Input::get("num_int");
-                $emprendedor->colonia = Input::get("colonia");
-                $emprendedor->cp = Input::get("cp");
-                $emprendedor->estado = Input::get("estado");
-                $emprendedor->municipio = Input::get("municipio");
-                $emprendedor->email = Input::get("email");
-                $emprendedor->estado_civil = Input::get("estado_civil");
-                $emprendedor->tel_fijo = Input::get("tel_fijo");
-                $emprendedor->tel_movil = Input::get("tel_movil");
-                $emprendedor->salario_mensual = Input::get("salario");
-                $emprendedor->escolaridad = Input::get("escolaridad");
-                $emprendedor->tiempo_trabajando = Input::get("trabajando");
-                $emprendedor->personas_dependen = Input::get("personas");
-                $emprendedor->emprendido_ant = Input::get("emprendido");
-                if ($emprendedor->emprendido_ant == 1)
-                    $emprendedor->veces_emprendido = Input::get("veces");
-                $autor = Asesor::where('user_id', '=', Auth::user()->id)->first();
-                $emprendedor->created_by = $autor->id;
-                $emprendedor->user_id = $user->id;
-                $emprendedor->imagen = 'generic-emprendedor.png';
-                if ($emprendedor->save()) {
-                    if (Input::hasFile('imagen')) {
-                        $emprendedor->imagen = $emprendedor->id . "." . Input::file('imagen')->getClientOriginalExtension();
-                        $emprendedor->save();
-                        Input::file('imagen')->move('Orb/images/emprendedores', $emprendedor->imagen);
-                    }
-                    if (Input::get("empresa") == 'yes')
-                        return Redirect::to('emprendedores/crearempresa/' . $emprendedor->id);
-                    else
-                        return Redirect::to('emprendedores/editar/' . $emprendedor->id)->with(array('confirm' => 'Se ha registrado correctamente.'));
-                } else
-                    return Redirect::to('emprendedores')->with(array('confirm' => 'Lo sentimos. No se ha registrado correctamente.'));
-            } else
-                return Redirect::to('emprendedores')->with(array('confirm' => 'Lo sentimos. No se ha registrado correctamente.'));
-        }*/
     }
 
     public function getEditar($emprendedor_id)
     {
-        if (Auth::user()->type_id != 1 && Auth::user()->type_id != 2)
-            return Redirect::to('sistema');
+        $this->_soloAsesores();
         $emprendedor = Emprendedor::find($emprendedor_id);
         $empresas = Empresa::where('emprendedor_id', '=', $emprendedor->id)->get();
         $documentos = Documento::all()->lists('nombre', 'id');
@@ -297,8 +222,7 @@ class EmprendedoresController extends BaseController
 
     public function postEditar()
     {
-        if (Auth::user()->type_id != 1 && Auth::user()->type_id != 2)
-            return Redirect::to('sistema');
+        $this->_soloAsesores();
         $dataUpload = array(
             "emprendedor_id" => Input::get("emprendedor_id"),
             "user_id" => Input::get("user_id"),
@@ -425,8 +349,7 @@ class EmprendedoresController extends BaseController
 
     public function getDelete($emprendedor_id)
     {
-        if (Auth::user()->type_id != 1 && Auth::user()->type_id != 2)
-            return Redirect::to('sistema');
+        $this->_soloAsesores();
         $dataUpload = array("emprendedor_id" => $emprendedor_id);
         $rules = array("emprendedor_id" => 'required|exists:emprendedores,id');
         $messages = array('exists' => 'El emprendedor indicado no existe.');
@@ -457,15 +380,13 @@ class EmprendedoresController extends BaseController
 
     public function getCrearempresa($emprendedor_id)
     {
-        if (Auth::user()->type_id != 1 && Auth::user()->type_id != 2)
-            return Redirect::to('sistema');
+        $this->_soloAsesores();
         $this->layout->content = View::make('emprendedores.create_empresa')->with(array('emprendedor_id' => $emprendedor_id));
     }
 
     public function postCrearempresa()
     {
-        if (Auth::user()->type_id != 1 && Auth::user()->type_id != 2)
-            return Redirect::to('sistema');
+        $this->_soloAsesores();
         $dataUpload = array(
             "emprendedor_id" => Input::get("emprendedor_id"),
             "imagen" => Input::get("imagen"),
@@ -582,8 +503,7 @@ class EmprendedoresController extends BaseController
 
     public function postEditarempresa()
     {
-        if (Auth::user()->type_id != 1 && Auth::user()->type_id != 2)
-            return Redirect::to('sistema');
+        $this->_soloAsesores();
         $dataUpload = array(
             "emprendedor_id" => Input::get("emprendedor_id"),
             "empresa_id" => Input::get("empresa_id"),
