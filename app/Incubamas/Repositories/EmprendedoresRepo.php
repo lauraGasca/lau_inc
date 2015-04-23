@@ -3,6 +3,8 @@
 use Incubamas\Entities\Emprendedor;
 use Incubamas\Entities\Empresa;
 use Incubamas\Entities\Socios;
+use Incubamas\Entities\Solicitud;
+use Incubamas\Entities\Pago;
 
 class EmprendedoresRepo extends BaseRepo
 {
@@ -50,6 +52,37 @@ class EmprendedoresRepo extends BaseRepo
             ->orWhereHas('empresas',function($query) use ($parametro)
             { $query->whereRaw('razon_social LIKE "%'.$parametro.'%"'); })
             ->orderBy('fecha_ingreso', 'desc')->paginate(12);;
+    }
+
+    public function verificar($fecha_actual)
+    {
+        $emprendedores = Emprendedor::all();
+        foreach ($emprendedores as $emprendedor)
+            if ($emprendedor->estatus <> "Cancelado")
+            {
+                $emprendedor->estatus = "Activo";
+                $emprendedor->save();
+                $solicitudes = Solicitud::where("emprendedor_id", "=", $emprendedor->id)->get();
+                foreach ($solicitudes as $solicitud)
+                    if ($solicitud->estado == "Vencido")
+                    {
+                        $emprendedor->estatus = "Suspendido";
+                        $emprendedor->save();
+                        break;
+                    } else {
+                        if ($solicitud->estado <> "Liquidado")
+                        {
+                            $pagos = Pago::selectRaw('MAX(siguiente_pago) as siguiente')->where("emprendedor_id", "=", $emprendedor->id)->where("solicitud_id", "=", $solicitud->id)->first();
+                            $fecha_limite = strtotime(date_format(date_create($pagos->siguiente), 'Y-m-d'));
+                            if ($fecha_actual > $fecha_limite)
+                            {
+                                $emprendedor->estatus = "Suspendido";
+                                $emprendedor->save();
+                                break;
+                            }
+                        }
+                    }
+            }
     }
 
 

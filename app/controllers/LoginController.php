@@ -2,6 +2,8 @@
 
 use Incubamas\Repositories\UserRepo;
 use Incubamas\Repositories\EmprendedoresRepo;
+use Incubamas\Repositories\SolicitudRepo;
+use Incubamas\Repositories\BlogsRepo;
 use Incubamas\Managers\FacebookManager;
 use Incubamas\Managers\EmprendedorManager;
 use Incubamas\Managers\UserManager;
@@ -12,12 +14,16 @@ class LoginController extends BaseController
     protected $layout = 'layouts.login';
     protected $userRepo;
     protected $emprendedoreRepo;
+    protected $solicitudRepo;
+    protected $blogRepo;
 
-    public function __construct(UserRepo $userRepo, EmprendedoresRepo $emprendedoresRepo)
+    public function __construct(UserRepo $userRepo, EmprendedoresRepo $emprendedoresRepo, SolicitudRepo $solicitudRepo, BlogsRepo $blogsRepo)
     {
         $this->beforeFilter('csrf', array('on' => array('post', 'put', 'patch', 'delete')));
         $this->userRepo = $userRepo;
         $this->emprendedoreRepo = $emprendedoresRepo;
+        $this->solicitudRepo = $solicitudRepo;
+        $this->blogRepo = $blogsRepo;
     }
     
     public function getIndex($error=null)
@@ -47,7 +53,7 @@ class LoginController extends BaseController
         if (Auth::attempt($credentials, Input::get('remember')))
         {
             if(Auth::user()->active == 1 || Auth::user()->active == 2) {
-                $this->_verificat();
+                $this->_verificar();
                 switch (Auth::user()->type_id) {
                     case 1:
                     case 2:
@@ -88,7 +94,7 @@ class LoginController extends BaseController
             if($user->active == 1 ||$user->active == 1)
             {
                 Auth::login($user);
-                $this->_verificat();
+                $this->_verificar();
                 switch(Auth::user()->type_id)
                 {
                     case 1: case 2: $direccion = 'emprendedores'; break;
@@ -181,7 +187,6 @@ class LoginController extends BaseController
                     ['titulo'=>'Contrase&ntilde;a Actualizada', 'mensaje'=>'<p>Hola '.$user->nombre.' '.$user->apellidos.': </p> <p>Tal como lo solicitaste, tu contrase&ntilde;a para entrar al sistema ha sido actualizada.</p><p>Si tienes dudas no dudes en ponerte en contacto con nosotros.</p>', 'seccion'=>"Datos de Acceso", 'imagen' => false,
                         'tabla' => "<div align='center'><table style='font-family:Arial, Helvetica, sans-serif; font-size:19px; color:#444444; text-align: center;'><tr><td width='50%'><strong>Nombre de Usuario: </strong></td><td>".$user->user."</td></tr><tr><td colspan='2'></td></tr><tr><td><strong>Contrase&ntilde;a: </strong></td><td>".$password."</td></tr></table><br/><br/><a target='_blank' href=\"".url('sistema')."\"style='text-decoration:none; padding: 14px 24px; font-size: 21px;color: #fff; background-color: #02384B; display: inline-block; margin-bottom: 0;font-weight: 400; line-height: 1.42857143; text-align: center; white-space: nowrap; vertical-align: middle; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; background-image: none; border: 1px solid transparent; border-radius: 4px;'>Acceso al Sistema</a></div>"],
                     'Reseteo de Contraseña', $user->email, $user->nombre . " " . $user->apellidos);
-
                 return Redirect::back()->with('confirm', 'Revise su correo para poder acceder a su cuenta.');
             }
             return Redirect::back()->with('contra', 'Su contrase&ntilde;a no puede ser actualizada. Acceso incorrecto.');
@@ -197,83 +202,12 @@ class LoginController extends BaseController
         return Redirect::to('sistema');
     }
 
-    private function _verificat()
+    private function _verificar()
     {
         $fecha_actual = strtotime(date("Y-m-d"));
-        $verificar = Solicitud::all();
-        if (count($verificar) > 0) {
-            foreach ($verificar as $v) {
-                if ($v->estado <> "Liquidado" && $v->estado <> "Vencido") {
-                    $date = date_create($v->fecha_limite);
-                    $fecha = date_format($date, 'Y-m-d');
-                    $fecha_limite = strtotime($fecha);
-                    if ($fecha_actual > $fecha_limite) {
-                        $v->estado = "Vencido";
-                        $v->save();
-                    } else {
-                        $nueva_fecha = strtotime('-5 day', $fecha_limite);
-                        if ($nueva_fecha <= $fecha_actual) {
-                            $v->estado = "Alerta";
-                            $v->save();
-                        }
-                    }
-                }
-            }
-        }
-
-        $estatus = Emprendedor::all();
-        if (count($estatus) > 0) {
-            foreach ($estatus as $e) {
-                if ($e->estatus <> "Cancelado") {
-                    $e->estatus = "Activo";
-                    $e->save();
-                    $solicitudes = Solicitud::where("emprendedor_id", "=", $e->id)->get();
-                    if (count($solicitudes) > 0) {
-                        foreach ($solicitudes as $s) {
-                            if ($s->estado == "Vencido") {
-                                $e->estatus = "Suspendido";
-                                $e->save();
-                                break;
-                            } else {
-                                if ($s->estado <> "Liquidado") {
-                                    $pagos = Pago::select(DB::raw('MAX(siguiente_pago) as siguiente'))
-                                        ->where("emprendedor_id", "=", $e->id)
-                                        ->where("solicitud_id", "=", $s->id)->first();
-                                    $date = date_create($pagos->siguiente);
-                                    $fecha = date_format($date, 'Y-m-d');
-                                    $fecha_limite = strtotime($fecha);
-                                    if ($fecha_actual > $fecha_limite) {
-                                        $e->estatus = "Suspendido";
-                                        $e->save();
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                    }
-
-                }
-            }
-        }
-
-        $blogs = Blogs::all();
-        if (count($blogs) > 0) {
-            foreach ($blogs as $blog) {
-                $fecha_entrada = strtotime(date_format(date_create($blog->fecha_publicacion), 'd-m-Y'));
-                if ($fecha_actual >= $fecha_entrada) {
-                    if ($blog->activo != 1) {
-                        $blog->activo = 1;
-                        $blog->save();
-                    }
-                } else {
-                    if ($blog->activo != 0) {
-                        $blog->activo = 0;
-                        $blog->save();
-                    }
-                }
-
-            }
-        }
+        $this->solicitudRepo->verificar($fecha_actual);
+        $this->emprendedoreRepo->verificar($fecha_actual);
+        $this->blogRepo->verificar($fecha_actual);
     }
 
     private function _mail($plantilla, $variables, $asunto, $correo, $nombre)
@@ -284,4 +218,5 @@ class LoginController extends BaseController
                 $message->to($correo, $nombre);
             });
     }
+
 }

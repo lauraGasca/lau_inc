@@ -126,6 +126,28 @@ class BlogsRepo extends BaseRepo
         return $archivos;
     }
 
+    public function verificar($fecha_actual)
+    {
+        $blogs = Blogs::all();
+        foreach ($blogs as $blog) {
+            $fecha_entrada = strtotime(date_format(date_create($blog->fecha_publicacion), 'd-m-Y'));
+            if ($fecha_actual >= $fecha_entrada)
+            {
+                if ($blog->activo != 1)
+                {
+                    $blog->activo = 1;
+                    $blog->save();
+                }
+            } else {
+                if ($blog->activo != 0)
+                {
+                    $blog->activo = 0;
+                    $blog->save();
+                }
+            }
+        }
+    }
+
     public function tags()
     {
         return Tag::orderBy('nombre', 'des')->get();
