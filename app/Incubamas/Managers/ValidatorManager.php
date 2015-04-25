@@ -77,6 +77,18 @@ class ValidatorManager
                     'acepto'            =>    'accepted'
                 ];
                 break;
+            //Para eliminar un servicio de casos de exito
+            case 'servicio':
+                $rules = [
+                    'servicio_id'   	=>    'required|exists:servicios,id',
+                ];
+                break;
+            //Para eliminar un servicio de casos de exito
+            case 'caso':
+                $rules = [
+                    'caso_id'   	=>    'required|exists:casos_exitosos,id',
+                ];
+                break;
             //Para eliminar un usuario
             case 'usuario':
                 $rules = [

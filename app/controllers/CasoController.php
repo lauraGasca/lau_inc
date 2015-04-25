@@ -1,11 +1,18 @@
 <?php
 
-use Incubamas\Repositories\CasosRepo;
+
 use Incubamas\Entities\Casos;
-use Incubamas\Repositories\ServicioRepo;
-use Incubamas\Entities\Servicio;
-use Incubamas\Repositories\RelacionRepo;
+
 use Incubamas\Entities\Relacion;
+
+use Incubamas\Repositories\CasosRepo;
+use Incubamas\Repositories\ServicioRepo;
+use Incubamas\Repositories\RelacionRepo;
+use Incubamas\Managers\ValidatorManager;
+use Incubamas\Managers\ServicioManager;
+use Incubamas\Managers\CasosManager;
+use Incubamas\Managers\CasosEditarManager;
+use Incubamas\Managers\RelacionManager;
 
 class CasoController extends BaseController
 {
@@ -17,198 +24,148 @@ class CasoController extends BaseController
 
     public function __construct(CasosRepo $casosRepo, ServicioRepo $servicioRepo, RelacionRepo $relacionRepo)
     {
-        $this->casosRepo = $casosRepo;
-        $this->servicioRepo = $servicioRepo;
-        $this->relacionRepo = $relacionRepo;
         $this->beforeFilter('auth');
         $this->beforeFilter('masters');
         $this->beforeFilter('csrf', array('on' => array('post', 'put', 'patch', 'delete')));
-
+        $this->casosRepo = $casosRepo;
+        $this->servicioRepo = $servicioRepo;
+        $this->relacionRepo = $relacionRepo;
     }
 
     public function getIndex()
     {
         $casos = $this->casosRepo->casos_paginados();
-        $servicios_all = $this->servicioRepo->all_Order();
-        $this->layout->content = View::make('casos.index', compact('casos', 'servicios_all'));
+        $servicios_all = $this->servicioRepo->servicios_todos();
+        $parametro = null;
+        $this->layout->content = View::make('casos.index', compact('casos', 'servicios_all', 'parametro'));
     }
 
     public function postBusqueda()
     {
-        $dataUpload = array("buscar" => Input::get("buscar"));
-        $rules = array("buscar" => 'required|min:1|max:100');
-        $messages = array('required' => 'Por favor, ingresa los parametros de busqueda.');
-        $validation = Validator::make(Input::all(), $rules, $messages);
-        if ($validation->fails())
-            return Redirect::back()->withErrors($validation)->withInput();
-        else {
-            $casos = Casos::where('nombre_proyecto', 'LIKE', '%' . Input::get("buscar") . '%')->paginate(20);
-            $servicios_all = Servicio::orderby('nombre')->get();
-            $this->layout->content = View::make('casos.index')
-                ->with('casos', $casos)
-                ->with('servicios_all', $servicios_all);
-        }
+        $manager = new ValidatorManager('buscar', Input::all());
+        $manager->validar();
+        $parametro = Input::get("buscar");
+        $casos = $this->casosRepo->buscar($parametro);
+        $servicios_all = $this->servicioRepo->servicios_todos();
+        $this->layout->content = View::make('casos.index', compact('casos', 'servicios_all', 'parametro'));
     }
 
     public function getCrear()
     {
-        $servicios = $this->servicioRepo->servicios();
+        $servicios = $this->servicioRepo->servicios_tags();
         $this->layout->content = View::make('casos.create', compact('servicios'));
     }
 
     public function postCrear()
     {
-        $dataUpload = array(
-            "nombre_proyecto" => Input::get("nombre_proyecto"),
-            "about_proyect" => Input::get("about_proyect"),
-            "categoria" => Input::get("categoria"),
-            "servicios[]" => Input::get("servicios[]"),
-            "archivo" => Input::get("archivo")
-        );
-        $rules = array(
-            "nombre_proyecto" => 'required|min:3|max:100|unique:casos_exitosos,nombre_proyecto',
-            "about_proyect" => 'required|min:3|max:500',
-            "categoria" => 'required|min:3|max:100',
-            "servicios[]" => 'min:3|max:200',
-            "archivo" => 'required|image'
-        );
-        $messages = array('unique' => 'El nombre de proyecto ya existe');
-        $validation = Validator::make(Input::all(), $rules, $messages);
-        if ($validation->fails())
-            return Redirect::back()->withErrors($validation)->withInput();
-        else {
-            $caso = new Casos;
-            $caso->nombre_proyecto = Input::get("nombre_proyecto");
-            $caso->about_proyect = Input::get("about_proyect");
-            $caso->categoria = Input::get("categoria");
-            if ($caso->save()) {
-                $caso->imagen = $caso->id . "." . Input::file("archivo")->getClientOriginalExtension();
-                $caso->save();
-                Input::file('archivo')->move('Orb/images/casos_exito', $caso->imagen);
-                if (count(Input::get("servicios")) > 0) {
-                    foreach (Input::get("servicios") as $serv) {
-                        $etiqueta = new Relacion;
-                        $etiqueta->servicio_id = $serv;
-                        $etiqueta->casos_exitoso_id = $caso->id;
-                        $etiqueta->save();
-                    }
+        $caso = $this->casosRepo->newCaso();
+        $manager = new CasosManager($caso, Input::all());
+        $manager->save();
+        $this->casosRepo->actualizarImagen($caso, $caso->id.".".Input::file("imagen")->getClientOriginalExtension());
+        Input::file('imagen')->move('Orb/images/casos_exito', $caso->imagen);
+        $this->casosRepo->actualizarSlug($caso);
+        if(trim(Input::get("servicios"))<>'')
+        {
+            $nombres_servicios = explode(",", trim(Input::get("servicios")));
+            foreach ($nombres_servicios as $nombre_servicio)
+            {
+                $servicio = $this->servicioRepo->busca_nombre($nombre_servicio);
+                if (count($servicio) <= 0) {
+                    $servicio = $this->servicioRepo->newServicio();
+                    $manager = new ServicioManager($servicio, ['nombre' => $nombre_servicio]);
+                    $manager->save();
                 }
-                return Redirect::to('casos')->with(array('confirm' => 'Se ha registrado correctamente.'));
-            } else
-                return Redirect::to('casos')->with(array('confirm' => 'No se ha podido registrar.'));
+                $relacion = $this->relacionRepo->newRelacion();
+                $manager = new RelacionManager($relacion, ['servicio_id' => $servicio->id, 'casos_exitoso_id' => $caso->id]);
+                $manager->save();
+            }
         }
-    }
-
-    public function getDelete($caso_id)
-    {
-        $dataUpload = array("caso_id" => $caso_id);
-        $rules = array("caso_id" => 'required|exists:casos_exitosos,id');
-        $messages = array('exists' => 'El caso indicado no existe.');
-        $validation = Validator::make($dataUpload, $rules, $messages);
-        if ($validation->fails())
-            return Redirect::to('casos')->with(array('confirm' => 'No se ha podido eliminar.'));
-        else {
-            $casos = Casos::find($caso_id);
-            $imagen = $casos->imagen;
-            if ($casos->delete()) {
-                File::delete(public_path() . '\\Orb\\images\\casos_exito\\' . $imagen);
-                return Redirect::to('casos')->with(array('confirm' => 'Se ha eliminado correctamente.'));
-            } else
-                return Redirect::to('casos')->with(array('confirm' => 'No se ha podido eliminar.'));
-        }
+        return Redirect::to('casos')->with(array('confirm' => 'Se ha creado correctamente.'));
     }
 
     public function getEditar($caso_id)
     {
-        $caso = $this->casosRepo->find($caso_id);
-        $servicios = $this->servicioRepo->servicios();
-        $relaciones = Relacion::where('casos_exitoso_id', '=', $caso_id)->lists('servicio_id');
+        $caso = $this->casosRepo->caso($caso_id);
+        $servicios = $this->servicioRepo->servicios_tags();
+        $relaciones = $this->relacionRepo->relaciones_caso($caso_id);
         $this->layout->content = View::make('casos.update', compact('caso', 'servicios', 'relaciones'));
     }
 
     public function postEditar()
     {
-        $dataUpload = array(
-            "caso_id" => Input::get('caso_id'),
-            "nombre_proyecto" => Input::get("nombre_proyecto"),
-            "about_proyect" => Input::get("about_proyect"),
-            "categoria" => Input::get("categoria"),
-            "servicios[]" => Input::get("servicios[]"),
-            "archivo" => Input::get("archivo")
-        );
-        $rules = array(
-            "caso_id" => 'required|exists:casos_exitosos,id',
-            "nombre_proyecto" => 'required|unique:casos_exitosos,nombre_proyecto,' . Input::get('caso_id'),
-            "about_proyect" => 'required|min:3|max:500',
-            "categoria" => 'required|min:3|max:100',
-            "servicios[]" => 'min:3|max:200',
-            "archivo" => 'image'
-        );
-        $messages = array(
-            'unique' => 'El nombre de proyecto ya existe',
-            'exists' => 'El caso indicado no existe.'
-        );
-        $validation = Validator::make(Input::all(), $rules, $messages);
-        if ($validation->fails())
-            return Redirect::back()->withErrors($validation)->withInput();
-        else {
-            $caso_id = Input::get('caso_id');
-            $caso = Casos::find($caso_id);
-            $caso->nombre_proyecto = Input::get("nombre_proyecto");
-            $caso->about_proyect = Input::get("about_proyect");
-            $caso->categoria = Input::get("categoria");
-            if ($caso->save()) {
-                if (Input::hasFile('archivo')) {
-                    File::delete(public_path() . '\\Orb\\images\\casos_exito\\' . $caso->imagen);
-                    Input::file('archivo')->move('Orb/images/casos_exito', $caso->imagen);
-                }
-                $existentes = Relacion::where('casos_exitoso_id', '=', Input::get('caso_id'))->delete();
-                if (count(Input::get("servicios")) > 0) {
-                    foreach (Input::get("servicios") as $serv) {
-                        $etiqueta = new Relacion;
-                        $etiqueta->servicio_id = $serv;
-                        $etiqueta->casos_exitoso_id = $caso->id;
-                        $etiqueta->save();
+        $caso = $this->casosRepo->caso(Input::get('id'));
+        $manager = new CasosEditarManager($caso, Input::all());
+        $manager->save();
+        $this->casosRepo->actualizarSlug($caso);
+        if (Input::hasFile('imagen'))
+        {
+            $this->casosRepo->actualizarImagen($caso, $caso->id.".".Input::file("imagen")->getClientOriginalExtension());
+            Input::file('imagen')->move('Orb/images/casos_exito', $caso->imagen);
+        }
+        if(trim(Input::get("servicios"))<>'')//Verificamos si enviaron tags
+        {
+            $relaciones = $this->relacionRepo->relacion_caso($caso->id); //Tags que tenemos actualmente
+            $nombres_servicios = explode(",", trim(Input::get("servicios"))); //Tags mandados
+            if(count($relaciones)>0) //Si ya tenemos tags, revisaremos cuales se tienen que eliminar y cuales conservar
+            {
+                $insertar = $nombres_servicios;
+                foreach($relaciones as $relacion)
+                {
+                    $esta = 0;
+                    for ($i = 0; $i<= count($nombres_servicios); $i++)
+                    {
+                        if(isset($nombres_servicios[$i]))
+                            if ($relacion->servicio->nombre == $nombres_servicios[$i])
+                            {
+                                $esta = 1;
+                                unset($insertar[$i]);
+                                break;
+                            }
                     }
+                    if($esta ==0)
+                        $this->relacionRepo->borrarRelacion($relacion->	casos_exitoso_id, $relacion->servicio_id);
                 }
-                return Redirect::to('casos/editar/' . Input::get('caso_id'))->with(array('confirm' => 'Se ha actualizado correctamente.'));
-            } else
-                return Redirect::to('casos/editar/' . Input::get('caso_id'))->with(array('confirm' => 'No se ha podido actualizar.'));
-        }
+                $nombres_servicios = $insertar;
+            }
+            foreach ($nombres_servicios as $nombre_servicio)
+            {
+                $servicio = $this->servicioRepo->busca_nombre($nombre_servicio);
+                if (count($servicio) <= 0) {
+                    $servicio = $this->servicioRepo->newServicio();
+                    $manager = new ServicioManager($servicio, ['nombre' => $nombre_servicio]);
+                    $manager->save();
+                }
+                $relacion = $this->relacionRepo->newRelacion();
+                $manager = new RelacionManager($relacion, ['servicio_id' => $servicio->id, 'casos_exitoso_id' => $caso->id]);
+                $manager->save();
+            }
+        }else //No enviaron tags, asi que eliminamos todos los que teniamos
+            $this->relacionRepo->borrarExistentes($caso->id);
+
+        return Redirect::back()->with(array('confirm' => 'Se ha creado correctamente.'));
     }
 
-    public function postCrearservicio()
+    public function getDelete($caso_id)
     {
-        $dataUpload = array("nombre" => Input::get("nombre"));
-        $rules = array("nombre" => 'required|unique:servicios,nombre');
-        $messages = array('unique' => 'El nombre de proyecto ya existe');
-        $validation = Validator::make(Input::all(), $rules, $messages);
-        if ($validation->fails())
-            return Redirect::back()->withErrors($validation)->withInput();
-        else {
-            $Servicio = new Servicio;
-            $Servicio->nombre = Input::get("nombre");
-            if ($Servicio->save())
-                return Redirect::to('casos')->with(array('confirm' => "Se ha agregado correctamente."));
-            else
-                return Redirect::to('casos')->with(array('confirm' => "Lo sentimos. No se ha podido agregar."));
-        }
+        $manager = new ValidatorManager('caso', ['caso_id'=> $caso_id]);
+        $manager->validar();
+        $this->casosRepo->borrarCaso($caso_id);
+        return Redirect::to('casos')->with(array('confirm' => 'Se ha eliminado correctamente.'));
     }
 
-    public function getDeleteservicio($servicio_id)
+    public function postCrearServicio()
     {
-        $dataUpload = array("servicio_id" => $servicio_id);
-        $rules = array("servicio_id" => 'required|exists:servicios,id');
-        $messages = array('exists' => 'El caso indicado no existe.');
-        $validation = Validator::make($dataUpload, $rules, $messages);
-        if ($validation->fails())
-            return Redirect::back()->with(array('confirm' => 'No se ha podido eliminar.'));
-        else {
-            $servicio = Servicio::find($servicio_id);
-            if ($servicio->delete())
-                return Redirect::to('casos')->with(array('confirm' => "Se ha eliminado correctamente."));
-            else
-                return Redirect::to('casos')->with(array('confirm' => "Lo sentimos. No se ha podido eliminar."));
-        }
+        $servicio = $this->servicioRepo->newServicio();
+        $manager = new ServicioManager($servicio, Input::all());
+        $manager->save();
+        return Redirect::to('casos')->with(array('confirm' => "Se ha agregado correctamente."));
+    }
+
+    public function getDeleteServicio($servicio_id)
+    {
+        $manager = new ValidatorManager('servicio', ['servicio_id'=>$servicio_id]);
+        $manager->validar();
+        $this->servicioRepo->deleteServicio($servicio_id);
+        return Redirect::to('casos')->with(array('confirm' => "Se ha eliminado correctamente."));
     }
 }

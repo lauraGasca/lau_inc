@@ -9,6 +9,11 @@ class CasosRepo extends BaseRepo
         return new Casos;
     }
 
+    public function newCaso()
+    {
+        return new Casos();
+    }
+
     public function caso($id)
     {
         return Casos::where('id', '=', $id)
@@ -22,7 +27,12 @@ class CasosRepo extends BaseRepo
 
     public function casos_paginados()
     {
-        return Casos::orderby('created_at','desc')->paginate(10);
+        return Casos::orderby('created_at','desc')->paginate(20);
+    }
+
+    public function buscar($parametro)
+    {
+        return Casos::whereRaw('nombre_proyecto LIKE "%'.$parametro.'%"')->orderby('created_at','desc')->paginate(20);
     }
 
     public function casos_categoria($categoria)
@@ -51,6 +61,40 @@ class CasosRepo extends BaseRepo
             ->where('id', '<>', $id)
             ->orderby('created_at','desc')
             ->paginate(3);
+    }
+
+    public function borrarCaso($id)
+    {
+        $caso = Casos::find($id);
+        $this->borrarImagen($caso->imagen);
+        $caso->delete();
+    }
+
+    public function actualizarImagen($caso, $imagen)
+    {
+        $this->borrarImagen($caso->imagen);
+        $caso->imagen = $imagen;
+        $caso->save();
+    }
+
+    public function actualizarSlug($caso)
+    {
+        $palabra = $caso->nombre_proyecto;
+        $palabra = strip_tags($palabra);
+        $buscar = array("á", "é", "í", "ó", "ú", "ä", "ë", "ï", "ö", "ü", "à", "è", "ì", "ò", "ù", "ñ", ".", ";", ":", "¡", "!", "¿", "?", "/", "*", "+", "´", "{", "}", "¨", "â", "ê", "î", "ô", "û", "^", "#", "|", "°", "=", "[", "]", "<", ">", "`", "(", ")", "&", "%", "$", "¬", "@", "Á", "É", "Í", "Ó", "Ú", "Ä", "Ë", "Ï", "Ö", "Ü", "Â", "Ê", "Î", "Ô", "Û", "~", "À", "È", "Ì", "Ò", "Ù", "_", "\\", ",", "'", "²", "º", "ª");
+        $rempl = array("a", "e", "i", "o", "u", "a", "e", "i", "o", "u", "a", "e", "i", "o", "u", "n", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "a", "e", "i", "o", "u", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "A", "E", "I", "O", "U", "A", "E", "I", "O", "U", "A", "E", "I", "O", "U", "", "A", "E", "I", "O", "U", "_", " ", " ", " ", " ", " ", " ");
+        $palabra = str_replace($buscar, $rempl, $palabra);
+        $find = array(' ',);
+        $palabra = str_replace($find, '-', $palabra);
+        $palabra = preg_replace('/--+/', '-', $palabra);
+        $palabra = trim($palabra, '-');
+        $caso->slug = $palabra;
+        $caso->save();
+    }
+
+    public function borrarImagen($imagen)
+    {
+        \File::delete(public_path() . '/Orb/images/casos_exito/'.$imagen);
     }
     
 }

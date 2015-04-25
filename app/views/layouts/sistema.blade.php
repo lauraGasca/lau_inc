@@ -18,7 +18,7 @@
         @show
     </head>
 
-    <body>
+    <body @if($errors->first('nombre')) class="modal-open" @endif>
     <div class="smooth-overflow">
         <nav class="main-header clearfix" role="navigation">
             <a class="navbar-brand" href="#">
@@ -134,28 +134,18 @@
         </div>
     </div>
 
+
     @section('scripts')
-        <!--Scripts-->
-        <!--Fullscreen-->
         {{ HTML::script('Orb/js/vendors/fullscreen/screenfull.min.js') }}
-        <!--NanoScroller-->
         {{ HTML::script('Orb/js/vendors/nanoscroller/jquery.nanoscroller.min.js') }}
-        <!--Sparkline-->
         {{ HTML::script('Orb/js/vendors/sparkline/jquery.sparkline.min.js') }}
-        <!--Horizontal Dropdown-->
         {{ HTML::script('Orb/js/vendors/horisontal/cbpHorizontalSlideOutMenu.js') }}
         {{ HTML::script('Orb/js/vendors/classie/classie.js') }}
-        <!--PowerWidgets-->
         {{ HTML::script('Orb/js/vendors/powerwidgets/powerwidgets.min.js') }}
-        <!--Bootstrap-->
-        {{ HTML::script('Orb/js/vendors/bootstrap/bootstrap.min.js') }}
-        <!--ToDo-->
         {{ HTML::script('Orb/js/vendors/todos/todos.js') }}
-        <!--Bootstrap Animation-->
         {{ HTML::script('Orb/js/vendors/animation/animation.js') }}
-        <!--Main App-->
         {{ HTML::script('Orb/js/scripts.js') }}
-        <!--/Scripts-->
+        {{ HTML::script('Orb/js/vendors/bootstrap/bootstrap.min.js') }}
     @show
 
     </body>

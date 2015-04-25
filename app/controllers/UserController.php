@@ -11,6 +11,7 @@ class UserController extends BaseController
     public function __construct(UserRepo $userRepo)
     {
         $this->beforeFilter('auth');
+        $this->beforeFilter('csrf', array('on' => array('put', 'patch', 'delete')));
         $this->userRepo=$userRepo;
     }
 

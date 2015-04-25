@@ -24,6 +24,12 @@
             {{Session::get('confirm')}}
         </div>
     @endif
+    @if($errors->first('buscar'))
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="fa fa-times-circle"></i></button>
+            ¡Por favor, revise los datos del formulario!
+        </div>
+    @endif
     <div class="powerwidget" id="forms-9" data-widget-editbutton="false">
         <div class="inner-spacer">
             <div class="row">
@@ -34,7 +40,7 @@
                                 {{Form::text('buscar', null, array('class'=>'form-control', 'placeholder'=>'Buscar', 'data-provide'=>'typeahead'))}}
                                 {{ Form::submit('Ir!', array('class'=>'btn btn-default')) }}
                             </span>
-                            <span class="message-error">{{$errors->first('buscar')}}</span>
+                            <span style="color: rgb(202, 16, 16);">{{$errors->first('buscar')}}</span><br/><br/>
                         {{Form::close()}}
                     </div>
                 </div>
