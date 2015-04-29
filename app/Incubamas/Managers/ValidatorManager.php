@@ -89,6 +89,24 @@ class ValidatorManager
                     'caso_id'   	=>    'required|exists:casos_exitosos,id',
                 ];
                 break;
+            //Para eliminar una entrada
+            case 'blog':
+                $rules = [
+                    'blog_id'   	=>    'required|exists:entradas,id',
+                ];
+                break;
+            //Para eliminar un tag de blog
+            case 'tag':
+                $rules = [
+                    'tag_id'   	    =>    'required|exists:tags,id',
+                ];
+                break;
+            //Para eliminar un categoria de blog
+            case 'categoria':
+                $rules = [
+                    'categoria_id'  =>    'required|exists:categorias,id',
+                ];
+                break;
             //Para eliminar un usuario
             case 'usuario':
                 $rules = [

@@ -40,7 +40,7 @@
                             </div>
                             <span class="tags">
                                 @foreach($blog->tags as $tag_blog)
-                                    <a href="{{ URL::asset('blogs/tag/'.substr(strip_tags(trim(str_replace(' ', '-', $tag_blog->nombre), '-')), 0, 100).'/'.$tag_blog->id) }}">{{$tag_blog->nombre}}</a>
+                                    <a href="{{ URL::asset('blogs/tag/'.substr(strip_tags(trim(str_replace(' ', '-', $tag_blog->tag), '-')), 0, 100).'/'.$tag_blog->id) }}">{{$tag_blog->tag}}</a>
                                 @endforeach
                             </span>
                         </article>
@@ -159,7 +159,7 @@
                             @if(count($tags) > 0)
                                 <div class="tagcloud">
                                     @foreach($tags as $tag)
-                                        <a href="{{ URL::asset('blogs/tag/'.substr(strip_tags(trim(str_replace(' ', '-', $tag->nombre), '-')), 0, 100).'/'.$tag->id) }}">{{$tag->nombre}}</a>
+                                        <a href="{{ URL::asset('blogs/tag/'.substr(strip_tags(trim(str_replace(' ', '-', $tag->tag), '-')), 0, 100).'/'.$tag->id) }}">{{$tag->tag}}</a>
                                     @endforeach
                                 </div>
                             @else

@@ -41,7 +41,7 @@
                                     {{Form::text('buscar', null, ['class'=>'form-control', 'placeholder'=>'Buscar', 'data-provide'=>'typeahead'])}}
                                     {{Form::submit('Ir!', ['class'=>'btn btn-default']) }}
                                 </span>
-                                <span style="color: rgb(202, 16, 16);">{{$errors->first('buscar')}}</span><br/><br/>
+                                <span style="color: rgb(202, 16, 16); font-weight: bold;">{{$errors->first('buscar')}}</span><br/><br/>
                             {{Form::close()}}
                         </div>
                     </div>
@@ -130,6 +130,8 @@
                                         ¡Por favor, revise los datos del formulario!
                                     </div>
                                 @endif
+                            </div>
+                            <div class="col-md-6 espacio_abajo">
                                 {{Form::label('nombre', '* Servicio', array('class' => 'label'))}}
                                     <label class="input">
                                         <i class="icon-prepend fa fa-cube"></i>

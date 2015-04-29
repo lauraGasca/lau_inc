@@ -3,18 +3,29 @@
 @stop
 
 @section('css')
-  @parent
-  <script type="text/javascript" src="{{ URL::asset('Orb/js/ckeditor/ckeditor.js') }}"></script>
-  <link href="{{ URL::asset('Orb/css/vendors/x-editable/address.css') }}" rel="stylesheet" type="text/css">
-  <link href="{{ URL::asset('Orb/css/vendors/x-editable/select2.css') }}" rel="stylesheet" type="text/css">
-  <link href="{{ URL::asset('Orb/css/vendors/x-editable/typeahead.js-bootstrap.css') }}" rel="stylesheet" type="text/css">
-  <link href="{{ URL::asset('Orb/css/vendors/x-editable/demo-bs3.css') }}" rel="stylesheet" type="text/css">
-  <link href="{{ URL::asset('Orb/css/vendors/x-editable/bootstrap-editable.css') }}" rel="stylesheet" type="text/css">
-  {{ HTML::style('Orb/bower_components/bootstrap-calendar/css/calendar.css') }}
-  {{ HTML::script('Orb/bower_components/bootstrap-calendar/js/language/es-MX.js') }}
-  {{ HTML::style('Orb/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css') }}
-  {{ HTML::script('Orb/bower_components/moment/moment.js') }}
-  {{ HTML::script('Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.es.js') }}
+    @parent
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
+    {{ HTML::style('Orb/bower_components/bootstrap-calendar/css/calendar.css') }}
+    {{ HTML::script('Orb/bower_components/bootstrap-calendar/js/language/es-MX.js') }}
+    {{ HTML::style('Orb/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css') }}
+    {{ HTML::script('Orb/bower_components/moment/moment.js') }}
+    {{ HTML::script('Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.es.js') }}
+    {{ HTML::script('Orb/js/ckeditor/ckeditor.js') }}
+    {{ HTML::style('Orb/tags/css/jquery.tagit.css') }}
+    {{ HTML::style('Orb/tags/css/tagit.ui-zendesk.css') }}
+    {{ HTML::script('Orb/tags/js/tag-it.js') }}
+    {{ HTML::style('Orb/js/fileinput/css/fileinput.min.css') }}
+    {{ HTML::script('Orb/js/fileinput/js/fileinput.min.js') }}
+    <script>
+        $(function(){
+            var sampleTags = [{{$tags}}];
+            $('#tags').tagit({
+                availableTags: sampleTags,
+                singleField: true,
+                singleFieldNode: $('#serv_tags')
+            });
+        });
+    </script>
 @stop
 
 @section('blog')
@@ -32,79 +43,74 @@
 @stop
 
 @section('contenido')
-  <div class="powerwidget col-grey" id="user-directory" data-widget-editbutton="false">
-    <div class="inner-spacer">
-      {{ Form::open(array('url'=>'blog/crear', 'class'=>'orb-form','method' => 'post', 'id'=>'data-pickers', 'enctype'=>'multipart/form-data') )}}
-        <fieldset>
-          <div class="col-md-6 espacio_abajo">
-            {{Form::label('titulo', '* T&iacute;tulo', array('class' => 'label'))}}
-            <label class="input">
-              <i class="icon-prepend fa fa-cube"></i>
-              {{Form::text('titulo')}}
-            </label>
-            <span class="message-error">{{$errors->first('titulo')}}</span>
-          </div>
-            <div class="col-md-2 espacio_abajo">
-                {{Form::label('fecha', '* Fecha de publicaci&oacute;n', array('class' => 'label'))}}
-                <label class="input">
-                    <i class="icon-prepend fa fa-calendar"></i>
-                    {{Form::text('fecha','',array('id'=>'fecha','readonly'))}}
-                </label>
-                <span class="message-error">{{$errors->first('fecha')}}</span>
-            </div>
-          <div class="col-md-2 espacio_abajo">
-            {{Form::label('cat', '* Categoria', array('class' => 'label'))}}
-            <label class="select">
-              {{Form::select('categoria', $categorias)}}
-            </label>
-            <span class="message-error">{{$errors->first('categoria')}}</span>
-          </div>
-          <div class="col-md-11 espacio_abajo">
-            {{Form::label('entrada', '* Entrada', array('class' => 'label'))}}
-            <label class="textarea">
-              {{Form::textarea('entrada')}}
-              <script type="text/javascript">
-                CKEDITOR.replace( 'entrada',
-                {
-                        toolbar : 'Incuba'
-                });
-              </script>
-            </label>
-            <span class="message-error">{{$errors->first('entrada')}}</span>
-          </div>
-        </fieldset>
-        <fieldset>
-          <div class="col-md-6 espacio_abajo">
-            {{Form::label('tags', 'Tags', array('class' => 'label'))}}
-            <label class="select select-multiple">
-              {{Form::select('tags[]', $tags, "", array('multiple'))}}
-            </label>
-            <span class="message-error">{{$errors->first('tags[]')}}</span>
-            <div class="note">
-              <strong>
-                  Nota:
-              </strong>
-              Manten precionado Ctrl para seleccionar multiples tags
-            </div>
-          </div>
-          <div class="col-md-5 espacio_abajo">
-            {{Form::label('img', '* Imagen', array('class' => 'label'))}}
-            {{Form::file('archivo')}}
-            <span class="message-error">{{$errors->first('archivo')}}</span>
-          </div>
-        </fieldset>
-        <footer>
-          <div class="col-md-6 espacio_abajo" >
-            {{ Form::submit('Crear', array('class'=>'btn btn-default')) }}
-          </div>
-          <div class="col-md-5 espacio_abajo" style="text-align: right;">
-            * Los campos son obligatorios
-          </div>
-        </footer>
-      {{Form::close()}}
+    @if(count($errors)>0)
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="fa fa-times-circle"></i></button>
+            ¡Por favor, revise los datos del formulario! {{var_dump($errors)}}
+        </div>
+    @endif
+    <div class="powerwidget col-grey" id="user-directory" data-widget-editbutton="false">
+        <div class="inner-spacer">
+            {{ Form::open(['url'=>'blog/crear', 'class'=>'orb-form','method' => 'post', 'enctype'=>'multipart/form-data'])}}
+                <fieldset>
+                    <div class="col-md-5 espacio_abajo">
+                        {{Form::label('titulo', '* T&iacute;tulo', ['class' => 'label'])}}
+                        <label class="input">
+                            <i class="icon-prepend fa fa-cube"></i>{{Form::text('titulo')}}
+                            <span class="message-error">{{$errors->first('titulo')}}</span>
+                        </label>
+                    </div>
+                    <div class="col-md-3 espacio_abajo">
+                        {{Form::label('fecha_publicacion', '* Fecha de publicaci&oacute;n', ['class' => 'label'])}}
+                        <label class="input">
+                            <i class="icon-prepend fa fa-calendar"></i>{{Form::text('fecha_publicacion', null, ['id'=>'fecha','readonly'])}}
+                            <span class="message-error">{{$errors->first('fecha_publicacion')}}</span>
+                        </label>
+                    </div>
+                    <div class="col-md-2 espacio_abajo">
+                        {{Form::label('categoria_id', '* Categoria', ['class' => 'label'])}}
+                        <label class="select">
+                            {{Form::select('categoria_id', [null=>'Selecciona']+$categorias)}}
+                            <span class="message-error">{{$errors->first('categoria_id')}}</span>
+                        </label>
+                    </div>
+                    <div class="col-md-11 espacio_abajo">
+                        {{Form::label('entrada', '* Entrada', ['class' => 'label'])}}
+                        <label class="textarea">
+                            {{Form::textarea('entrada')}}
+                            <script type="text/javascript">
+                                CKEDITOR.replace('entrada', {toolbar : 'Incuba'});
+                            </script>
+                            <span class="message-error">{{$errors->first('entrada')}}</span>
+                        </label>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="col-md-6 espacio_abajo">
+                        {{Form::label('tags', 'Tags', ['class' => 'label'])}}
+                        {{Form::text('tags', null, ['style'=>'visibility: hidden', 'id'=>'serv_tags']) }}
+                        <ul id="tags"></ul>
+                        <span class="message-error">{{$errors->first('tags')}}</span>
+                        <div class="note"><strong>Nota:</strong> Escribe el nombre del tag y al poner un espacio o dar enter se seleccionara. <br/> Si ya existe un tag que empiece con esa letra, aparecera una lista de sugerencias.</div>
+                    </div>
+                    <div class="col-md-5 espacio_abajo">
+                        {{Form::label('imagen', '* Imagen', ['class' => 'label'])}}
+                        {{Form::file('imagen', ['accept'=>"image/*"])}}<br/>
+                        <span class="message-error" style="font-weight: bold">{{$errors->first('imagen')}}</span>
+                        <div class="note"><strong>Nota:</strong>La imagen debe medir 300 x 300</div>
+                    </div>
+                </fieldset>
+                <footer>
+                    <div class="col-md-6 espacio_abajo" >
+                        {{ Form::submit('Crear', ['class'=>'btn btn-default'])}}
+                    </div>
+                    <div class="col-md-5 espacio_abajo" style="text-align: right;">
+                        * Los campos son obligatorios
+                    </div>
+                </footer>
+            {{Form::close()}}
+        </div>
     </div>
-  </div>
-  <!-- End .powerwidget --> 
 @stop
 
 @section('scripts')
@@ -122,6 +128,17 @@
                 defaultDate: new Date(),
                 maxDate: new Date()
             });
+        });
+        $("#imagen").fileinput({
+            previewFileType: "image",
+            browseClass: "btn btn-success",
+            browseLabel: " Selecciona la imagen ",
+            browseIcon: '<i class="glyphicon glyphicon-picture"></i>',
+            showCaption: false,
+            removeClass: "btn btn-danger",
+            removeLabel: "Borrar",
+            removeIcon: '<i class="glyphicon glyphicon-trash"></i>',
+            showUpload: false
         });
     </script>
 @stop

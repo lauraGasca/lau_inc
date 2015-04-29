@@ -1,8 +1,6 @@
 <?php namespace Incubamas\Repositories;
 
 use Incubamas\Entities\Blogs;
-use Incubamas\Entities\Tag;
-use Incubamas\Entities\Categoria;
 use Incubamas\Entities\Comentarios;
 
 class BlogsRepo extends BaseRepo
@@ -10,6 +8,48 @@ class BlogsRepo extends BaseRepo
     public function getModel()
     {
         return new Blogs();
+    }
+
+    public function newBlog()
+    {
+        $blog = new Blogs();
+        $blog->user_id = \Auth::user()->id;
+        $blog->activo = 0;
+        return $blog;
+    }
+
+    public function borrarBlog($id)
+    {
+        $blog = Blogs::find($id);
+        $this->borrarImagen($blog->imagen);
+        $blog->delete();
+    }
+
+    public function actualizarSlug($blog)
+    {
+        $palabra = $blog->titulo;
+        $palabra = strip_tags($palabra);
+        $buscar = array("á", "é", "í", "ó", "ú", "ä", "ë", "ï", "ö", "ü", "à", "è", "ì", "ò", "ù", "ñ", ".", ";", ":", "¡", "!", "¿", "?", "/", "*", "+", "´", "{", "}", "¨", "â", "ê", "î", "ô", "û", "^", "#", "|", "°", "=", "[", "]", "<", ">", "`", "(", ")", "&", "%", "$", "¬", "@", "Á", "É", "Í", "Ó", "Ú", "Ä", "Ë", "Ï", "Ö", "Ü", "Â", "Ê", "Î", "Ô", "Û", "~", "À", "È", "Ì", "Ò", "Ù", "_", "\\", ",", "'", "²", "º", "ª");
+        $rempl = array("a", "e", "i", "o", "u", "a", "e", "i", "o", "u", "a", "e", "i", "o", "u", "n", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "a", "e", "i", "o", "u", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", "A", "E", "I", "O", "U", "A", "E", "I", "O", "U", "A", "E", "I", "O", "U", "", "A", "E", "I", "O", "U", "_", " ", " ", " ", " ", " ", " ");
+        $palabra = str_replace($buscar, $rempl, $palabra);
+        $find = array(' ',);
+        $palabra = str_replace($find, '-', $palabra);
+        $palabra = preg_replace('/--+/', '-', $palabra);
+        $palabra = trim($palabra, '-');
+        $blog->slug = $palabra;
+        $blog->save();
+    }
+
+    public function actualizarImagen($blog, $imagen)
+    {
+        $this->borrarImagen($blog->imagen);
+        $blog->imagen = $imagen;
+        $blog->save();
+    }
+
+    public function borrarImagen($imagen)
+    {
+        \File::delete(public_path() . '/Orb/images/entradas/'.$imagen);
     }
 
     public function blog($id)
@@ -24,6 +64,12 @@ class BlogsRepo extends BaseRepo
     {
         return Blogs::with('tags')->with('comentario')->with('categoria')
             ->where('id', '=', $id)->first();
+    }
+
+    public function blogsAdmin()
+    {
+        return Blogs::orderBy('activo', 'desc')
+            ->orderBy('fecha_publicacion', 'desc')->paginate(20);
     }
 
     public function blogs()
@@ -60,6 +106,13 @@ class BlogsRepo extends BaseRepo
             ->orderBy('fecha_publicacion', 'des')->paginate(10);
     }
 
+    public function buscarAdmin($parametro)
+    {
+        return Blogs::where('titulo', 'LIKE', '%' . $parametro . '%')
+            ->orderBy('activo', 'desc')
+            ->orderBy('fecha_publicacion', 'des')->paginate(10);
+    }
+
     public function blogs_tag($id)
     {
         return Blogs::with('tags')->with('categoria')
@@ -72,7 +125,6 @@ class BlogsRepo extends BaseRepo
 
     public function blogs_fecha($month, $year)
     {
-
         switch($month)
         {
             case 'Enero': echo $mes = 1; break;
@@ -146,16 +198,6 @@ class BlogsRepo extends BaseRepo
                 }
             }
         }
-    }
-
-    public function tags()
-    {
-        return Tag::orderBy('nombre', 'des')->get();
-    }
-
-    public function categorias()
-    {
-        return Categoria::orderBy('nombre', 'des')->get();
     }
 
     public function newComentario()

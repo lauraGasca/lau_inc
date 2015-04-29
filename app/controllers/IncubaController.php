@@ -2,6 +2,8 @@
 
 use Incubamas\Repositories\CasosRepo;
 use Incubamas\Repositories\BlogsRepo;
+use Incubamas\Repositories\TagRepo;
+use Incubamas\Repositories\CategoriaRepo;
 use Incubamas\Managers\ValidatorManager;
 use Incubamas\Managers\ComentarioManager;
 
@@ -10,12 +12,16 @@ class IncubaController extends BaseController
     protected $layout = 'layouts.incuba';
     protected $casosRepo;
     protected $blogsRepo;
+    protected $tagRepo;
+    protected $categoriaRepo;
 
-    public function __construct(CasosRepo $casosRepo, BlogsRepo $blogsRepo)
+    public function __construct(CasosRepo $casosRepo, BlogsRepo $blogsRepo, TagRepo $tagRepo, CategoriaRepo $categoriaRepo)
     {
         $this->beforeFilter('csrf', array('on' => array('post', 'put', 'patch', 'delete')));
         $this->casosRepo = $casosRepo;
         $this->blogsRepo = $blogsRepo;
+        $this->tagRepo = $tagRepo;
+        $this->categoriaRepo = $categoriaRepo;
     }
 
     public function home()
@@ -82,8 +88,8 @@ class IncubaController extends BaseController
         if(count($blog)>0)
         {
             $slug = $blog->slug;
-            $tags = $this->blogsRepo->tags();
-            $categorias = $this->blogsRepo->categorias();
+            $tags = $this->tagRepo->tags();
+            $categorias = $this->categoriaRepo->categorias();
             $recent_blogs = $this->blogsRepo->entradas_recientes();
             $archive_blogs = $this->blogsRepo->archive();
             $this->layout->content = View::make('incuba.blog', compact('blog', 'tags', 'categorias', 'recent_blogs', 'archive_blogs', 'slug'));
@@ -101,8 +107,8 @@ class IncubaController extends BaseController
 
         if(count($blog)>0)
         {
-            $tags = $this->blogsRepo->tags();
-            $categorias = $this->blogsRepo->categorias();
+            $tags = $this->tagRepo->tags();
+            $categorias = $this->categoriaRepo->categorias();
             $recent_blogs = $this->blogsRepo->entradas_recientes();
             $archive_blogs = $this->blogsRepo->archive();
             $this->layout->content = View::make('incuba.blog', compact('blog', 'tags', 'categorias', 'recent_blogs', 'archive_blogs', 'slug'));
@@ -115,8 +121,8 @@ class IncubaController extends BaseController
     {
         $blogs = $this->blogsRepo->blogs();
         $slug = "todos";
-        $tags = $this->blogsRepo->tags();
-        $categorias = $this->blogsRepo->categorias();
+        $tags = $this->tagRepo->tags();
+        $categorias = $this->categoriaRepo->categorias();
         $recent_blogs = $this->blogsRepo->entradas_recientes();
         $archive_blogs = $this->blogsRepo->archive();
         $this->layout->content = View::make('incuba.blogs', compact('blogs', 'tags', 'categorias', 'recent_blogs', 'archive_blogs', 'slug'));
@@ -148,8 +154,8 @@ class IncubaController extends BaseController
                 $this->blogsRepo->actualizaComentarios($comentario->entrada_id);
                 return Redirect::back()->with(array('confirm' => 'Gracias por tu comentario.'));
         }
-        $tags = $this->blogsRepo->tags();
-        $categorias = $this->blogsRepo->categorias();
+        $tags = $this->tagRepo->tags();
+        $categorias = $this->categoriaRepo->categorias();
         $recent_blogs = $this->blogsRepo->entradas_recientes();
         $archive_blogs = $this->blogsRepo->archive();
         $this->layout->content = View::make('incuba.blogs', compact('blogs', 'tags', 'categorias', 'recent_blogs', 'archive_blogs', 'slug'));

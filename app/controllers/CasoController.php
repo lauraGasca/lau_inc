@@ -1,10 +1,5 @@
 <?php
 
-
-use Incubamas\Entities\Casos;
-
-use Incubamas\Entities\Relacion;
-
 use Incubamas\Repositories\CasosRepo;
 use Incubamas\Repositories\ServicioRepo;
 use Incubamas\Repositories\RelacionRepo;

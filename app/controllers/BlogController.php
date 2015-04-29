@@ -1,284 +1,192 @@
 <?php
 
+use Incubamas\Repositories\BlogsRepo;
+use Incubamas\Repositories\CategoriaRepo;
+use Incubamas\Repositories\TagRepo;
+use Incubamas\Repositories\EtiquetadoRepo;
+use Incubamas\Managers\BlogEditarManager;
+use Incubamas\Managers\BlogManager;
+use Incubamas\Managers\CategoriaManager;
+use Incubamas\Managers\TagManager;
+use Incubamas\Managers\ValidatorManager;
+use Incubamas\Managers\EtiquetadoManager;
+
 class BlogController extends BaseController
 {
-
     protected $layout = 'layouts.sistema';
+    protected $blogRepo;
+    protected $tagRepo;
+    protected $categoriaRepo;
+    protected $etiquetaRepo;
 
-    public function __construct()
+    public function __construct(BlogsRepo $blogRepo, TagRepo $tagRepo, CategoriaRepo $categoriaRepo, EtiquetadoRepo $etiquetaRepo)
     {
         $this->beforeFilter('auth');
         $this->beforeFilter('practicantes');
         $this->beforeFilter('csrf', array('on' => array('post', 'put', 'patch', 'delete')));
+        $this->blogRepo = $blogRepo;
+        $this->tagRepo = $tagRepo;
+        $this->categoriaRepo = $categoriaRepo;
+        $this->etiquetaRepo = $etiquetaRepo;
     }
 
     public function getIndex()
     {
-        $blogs = Blogs::orderBy('activo', 'desc')
-            ->orderBy('fecha_publicacion', 'desc')->paginate(20);
-        $categorias = Categoria::orderby('nombre')->get();
-        $tags = Tag::orderby('nombre')->get();
-        $this->layout->content = View::make('blogs.index')
-            ->with('blogs', $blogs)
-            ->with('tags', $tags)
-            ->with('categorias', $categorias);
+        $blogs = $this->blogRepo->blogsAdmin();
+        $categorias = $this->categoriaRepo->categorias();
+        $tags = $this->tagRepo->tags();
+        $parametro = null;
+        $this->layout->content = View::make('blogs.index', compact('blogs', 'categorias', 'tags', 'parametro'));
     }
 
     public function postBusqueda()
     {
-        $buscar = Input::get("buscar");
-        $dataUpload = array("buscar" => $buscar);
-        $rules = array("buscar" => 'required|min:3|max:100');
-        $messages = array('required' => 'Por favor, ingresa los parametros de busqueda.');
-        $validation = Validator::make(Input::all(), $rules, $messages);
-        if ($validation->fails())
-            return Redirect::back()->withErrors($validation)->withInput();
-        else {
-            $blogs = Blogs::where('titulo', 'LIKE', '%' . $buscar . '%')
-                ->orderBy('activo', 'desc')->orderBy('fecha_publicacion', 'desc')
-                ->paginate(20);
-            $categorias = Categoria::orderby('nombre')->get();
-            $tags = Tag::orderby('nombre')->get();
-            $this->layout->content = View::make('blogs.index')
-                ->with('blogs', $blogs)
-                ->with('tags', $tags)
-                ->with('categorias', $categorias);
-        }
+        $manager = new ValidatorManager('buscar', Input::all());
+        $manager->validar();
+        $parametro = Input::get('buscar');
+        $blogs = $this->blogRepo->buscarAdmin($parametro);
+        $categorias = $this->categoriaRepo->categorias();
+        $tags = $this->tagRepo->tags();
+        $this->layout->content = View::make('blogs.index', compact('blogs', 'categorias', 'tags', 'parametro'));
     }
 
     public function getCrear()
     {
-        $categorias = Categoria::all()->lists('nombre', 'id');
-        $tags = Tag::all()->lists('nombre', 'id');
-        $this->layout->content = View::make('blogs.create')
-            ->with('categorias', $categorias)
-            ->with('tags', $tags);
+        $categorias = $this->categoriaRepo->categorias_listar();
+        $tags = $this->tagRepo->tag_tags();
+        $this->layout->content = View::make('blogs.create', compact('categorias', 'tags'));
     }
 
     public function postCrear()
     {
-        $dataUpload = array(
-            "titulo" => Input::get("titulo"),
-            "fecha" => Input::get("fecha"),
-            "categoria" => Input::get("categoria"),
-            "entrada" => Input::get("entrada"),
-            "tags[]" => Input::get("tags[]"),
-            "archivo" => Input::get("archivo")
-        );
-        $rules = array(
-            "titulo" => 'required|unique:entradas,titulo',
-            "fecha" => 'required',
-            "categoria" => 'required|exists:categorias,id',
-            "entrada" => 'required|min:3',
-            "tags[]" => 'min:3|max:500',
-            "archivo" => 'required|image'
-        );
-        $messages = array(
-            'unique' => 'El titulo ya fue usado',
-            'exist' => 'La categoria seleccionada es invalida'
-        );
-        $validation = Validator::make(Input::all(), $rules, $messages);
-        if ($validation->fails())
-            return Redirect::back()->withErrors($validation)->withInput();
-        else {
-            $blogs = new Blogs;
-            $blogs->user_id = Auth::user()->id;
-            $blogs->categoria_id = Input::get("categoria");
-            $blogs->titulo = Input::get("titulo");
-            $blogs->fecha_publicacion = $this->_mysqlformat(Input::get("fecha"));
-            $blogs->entrada = Input::get("entrada");
-            //Determinar si es activo o no
-            $fecha_actual = strtotime(date("d-m-Y"));
-            $date = date_create(Input::get("finish"));
-            $fecha = date_format($date, 'd-m-Y');
-            $fecha_entrada = strtotime($fecha);
-            if ($fecha_actual >= $fecha_entrada)
-                $blogs->activo = 1;
-            else
-                $blogs->activo = 0;
-            if ($blogs->save()) {
-                $blogs->imagen = $blogs->id . "." . Input::file('archivo')->getClientOriginalExtension();
-                $blogs->save();
-                Input::file('archivo')->move('Orb/images/entradas', $blogs->imagen);
-                if (count(Input::get("tags")) > 0) {
-                    foreach (Input::get("tags") as $tag) {
-                        $etiqueta = new Etiquetas;
-                        $etiqueta->entrada_id = $blogs->id;
-                        $etiqueta->tags_id = $tag;
-                        $etiqueta->save();
-                    }
-                }
-                return Redirect::to('blog')->with(array('confirm' => 'Se ha registrado correctamente.'));
-            } else
-                return Redirect::to('blog')->with(array('confirm' => 'Lo sentimos. No se ha podido registrar.'));
-        }
-    }
+        $blog = $this->blogRepo->newBlog();
+        $manager = new BlogManager($blog, Input::all());
+        $manager->save();
+        $this->blogRepo->verificar(strtotime(date("d-m-Y")));
+        $this->blogRepo->actualizarImagen($blog, $blog->id.".".Input::file("imagen")->getClientOriginalExtension());
+        Input::file('imagen')->move('Orb/images/entradas', $blog->imagen);
+        $this->blogRepo->actualizarSlug($blog);
 
-    public function getDelete($blog_id)
-    {
-        $dataUpload = array("blog_id" => $blog_id);
-        $rules = array("blog_id" => 'required|exists:entradas,id');
-        $messages = array('exists' => 'La entrada indicado no existe.');
-        $validation = Validator::make($dataUpload, $rules, $messages);
-        if ($validation->fails())
-            return Redirect::to('blog')->with(array('confirm' => 'No se ha podido eliminar.'));
-        else {
-            $blogs = Blogs::find($blog_id);
-            $imagen = $blogs->imagen;
-            if ($blogs->delete()) {
-                File::delete(public_path() . '\\Orb\\images\\entradas\\' . $blogs->imagen);
-                return Redirect::to('blog')->with(array('confirm' => 'Se ha eliminado correctamente.'));
-            } else
-                return Redirect::to('blog')->with(array('confirm' => 'No se ha podido eliminar.'));
+        if(trim(Input::get("tags"))<>'')
+        {
+            $nombres_tags = explode(",", trim(Input::get("tags")));
+            foreach ($nombres_tags as $nombre_tag)
+            {
+                $tag = $this->tagRepo->busca_nombre($nombre_tag);
+                if (count($tag) <= 0) {
+                    $tag = $this->tagRepo->newTag();
+                    $manager = new TagManager($tag, ['tag' => $nombre_tag]);
+                    $manager->save();
+                }
+                $etiqueta = $this->etiquetaRepo->newRelacion();
+                $manager = new EtiquetadoManager($etiqueta, ['tags_id' => $tag->id, 'entrada_id' => $blog->id]);
+                $manager->save();
+            }
         }
+        return Redirect::to('blog')->with(array('confirm' => 'Se ha registrado correctamente.'));
     }
 
     public function getEditar($blog_id)
     {
-        $blogs = Blogs::find($blog_id);
-        $categorias = Categoria::all()->lists('nombre', 'id');
-        $tags = Tag::all()->lists('nombre', 'id');
-        $etiquetados = Etiquetas::where('entrada_id', '=', $blog_id)->lists('tags_id');
-        $this->layout->content = View::make('blogs.update')
-            ->with('blogs', $blogs)
-            ->with('categorias', $categorias)
-            ->with('tags', $tags)
-            ->with('etiquetados', $etiquetados);
+        $blog = $this->blogRepo->blog($blog_id);
+        $categorias = $this->categoriaRepo->categorias_listar();
+        $tags = $this->tagRepo->tag_tags();
+        $etiquetados = $this->etiquetaRepo->relaciones_tags($blog_id);
+        $this->layout->content = View::make('blogs.update', compact('blog', 'categorias', 'tags', 'etiquetados'));
     }
 
     public function postEditar()
     {
-        $dataUpload = array(
-            "blog_id" => Input::get("blog_id"),
-            "titulo" => Input::get("titulo"),
-            "fecha" => Input::get("fecha"),
-            "categoria" => Input::get("categoria"),
-            "entrada" => Input::get("entrada"),
-            "tags[]" => Input::get("tags[]"),
-            "archivo" => Input::get("archivo")
-        );
-        $rules = array(
-            "blog_id" => 'required|exists:entradas,id',
-            "titulo" => 'required|unique:entradas,titulo,' . Input::get("blog_id"),
-            "fecha" => 'required',
-            "categoria" => 'required|exists:categorias,id',
-            "entrada" => 'required|min:3',
-            "tags[]" => 'min:3|max:500',
-            "archivo" => 'image'
-        );
-        $messages = array(
-            'unique' => 'El titulo ya fue usado',
-            'exist' => 'El campo no es valido seleccionada es invalida'
-        );
-        $validation = Validator::make(Input::all(), $rules, $messages);
-        if ($validation->fails())
-            return Redirect::back()->withErrors($validation)->withInput();
-        else {
-            $blogs = Blogs::find(Input::get('blog_id'));
-            $blogs->user_id = Auth::user()->id;
-            $blogs->categoria_id = Input::get("categoria");
-            $blogs->titulo = Input::get("titulo");
-            $blogs->entrada = Input::get("entrada");
-            $blogs->fecha_publicacion = $this->_mysqlformat(Input::get("fecha"));
-            //Determinar si es activo o no
-            $fecha_actual = strtotime(date("d-m-Y"));
-            $date = date_create(Input::get("finish"));
-            $fecha = date_format($date, 'd-m-Y');
-            $fecha_entrada = strtotime($fecha);
-            if ($fecha_actual >= $fecha_entrada)
-                $blogs->activo = 1;
-            else
-                $blogs->activo = 0;
-            if ($blogs->save()) {
-                if (Input::hasFile('archivo')) {
-                    File::delete(public_path() . '\\Orb\\images\\entradas\\' . $blogs->imagen);
-                    $blogs->imagen = $blogs->id . "." . Input::file("archivo")->getClientOriginalExtension();
-                    $blogs->save();
-                    Input::file('archivo')->move('Orb/images/entradas', $blogs->imagen);
-                }
-                $existentes = Etiquetas::where('entrada_id', '=', Input::get('blog_id'))->delete();
-                if (count(Input::get("tags")) > 0) {
-                    foreach (Input::get("tags") as $tag) {
-                        $etiqueta = new Etiquetas;
-                        $etiqueta->entrada_id = $blogs->id;
-                        $etiqueta->tags_id = $tag;
-                        $etiqueta->save();
+        $blog = $this->blogRepo->blog(Input::get('id'));
+        $manager = new BlogEditarManager($blog, Input::all());
+        $manager->save();
+        $this->blogRepo->actualizarSlug($blog);
+        if (Input::hasFile('imagen'))
+        {
+            $this->blogRepo->actualizarImagen($blog, $blog->id.".".Input::file("imagen")->getClientOriginalExtension());
+            Input::file('imagen')->move('Orb/images/entradas', $blog->imagen);
+        }
+        if(trim(Input::get("tags"))<>'')//Verificamos si enviaron tags
+        {
+            $etiquetados = $this->etiquetaRepo->relacion_tags($blog->id); //Tags que tenemos actualmente
+            $nombres_tags = explode(",", trim(Input::get("tags"))); //Tags mandados
+            if(count($etiquetados)>0) //Si ya tenemos tags, revisaremos cuales se tienen que eliminar y cuales conservar
+            {
+                $insertar = $nombres_tags;
+                foreach($etiquetados as $etiqueta)
+                {
+                    $esta = 0;
+                    for ($i = 0; $i<= count($nombres_tags); $i++)
+                    {
+                        if(isset($nombres_tags[$i]))
+                            if ($etiqueta->tags->tag == $nombres_tags[$i])
+                            {
+                                $esta = 1;
+                                unset($insertar[$i]);
+                                break;
+                            }
                     }
+                    if($esta ==0)
+                        $this->etiquetaRepo->borrarEtiquetado($etiqueta->entrada_id, $etiqueta->tags_id);
                 }
-                return Redirect::to('blog/editar/' . Input::get('blog_id'))->with(array('confirm' => 'Se ha registrado correctamente.'));
-            } else
-                return Redirect::to('blog/editar/' . Input::get('blog_id'))->with(array('confirm' => 'Lo sentimos. No se ha podido registrar'));
-        }
+                $nombres_tags = $insertar;
+            }
+            foreach ($nombres_tags as $nombre_tag)
+            {
+                $tag = $this->tagRepo->busca_nombre($nombre_tag);
+                if (count($tag) <= 0) {
+                    $tag = $this->tagRepo->newTag();
+                    $manager = new TagManager($tag, ['tag' => $nombre_tag]);
+                    $manager->save();
+                }
+                $etiqueta = $this->etiquetaRepo->newRelacion();
+                $manager = new EtiquetadoManager($etiqueta, ['tag_id' => $tag->id, 'entrada_id' => $blog->id]);
+                $manager->save();
+            }
+        }else //No enviaron tags, asi que eliminamos todos los que teniamos
+            $this->etiquetaRepo->borrarExistentes($blog->id);
+
+        return Redirect::back()->with(array('confirm' => 'Se ha creado correctamente.'));
     }
 
-    public function postCrearcategoria()
+    public function getDelete($blog_id)
     {
-        $dataUpload = array("nombre" => Input::get("nombre"));
-        $rules = array("nombre" => 'required|unique:categorias,nombre');
-        $messages = array('unique' => 'La categoria ya existe');
-        $validation = Validator::make(Input::all(), $rules, $messages);
-        if ($validation->fails())
-            return Redirect::back()->withErrors($validation)->withInput();
-        else {
-            $categoria = new Categoria;
-            $categoria->nombre = Input::get("nombre");
-            if ($categoria->save())
-                return Redirect::to('blog')->with(array('confirm' => "Se ha agregado correctamente."));
-            else
-                return Redirect::to('blog')->with(array('confirm' => "Lo sentimos. No se ha podido agregar."));
-        }
+        $manager = new ValidatorManager('blog',['blog_id'=>$blog_id]);
+        $manager->validar();
+        $this->blogRepo->borrarBlog($blog_id);
+        return Redirect::to('blog')->with(array('confirm' => 'Se ha eliminado correctamente.'));
     }
 
-    public function getDeletecategoria($categoria_id)
+    public function postCrearCategoria()
     {
-        $dataUpload = array("categoria_id" => $categoria_id);
-        $rules = array("categoria_id" => 'required|exists:categorias,id');
-        $messages = array('exists' => 'La cetegoria indicado no existe.');
-        $validation = Validator::make($dataUpload, $rules, $messages);
-        if ($validation->fails())
-            return Redirect::back()->with(array('confirm' => 'No se ha podido eliminar.'));
-        else {
-            $categotia = Categoria::find($categoria_id);
-            if ($categotia->delete())
-                return Redirect::to('blog')->with(array('confirm' => "Se ha eliminado correctamente."));
-            else
-                return Redirect::to('blog')->with(array('confirm' => "Lo sentimos. No se ha podido eliminar."));
-        }
+        $categoria = $this->categoriaRepo->newCategoria();
+        $manager = new CategoriaManager($categoria, Input::all());
+        $manager->save();
+        return Redirect::to('blog')->with(array('confirm' => "Se ha agregado correctamente."));
     }
 
-    public function postCreartag()
+    public function getDeleteCategoria($categoria_id)
     {
-        $dataUpload = array("nombre" => Input::get("nombre"));
-        $rules = array("nombre" => 'required|unique:tags,nombre');
-        $messages = array('unique' => 'El tag ya existe');
-        $validation = Validator::make(Input::all(), $rules, $messages);
-        if ($validation->fails())
-            return Redirect::back()->withErrors($validation)->withInput();
-        else {
-            $tag = new Tag;
-            $tag->nombre = Input::get("nombre");
-            if ($tag->save())
-                return Redirect::to('blog')->with(array('confirm' => "Se ha agregado correctamente."));
-            else
-                return Redirect::to('blog')->with(array('confirm' => "Lo sentimos. No se ha podido agregar."));
-        }
+        $manager = new ValidatorManager('categoria', ['categoria_id'=> $categoria_id]);
+        $manager->validar();
+        $this->categoriaRepo->borrarCategoria($categoria_id);
+        return Redirect::to('blog')->with(array('confirm' => "Se ha eliminado correctamente."));
     }
 
-    public function getDeletetag($tag_id)
+    public function postCrearTag()
     {
-        $dataUpload = array("tag_id" => $tag_id);
-        $rules = array("tag_id" => 'required|exists:tags,id');
-        $messages = array('exists' => 'El tag indicado no existe.');
-        $validation = Validator::make($dataUpload, $rules, $messages);
-        if ($validation->fails())
-            return Redirect::back()->with(array('confirm' => 'No se ha podido eliminar.'));
-        else {
-            $tag = Tag::find($tag_id);
-            if ($tag->delete())
-                return Redirect::to('blog')->with(array('confirm' => "Se ha eliminado correctamente."));
-            else
-                return Redirect::to('blog')->with(array('confirm' => "Lo sentimos. No se ha podido eliminar."));
-        }
+        $tag = $this->tagRepo->newTag();
+        $manager = new TagManager($tag, Input::all());
+        $manager->save();
+        return Redirect::to('blog')->with(array('confirm' => "Se ha agregado correctamente."));
+    }
+
+    public function getDeleteTag($tag_id)
+    {
+        $manager = new ValidatorManager('tag', ['tag_id'=>$tag_id]);
+        $manager->validar();
+        $this->tagRepo->borrarTag($tag_id);
+        return Redirect::to('blog')->with(array('confirm' => "Se ha eliminado correctamente."));
     }
 
     //Convierte una fecha al formato Y-d-m
