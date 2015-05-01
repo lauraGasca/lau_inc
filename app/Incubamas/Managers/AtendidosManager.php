@@ -1,9 +1,9 @@
 <?php namespace Incubamas\Managers;
 
-
 class AtendidosManager extends BaseManager
 {
-    public function getRules(){
+    public function getRules()
+    {
         $rules = [
             "nombre_completo"   =>    'required|max:100',
             "correo"            =>    'email|max:100',
@@ -14,4 +14,5 @@ class AtendidosManager extends BaseManager
         ];
         return $rules;
     }
+
 }

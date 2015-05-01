@@ -9,4 +9,5 @@ class CategoriaManager extends BaseManager
         ];
         return $rules;
     }
+
 }

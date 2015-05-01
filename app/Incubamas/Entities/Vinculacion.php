@@ -3,6 +3,6 @@
 class Vinculacion extends \Eloquent
 {
     protected $table = 'vinculacion';
-
     protected $guarded = [];
+
 }

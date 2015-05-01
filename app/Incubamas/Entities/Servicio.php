@@ -3,4 +3,5 @@
 class Servicio extends \Eloquent
 {
     protected $guarded = ['id'];
+
 }

@@ -9,4 +9,5 @@ class ServicioManager extends BaseManager
         ];
         return $rules;
     }
+
 }

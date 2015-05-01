@@ -1,6 +1,5 @@
 <?php namespace Incubamas\Managers;
 
-
 class ValidatorManager
 {
     protected $type;
@@ -113,6 +112,12 @@ class ValidatorManager
                     'user_id'   	    =>    'required|exists:users,id',
                 ];
                 break;
+            //Para eliminar un horario
+            case 'horario':
+                $rules = [
+                    'horario_id'   	    =>    'required|exists:horario_asesor,id',
+                ];
+                break;
             //Crear un emprendedor desde el panel de administrador
             case 'user':
                 $rules = [
@@ -163,5 +168,3 @@ class ValidatorManager
     }
 
 }
-
-?>

@@ -4,7 +4,6 @@ use Incubamas\Entities\Solicitud;
 
 class SolicitudRepo extends BaseRepo
 {
-    
     public function getModel()
     {
         return new Solicitud();

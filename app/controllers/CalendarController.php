@@ -1,14 +1,17 @@
 <?php
 
-use Incubamas\Managers\CalendarioManager;
-use Incubamas\Managers\EventoManager;
-use Incubamas\Managers\HorarioManager;
+use Incubamas\Repositories\UserRepo;
 use Incubamas\Repositories\CalendarioRepo;
 use Incubamas\Repositories\HorariosRepo;
 use Incubamas\Repositories\AsesoresRepo;
 use Incubamas\Repositories\EmprendedoresRepo;
 use Incubamas\Repositories\EventoRepo;
 use Incubamas\Repositories\NoHorarioRepo;
+use Incubamas\Managers\CalendarioManager;
+use Incubamas\Managers\EventoManager;
+use Incubamas\Managers\HorarioManager;
+use Incubamas\Managers\ValidatorManager;
+use Incubamas\Managers\EventoFinManager;
 
 class CalendarController extends BaseController
 {
@@ -20,8 +23,9 @@ class CalendarController extends BaseController
     protected $emprendedoresRepo;
     protected $eventoRepo;
     protected $nohorarioRepo;
+    protected $userRepo;
 
-    public function __construct(CalendarioRepo $calendarioRepo,
+    public function __construct(CalendarioRepo $calendarioRepo, UserRepo $userRepo,
                                 HorariosRepo $horariosRepo, AsesoresRepo $asesoresRepo,
                                 EmprendedoresRepo $emprendedoresRepo, EventoRepo $eventoRepo, NoHorarioRepo $nohorarioRepo)
     {
@@ -33,171 +37,172 @@ class CalendarController extends BaseController
         $this->emprendedoresRepo = $emprendedoresRepo;
         $this->eventoRepo = $eventoRepo;
         $this->nohorarioRepo = $nohorarioRepo;
+        $this->userRepo = $userRepo;
     }
 
-    public function getIndex($user_id = null)
+    public function getIndex()
+    {
+        $this->_soloAsesores();
+        $asesores = [null=>'Selecciona al Emprendedor']+$this->userRepo->listar_emprendedores();
+        $noHorarios = $this->nohorarioRepo->noDisponible(Auth::user()->id);
+        $minDate = $this->_noSabadoDomingo(strtotime(date('j-m-Y')), 2);
+        $maxDate = $this->_noSabadoDomingo(strtotime(date('j-m-Y')), 30);
+        $this->layout->content = View::make('calendario/index', compact('asesores', 'noHorarios', 'minDate', 'maxDate'));
+    }
+
+    public function postCrear()
+    {
+        $eventoPropio = $this->eventoRepo->newCita();
+        $manager = new EventoManager($eventoPropio, ['user_id'=>Auth::user()->id]+Input::all());
+        $manager->save();
+        $usuario = $this->userRepo->usuario(Input::get('user'));
+        $eventoOtro = $this->eventoRepo->newCita();
+        $manager = new EventoManager($eventoOtro, ['user_id'=>$usuario->id]+Input::all());
+        $manager->save();
+        $this->eventoRepo->ponerDetalles($eventoPropio, $usuario->nombre.' '.$usuario->apellidos, Input::get('start'));
+        $this->eventoRepo->ponerDetalles($eventoOtro, Auth::user()->nombre.' '.Auth::user()->apellidos, Input::get('start') );
+        $asunto = '';
+        if(Input::get('cuerpo')!='')
+            $asunto = '<tr><td><strong>Asunto: </strong></td><td>'.Input::get('cuerpo').'</td></tr>';
+        if(Input::get('correo') == 'yes')
+        {
+            $this->_mail('emails.estandar', ['titulo'=>"Cita Programada", 'seccion' => "Detalles de la Cita", 'imagen' => false,
+                'mensaje'=>'<p>Hola <strong>'.Auth::user()->nombre.' '.Auth::user()->apellidos.'</strong>:</p><p>Tal como lo solicitaste, te mandamos los detalles de la cita que has programado en el sistema con el emprendedor <strong>'.$usuario->nombre.' '.$usuario->apellidos.'</strong>.</p>',
+                'tabla' => "<div align='center'><table style='font-family:Arial, Helvetica, sans-serif; font-size:19px; color:#444444; text-align: justify;'><tr><td width='30%'><strong>Fecha: </strong></td><td>".$eventoOtro->fecha."</td></tr><tr><td colspan='2'></td></tr><tr><td><strong>Horario: </strong></td><td>".$eventoOtro->horario->hora." hrs</td></tr>" . $asunto . "</table><br/><br/></div>"],
+                'Cita Programada', Auth::user()->email, Auth::user()->nombre.' '.Auth::user()->apellidos);
+        }
+        if(Input::get('notifica') == 'yes')
+        {
+            $this->_mail('emails.estandar', ['titulo'=>"Cita Programada", 'seccion' => "Detalles de la Cita", 'imagen' => false,
+                'mensaje'=>'<p>Hola <strong>'.$usuario->nombre.' '.$usuario->apellidos.'</strong>:</p><p><strong>'.Auth::user()->nombre.' '.Auth::user()->apellidos.'</strong> ha programado una cita contigo, abajo podras ver todos los detalles.</p><p>Si tienes dudas no dudes en ponerte en contacto con nosotros.</p>',
+                'tabla' => "<div align='center'><table style='font-family:Arial, Helvetica, sans-serif; font-size:19px; color:#444444; text-align: justify;'><tr><td width='30%'><strong>Fecha: </strong></td><td>".$eventoOtro->fecha."</td></tr><tr><td colspan='2'></td></tr><tr><td><strong>Horario: </strong></td><td>".$eventoOtro->horario->hora." hrs</td></tr>" . $asunto . "</table><br/><br/></div>"],
+                'Cita Programada', $usuario->email, $usuario->nombre.' '.$usuario->apellidos);
+        }
+        return Redirect::back()->with(array('confirm' => 'Se ha registrado correctamente.'));
+    }
+
+    public function postEvento()
+    {
+        $evento = $this->eventoRepo->newEvento();
+        $manager = new EventoFinManager($evento, ['user_id'=>Auth::user()->id]+Input::all());
+        $manager->save();
+
+        $asunto = '';
+        if(Input::get('cuerpo')!='')
+            $asunto = '<tr><td><strong>Asunto: </strong></td><td>'.Input::get('cuerpo').'</td></tr>';
+        if(Input::get('correo') == 'yes')
+        {
+            $this->_mail('emails.estandar', ['titulo'=>"Evento Programada", 'seccion' => "Detalles del Evento", 'imagen' => false,
+                'mensaje'=>'<p>Hola <strong>'.Auth::user()->nombre.' '.Auth::user()->apellidos.'</strong>:</p><p>Tal como lo solicitaste, te mandamos los detalles del evento que has programado en el sistema.</p>',
+                'tabla' => "<div align='center'><table style='font-family:Arial, Helvetica, sans-serif; font-size:19px; color:#444444; text-align: justify;'><tr><td width='30%'><strong>Nombre: </strong></td><td>".$evento->titulo."</td></tr><tr><td colspan='2'></td></tr><tr><td><strong>Inicio: </strong></td><td>".$evento->inicio."</td></tr><tr><td colspan='2'></td></tr><tr><td><strong>Fin: </strong></td><td>".$evento->fin."</td></tr><tr><td colspan='2'></td></tr>".$asunto."</table><br/><br/></div>"],
+                'Evento Programado', Auth::user()->email, Auth::user()->nombre.' '.Auth::user()->apellidos);
+        }
+
+        return Redirect::back()->with(array('confirm' => 'Se ha registrado correctamente.'));
+    }
+
+    public function postHorario()
+    {
+        $horarios = $this->horariosRepo->horarioCita(Input::get("fecha"), Input::get("emprendedor"));
+        $JSON = array("success" => 1, "result" => $horarios);
+        return Response::json($JSON);
+    }
+
+    public function postHorariosAsesor()
+    {
+        $this->_soloAsesores();
+        $horario = $this->nohorarioRepo->newHorario();
+        $manager = new HorarioManager($horario, Input::all());
+        $manager->save();
+        return Redirect::back()->with(['confirm' => 'Se ha registrado correctamente.']);
+    }
+
+    public function postHorarioDia()
+    {
+        $this->_soloAsesores();
+        $disponibles = $this->nohorarioRepo->diaDisponibles(Input::get('dia'));
+        $JSON = array("success" => 1, "result" => $disponibles);
+        return Response::json($JSON);
+    }
+
+    public function getDeleteHorario($horario_id)
+    {
+        $this->_soloAsesores();
+        $manager = new ValidatorManager('horario', ['horario_id'=> $horario_id]);
+        $manager->validar();
+        $this->nohorarioRepo->eliminar($horario_id);
+        return Redirect::back()->with(array('confirm' => 'Se ha eliminado correctamente.'));
+    }
+
+    /* Regresa el JSON que consume Boobstrap calendar para imprimir las citas
+    * { "success": 1,"result": [{"id": 293,"title": "Event 1","url": "http://example.com",
+    *	  "class": "event-important","start": 12039485678000, // MilliS "end": 1234576967000 // MilliS}, ...]}*/
+    public function getObtener()
+    {
+        $eventos = $this->eventoRepo->eventos();
+        if (count($eventos) > 0) {
+            foreach ($eventos as $evento) {
+                $hora = strtotime('-6 hour', $evento->start / 1000);
+                $texto = date("H:i", $hora) . " - " . $evento->titulo;
+                if ($evento->cuerpo <> '')
+                    $texto .= ": " . $evento->cuerpo;
+                if ($evento->horario <> null)
+                    if ($evento->confirmation == 1)
+                        $texto .= " / Confirmada";
+                    else
+                        $texto .= " / Sin confirmar";
+
+                $JSON2[] = array(
+                    'id' => $evento->id,
+                    'title' => $texto,
+                    'url' => $evento->url,
+                    'class' => $evento->clase,
+                    'start' => $evento->start,
+                    'end' => $evento->end
+                );
+            }
+            $JSON = array("success" => 1, "result" => $JSON2);
+            return Response::json($JSON);
+        }else
+            return 0;
+    }
+
+    //Si la fecha indicada cae en fin de semana, se recorre para el lunes
+    private function _noSabadoDomingo($fecha, $dias)
+    {
+        if (date("w", strtotime('+'.$dias.' day', $fecha)) == 0)
+            $fecha_final = date('Y-m-d', strtotime('+'.($dias+1).' day', $fecha));
+        elseif (date("w", strtotime('+'.$dias.' day', $fecha)) == 6)
+            $fecha_final = date('Y-m-d', strtotime('+'.($dias+2).' day', $fecha));
+        else
+            $fecha_final = date('Y-m-d', strtotime('+'.$dias.' day', $fecha));
+
+        return $fecha_final;
+    }
+
+    private function _mail($plantilla, $variables, $asunto, $correo, $nombre)
+    {
+        Mail::send($plantilla, $variables,
+            function ($message) use ($asunto, $correo, $nombre){
+                $message->subject($asunto);
+                $message->to($correo, $nombre);
+            });
+    }
+
+    private function _soloAsesores()
     {
         if (Auth::user()->type_id != 1 && Auth::user()->type_id != 2)
             return Redirect::to('sistema');
-
-        if ($user_id == null)
-            $user_id = Auth::user()->id;
-
-        $nombre = $this->asesoresRepo->nombre($user_id);
-
-        $warning = "";
-        $warning_cita = "";
-
-        $asesores = $this->emprendedoresRepo->listar();
-        $id = $this->emprendedoresRepo->primer()->user_id;
-
-        $fecha = $this->_noSD(date('j-m-Y'));
-        $horarios = $this->horariosRepo->listar_todos('horario', 'id');
-
-        $horarios_disponibles = $this->horariosRepo->disponible(
-            $this->asesoresRepo->usuario()->id, date("w", strtotime($fecha)), $fecha, $id);
-
-        $nohorarios = $this->nohorarioRepo->asesor($this->asesoresRepo->usuario($user_id)->id);
-
-        if ($this->eventoRepo->warning(date('Y-m-j'), \Auth::user()->id))
-            $warning = "Hay eventos";
-
-        if ($this->eventoRepo->warning_cita($fecha, $id, \Auth::user()->id))
-            $warning_cita = "Hay eventos";
-
-        $this->layout->content = View::make('calendario/index',
-            compact('asesores', 'horarios', 'warning', 'warning_cita', 'nohorarios', 'horarios_disponibles', 'user_id', 'nombre'));
     }
 
-    public function postCrear($user_id = null)
-    {
-        $confirmation = false;
-
-        if ($user_id == null)
-            $user_id = \Auth::user()->id;
-
-        //Verifica si el calendario para este usuario esta creado - Calendario Id
-        if (!$this->calendarioRepo->existe($user_id)) {
-            $data = array("user_id" => $user_id);
-            $calendario_user = $this->calendarioRepo->newCalendario();
-            $manager = new CalendarioManager($calendario_user, $data);
-
-            if (!$manager->save())
-                return Redirect::back()->withErrors($manager->getErrors)->withInput();
-
-        } else
-            $calendario_user = $this->calendarioRepo->buscar($user_id);
-
-        //Verifica si el calendario para el consultor esta creado - Calendario Id
-        if (!$this->calendarioRepo->existe(Input::get("consultor"))) {
-            $data = array("user_id" => Input::get("consultor"));
-            $calendario_con = $this->calendarioRepo->newCalendario();
-            $manager = new CalendarioManager($calendario_con, $data);
-
-            if (!$manager->save())
-                return Redirect::back()->withErrors($manager->getErrors)->withInput();
-
-        } else
-            $calendario_con = $this->calendarioRepo->buscar(Input::get("consultor"));
 
 
-        $hora = $this->horariosRepo->hora(Input::get("horario"));
-        $horaFin = $this->_sumar($this->horariosRepo->hora(Input::get("horario")));
-        $from = $this->_formatear(Input::get("from") . " " . $hora);
-        $to = $this->_formatear(Input::get("from") . " " . $horaFin);
 
-        if (Input::get("destino") == 'calendario/index/' . $user_id) {
-            $tu = $this->asesoresRepo->nombre($user_id);
-            $otro = $this->emprendedoresRepo->nombre(Input::get("consultor"));
-            $asesor = $this->asesoresRepo->usuario($user_id);
-            $emprendedor = $this->emprendedoresRepo->emprendedor(Input::get("consultor"));
-        } else {
-            $tu = $this->emprendedoresRepo->nombre($user_id);
-            $otro = $this->asesoresRepo->nombre(Input::get("consultor"));
-            $emprendedor = $this->emprendedoresRepo->emprendedor($user_id);
-            $asesor = $this->asesoresRepo->usuario(Input::get("consultor"));
-        }
 
-        if ($this->asesoresRepo->existe($user_id))
-            $confirmation = true;
 
-        //Crea el evento para el emprendedor
-        $data = array(
-            "calendario_id" => $calendario_user->id,
-            "user_id" => $user_id,
-            "titulo" => 'Cita con ' . $otro,
-            "cuerpo" => Input::get("event"),
-            "horario" => Input::get("horario"),
-            "clase" => 'event-important',
-            "fecha" => $this->_mysqlformat(Input::get("from")),
-            "fin" => $this->_mysqlformat(Input::get("from")),
-            "start" => $from,
-            "end" => $to,
-            "confirmation" => $confirmation
-        );
-        $evento = $this->eventoRepo->newEvento();
-        $manager = new EventoManager($evento, $data);
-        if (!$manager->save())
-            return Redirect::back()->withErrors($manager->getErrors())->withInput();
-        $ant_id = $evento->id;
-        //Crear el evento para el consultor
-        $data = array(
-            "calendario_id" => $calendario_con->id,
-            "user_id" => Input::get("consultor"),
-            "titulo" => 'Cita con ' . $tu,
-            "cuerpo" => Input::get("event"),
-            "clase" => 'event-important',
-            "horario" => Input::get("horario"),
-            "fecha" => $this->_mysqlformat(Input::get("from")),
-            "fin" => $this->_mysqlformat(Input::get("from")),
-            "start" => $from,
-            "end" => $to,
-            "confirmation" => $confirmation
-        );
-        $evento = $this->eventoRepo->newEvento();
-        $manager = new EventoManager($evento, $data);
-        if (!$manager->save())
-            return Redirect::back()->withErrors($manager->getErrors())->withInput();
 
-        $consultor = $asesor->nombre . " " . $asesor->apellidos;
-        $emprendedor_nombre = $emprendedor->name . " " . $emprendedor->apellidos;
-        $consultor_nombre = $asesor->nombre . " " . $asesor->apellidos;
-        $correo_emp = $emprendedor->email;
-        $correo_con = $asesor->email;
-        $hora = $this->horariosRepo->hora($evento->horario);
-        $asunto = $evento->cuerpo;
-        setlocale(LC_ALL, "es_ES@euro", "es_ES", "esp");
-        $fecha = strftime("%d de %B de %Y", strtotime($evento->fecha));
 
-        if ($confirmation) {
-            //Enviar correo al emprendedor de confirmacion de la cita
-            Mail::send('emails.confirmacion', array('consultor' => $consultor, 'fecha' => $fecha, 'hora' => $hora,
-                'asunto' => $asunto, 'contacto' => $correo_con, 'emprendedor' => $emprendedor_nombre,
-            ), function ($message) use ($correo_emp, $emprendedor_nombre) {
-
-                $message->subject('Confirmación de Cita');
-                $message->to($correo_emp, $emprendedor_nombre);
-            });
-            //Enviar correo al consultor de confirmacion de la cita
-            Mail::send('emails.confirmacion', array('consultor' => $consultor, 'fecha' => $fecha, 'hora' => $hora,
-                'asunto' => $asunto, 'contacto' => $correo_emp, 'emprendedor' => $emprendedor_nombre,
-            ), function ($message) use ($correo_con, $consultor_nombre) {
-                $message->subject('Confirmación de Cita');
-                $message->to($correo_con, $consultor_nombre);
-            });
-        } else {
-            //Enviar correo al consultor de la solicitud de la cita
-            Mail::send('emails.solicitud', array('consultor' => $consultor, 'fecha' => $fecha, 'hora' => $hora,
-                'asunto' => $asunto, 'contacto' => $correo_emp, 'emprendedor' => $emprendedor_nombre, 'id' => $evento->id, 'id2' => $ant_id
-            ), function ($message) use ($correo_con, $consultor_nombre) {
-                $message->subject('Solicitud de Cita');
-                $message->to($correo_con, $consultor_nombre);
-            });
-        }
-
-        return Redirect::to(Input::get("destino"))->with(array('confirm' => 'Se ha registrado correctamente.'));
-    }
-
+    //Verificar
     public function getConfirmar($id, $id2)
     {
         if (Auth::user()->type_id != 1 && Auth::user()->type_id != 2)
@@ -247,7 +252,7 @@ class CalendarController extends BaseController
             $this->layout->content = View::make('calendario/mensaje', compact('mensaje'));
         }
     }
-
+    //Verificar
     public function getCancelar($id, $id2)
     {
         if (Auth::user()->type_id != 1 && Auth::user()->type_id != 2)
@@ -295,192 +300,5 @@ class CalendarController extends BaseController
             $mensaje = 'El evento ya fue cancelado';
             $this->layout->content = View::make('calendario/mensaje', compact('mensaje'));
         }
-    }
-
-    public function postEvento($user_id)
-    {
-        //Verifica si el calendario para este usuario esta creado - Calendario Id
-        if (!$this->calendarioRepo->existe($user_id)) {
-            $data = array("user_id" => $user_id);
-            $calendario_user = $this->calendarioRepo->newCalendario();
-            $manager = new CalendarioManager($calendario_user, $data);
-
-            if (!$manager->save())
-                return Redirect::back()->withErrors($manager->getErrors()->withInput());
-
-        } else
-            $calendario_user = $this->calendarioRepo->buscar($user_id);
-
-        //Crea el evento
-        $data = array(
-            "calendario_id" => $calendario_user->id,
-            "user_id" => $user_id,
-            "titulo" => Input::get("title"),
-            "cuerpo" => Input::get("event"),
-            "clase" => Input::get("class"),
-            "fecha" => $this->_mysqlformat(Input::get("from")),
-            "fin" => $this->_mysqlformat(Input::get("to")),
-            "start" => $this->_formatear(Input::get("from")),
-            "end" => $this->_formatear(Input::get("to")),
-            "confirmation" => true
-        );
-
-        $evento = $this->eventoRepo->newEvento();
-        $manager = new EventoManager($evento, $data);
-
-
-        if (!$manager->save())
-            return Redirect::back()->withErrors($manager->getErrors())->withInput();
-
-        return Redirect::to(Input::get("destino"))->with(array('confirm' => 'Se ha registrado correctamente.'));
-    }
-
-    public function postHorario($user_id = null)
-    {
-        $warning_cita = "";
-        $warning_evento = "";
-
-        $fecha = Input::get("fecha");
-        $consultor = Input::get("consultor");
-
-        if ($user_id == null) {//Si es asesor
-            $user_id = $this->asesoresRepo->usuario()->id;
-            $horarios = $this->horariosRepo->listar_ajax(
-                $user_id, date("w", strtotime($this->_mysqlformat($fecha))),
-                $this->_mysqlformat($fecha), $consultor);
-        } else
-            $horarios = $this->horariosRepo->listar_ajax(
-                $this->asesoresRepo->usuario($consultor)->id, date("w", strtotime($this->_mysqlformat(Input::get("fecha")))),
-                $this->_mysqlformat($fecha), $consultor, $user_id);
-
-        if ($this->eventoRepo->warning_cita($this->_mysqlformat(Input::get("fecha")), Input::get("consultor"), $user_id))
-            $warning_cita = "Hay eventos";
-        if ($this->eventoRepo->warning($this->_mysqlformat(Input::get("from")), $user_id))
-            $warning_evento = "Hay eventos";
-        else
-            if ($this->eventoRepo->warning($this->_mysqlformat(Input::get("to")), $user_id))
-                $warning_evento = "Hay eventos";
-
-        if (count($horarios) > 0) {
-            foreach ($horarios as $horario) {
-                $JSON2[] = array(
-                    'id' => $horario->id,
-                    'horario' => $horario->horario,
-                );
-            }
-
-            $JSON = array("warning" => $warning_cita, "warning_evento" => $warning_evento, "horarios" => $JSON2);
-            return Response::json($JSON);
-        }
-
-        return 0;
-    }
-
-    public function postHorariosAsesor($user_id)
-    {
-        $data = array(
-            "horario_id" => Input::get("horario"),
-            "asesor_id" => $this->asesoresRepo->usuario($user_id)->id,
-            "dia" => Input::get("dia")
-        );
-        $evento = $this->nohorarioRepo->newHorario();
-        $manager = new HorarioManager($evento, $data);
-        if (!$manager->save())
-            return Redirect::back()->withErrors($manager->getErrors())->withInput();
-
-        return Redirect::to('calendario/index/' . $user_id)->with(array('confirm' => 'Se ha registrado correctamente.'));
-    }
-
-    public function getDeletehorario($user_id, $horario_id)
-    {
-        if (Auth::user()->type_id != 1 && Auth::user()->type_id != 2)
-            return Redirect::to('sistema');
-        $dataUpload = array("id" => $horario_id);
-        $rules = array("id" => 'required|exists:horario_asesor,id');
-        $messages = array('exists' => 'El horario indicado no existe.');
-        $validation = Validator::make($dataUpload, $rules, $messages);
-        if ($validation->fails())
-            return Redirect::back()->with(array('confirm' => 'No se ha podido eliminar.'));
-        else {
-            if ($this->nohorarioRepo->eliminar($horario_id))
-                return Redirect::to('calendario/index/' . $user_id)->with(array('confirm' => 'Se ha eliminado correctamente.'));
-            else
-                return Redirect::back()->with(array('confirm' => 'No se ha podido eliminar.'));
-        }
-    }
-
-    /* Regresa el JSON que consume Boobstrap calendar para imprimir las citas
-    * { "success": 1,"result": [{"id": 293,"title": "Event 1","url": "http://example.com",
-    *	  "class": "event-important","start": 12039485678000, // MilliS "end": 1234576967000 // MilliS}, ...]}*/
-    public function getObtener($user_id)
-    {
-        $eventos = $this->calendarioRepo->buscar($user_id)->eventos;
-
-
-        if (count($eventos) > 0) {
-            foreach ($eventos as $evento) {
-                $hora = strtotime('-6 hour', $evento->start / 1000);
-                $texto = date("H:i", $hora) . " - " . $evento->titulo;
-                if ($evento->cuerpo <> '')
-                    $texto .= ": " . $evento->cuerpo;
-                if ($evento->horario <> null)
-                    if ($evento->confirmation == 1)
-                        $texto .= " / Confirmada";
-                    else
-                        $texto .= " / Sin confirmar";
-
-                $JSON2[] = array(
-                    'id' => $evento->id,
-                    'title' => $texto,
-                    'url' => $evento->url,
-                    'class' => $evento->clase,
-                    'start' => $evento->start,
-                    'end' => $evento->end
-                );
-            }
-            $JSON = array("success" => 1, "result" => $JSON2);
-            return Response::json($JSON);
-        }
-    }
-
-    //Convierte una fecha al formato Y-d-m
-    private function _mysqlformat($fecha)
-    {
-        if ($fecha <> "")
-            return date_format(date_create(substr($fecha, 3, 2) . '/' . substr($fecha, 0, 2) . '/' . substr($fecha, 6, 4)), 'Y-m-d');
-        else
-            return null;
-    }
-
-    //formatea una fecha a microtime para añadir al evento tipo 1401517498985
-    private function _formatear($dia)
-    {
-        if ($dia != null)
-            return strtotime('+6 hour', strtotime(substr($dia, 6, 4) . "-" . substr($dia, 3, 2) . "-" . substr($dia, 0, 2) . " " . substr($dia, 10, 6))) * 1000;
-        else
-            return null;
-    }
-
-    //Te devuelve una hora despues de la fecha indicada, para que las citas duren una hora
-    private function _sumar($hora)
-    {
-        $hora = substr($hora, 0, 2);
-        $hora++;
-        return $hora . ':00';
-    }
-
-    //Si la fecha indicada cae en fin de semana, se recorre para el lunes
-    private function _noSD($f)
-    {
-        $s_f = strtotime($f);
-
-        if (date("w", strtotime('+2 day', $s_f)) == 0)
-            $fecha = date('Y-m-d', strtotime('+3 day', $s_f));
-        elseif (date("w", strtotime('+2 day', $s_f)) == 6)
-            $fecha = date('Y-m-d', strtotime('+4 day', $s_f));
-        else
-            $fecha = date('Y-m-d', strtotime('+2 day', $s_f));
-
-        return $fecha;
     }
 }

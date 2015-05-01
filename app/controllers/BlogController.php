@@ -189,12 +189,4 @@ class BlogController extends BaseController
         return Redirect::to('blog')->with(array('confirm' => "Se ha eliminado correctamente."));
     }
 
-    //Convierte una fecha al formato Y-d-m
-    private function _mysqlformat($fecha)
-    {
-        if ($fecha <> "")
-            return date_format(date_create(substr($fecha, 3, 2) . '/' . substr($fecha, 0, 2) . '/' . substr($fecha, 6, 4)), 'Y-m-d');
-        else
-            return null;
-    }
 }

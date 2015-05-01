@@ -1,6 +1,5 @@
 <?php namespace Incubamas\Managers;
 
-
 class EmprendedoresManager extends BaseManager
 {
     public function getRules()

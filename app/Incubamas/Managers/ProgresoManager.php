@@ -10,7 +10,7 @@ class ProgresoManager extends BaseManager
             'texto'	            =>    'max:500',
             'estado'	        =>    'required',
         ];
-
         return $rules;
     }
+
 }

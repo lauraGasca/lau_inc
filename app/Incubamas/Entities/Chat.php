@@ -1,7 +1,7 @@
 <?php namespace Incubamas\Entities;
 
-class Chat extends \Eloquent {
-    
+class Chat extends \Eloquent
+{
     protected $table = 'chats';
     protected $fillable = array('nombre', 'foto', 'grupo');
     
@@ -14,4 +14,5 @@ class Chat extends \Eloquent {
     {
         return $this->hasMany('Miembro');
     }
+
 }

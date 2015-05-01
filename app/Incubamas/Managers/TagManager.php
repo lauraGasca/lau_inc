@@ -1,6 +1,5 @@
 <?php namespace Incubamas\Managers;
 
-
 class TagManager extends BaseManager
 {
     public function getRules()

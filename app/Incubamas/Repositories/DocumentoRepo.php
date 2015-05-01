@@ -1,12 +1,10 @@
-<?php
+<?php namespace Incubamas\Repositories;
 
-namespace Incubamas\Repositories;
 use Incubamas\Entities\Documento;
 use Incubamas\Entities\Subidas;
 
 class DocumentoRepo extends BaseRepo
 {
-        
     public function getModel()
     {
         return new Documento;
@@ -21,4 +19,5 @@ class DocumentoRepo extends BaseRepo
     {
         return Subidas::where('id_emprendedor','=',$emprendedor_id)->count();
     }
+
 }

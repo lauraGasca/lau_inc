@@ -163,4 +163,5 @@ class CasoController extends BaseController
         $this->servicioRepo->deleteServicio($servicio_id);
         return Redirect::to('casos')->with(array('confirm' => "Se ha eliminado correctamente."));
     }
+    
 }

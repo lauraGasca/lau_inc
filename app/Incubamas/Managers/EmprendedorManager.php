@@ -1,8 +1,7 @@
 <?php namespace Incubamas\Managers;
 
-
-class EmprendedorManager extends BaseManager{
-
+class EmprendedorManager extends BaseManager
+{
     public function getRules()
     {
         $rules = [
@@ -11,7 +10,6 @@ class EmprendedorManager extends BaseManager{
             "fecha_ingreso"     => 'date_format:d/m/Y',
             "user_id"           => 'required|exists:users,id'
         ];
-
         return $rules;
     }
 

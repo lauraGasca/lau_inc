@@ -69,9 +69,4 @@ class Emprendedor extends \Eloquent
         return strftime("%d/%b/%Y", strtotime(date_format(date_create($this->fecha_ingreso), 'd-m-Y')));
     }
 
-    //borrar
-    public function getFullNameAttribute()
-    {
-        return $this->apellidos.' '.$this->name;
-    }
 }

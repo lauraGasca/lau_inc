@@ -38,6 +38,16 @@ class UserRepo extends BaseRepo
             return null;
     }
 
+    public function listar_asesores()
+    {
+        return User::where('type_id', '=', 2)->where('active', '=', 1)->orderBy('apellidos', 'asc')->get()->lists('FullName','id');
+    }
+
+    public function listar_emprendedores()
+    {
+        return User::where('type_id', '=', 3)->where('active', '=', 1)->orderBy('apellidos', 'asc')->get()->lists('FullName','id');
+    }
+
     public function actualizarPassword($user)
     {
         $password = $this->_password();

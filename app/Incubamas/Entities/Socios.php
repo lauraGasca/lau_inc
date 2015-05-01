@@ -1,7 +1,7 @@
 <?php namespace Incubamas\Entities;
 
-class Socios extends \Eloquent {
-    
+class Socios extends \Eloquent
+{
     protected $table = 'socios';
     
 }

@@ -2,7 +2,8 @@
 
 class ChatManager extends BaseManager
 {
-    public function getRules(){
+    public function getRules()
+    {
         $rules = [
             "nombre"	        =>  'min:1|max:100',
             "foto"	        =>  'min:1|max:100',
@@ -12,4 +13,5 @@ class ChatManager extends BaseManager
         
         return $rules;
     }
+
 }

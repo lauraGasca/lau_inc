@@ -1,9 +1,7 @@
 <?php namespace Incubamas\Managers;
 
-
 class EmprendedoresEditarManager extends BaseManager
 {
-
     public function getRules()
     {
         $rules = [
@@ -32,7 +30,6 @@ class EmprendedoresEditarManager extends BaseManager
             "emprendido_ant"    => 'required|max:2',
             "veces_emprendido"  => 'required_if:emprendido_ant,2|max:10'
         ];
-
         return $rules;
     }
 

@@ -2,7 +2,6 @@
 
 class Etiquetas extends \Eloquent
 {
-    
     protected $table = 'etiquetados';
     protected $guarded = ['id'];
 

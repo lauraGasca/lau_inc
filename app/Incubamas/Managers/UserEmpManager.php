@@ -10,7 +10,7 @@ class UserEmpManager extends BaseManager
             'foto'	    =>    'image',
             'email'	    =>    'email|max:60|unique:users,email'
         ];
-
         return $rules;
     }
+
 }

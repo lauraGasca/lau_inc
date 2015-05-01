@@ -1,11 +1,9 @@
-<?php
+<?php namespace Incubamas\Repositories;
 
-namespace Incubamas\Repositories;
 use Incubamas\Entities\Miembro;
 
 class MiembrosRepo extends BaseRepo
 {
-        
     public function getModel()
     {
         return new Miembro;
@@ -16,4 +14,5 @@ class MiembrosRepo extends BaseRepo
         $miembro = new Miembro();
         return $miembro;
     }
+
 }

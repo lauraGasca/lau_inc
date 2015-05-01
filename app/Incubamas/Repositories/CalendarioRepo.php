@@ -1,11 +1,9 @@
-<?php
+<?php namespace Incubamas\Repositories;
 
-namespace Incubamas\Repositories;
 use Incubamas\Entities\Calendario;
 
 class CalendarioRepo extends BaseRepo
 {
-        
     public function getModel()
     {
         
@@ -32,4 +30,5 @@ class CalendarioRepo extends BaseRepo
     {
         return Calendario::where('user_id','=',$user_id)->first();
     }
+
 }

@@ -1,13 +1,12 @@
-<?php
+<?php namespace Incubamas\Repositories;
 
-namespace Incubamas\Repositories;
 use Incubamas\Entities\Chat;
 use Incubamas\Entities\Asesor;
 use Incubamas\Entities\Miembro;
 use Incubamas\Entities\Tipo;
 
-class ChatRepo extends BaseRepo{
-    
+class ChatRepo extends BaseRepo
+{
     /* Grupos:
      *   1-Chats de incubito
      *   2-Consultor con Consultor
@@ -179,4 +178,5 @@ class ChatRepo extends BaseRepo{
         }
         return $mayor;
     }
+
 }

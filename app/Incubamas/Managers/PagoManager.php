@@ -1,6 +1,5 @@
 <?php namespace Incubamas\Managers;
 
-
 class AtendidosManager extends BaseManager
 {
     public function getRules()
@@ -16,4 +15,5 @@ class AtendidosManager extends BaseManager
         ];
         return $rules;
     }
+
 }

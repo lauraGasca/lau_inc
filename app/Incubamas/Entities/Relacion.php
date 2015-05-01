@@ -3,7 +3,6 @@
 class Relacion extends \Eloquent
 {
     protected $table = 'relaciones';
-
     protected $guarded = [];
 
     public function servicio()

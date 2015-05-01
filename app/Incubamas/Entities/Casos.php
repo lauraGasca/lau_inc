@@ -3,7 +3,6 @@
 class Casos extends \Eloquent
 {
     protected $table = 'casos_exitosos';
-
     protected $guarded = ['id', 'imagen'];
 
     public function servicios()

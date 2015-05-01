@@ -1,9 +1,13 @@
 <?php namespace Incubamas\Entities;
 
-class NoHorarios extends \Eloquent {
-    
+class NoHorarios extends \Eloquent
+{
     protected $table = 'horario_asesor';
-    
-    protected $fillable = array('horario_id','asesor_id','dia');
+    protected $guarded = ['id'];
+
+    public function horario()
+    {
+        return $this->belongsTo('Incubamas\Entities\Horarios');
+    }
     
 }

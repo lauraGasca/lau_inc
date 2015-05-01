@@ -1,10 +1,9 @@
 <?php namespace Incubamas\Entities;
 
-class Calendario extends \Eloquent {
-    
+class Calendario extends \Eloquent
+{
     protected $table = 'calendarios';
-    
-    protected $fillable = array('user_id');
+    protected $guarded = ['id'];
     
     public function user()
     {
@@ -15,4 +14,5 @@ class Calendario extends \Eloquent {
     {
         return $this->hasMany('Evento');
     }
+
 }

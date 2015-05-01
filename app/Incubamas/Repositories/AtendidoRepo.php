@@ -36,4 +36,5 @@ class AtendidoRepo extends BaseRepo
        return Atendido::where('nombre_completo', 'LIKE', '%' . $termino . '%')
         ->orderBy('created_at', 'desc')->paginate(20);
     }
+
 }

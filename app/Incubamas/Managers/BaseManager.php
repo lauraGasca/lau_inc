@@ -2,7 +2,6 @@
 
 abstract class BaseManager
 {
-
     protected $entity;
     protected $data;
     protected $errors;
@@ -46,5 +45,3 @@ abstract class BaseManager
     }
     
 }
-
-?>

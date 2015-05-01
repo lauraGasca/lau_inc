@@ -2,7 +2,8 @@
 
 class ComentarioManager extends BaseManager
 {
-    public function getRules(){
+    public function getRules()
+    {
         $rules = [
             "nombre"        => 'required|min:3|max:100',
             "comentario"    => 'required|min:3',
@@ -13,4 +14,5 @@ class ComentarioManager extends BaseManager
         
         return $rules;
     }
+
 }

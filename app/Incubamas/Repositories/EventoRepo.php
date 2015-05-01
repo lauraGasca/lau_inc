@@ -1,46 +1,57 @@
-<?php
+<?php namespace Incubamas\Repositories;
 
-namespace Incubamas\Repositories;
 use Incubamas\Entities\Evento;
 
 class EventoRepo extends BaseRepo
 {
-        
     public function getModel()
     {
         return new Evento;
     }
-    
+
+    public function newCita()
+    {
+        $evento = new Evento();
+        $evento->url = "#";
+        $evento->clase = 'event-important';
+        $evento->confirmation = 1;
+        return $evento;
+    }
+
     public function newEvento()
     {
         $evento = new Evento();
         $evento->url = "#";
+        $evento->confirmation = 1;
         return $evento;
     }
-    
-    public function warning($fecha, $user_id)
+
+    public function newSolicitaCita()
     {
-        $eventos = Evento::where('user_id','=',$user_id)
-        ->whereRaw('(fecha<"'.$fecha.'" or fecha ="'.$fecha.'")')
-        ->whereRaw('(fin>"'.$fecha.'" or fin ="'.$fecha.'")')
-        ->whereNull('horario')
-        ->get();
-        //return count($eventos);
-        if(count($eventos)>0)
-            return true;
-        return false;
+        $evento = new Evento();
+        $evento->url = "#";
+        $evento->clase = 'event-important';
+        $evento->confirmation = 0;
+        return $evento;
     }
-    
-    public function warning_cita($fecha, $id, $user_id)
+
+    public function ponerDetalles($evento, $nombre, $from)
     {
-         $eventos = Evento::whereRaw('(user_id = '.$user_id.' or user_id = '.$id.')')
-        ->whereRaw('(fecha<"'.$fecha.'" or fecha ="'.$fecha.'")')
-        ->whereRaw('(fin>"'.$fecha.'" or fin ="'.$fecha.'")')
-        ->whereNull('horario')
-        ->get();
-        if(count($eventos)>0)
-            return true;
-        return false;
+        $evento->titulo = 'Cita con '.$nombre;
+
+        $hora = substr($evento->horario->horario, 0, 2);
+        $hora++;
+        $horaFin = $hora .':00';
+
+        $evento->start = $from . " " . $evento->horario->horario;
+        $evento->end = $from . " " . $horaFin;
+
+        $evento->save();
+    }
+
+    public function eventos()
+    {
+        return Evento::where('user_id','=',\Auth::user()->id)->get();
     }
 
     public function existe($evento_id)

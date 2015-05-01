@@ -1,13 +1,11 @@
-<?php
+<?php namespace Incubamas\Repositories;
 
-namespace Incubamas\Repositories;
 use Incubamas\Entities\Horarios;
 use Incubamas\Entities\Evento;
 use Incubamas\Entities\NoHorarios;
 
 class HorariosRepo extends BaseRepo
 {
-    
     public function getModel()
     {
         return new Horarios;
@@ -20,6 +18,11 @@ class HorariosRepo extends BaseRepo
         }else{
             return $horario->horario;
         }
+    }
+
+    public function listar_horarios()
+    {
+        return Horarios::lists('horario', 'id');
     }
     
     /*
@@ -72,6 +75,46 @@ class HorariosRepo extends BaseRepo
                 })
                 ->lists('horario','id');
     }
+
+    public function horarioCita($fecha, $emprendedor)
+    {
+        $horarios = Horarios::all();
+        $horariosOcupados = NoHorarios::where('user_id','=', \Auth::user()->id)->where('dia','=', strftime("%A", strtotime(date_format(date_create(substr($fecha, 3, 2) . '/' . substr($fecha, 0, 2) . '/' . substr($fecha, 6, 4)), 'd-m-Y'))))->get();
+        $horariosCitas = Evento::where('user_id','=', \Auth::user()->id)->whereNotNull('horario_id')->get();
+        $horariosCitasEmp = Evento::where('user_id','=', $emprendedor)->whereNotNull('horario_id')->get();
+        $disponibles = [];
+        foreach($horarios as $horario)
+        {
+            $esta = 0;
+            foreach($horariosOcupados as $ocupado)
+            {
+                if ($horario->id == $ocupado->horario_id)
+                {
+                    $esta = 1;
+                    break;
+                }
+            }
+            foreach($horariosCitas as $cita)
+            {
+                if ($horario->id == $cita->horario_id)
+                {
+                    $esta = 1;
+                    break;
+                }
+            }
+            foreach($horariosCitasEmp as $citaEmp)
+            {
+                if ($horario->id == $citaEmp->horario_id)
+                {
+                    $esta = 1;
+                    break;
+                }
+            }
+            if($esta==0)
+                $disponibles[] = ['id' => $horario->id, 'horario' => $horario->horario];
+        }
+        return $disponibles;
+    }
     
     public function listar_ajax($asesor_id, $dia, $fecha, $user_id, $emp_id=null)
     {
@@ -116,4 +159,5 @@ class HorariosRepo extends BaseRepo
                 ->where('fecha','=',$fecha);
                 })->get();
     }
+
 }

@@ -10,7 +10,7 @@ class UserEmpEditManager extends BaseManager
             'foto'	    =>    'image',
             'email'	    =>    'email|max:60|unique:users,email,'.$this->entity->id
         ];
-
         return $rules;
     }
+
 }

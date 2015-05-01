@@ -2,18 +2,9 @@
     Incubamas | Calendario
 @stop
 
-@if($user_id==Auth::user()->id)
-    @section('calendario')
-        class="active"
-    @stop
-@else
-    @section('calendario-down')
-        downarrow
-    @stop
-    @section('calendario-none')
-        block
-    @stop
-@endif
+@section('calendario')
+    class="active"
+@stop
 
 @section('mapa')
     <li><a href="#"><i class="fa fa-home"></i></a></li>
@@ -22,42 +13,39 @@
 
 @section('css')
     @parent
-    <!---Calendario-->
-        {{ HTML::style('Orb/bower_components/bootstrap-calendar/css/calendar.css') }}
-        {{ HTML::script('Orb/bower_components/bootstrap-calendar/js/language/es-MX.js') }}
-        {{ HTML::style('Orb/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css') }}
-        {{ HTML::script('Orb/bower_components/moment/moment.js') }}
-        {{ HTML::script('Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.es.js') }}
-    <!---/Calendario-->
+    {{ HTML::style('Orb/bower_components/bootstrap-calendar/css/calendar.css') }}
+    {{ HTML::script('Orb/bower_components/bootstrap-calendar/js/language/es-MX.js') }}
+    {{ HTML::style('Orb/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css') }}
+    {{ HTML::script('Orb/bower_components/moment/moment.js') }}
+    {{ HTML::script('Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.es.js') }}
 @show
 
 @section('titulo-seccion')
     <h1>Calendario
-        <small> {{$nombre}}</small>
+        <small> {{Auth::user()->nombre.' '.Auth::user()->apellidos}}</small>
     </h1>
 @stop
 
 @section('contenido')
     @if(Session::get('confirm'))
-        <div class="row">
-            <div class="col-md-12">
-                <div class="breadcrumb clearfix">
-                    {{Session::get('confirm')}}
-                </div>
-            </div>
+        <div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="fa fa-times-circle"></i></button>
+            {{Session::get('confirm')}}
         </div>
     @endif
     @if(count($errors)>0)
-        <script>
-            alert("¡Por favor, revise los datos del formulario!");
-        </script>
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="fa fa-times-circle"></i></button>
+            ¡Por favor, revise los datos del formulario! {{var_dump($errors)}}
+        </div>
     @endif
+
     <div class="powerwidget" id="forms-9" data-widget-editbutton="false">
         <div class="inner-spacer">
             <div class="container">
                 <div class="row">
                     <div class="page-header">
-                        <div class="pull-right form-inline" style="float: left !important; width: 93%;">
+                        <div class="pull-right form-inline" style="float: left !important; width: 85%;">
                             <div class="btn-group">
                                 <button class="btn btn-primary" data-calendar-nav="prev"><<</button>
                                 <button class="btn" data-calendar-nav="today">Hoy</button>
@@ -69,10 +57,8 @@
                                 <button class="btn btn-warning" data-calendar-view="week">Semana</button>
                                 <button class="btn btn-warning" data-calendar-view="day">Día</button>
                             </div>
-
                         </div>
                         <br/><br/><br/><br/><br/>
-
                         <h3 style="display: inline-block;"></h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <a class="btn btn-info" href="#myModal3" data-toggle="modal">Concretar Cita</a>&nbsp;&nbsp;
                         <a class="btn btn-info" href="#myModal1" data-toggle="modal">Crear Evento</a>&nbsp;&nbsp;
@@ -82,31 +68,69 @@
                 <div class="row">
                     <div id="calendar"></div>
                 </div>
-                <!--ventana modal para el calendario-->
-                <div class="modal fade" id="events-modal">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal"
-                                        aria-hidden="true">&times;</button>
-                                <h4 class="modal-title">Modal title</h4>
-                            </div>
-                            <div class="modal-body" style="height: 400px">
-                                <p>One fine body&hellip;</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
-                            </div>
-                        </div>
-                        <!-- /.modal-content -->
-                    </div>
-                    <!-- /.modal-dialog -->
-                </div>
-                <!-- /.modal -->
             </div>
         </div>
     </div>
+
+    <div id="myModal3" class="modal" data-easein="fadeInUp" data-easeout="fadeOutUp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="titulo_pago">Concretar Cita</h4>
+                </div>
+                {{Form::open(['url'=>'calendario/crear', 'class'=>'orb-form','method' => 'post'])}}
+                <div class="modal-body">
+                    <fieldset>
+                        <div class="col-md-11 espacio_abajo">
+                            {{Form::label('user', '* Emprendedor', ['class' => 'label'])}}
+                            <label class="select">
+                                {{Form::select('user', $asesores,  '', ['id' => 'emprendedor'])}}
+                            </label>
+                            <span class="message-error">{{$errors->first('user')}}</span>
+                        </div>
+                        <div class="col-md-5 espacio_abajo">
+                            {{Form::label('start', '* Fecha', ['class' => 'label'])}}
+                            <label class="input">
+                                {{Form::text('start', '', ['class'=>'form-control', 'readonly', 'id'=>'fecha'])}}
+                            </label>
+                            <span class="message-error">{{$errors->first('start')}}</span>
+                        </div>
+                        <div class="col-md-5 espacio_abajo">
+                            {{Form::label('horario_id', '* Hora', ['class' => 'label'])}}
+                            <label class="select" id='divHorarioCita'>
+                                {{Form::select('horario_id', [null=>'Primero Selecciona el emprendedor'])}}
+                            </label>
+                            <span class="message-error">{{$errors->first('horario_id')}}</span>
+                        </div>
+                        <div class="col-md-11 espacio_abajo">
+                            {{Form::label('cuerpo', 'Asunto', ['class' => 'label'])}}
+                            <label class="input">
+                                {{Form::text('cuerpo', '', ['class'=>'form-control', 'id'=>"body"])}}
+                            </label>
+                            <span class="message-error">{{$errors->first('cuerpo')}}</span>
+                        </div>
+                        <div class="col-md-11 espacio_abajo">
+                            {{Form::label('empresa', 'Selecciona la opci&oacute;n deseada', ['class' => 'label'])}}
+                            {{Form::checkbox('correo', 'yes')}} Enviarme un correo con los datos de la Cita<br/>
+                            {{Form::checkbox('notifica', 'yes')}} Notificar al Emprendedor de la cita mediante un correo
+                        </div>
+                        <div class="col-md-11 espacio_abajo" style="text-align: left;">
+                            <br/>* Los campos son obligatorios
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="modal-footer">
+                        <span id="cita">
+                                <button class="btn btn-primary" id="cita_boton">Crear</button>
+                        </span>
+                    <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+                </div>
+                {{Form::close()}}
+            </div>
+        </div>
+    </div>
+
     <div id="myModal1" class="modal" data-easein="fadeInLeft" data-easeout="fadeOutLeft" role="dialog"
          aria-labelledby="myModalLabel" aria-hidden="false">
         <div class="modal-dialog modal-sm">
@@ -115,133 +139,67 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     <h4 class="modal-title" id="myModalLabel">Crear Evento</h4>
                 </div>
-                {{ Form::open(array('url'=>'calendario/evento/'.$user_id, 'class'=>'orb-form','method' => 'post') )}}
-                {{Form::hidden('destino','calendario/index/'.$user_id)}}
-                <div class="modal-body">
-                    <fieldset>
-                        <div class="col-md-6 espacio_abajo">
-                            {{Form::label('title', '* Nombre', array('class' => 'label'))}}
-                            <label class="input">
-                                {{Form::text('title','',array('class'=>'form-control', 'id'=>"body"))}}
-                            </label>
-                            <span class="message-error">{{$errors->first('title')}}</span>
-                        </div>
-                        <div class="col-md-5 espacio_abajo">
-                            {{Form::label('class', '* Color', array('class' => 'label'))}}
-                            <label class="select">
-                                {{Form::select('class', array("event-info"=>'Azul', "event-success"=>'Verde',
-                                   "event-inverse"=>'Negro',"event-warning"=>'Amarillo',"event-special"=>'Morado'))}}
-                            </label>
-                            <span class="message-error">{{$errors->first('class')}}</span>
-                        </div>
-                        <div class="col-md-6 espacio_abajo">
-                            {{Form::label('from', '* De', array('class' => 'label'))}}
-                            <label class="input">
-                                <i class="icon-prepend  fa fa-calendar"></i>
-                                {{Form::text('from','',array('class'=>'form-control', 'readonly', 'id'=>'from', 'onchange'=>'cambiar();'))}}
-                            </label>
-                            <span class="message-error">{{$errors->first('from')}}</span>
-                        </div>
-                        <div class="col-md-5 espacio_abajo">
-                            {{Form::label('to', '* A', array('class' => 'label'))}}
-                            <label class="input">
-                                <i class="icon-prepend  fa fa-calendar"></i>
-                                {{Form::text('to','',array('class'=>'form-control', 'readonly', 'id'=>'to','onchange'=>'cambiar();'))}}
-                            </label>
-                            <span class="message-error">{{$errors->first('to')}}</span>
-                        </div>
-                        <div class="col-md-6 espacio_abajo">
-                            {{Form::label('event', 'Asunto', array('class' => 'label'))}}
-                            <label class="input">
-                                {{Form::text('event','',array('class'=>'form-control', 'id'=>"body"))}}
-                            </label>
-                            <span class="message-error">{{$errors->first('event')}}</span>
-                        </div>
-
-                        <div class="col-md-11 espacio_abajo" style="text-align: left;">
-                            * Los campos son obligatorios
-                        </div>
-                    </fieldset>
-                </div>
-                <div class="modal-footer">
-                    <span id="eventos">
-                        @if($warning<>"")
-                            <button onClick="return confirm('Se han detectado otros eventos en este dia. \u00BFSeguro que deseas continuar?');"
-                                  class="btn btn-primary" id="evento_boton">Crear</button>
-                        @else
+                {{Form::open(['url'=>'calendario/evento', 'class'=>'orb-form','method' => 'post'])}}
+                    <div class="modal-body">
+                        <fieldset>
+                            <div class="col-md-6 espacio_abajo">
+                                {{Form::label('titulo', '* Nombre del evento', ['class' => 'label'])}}
+                                <label class="input">
+                                    {{Form::text('titulo', '', ['class'=>'form-control', 'id'=>"body"])}}
+                                    <span class="message-error">{{$errors->first('titulo')}}</span>
+                                </label>
+                            </div>
+                            <div class="col-md-5 espacio_abajo">
+                                {{Form::label('clase', '* Color del evento', ['class' => 'label'])}}
+                                <label class="select">
+                                    {{Form::select('clase', ["event-info"=>'Azul', "event-success"=>'Verde',"event-inverse"=>'Negro',"event-warning"=>'Amarillo',"event-special"=>'Morado'])}}
+                                    <span class="message-error">{{$errors->first('clase')}}</span>
+                                </label>
+                            </div>
+                            <div class="col-md-6 espacio_abajo">
+                                {{Form::label('start', '* Fecha de Inicio', ['class' => 'label'])}}
+                                <label class="input">
+                                    <i class="icon-prepend  fa fa-calendar"></i>
+                                    {{Form::text('start', '', ['class'=>'form-control', 'readonly', 'id'=>'from'])}}
+                                    <span class="message-error">{{$errors->first('start')}}</span>
+                                </label>
+                            </div>
+                            <div class="col-md-5 espacio_abajo">
+                                {{Form::label('end', '* Fecha de fin', ['class' => 'label'])}}
+                                <label class="input">
+                                    <i class="icon-prepend  fa fa-calendar"></i>
+                                    {{Form::text('end', '', ['class'=>'form-control', 'readonly', 'id'=>'to'])}}
+                                    <span class="message-error">{{$errors->first('end')}}</span>
+                                </label>
+                            </div>
+                            <div class="col-md-6 espacio_abajo">
+                                {{Form::label('cuerpo', 'Asunto', ['class' => 'label'])}}
+                                <label class="input">
+                                    {{Form::text('cuerpo','', ['class'=>'form-control', 'id'=>"body"])}}
+                                    <span class="message-error">{{$errors->first('cuerpo')}}</span>
+                                </label>
+                            </div>
+                            <div class="col-md-15 espacio_abajo">
+                                {{Form::label('correo', 'Selecciona la opci&oacute;n deseada', ['class' => 'label'])}}
+                                {{Form::checkbox('correo', 'yes')}} Enviarme un correo con los datos del Evento<br/>
+                            </div>
+                            <div class="col-md-11 espacio_abajo" style="text-align: left;">
+                                * Los campos son obligatorios
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="modal-footer">
+                        <span id="eventos">
                             <button class="btn btn-primary" id="evento_boton">Crear</button>
-                        @endif
-                    </span>
-                    <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancelar</button>
-                </div>
+                        </span>
+                        <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+                    </div>
                 {{Form::close()}}
             </div>
         </div>
     </div>
-    <div id="myModal3" class="modal" data-easein="fadeInUp" data-easeout="fadeOutUp" tabindex="-1" role="dialog"
-         aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title" id="titulo_pago">Concretar Cita</h4>
-                </div>
-                {{ Form::open(array('url'=>'calendario/crear/'.$user_id, 'class'=>'orb-form','method' => 'post') )}}
-                    {{Form::hidden('destino','calendario/index/'.$user_id)}}
-                <div class="modal-body">
-                    <fieldset>
-                        <div class="col-md-11 espacio_abajo">
-                            {{Form::label('consultor', '* Emprendedor', array('class' => 'label'))}}
-                            <label class="select">
-                                {{Form::select('consultor', $asesores,  '',array('id' => 'objetivo','onchange'=>'cambiar();'))}}
-                            </label>
-                            <span class="message-error">{{$errors->first('consultor')}}</span>
-                        </div>
-                        <div class="col-md-6 espacio_abajo">
-                            {{Form::label('from', '* Fecha', array('class' => 'label'))}}
-                            <label class="input">
-                                {{Form::text('from','',array('class'=>'form-control', 'readonly', 'id'=>'fecha', 'onchange'=>'cambiar();'))}}
-                            </label>
-                            <span class="message-error">{{$errors->first('from')}}</span>
-                        </div>
-                        <div class="col-md-5 espacio_abajo">
-                            {{Form::label('horario', '* Hora', array('class' => 'label'))}}
-                            <label class="select" id='hora'>
-                                {{Form::select('horario', $horarios_disponibles, array('id' => 'horario'))}}
-                            </label>
-                            <span class="message-error">{{$errors->first('horario')}}</span>
-                        </div>
-                        <div class="col-md-11 espacio_abajo">
-                            {{Form::label('event', 'Asunto', array('class' => 'label'))}}
-                            <label class="input">
-                                {{Form::text('event','',array('class'=>'form-control', 'id'=>"body"))}}
-                            </label>
-                            <span class="message-error">{{$errors->first('event')}}</span>
-                        </div>
-                        <div class="col-md-11 espacio_abajo" style="text-align: left;">
-                            * Los campos son obligatorios
-                        </div>
-                    </fieldset>
-                </div>
-                <div class="modal-footer">
-                    <span id="cita">
-                        @if($warning_cita<>"")
-                            <button onClick="return confirm('Se han detectado otros eventos en este dia. \u00BFSeguro que deseas continuar?');"
-                                  class="btn btn-primary" id="cita_boton">Crear</button>
-                        @else
-                            <button class="btn btn-primary" id="cita_boton">Crear</button>
-                        @endif
-                    </span>
-                    <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancelar</button>
-                </div>
-                {{Form::close()}}
-            </div>
-        </div>
-    </div>
-    <!-- End .powerwidget -->
-    <!-------Servicios------->
-    <div id="Servicios" class="modal" data-easein="fadeInLeft" data-easeout="fadeOutLeft" role="dialog"
-         aria-labelledby="myModalLabel" aria-hidden="false">
+
+    <div id="Servicios" class="modal" data-easein="fadeInLeft" data-easeout="fadeOutLeft" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
@@ -249,69 +207,52 @@
                     <h4 class="modal-title" id="myModalLabel">Horarios En Los Que No Te Encuentras Disponible</h4>
                 </div>
                 <div class="modal-body">
-                    {{ Form::open(array('url'=>'calendario/horarios-asesor/'.$user_id, 'class'=>'orb-form','method' => 'post') )}}
-                    <fieldset>
-                        {{Form::label('nombre', 'Horarios', array('class' => 'label'))}}
-                        <div class="col-md-11 espacio_abajo" style=" overflow: auto; height: 200px;">
-                            <table class="table table-striped table-bordered table-hover">
-                                <tbody>
-                                @if(count($nohorarios) > 0)
-                                    @foreach($nohorarios as $horario)
-                                        <tr>
-                                            <td>
-                                                @if($horario->dia==1)
-                                                    Lunes
-                                                @else
-                                                    @if($horario->dia==2)
-                                                        Martes
-                                                    @else
-                                                        @if($horario->dia==3)
-                                                            Miercoles
-                                                        @else
-                                                            @if($horario->dia==4)
-                                                                Jueves
-                                                            @else
-                                                                @if($horario->dia==5)
-                                                                    Viernes
-                                                                @endif
-                                                            @endif
-                                                        @endif
-                                                    @endif
-                                                @endif
-                                            </td>
-                                            <td>{{$horario->horario}}</td>
-                                            <td><a onClick="return confirm('\u00BFSeguro que deseas eliminar?');"
-                                                   href="{{url('calendario/deletehorario/'.$user_id.'/'.$horario->id)}}"><i
-                                                            class="fa fa-trash-o"></i></a>
-                                        </tr>
-                                    @endforeach
-                                @endif
-                                </tbody>
-                            </table>
-                        </div>
-                    </fieldset>
-                    <fieldset>
-                        <div class="col-md-6 espacio_abajo">
-                            {{Form::label('dia', '* Dia', array('class' => 'label'))}}
-                            <label class="select">
-                                {{Form::select('dia', array(1=>'Lunes',2=>'Martes',3=>'Miercoles',4=>'Jueves',5=>'Viernes'), array('id' => 'horario'))}}
-                            </label>
-                            <span class="message-error">{{$errors->first('dia')}}</span>
-                        </div>
-                        <div class="col-md-5 espacio_abajo">
-                            {{Form::label('horario', '* Horario', array('class' => 'label'))}}
-                            <label class="select">
-                                {{Form::select('horario', $horarios)}}
-                            </label>
-                            <span class="message-error">{{$errors->first('horario')}}</span>
-                        </div>
-                        <div class="col-md-6 espacio_abajo">
-                            <button class="btn btn-primary">A&ntilde;adir</button>
-                        </div>
-                        <div class="col-md-11 espacio_abajo" style="text-align: left;">
-                            * Los campos son obligatorios
-                        </div>
-                    </fieldset>
+                    {{ Form::open(['url'=>'calendario/horarios-asesor', 'class'=>'orb-form','method' => 'post'])}}
+                        <fieldset>
+                            {{Form::label('nombre', 'Horarios', ['class' => 'label'])}}
+                            <div class="col-md-11 espacio_abajo" style=" overflow: auto; height: 200px;">
+                                <table class="table table-striped table-bordered table-hover">
+                                    <tbody>
+                                        @if(count($noHorarios)>0)
+                                            @foreach($noHorarios as $noHorario)
+                                                <tr>
+                                                    <td>{{$noHorario->dia}}</td>
+                                                    <td>{{$noHorario->horario->horario}}</td>
+                                                    <td><a onClick="return confirm('\u00BFSeguro que deseas eliminar?');" href="{{url('calendario/delete-horario/'.$noHorario->id)}}"><i class="fa fa-trash-o"></i></a>
+                                                </tr>
+                                            @endforeach
+                                        @else
+                                            <tr>
+                                                <td colspan="3" style="font-style: italic; color: gray;">No se han registrado horarioss</td>
+                                            </tr>
+                                        @endif
+                                    </tbody>
+                                </table>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <div class="col-md-5 espacio_abajo">
+                                {{Form::label('dia', '* Dia', ['class' => 'label'])}}
+                                <label class="select">
+                                    {{Form::select('dia', [null=>'Selecciona', 'Lunes'=>'Lunes', 'Martes'=>'Martes', 'Miercoles'=>'Miercoles', 'Jueves'=>'Jueves', 'Viernes'=>'Viernes'], ['id' => 'dia'])}}
+                                    <span class="message-error">{{$errors->first('dia')}}</span>
+                                </label>
+                            </div>
+                            <div class="col-md-5 espacio_abajo">
+                                {{Form::label('horario_id', '* Horario', array('class' => 'label'))}}
+                                <label class="select" id="divHorario">
+                                    {{Form::select('horario_id', [null=>'Primero Selecciona el dia'])}}
+                                    <span class="message-error">{{$errors->first('horario_id')}}</span>
+                                </label>
+                            </div>
+                            <div class="col-md-11 espacio_abajo"></div>
+                            <div class="col-md-5 espacio_abajo">
+                                <button class="btn btn-primary">A&ntilde;adir</button>
+                            </div>
+                            <div class="col-md-5 espacio_abajo" style="text-align: right;">
+                                <br/>* Los campos son obligatorios
+                            </div>
+                        </fieldset>
                     {{Form::close()}}
                 </div>
                 <div class="modal-footer">
@@ -324,15 +265,97 @@
 @stop
 
 @section('scripts')
-    <!--Scripts-->
-        @parent
-        <!--Calendario-->
-        {{ HTML::script('Orb/bower_components/underscore/underscore-min.js') }}
-        {{ HTML::script('Orb/bower_components/bootstrap-calendar/js/calendar.js') }}
-        {{ HTML::script('Orb/bower_components/eonasdan-bootstrap-datetimepicker/bootstrap/bootstrap.min.js') }}
-        {{ HTML::script('Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js') }}
-    <!--/Scripts-->
+    @parent
+    {{ HTML::script('Orb/bower_components/underscore/underscore-min.js') }}
+    {{ HTML::script('Orb/bower_components/bootstrap-calendar/js/calendar.js') }}
+    {{ HTML::script('Orb/bower_components/eonasdan-bootstrap-datetimepicker/bootstrap/bootstrap.min.js') }}
+    {{ HTML::script('Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js') }}
     <script type="text/javascript">
+        //Al añadir un horario no disponible. Cuando se selecciona un dia, se ponen solo los horarios disponibles del asesor para ese dia
+        $( "#dia" ).change(function() {
+            dia = $('#dia').val();
+            $.ajax({
+                url: '/calendario/horario-dia',
+                type: 'POST',
+                data: {dia: dia},
+                dataType: 'JSON',
+                error: function () {
+                    $("#divHorario").html('Ha ocurrido un error...');
+                },
+                success: function (respuesta) {
+                    html='';
+                    if (respuesta) {
+                        html = '<select name="horario_id" id="horario_id">';
+                        if(respuesta.result.length>0)
+                            for (i = 0; i < respuesta.result.length; i++)
+                                html += '<option value="' + respuesta.result[i].id + '">' + respuesta.result[i].horario + '</option>';
+                        else
+                            html += '<option value selected="selected">No hay horarios disponibles</option>';
+                        html += '</select><span class="message-error">{{$errors->first('horario_id')}}</span>';
+                        $("#divHorario").html(html);
+                    }
+                    else {
+                        $("#divHorario").html('No se que pasa');
+                    }
+                }
+            });
+        });
+
+        var eventos = {
+            change: function(){
+                emprendedor = $('#emprendedor').val();
+                fecha = $('#fecha').val();
+                $.ajax({
+                    url: '/calendario/horario',
+                    type: 'POST',
+                    data: {emprendedor: emprendedor, fecha: fecha},
+                    dataType: 'JSON',
+                    error: function () {
+                        $("#divHorarioCita").html('Ha ocurrido un error...');
+                    },
+                    success: function (respuesta) {
+                        html='';
+                        if (respuesta) {
+                            html = '<select name="horario_id" id="horario_id">';
+                             if(respuesta.result.length>0)
+                             for (i = 0; i < respuesta.result.length; i++)
+                             html += '<option value="' + respuesta.result[i].id + '">' + respuesta.result[i].horario + '</option>';
+                             else
+                             html += '<option value selected="selected">No hay horarios disponibles</option>';
+                             html += '</select><span class="message-error">{{$errors->first('horario_id')}}</span>';
+                             $("#divHorarioCita").html(html);
+                        }
+                        else {
+                            $("#divHorarioCita").html('No se que pasa');
+                        }
+                    }
+                });
+            }
+        };
+        $('#emprendedor').on(eventos);
+        $('#fecha').on(eventos);
+
+        //Configura el calendario para citas
+        $('#fecha').datetimepicker({
+            language: 'es',
+            disabledDates: [
+                moment("12/25/2014"),
+                moment("1/1/2015"),
+                moment("2/2/2015"),
+                moment("3/16/2015"),
+                moment("4/3/2015"),
+                moment("5/1/2015"),
+                moment("9/16/2015"),
+                moment("11/16/2015"),
+                moment("12/25/2015")
+            ],
+            daysOfWeekDisabled: [0, 6],
+            pickTime: false,
+            minDate:'{{$minDate}}',
+            maxDate: '{{$maxDate}}',
+            defaultDate: '{{$minDate}}'
+        });
+
         //Configuración del Calendario
         (function ($) {
             //creamos la fecha actual
@@ -343,7 +366,7 @@
 
             //establecemos los valores del calendario
             var options = {
-                events_source: '{{url('calendario/obtener/'.$user_id)}}',
+                events_source: '{{url('calendario/obtener')}}',
                 view: 'month',
                 language: 'es-MX',
                 tmpl_path: '{{url('Orb/bower_components/bootstrap-calendar/tmpls')}}/',
@@ -352,7 +375,7 @@
                 time_start: '9:00',
                 time_end: '18:00',
                 time_split: '30',
-                width: '93%',
+                width: '85%',
                 onAfterEventsLoad: function (events) {
                     if (!events) {
                         return;
@@ -403,44 +426,6 @@
 
         //Configurar las cajas con calendarios
         $(function () {
-            $('#fecha').datetimepicker({
-                language: 'es',
-                minDate: @if(date("w", strtotime ('+2 day', strtotime(date('j-m-Y'))))==0)
-                        '{{date ( 'm/j/Y' , strtotime ('+3 day', strtotime(date('j-m-Y'))))}}',
-                @elseif(date("w", strtotime ('+2 day', strtotime(date('j-m-Y'))))==6)
-                '{{date ( 'm/j/Y' , strtotime ('+4 day', strtotime(date('j-m-Y'))))}}',
-                @else
-                  '{{date ( 'm/j/Y' , strtotime ('+2 day', strtotime(date('j-m-Y'))))}}',
-                @endif
-                maxDate: @if(date("w", strtotime ('+30 day', strtotime(date('j-m-Y'))))==0)
-                        '{{date ( 'm/j/Y' , strtotime ('+31 day', strtotime(date('j-m-Y'))))}}',
-                @elseif(date("w", strtotime ('+30 day', strtotime(date('j-m-Y'))))==6)
-                '{{date ( 'm/j/Y' , strtotime ('+32 day', strtotime(date('j-m-Y'))))}}',
-                @else
-                  '{{date ( 'm/j/Y' , strtotime ('+30 day', strtotime(date('j-m-Y'))))}}',
-                @endif
-                pickTime: false,
-                defaultDate: @if(date("w", strtotime ('+2 day', strtotime(date('j-m-Y'))))==0)
-                        '{{date ( 'm/j/Y' , strtotime ('+3 day', strtotime(date('j-m-Y'))))}}',
-                @elseif(date("w", strtotime ('+2 day', strtotime(date('j-m-Y'))))==6)
-                '{{date ( 'm/j/Y' , strtotime ('+4 day', strtotime(date('j-m-Y'))))}}',
-                @else
-                  '{{date ( 'm/j/Y' , strtotime ('+2 day', strtotime(date('j-m-Y'))))}}',
-                @endif
-                //'{{date ( 'm/j/Y' , strtotime ('+2 day', strtotime(date('j-m-Y'))))}}',
-                disabledDates: [
-                    moment("12/25/2014"),
-                    moment("1/1/2015"),
-                    moment("2/2/2015"),
-                    moment("3/16/2015"),
-                    moment("4/3/2015"),
-                    moment("5/1/2015"),
-                    moment("9/16/2015"),
-                    moment("11/16/2015"),
-                    moment("12/25/2015"),
-                ],
-                daysOfWeekDisabled: [0, 6]
-            });
             $('#from').datetimepicker({
                 language: 'es',
                 defaultDate: new Date(),
@@ -462,45 +447,5 @@
                 }
             });
         });
-
-        //Cambiar los horarios de acuerdo al asesor
-        function cambiar()
-        {
-            consultor = $('#objetivo').val();
-            fecha = $('#fecha').val();
-            from = $('#from').val();
-            to = $('#to').val();
-            $.ajax({
-                url: '/calendario/horario',
-                type: 'POST',
-                data: {consultor: consultor, fecha: fecha, from: from, to: to},
-                dataType: 'JSON',
-                error: function () {
-                    $("#hora").html('Ha ocurrido un error...');
-                },
-                success: function (respuesta) {
-                    if (respuesta) {
-                        var html = '';
-                        for (i = 0; i < respuesta.horarios.length; i++) {
-                            html += '<option value="' + respuesta.horarios[i].id + '">' + respuesta.horarios[i].horario + '</option>';
-                        }
-                        $("#horario").html(html);
-                        if (respuesta.warning == "Hay eventos") {
-                            $("#cita").html('<button onClick="return confirm(\'Se han detectado otros eventos en este dia. \u00BFSeguro que deseas continuar?\');" class="btn btn-primary" id="cita_boton">Crear</button>');
-                        } else {
-                            $("#cita").html('<button class="btn btn-primary" id="cita_boton">Crear</button>');
-                        }
-                        if (respuesta.warning_evento == "Hay eventos") {
-                            $("#eventos").html('<button onClick="return confirm(\'Se han detectado otros eventos en este dia. \u00BFSeguro que deseas continuar?\');" class="btn btn-primary" id="evento_boton">Crear</button>');
-                        } else {
-                            $("#eventos").html('<button class="btn btn-primary" id="evento_boton">Crear</button>');
-                        }
-                    }
-                    else {
-                        $("#hora").html('No se que pasa');
-                    }
-                }
-            });
-        }
     </script>
 @stop

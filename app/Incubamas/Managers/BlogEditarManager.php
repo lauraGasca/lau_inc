@@ -1,6 +1,5 @@
 <?php namespace Incubamas\Managers;
 
-
 class BlogEditarManager extends BaseManager
 {
     public function getRules()
@@ -14,4 +13,5 @@ class BlogEditarManager extends BaseManager
         ];
         return $rules;
     }
+
 }

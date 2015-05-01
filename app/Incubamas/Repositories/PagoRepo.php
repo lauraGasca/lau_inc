@@ -1,17 +1,14 @@
-<?php
+<?php namespace Incubamas\Repositories;
 
-namespace Incubamas\Repositories;
 use Incubamas\Entities\Pago;
 use Incubamas\Entities\Solicitud;
 
 class PagoRepo extends BaseRepo
 {
-        
     public function getModel()
     {
         return new Pago;
     }
-    
     
     public function pagos($emprendedor_id)
     {
@@ -37,4 +34,5 @@ class PagoRepo extends BaseRepo
     {
         return $this->servicios($emprendedor_id)-$this->pagos($emprendedor_id);
     }
+
 }

@@ -1,11 +1,9 @@
-<?php
+<?php namespace Incubamas\Repositories;
 
-namespace Incubamas\Repositories;
 use Incubamas\Entities\Mensaje;
 
 class MensajeRepo extends BaseRepo
 {
-    
     public function getModel()
     {
         return new Mensaje;
@@ -58,4 +56,5 @@ class MensajeRepo extends BaseRepo
         }
         return 'error';
     }
+
 }

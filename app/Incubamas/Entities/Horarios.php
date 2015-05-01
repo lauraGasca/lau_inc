@@ -1,7 +1,7 @@
 <?php namespace Incubamas\Entities;
 
-class Horarios extends \Eloquent {
-    
+class Horarios extends \Eloquent
+{
     protected $table = 'horarios';
     
 }

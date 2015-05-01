@@ -8,7 +8,6 @@ use Incubamas\Entities\Pago;
 
 class EmprendedoresRepo extends BaseRepo
 {
-        
     public function getModel()
     {
         return new Emprendedor;
@@ -115,10 +114,7 @@ class EmprendedoresRepo extends BaseRepo
     
 
     
-    public function listar()
-    {
-        return Emprendedor::orderBy('apellidos', 'asc')->get()->lists('FullName','user_id');
-    }
+
     
     public function primer()
     {
@@ -150,4 +146,5 @@ class EmprendedoresRepo extends BaseRepo
         return Socios::selectRaw('id, CONCAT(nombre, " ", apellidos) AS nombre_completo')
 		->where('emprendedor_id','=',$emprendedor_id)->lists('nombre_completo','id');
     }
+
 }
