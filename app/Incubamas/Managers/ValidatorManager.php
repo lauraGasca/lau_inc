@@ -118,6 +118,12 @@ class ValidatorManager
                     'horario_id'   	    =>    'required|exists:horario_asesor,id',
                 ];
                 break;
+            //Para eliminar eventos
+            case 'evento':
+                $rules = [
+                    'evento_id'   	    =>    'required|exists:eventos,id',
+                ];
+                break;
             //Crear un emprendedor desde el panel de administrador
             case 'user':
                 $rules = [

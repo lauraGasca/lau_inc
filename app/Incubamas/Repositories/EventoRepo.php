@@ -35,9 +35,10 @@ class EventoRepo extends BaseRepo
         return $evento;
     }
 
-    public function ponerDetalles($evento, $nombre, $from)
+    public function ponerDetalles($evento, $nombre, $from, $evento_id)
     {
         $evento->titulo = 'Cita con '.$nombre;
+        $evento->evento_id = $evento_id;
 
         $hora = substr($evento->horario->horario, 0, 2);
         $hora++;
@@ -51,7 +52,22 @@ class EventoRepo extends BaseRepo
 
     public function eventos()
     {
-        return Evento::where('user_id','=',\Auth::user()->id)->get();
+        return Evento::where('user_id','=',\Auth::user()->id)->orderby('start', 'asc')->get();
+    }
+
+    public function eventosFuturos()
+    {
+        return Evento::where('user_id','=',\Auth::user()->id)->where('start','>', time())->orderby('start', 'asc')->get();
+    }
+
+    public function eliminar($evento)
+    {
+        if($evento->evento_id!='')
+        {
+            $otroEvento = Evento::find($evento->evento_id);
+            $otroEvento->delete();
+        }
+        $evento->delete();
     }
 
     public function existe($evento_id)

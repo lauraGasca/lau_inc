@@ -7,7 +7,6 @@ use Incubamas\Repositories\AsesoresRepo;
 use Incubamas\Repositories\EmprendedoresRepo;
 use Incubamas\Repositories\EventoRepo;
 use Incubamas\Repositories\NoHorarioRepo;
-use Incubamas\Managers\CalendarioManager;
 use Incubamas\Managers\EventoManager;
 use Incubamas\Managers\HorarioManager;
 use Incubamas\Managers\ValidatorManager;
@@ -47,7 +46,8 @@ class CalendarController extends BaseController
         $noHorarios = $this->nohorarioRepo->noDisponible(Auth::user()->id);
         $minDate = $this->_noSabadoDomingo(strtotime(date('j-m-Y')), 2);
         $maxDate = $this->_noSabadoDomingo(strtotime(date('j-m-Y')), 30);
-        $this->layout->content = View::make('calendario/index', compact('asesores', 'noHorarios', 'minDate', 'maxDate'));
+        $eventos = $this->eventoRepo->eventosFuturos();
+        $this->layout->content = View::make('calendario/index', compact('asesores', 'noHorarios', 'minDate', 'maxDate', 'eventos'));
     }
 
     public function postCrear()
@@ -59,8 +59,8 @@ class CalendarController extends BaseController
         $eventoOtro = $this->eventoRepo->newCita();
         $manager = new EventoManager($eventoOtro, ['user_id'=>$usuario->id]+Input::all());
         $manager->save();
-        $this->eventoRepo->ponerDetalles($eventoPropio, $usuario->nombre.' '.$usuario->apellidos, Input::get('start'));
-        $this->eventoRepo->ponerDetalles($eventoOtro, Auth::user()->nombre.' '.Auth::user()->apellidos, Input::get('start') );
+        $this->eventoRepo->ponerDetalles($eventoPropio, $usuario->nombre.' '.$usuario->apellidos, Input::get('start'), $eventoOtro->id);
+        $this->eventoRepo->ponerDetalles($eventoOtro, Auth::user()->nombre.' '.Auth::user()->apellidos, Input::get('start'), $eventoPropio->id);
         $asunto = '';
         if(Input::get('cuerpo')!='')
             $asunto = '<tr><td><strong>Asunto: </strong></td><td>'.Input::get('cuerpo').'</td></tr>';
@@ -99,6 +99,50 @@ class CalendarController extends BaseController
         }
 
         return Redirect::back()->with(array('confirm' => 'Se ha registrado correctamente.'));
+    }
+
+    public function postDeleteEvento()
+    {
+        $manager = new ValidatorManager('evento', ['evento_id'=> Input::get('evento_id')]);
+        $manager->validar();
+
+        $evento = $this->eventoRepo->evento(Input::get('evento_id'));
+        $asunto = '';
+        if ($evento->cuerpo != '')
+            $asunto = '<tr><td><strong>Asunto: </strong></td><td>' . $evento->cuerpo . '</td></tr>';
+
+        if($evento->evento_id!='')
+        {
+            $eventoOtro = $this->eventoRepo->evento($evento->evento_id);
+            $usuario = $this->userRepo->usuario($eventoOtro->user_id);
+            if ($evento->cuerpo != '')
+                $asunto = '<tr><td><strong>Asunto: </strong></td><td>' . $evento->cuerpo . '</td></tr>';
+            if(Input::get('correo') == 'yes')
+            {
+                $this->_mail('emails.estandar', ['titulo'=>"Cita Cancelada", 'seccion' => "Detalles de la Cita", 'imagen' => false,
+                    'mensaje'=>'<p>Hola <strong>'.Auth::user()->nombre.' '.Auth::user()->apellidos.'</strong>:</p><p>Tal como lo solicitaste, te mandamos los detalles de la cita que has cancelado en el sistema con el emprendedor <strong>'.$usuario->nombre.' '.$usuario->apellidos.'</strong>.</p>',
+                    'tabla' => "<div align='center'><table style='font-family:Arial, Helvetica, sans-serif; font-size:19px; color:#444444; text-align: justify;'><tr><td width='30%'><strong>Fecha: </strong></td><td>".$eventoOtro->fecha."</td></tr><tr><td colspan='2'></td></tr><tr><td><strong>Horario: </strong></td><td>".$eventoOtro->horario->hora." hrs</td></tr>" . $asunto . "</table><br/><br/></div>"],
+                    'Cita Cancelada', Auth::user()->email, Auth::user()->nombre.' '.Auth::user()->apellidos);
+            }
+            if(Input::get('notifica') == 'yes')
+            {
+                $this->_mail('emails.estandar', ['titulo'=>"Cita Cancelada", 'seccion' => "Detalles de la Cita", 'imagen' => false,
+                    'mensaje'=>'<p>Hola <strong>'.$usuario->nombre.' '.$usuario->apellidos.'</strong>:</p><p><strong>'.Auth::user()->nombre.' '.Auth::user()->apellidos.'</strong> ha cancelado la cita que habia programado contigo, abajo podras ver todos los detalles.</p><p>Si tienes dudas no dudes en ponerte en contacto con nosotros.</p>',
+                    'tabla' => "<div align='center'><table style='font-family:Arial, Helvetica, sans-serif; font-size:19px; color:#444444; text-align: justify;'><tr><td width='30%'><strong>Fecha: </strong></td><td>".$eventoOtro->fecha."</td></tr><tr><td colspan='2'></td></tr><tr><td><strong>Horario: </strong></td><td>".$eventoOtro->horario->hora." hrs</td></tr>" . $asunto . "</table><br/><br/></div>"],
+                    'Cita Cancelada', $usuario->email, $usuario->nombre.' '.$usuario->apellidos);
+            }
+        }else {
+
+            if (Input::get('correo') == 'yes') {
+                $this->_mail('emails.estandar', ['titulo' => "Evento Cancelado", 'seccion' => "Detalles del Evento", 'imagen' => false,
+                    'mensaje' => '<p>Hola <strong>' . Auth::user()->nombre . ' ' . Auth::user()->apellidos . '</strong>:</p><p>Tal como lo solicitaste, te mandamos los detalles del evento que has cancelado en el sistema.</p>',
+                    'tabla' => "<div align='center'><table style='font-family:Arial, Helvetica, sans-serif; font-size:19px; color:#444444; text-align: justify;'><tr><td width='30%'><strong>Nombre: </strong></td><td>" . $evento->titulo . "</td></tr><tr><td colspan='2'></td></tr><tr><td><strong>Inicio: </strong></td><td>" . $evento->inicio . "</td></tr><tr><td colspan='2'></td></tr><tr><td><strong>Fin: </strong></td><td>" . $evento->fin . "</td></tr><tr><td colspan='2'></td></tr>" . $asunto . "</table><br/><br/></div>"],
+                    'Evento Cancelado', Auth::user()->email, Auth::user()->nombre . ' ' . Auth::user()->apellidos);
+            }
+        }
+        $this->eventoRepo->eliminar($evento);
+
+        return Redirect::back()->with(array('confirm' => 'Se ha eliminado correctamente.'));
     }
 
     public function postHorario()
@@ -163,8 +207,10 @@ class CalendarController extends BaseController
             }
             $JSON = array("success" => 1, "result" => $JSON2);
             return Response::json($JSON);
-        }else
-            return 0;
+        }else {
+            $JSON = array("success" => 1, "result" => []);
+            return Response::json($JSON);
+        }
     }
 
     //Si la fecha indicada cae en fin de semana, se recorre para el lunes
