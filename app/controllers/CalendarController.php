@@ -81,6 +81,34 @@ class CalendarController extends BaseController
         return Redirect::back()->with(array('confirm' => 'Se ha registrado correctamente.'));
     }
 
+    public function postCita()
+    {
+        $eventoPropio = $this->eventoRepo->newSolicitaCita();
+        $manager = new EventoManager($eventoPropio, ['user_id'=>Auth::user()->id]+Input::all());
+        $manager->save();
+        $usuario = $this->userRepo->usuario(Input::get('user'));
+        $eventoOtro = $this->eventoRepo->newCita();
+        $manager = new EventoManager($eventoOtro, ['user_id'=>$usuario->id]+Input::all());
+        $manager->save();
+        $this->eventoRepo->ponerDetalles($eventoPropio, $usuario->nombre.' '.$usuario->apellidos, Input::get('start'), $eventoOtro->id);
+        $this->eventoRepo->ponerDetalles($eventoOtro, Auth::user()->nombre.' '.Auth::user()->apellidos, Input::get('start'), $eventoPropio->id);
+        $asunto = '';
+        if(Input::get('cuerpo')!='')
+            $asunto = '<tr><td><strong>Asunto: </strong></td><td>'.Input::get('cuerpo').'</td></tr>';
+        if(Input::get('correo') == 'yes')
+        {
+            $this->_mail('emails.estandar', ['titulo'=>"Solicitud de Cita", 'seccion' => "Detalles de la Cita", 'imagen' => false,
+                'mensaje'=>'<p>Hola <strong>'.Auth::user()->nombre.' '.Auth::user()->apellidos.'</strong>:</p><p>Tal como lo solicitaste, te mandamos los detalles de la cita que has programado en el sistema con el asesor <strong>'.$usuario->nombre.' '.$usuario->apellidos.'</strong>.</p><p>Espere un correo con la confirmaci&oacute;n de la cita.</p>',
+                'tabla' => "<div align='center'><table style='font-family:Arial, Helvetica, sans-serif; font-size:19px; color:#444444; text-align: justify;'><tr><td width='30%'><strong>Fecha: </strong></td><td>".$eventoOtro->fecha."</td></tr><tr><td colspan='2'></td></tr><tr><td><strong>Horario: </strong></td><td>".$eventoOtro->horario->hora." hrs</td></tr>" . $asunto . "</table><br/><br/></div>"],
+                'Solicitud de Cita', Auth::user()->email, Auth::user()->nombre.' '.Auth::user()->apellidos);
+        }
+        $this->_mail('emails.estandar', ['titulo'=>"Solicitud de Cita", 'seccion' => "Detalles de la Cita", 'imagen' => false,
+            'mensaje'=>'<p>Hola <strong>'.$usuario->nombre.' '.$usuario->apellidos.'</strong>:</p><p> El emprendedor <strong>'.Auth::user()->nombre.' '.Auth::user()->apellidos.'</strong> ha solicitado una cita contigo en el sistema.</p>',
+            'tabla' => "<div align='center'><table style='font-family:Arial, Helvetica, sans-serif; font-size:19px; color:#444444; text-align: justify;'><tr><td width='30%'><strong>Fecha: </strong></td><td>".$eventoOtro->fecha."</td></tr><tr><td colspan='2'></td></tr><tr><td><strong>Horario: </strong></td><td>".$eventoOtro->horario->hora." hrs</td></tr>" . $asunto . "</table><br/><br/></div><div align='center'><a href=\"".url('calendario/confirmar/'.$eventoOtro->id)."\"style='text-decoration:none; padding: 14px 24px; font-size: 21px;color: #fff; background-color: #5cb85c; display: inline-block; margin-bottom: 0;font-weight: 400; line-height: 1.42857143; text-align: center; white-space: nowrap; vertical-align: middle; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; background-image: none; border: 1px solid transparent; border-radius: 4px;'>Confirmar</a> &nbsp;&nbsp;<a href=\"".url('calendario/cancelar/'.$eventoOtro->id)."\" style='text-decoration:none; padding: 14px 24px; font-size: 21px;color: #fff; background-color: #B33C3C; display: inline-block; margin-bottom: 0;font-weight: 400; line-height: 1.42857143; text-align: center; white-space: nowrap; vertical-align: middle; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; background-image: none; border: 1px solid transparent; border-radius: 4px;'>Cancelar</a></div>"],
+            'Solicitud de Cita', $usuario->email, $usuario->nombre.' '.$usuario->apellidos);
+        return Redirect::back()->with(array('confirm' => 'Se ha registrado correctamente. Espere un correo con la confirmaci&oacute;n de la cita.'));
+    }
+
     public function postEvento()
     {
         $evento = $this->eventoRepo->newEvento();
@@ -145,9 +173,57 @@ class CalendarController extends BaseController
         return Redirect::back()->with(array('confirm' => 'Se ha eliminado correctamente.'));
     }
 
+    public function postDeleteEventoEmprendedor()
+    {
+        $manager = new ValidatorManager('evento', ['evento_id'=> Input::get('evento_id')]);
+        $manager->validar();
+
+        $evento = $this->eventoRepo->evento(Input::get('evento_id'));
+        $asunto = '';
+        if ($evento->cuerpo != '')
+            $asunto = '<tr><td><strong>Asunto: </strong></td><td>' . $evento->cuerpo . '</td></tr>';
+
+        if($evento->evento_id!='')
+        {
+            $eventoOtro = $this->eventoRepo->evento($evento->evento_id);
+            $usuario = $this->userRepo->usuario($eventoOtro->user_id);
+            if ($evento->cuerpo != '')
+                $asunto = '<tr><td><strong>Asunto: </strong></td><td>' . $evento->cuerpo . '</td></tr>';
+            if(Input::get('correo') == 'yes')
+            {
+                $this->_mail('emails.estandar', ['titulo'=>"Cita Cancelada", 'seccion' => "Detalles de la Cita", 'imagen' => false,
+                    'mensaje'=>'<p>Hola <strong>'.Auth::user()->nombre.' '.Auth::user()->apellidos.'</strong>:</p><p>Tal como lo solicitaste, te mandamos los detalles de la cita que has cancelado en el sistema con el asesor <strong>'.$usuario->nombre.' '.$usuario->apellidos.'</strong>.</p>',
+                    'tabla' => "<div align='center'><table style='font-family:Arial, Helvetica, sans-serif; font-size:19px; color:#444444; text-align: justify;'><tr><td width='30%'><strong>Fecha: </strong></td><td>".$eventoOtro->fecha."</td></tr><tr><td colspan='2'></td></tr><tr><td><strong>Horario: </strong></td><td>".$eventoOtro->horario->hora." hrs</td></tr>" . $asunto . "</table><br/><br/></div>"],
+                    'Cita Cancelada', Auth::user()->email, Auth::user()->nombre.' '.Auth::user()->apellidos);
+            }
+            $this->_mail('emails.estandar', ['titulo'=>"Cita Cancelada", 'seccion' => "Detalles de la Cita", 'imagen' => false,
+                'mensaje'=>'<p>Hola <strong>'.$usuario->nombre.' '.$usuario->apellidos.'</strong>:</p><p><strong>'.Auth::user()->nombre.' '.Auth::user()->apellidos.'</strong> ha cancelado la cita que habia programado contigo, abajo podras ver todos los detalles.</p>',
+                'tabla' => "<div align='center'><table style='font-family:Arial, Helvetica, sans-serif; font-size:19px; color:#444444; text-align: justify;'><tr><td width='30%'><strong>Fecha: </strong></td><td>".$eventoOtro->fecha."</td></tr><tr><td colspan='2'></td></tr><tr><td><strong>Horario: </strong></td><td>".$eventoOtro->horario->hora." hrs</td></tr>" . $asunto . "</table><br/><br/></div>"],
+                'Cita Cancelada', $usuario->email, $usuario->nombre.' '.$usuario->apellidos);
+        }else {
+
+            if (Input::get('correo') == 'yes') {
+                $this->_mail('emails.estandar', ['titulo' => "Evento Cancelado", 'seccion' => "Detalles del Evento", 'imagen' => false,
+                    'mensaje' => '<p>Hola <strong>' . Auth::user()->nombre . ' ' . Auth::user()->apellidos . '</strong>:</p><p>Tal como lo solicitaste, te mandamos los detalles del evento que has cancelado en el sistema.</p>',
+                    'tabla' => "<div align='center'><table style='font-family:Arial, Helvetica, sans-serif; font-size:19px; color:#444444; text-align: justify;'><tr><td width='30%'><strong>Nombre: </strong></td><td>" . $evento->titulo . "</td></tr><tr><td colspan='2'></td></tr><tr><td><strong>Inicio: </strong></td><td>" . $evento->inicio . "</td></tr><tr><td colspan='2'></td></tr><tr><td><strong>Fin: </strong></td><td>" . $evento->fin . "</td></tr><tr><td colspan='2'></td></tr>" . $asunto . "</table><br/><br/></div>"],
+                    'Evento Cancelado', Auth::user()->email, Auth::user()->nombre . ' ' . Auth::user()->apellidos);
+            }
+        }
+        $this->eventoRepo->eliminar($evento);
+
+        return Redirect::back()->with(array('confirm' => 'Se ha eliminado correctamente.'));
+    }
+
     public function postHorario()
     {
         $horarios = $this->horariosRepo->horarioCita(Input::get("fecha"), Input::get("emprendedor"));
+        $JSON = array("success" => 1, "result" => $horarios);
+        return Response::json($JSON);
+    }
+
+    public function postHorarioEmprendedor()
+    {
+        $horarios = $this->horariosRepo->horarioCitaEmp(Input::get("fecha"), Input::get("emprendedor"));
         $JSON = array("success" => 1, "result" => $horarios);
         return Response::json($JSON);
     }
@@ -181,9 +257,11 @@ class CalendarController extends BaseController
     /* Regresa el JSON que consume Boobstrap calendar para imprimir las citas
     * { "success": 1,"result": [{"id": 293,"title": "Event 1","url": "http://example.com",
     *	  "class": "event-important","start": 12039485678000, // MilliS "end": 1234576967000 // MilliS}, ...]}*/
-    public function getObtener()
+    public function getObtener($user_id=null)
     {
-        $eventos = $this->eventoRepo->eventos();
+        if($user_id==null)
+            $user_id = \Auth::user()->id;
+        $eventos = $this->eventoRepo->eventos($user_id);
         if (count($eventos) > 0) {
             foreach ($eventos as $evento) {
                 $hora = strtotime('-6 hour', $evento->start / 1000);

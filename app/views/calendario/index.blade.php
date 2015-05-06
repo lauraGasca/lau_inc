@@ -277,6 +277,14 @@
                             <fieldset>
                                 <div class="col-md-11 espacio_abajo" style=" overflow: auto; height: 200px;">
                                     <table class="table table-striped table-bordered table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th width="30%" >Evento</th>
+                                            <th width="20%" >Fecha</th>
+                                            <th width="10%" >Estatus</th>
+                                            <th width="10%" >Borrar</th>
+                                        </tr>
+                                        </thead>
                                         <tbody>
                                         @if(count($eventos)>0)
                                             @foreach($eventos as $evento)
@@ -297,7 +305,7 @@
                                             @endforeach
                                         @else
                                             <tr>
-                                                <td colspan="3" style="font-style: italic; color: gray;">No tienes eventos registrados</td>
+                                                <td colspan="4" style="font-style: italic; color: gray;">No tienes eventos registrados</td>
                                             </tr>
                                         @endif
                                         </tbody>

@@ -115,6 +115,46 @@ class HorariosRepo extends BaseRepo
         }
         return $disponibles;
     }
+
+    public function horarioCitaEmp($fecha, $asesor)
+    {
+        $horarios = Horarios::all();
+        $horariosOcupados = NoHorarios::where('user_id','=', $asesor)->where('dia','=', strftime("%A", strtotime(date_format(date_create(substr($fecha, 3, 2) . '/' . substr($fecha, 0, 2) . '/' . substr($fecha, 6, 4)), 'd-m-Y'))))->get();
+        $horariosCitas = Evento::where('user_id','=', $asesor)->whereNotNull('horario_id')->get();
+        $horariosCitasEmp = Evento::where('user_id','=', \Auth::user()->id)->whereNotNull('horario_id')->get();
+        $disponibles = [];
+        foreach($horarios as $horario)
+        {
+            $esta = 0;
+            foreach($horariosOcupados as $ocupado)
+            {
+                if ($horario->id == $ocupado->horario_id)
+                {
+                    $esta = 1;
+                    break;
+                }
+            }
+            foreach($horariosCitas as $cita)
+            {
+                if ($horario->id == $cita->horario_id)
+                {
+                    $esta = 1;
+                    break;
+                }
+            }
+            foreach($horariosCitasEmp as $citaEmp)
+            {
+                if ($horario->id == $citaEmp->horario_id)
+                {
+                    $esta = 1;
+                    break;
+                }
+            }
+            if($esta==0)
+                $disponibles[] = ['id' => $horario->id, 'horario' => $horario->horario];
+        }
+        return $disponibles;
+    }
     
     public function listar_ajax($asesor_id, $dia, $fecha, $user_id, $emp_id=null)
     {

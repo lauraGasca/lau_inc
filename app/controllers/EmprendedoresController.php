@@ -70,20 +70,21 @@ class EmprendedoresController extends BaseController
 
     /**************************Perfil Emprendedores*******************************/
 
-    public function getPerfil($emprendedor_id, $chat = null, $user = null, $group = null, $name = null)
+    public function getPerfil($emprendedor_id)
     {
-        if (Auth::user()->type_id == 1 && Auth::user()->type_id != 2 && Auth::user()->type_id != 3)
-            return Redirect::to('sistema');
-        elseif (Auth::user()->type_id == 3) {
-            $id = $this->emprendedoresRepo->emprendedorid(Auth::user()->id);
-            if ($emprendedor_id <> $id)
-                return Redirect::to('emprendedores/perfil/' . $id);
-        }
-
-        $warning = "";
-        $warning_cita = "";
+        $this->_emprendedorAsesor($emprendedor_id);
 
         $emprendedor = $this->emprendedoresRepo->emprendedor($emprendedor_id);
+        $documentos = $this->documentoRepo->documentos_listar();
+        $eventos = $this->eventoRepo->eventosFuturosEmp();
+        $minDate = $this->_noSabadoDomingo(strtotime(date('j-m-Y')), 2);
+        $maxDate = $this->_noSabadoDomingo(strtotime(date('j-m-Y')), 30);
+        $asesores = [null=>'Selecciona al Asesor']+$this->userRepo->listar_asesores();
+
+        $this->layout->content = View::make('emprendedores.perfil', compact('emprendedor', 'documentos', 'eventos', 'asesores', 'maxDate', 'minDate'));
+
+
+/*
         $asesores = $this->asesoresRepo->listar();
         $asesor = $this->asesoresRepo->primer();
         $id = $asesor->user_id;
@@ -91,7 +92,7 @@ class EmprendedoresController extends BaseController
         //Busca la fecha en la que se puede hacer la cita
         $fecha = $this->_noSD(date('j-m-Y'));
         $horarios_disponibles = [];/*$this->horariosRepo->disponible(
-            $asesor->id, date("w", strtotime($fecha)), $fecha, $id, $emprendedor[0]->user_id);*/
+            $asesor->id, date("w", strtotime($fecha)), $fecha, $id, $emprendedor[0]->user_id);
         //dd($horarios_disponibles);
         //3,1, "2014-12-22",19
 
@@ -103,9 +104,9 @@ class EmprendedoresController extends BaseController
         $num_documentos = $this->documentoRepo->num_documentos();
         $subidas = $this->documentoRepo->num_subidos($emprendedor_id);
 
-        $documentos = $this->documentoRepo->listar_todos('nombre', 'id');
+
         $empresas_listado = $this->emprendedoresRepo->listar_empresas($emprendedor_id);
-        $socios_listado = $this->emprendedoresRepo->listar_socios($emprendedor_id);
+        $socios_listado = $this->emprendedoresRepo->listar_socios($emprendedor_id);*/
 
         //Ve si hay eventos para este dia
         /*if ($this->eventoRepo->warning(date('Y-m-j'), $emprendedor[0]->user_id))
@@ -115,7 +116,7 @@ class EmprendedoresController extends BaseController
 
         /*Aqui lo que voy a adaptar*/
 
-        if (Auth::user()->type_id == 3) {
+        /*if (Auth::user()->type_id == 3) {
             $active_chat = null;
             $active_user = null;
             $active_group = null;
@@ -156,7 +157,7 @@ class EmprendedoresController extends BaseController
                 compact('asesores', 'horarios', 'warning', 'warning_cita', 'emprendedor', 'empresas',
                     'pagos', 'adeudo', 'num_documentos', 'subidas', 'documentos', 'empresas_listado',
                     'socios_listado', 'horarios_disponibles'));
-        }
+        }*/
     }
 
 
@@ -1318,13 +1319,6 @@ class EmprendedoresController extends BaseController
         }
     }
 
-    //Filtro para que solo los trabajadores entren a la funcion
-    private function _soloAsesores()
-    {
-        if (Auth::user()->type_id != 1 && Auth::user()->type_id != 2)
-            return Redirect::to('sistema');
-    }
-
     //Si la fecha indicada cae en fin de semana, se recorre para el lunes
     private function _noSD($f)
     {
@@ -1353,5 +1347,42 @@ class EmprendedoresController extends BaseController
             return date_format(date_create(substr($fecha, 3, 2) . '/' . substr($fecha, 0, 2) . '/' . substr($fecha, 6, 4)), 'Y-m-d');
         else
             return null;
+    }
+
+
+
+
+
+
+
+    //Filtro para que solo los trabajadores entren a la funcion
+    private function _soloAsesores()
+    {
+        if (Auth::user()->type_id != 1 && Auth::user()->type_id != 2)
+            return Redirect::to('sistema');
+    }
+
+    private function _emprendedorAsesor($emprendedor_id)
+    {
+        if (Auth::user()->type_id == 1 && Auth::user()->type_id != 2 && Auth::user()->type_id != 3)
+            return Redirect::to('sistema');
+        elseif (Auth::user()->type_id == 3) {
+            $id = $this->emprendedoresRepo->emprendedorid(Auth::user()->id);
+            if ($emprendedor_id <> $id)
+                return Redirect::to('emprendedores/perfil/' . $id);
+        }
+    }
+
+    //Si la fecha indicada cae en fin de semana, se recorre para el lunes
+    private function _noSabadoDomingo($fecha, $dias)
+    {
+        if (date("w", strtotime('+'.$dias.' day', $fecha)) == 0)
+            $fecha_final = date('Y-m-d', strtotime('+'.($dias+1).' day', $fecha));
+        elseif (date("w", strtotime('+'.$dias.' day', $fecha)) == 6)
+            $fecha_final = date('Y-m-d', strtotime('+'.($dias+2).' day', $fecha));
+        else
+            $fecha_final = date('Y-m-d', strtotime('+'.$dias.' day', $fecha));
+
+        return $fecha_final;
     }
 }

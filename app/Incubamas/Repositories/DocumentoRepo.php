@@ -20,4 +20,9 @@ class DocumentoRepo extends BaseRepo
         return Subidas::where('id_emprendedor','=',$emprendedor_id)->count();
     }
 
+    public function documentos_listar()
+    {
+        return Documento::lists('nombre', 'id');
+    }
+
 }

@@ -50,14 +50,21 @@ class EventoRepo extends BaseRepo
         $evento->save();
     }
 
-    public function eventos()
+    public function eventos($user_id)
     {
-        return Evento::where('user_id','=',\Auth::user()->id)->orderby('start', 'asc')->get();
+        return Evento::where('user_id','=',$user_id)->orderby('start', 'asc')->get();
     }
 
     public function eventosFuturos()
     {
         return Evento::where('user_id','=',\Auth::user()->id)->where('start','>', time())->orderby('start', 'asc')->get();
+    }
+
+    public function eventosFuturosEmp()
+    {
+        return Evento::where('user_id','=',\Auth::user()->id)
+                ->where('start','>', time())->where('confirmation','=', 0)
+                ->orderby('start', 'asc')->get();
     }
 
     public function eliminar($evento)

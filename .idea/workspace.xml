@@ -2,10 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5a5b8e23-e436-4e8b-9d61-9e95ce82aba0" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/views/emails/confirmar.blade.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/views/emails/email.blade.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/views/emails/emprendedor.blade.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/views/emails/incubacion.blade.php" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/CalendarController.php" afterPath="$PROJECT_DIR$/app/controllers/CalendarController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Incubamas/Repositories/DocumentoRepo.php" afterPath="$PROJECT_DIR$/app/Incubamas/Repositories/DocumentoRepo.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/EmprendedoresController.php" afterPath="$PROJECT_DIR$/app/controllers/EmprendedoresController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Incubamas/Repositories/EventoRepo.php" afterPath="$PROJECT_DIR$/app/Incubamas/Repositories/EventoRepo.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Incubamas/Managers/ValidatorManager.php" afterPath="$PROJECT_DIR$/app/Incubamas/Managers/ValidatorManager.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Incubamas/Repositories/HorariosRepo.php" afterPath="$PROJECT_DIR$/app/Incubamas/Repositories/HorariosRepo.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/calendario/index.blade.php" afterPath="$PROJECT_DIR$/app/views/calendario/index.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/emprendedores/perfil.blade.php" afterPath="$PROJECT_DIR$/app/views/emprendedores/perfil.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/routes.php" afterPath="$PROJECT_DIR$/app/routes.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Incubamas.iws" />
@@ -31,19 +39,27 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="CalendarController.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="CalendarController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/controllers/CalendarController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.28648648" vertical-offset="1785" max-vertical-offset="6390">
-              <caret line="108" column="38" selection-start-line="108" selection-start-column="38" selection-end-line="108" selection-end-column="38" />
+            <state vertical-scroll-proportion="-5.6545453" vertical-offset="445" max-vertical-offset="7794">
+              <caret line="42" column="5" selection-start-line="42" selection-start-column="5" selection-end-line="42" selection-end-column="5" />
               <folding>
                 <element signature="e#7#43#0#PHP" expanded="true" />
-                <marker date="1430861124594" expanded="true" signature="3521:3614" placeholder="..." />
-                <marker date="1430861124594" expanded="true" signature="4541:4634" placeholder="..." />
-                <marker date="1430861124594" expanded="true" signature="5917:6010" placeholder="..." />
-                <marker date="1430861124594" expanded="true" signature="7866:7959" placeholder="..." />
-                <marker date="1430861124594" expanded="true" signature="8931:9024" placeholder="..." />
-                <marker date="1430861124594" expanded="true" signature="9878:9971" placeholder="..." />
+                <marker date="1430893450052" expanded="true" signature="3521:3614" placeholder="..." />
+                <marker date="1430893450052" expanded="true" signature="4541:4634" placeholder="..." />
+                <marker date="1430893450052" expanded="true" signature="6583:6676" placeholder="..." />
+                <marker date="1430893450052" expanded="true" signature="7466:7559" placeholder="..." />
+                <marker date="1430893450052" expanded="true" signature="7821:8863" placeholder="..." />
+                <marker date="1430893450052" expanded="true" signature="7889:8319" placeholder="..." />
+                <marker date="1430893450052" expanded="true" signature="8414:8844" placeholder="..." />
+                <marker date="1430893450052" expanded="true" signature="9948:10041" placeholder="..." />
+                <marker date="1430893450052" expanded="true" signature="11897:11990" placeholder="..." />
+                <marker date="1430893450052" expanded="true" signature="12962:13055" placeholder="..." />
+                <marker date="1430893450052" expanded="true" signature="13909:14002" placeholder="..." />
+                <marker date="1430893450052" expanded="true" signature="15946:16039" placeholder="..." />
+                <marker date="1430893450052" expanded="true" signature="16869:16962" placeholder="..." />
+                <marker date="1430893450052" expanded="true" signature="17798:17891" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -52,32 +68,60 @@
       <file leaf-file-name="EventoRepo.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Incubamas/Repositories/EventoRepo.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-9.333333" vertical-offset="990" max-vertical-offset="1890">
-              <caret line="69" column="26" selection-start-line="69" selection-start-column="26" selection-end-line="69" selection-end-column="26" />
+            <state vertical-scroll-proportion="-14.0" vertical-offset="810" max-vertical-offset="2016">
+              <caret line="66" column="49" selection-start-line="66" selection-start-column="49" selection-end-line="66" selection-end-column="49" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.blade.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/calendario/index.blade.php">
+      <file leaf-file-name="HorariosRepo.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Incubamas/Repositories/HorariosRepo.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-13.888889" vertical-offset="5151" max-vertical-offset="9378">
-              <caret line="307" column="47" selection-start-line="307" selection-start-column="47" selection-end-line="307" selection-end-column="47" />
+            <state vertical-scroll-proportion="-4.5555553" vertical-offset="2037" max-vertical-offset="3726">
+              <caret line="122" column="61" selection-start-line="122" selection-start-column="61" selection-end-line="122" selection-end-column="61" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="EmprendedoresController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/controllers/EmprendedoresController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-10.666667" vertical-offset="864" max-vertical-offset="24822">
+              <caret line="78" column="55" selection-start-line="78" selection-start-column="38" selection-end-line="78" selection-end-column="55" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="perfil.blade.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/views/emprendedores/perfil.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.45351043" vertical-offset="7915" max-vertical-offset="14436">
+              <caret line="453" column="57" selection-start-line="453" selection-start-column="57" selection-end-line="453" selection-end-column="57" />
               <folding>
-                <element signature="e#18177#18203#0#HTML" expanded="true" />
-                <element signature="e#18838#18864#0#HTML" expanded="true" />
+                <element signature="e#4318#4371#0#HTML" expanded="true" />
+                <element signature="e#9051#9104#0#HTML" expanded="true" />
+                <element signature="e#11039#11065#0#HTML" expanded="true" />
+                <element signature="e#12713#12766#0#HTML" expanded="true" />
+                <element signature="e#13011#13030#0#HTML" expanded="true" />
+                <element signature="e#13181#13200#0#HTML" expanded="true" />
+                <element signature="e#13279#13298#0#HTML" expanded="true" />
+                <element signature="e#13394#13413#0#HTML" expanded="true" />
+                <element signature="e#16308#16361#0#HTML" expanded="true" />
+                <element signature="e#21064#21134#0#HTML" expanded="true" />
+                <element signature="e#21216#21259#0#HTML" expanded="true" />
+                <element signature="e#21812#21833#0#HTML" expanded="true" />
+                <element signature="e#22561#22591#0#HTML" expanded="true" />
+                <element signature="e#28171#28196#0#HTML" expanded="true" />
+                <element signature="e#32631#32656#0#HTML" expanded="true" />
+                <element signature="e#34184#34223#0#HTML" expanded="true" />
+                <element signature="e#35779#35819#0#HTML" expanded="true" />
+                <element signature="e#36130#36156#0#HTML" expanded="true" />
+                <element signature="e#36624#36650#0#HTML" expanded="true" />
+                <element signature="e#40504#40529#0#HTML" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="create.blade.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/emprendedores/create.blade.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-9.222222" vertical-offset="5115" max-vertical-offset="6102">
-              <caret line="298" column="33" selection-start-line="298" selection-start-column="33" selection-end-line="298" selection-end-column="64" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -95,9 +139,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/Incubamas/Repositories/MensajeRepo.php" />
-        <option value="$PROJECT_DIR$/app/Incubamas/Repositories/SolicitudRepo.php" />
-        <option value="$PROJECT_DIR$/app/Incubamas/Repositories/PagoRepo.php" />
         <option value="$PROJECT_DIR$/app/Incubamas/Repositories/MiembrosRepo.php" />
         <option value="$PROJECT_DIR$/app/Incubamas/Managers/AtendidosManager.php" />
         <option value="$PROJECT_DIR$/app/Incubamas/Managers/BaseManager.php" />
@@ -134,18 +175,21 @@
         <option value="$PROJECT_DIR$/app/Incubamas/Managers/HorarioManager.php" />
         <option value="$PROJECT_DIR$/app/Incubamas/Entities/NoHorarios.php" />
         <option value="$PROJECT_DIR$/app/Incubamas/Managers/EventoManager.php" />
-        <option value="$PROJECT_DIR$/app/Incubamas/Repositories/HorariosRepo.php" />
         <option value="$PROJECT_DIR$/app/Incubamas/Repositories/UserRepo.php" />
         <option value="$PROJECT_DIR$/app/Incubamas/Repositories/NoHorarioRepo.php" />
-        <option value="$PROJECT_DIR$/app/routes.php" />
         <option value="$PROJECT_DIR$/app/Incubamas/Entities/Evento.php" />
         <option value="$PROJECT_DIR$/app/Incubamas/Managers/EventoFinManager.php" />
         <option value="$PROJECT_DIR$/app/Incubamas/Managers/ValidatorManager.php" />
         <option value="$PROJECT_DIR$/app/Incubamas/Entities/Cita.php" />
         <option value="$PROJECT_DIR$/app/views/layouts/sistema.blade.php" />
+        <option value="$PROJECT_DIR$/app/Incubamas/Repositories/DocumentoRepo.php" />
+        <option value="$PROJECT_DIR$/app/routes.php" />
+        <option value="$PROJECT_DIR$/app/Incubamas/Repositories/HorariosRepo.php" />
+        <option value="$PROJECT_DIR$/app/controllers/CalendarController.php" />
+        <option value="$PROJECT_DIR$/app/controllers/EmprendedoresController.php" />
         <option value="$PROJECT_DIR$/app/Incubamas/Repositories/EventoRepo.php" />
         <option value="$PROJECT_DIR$/app/views/calendario/index.blade.php" />
-        <option value="$PROJECT_DIR$/app/controllers/CalendarController.php" />
+        <option value="$PROJECT_DIR$/app/views/emprendedores/perfil.blade.php" />
       </list>
     </option>
   </component>
@@ -248,7 +292,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="layouts" />
+              <option name="myItemId" value="emprendedores" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -465,6 +509,7 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.329582" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27974278" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
@@ -474,7 +519,6 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -511,62 +555,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/Incubamas/Managers/PagoManager.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5387324" vertical-offset="0" max-vertical-offset="568">
-          <caret line="17" column="4" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Incubamas/Managers/ProgresoManager.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.44366196" vertical-offset="0" max-vertical-offset="568">
-          <caret line="14" column="4" selection-start-line="14" selection-start-column="4" selection-end-line="14" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Incubamas/Managers/RelacionManager.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="595">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Incubamas/Managers/ServicioManager.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.34859154" vertical-offset="0" max-vertical-offset="568">
-          <caret line="11" column="4" selection-start-line="11" selection-start-column="4" selection-end-line="11" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Incubamas/Managers/TagManager.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.03169014" vertical-offset="0" max-vertical-offset="568">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Incubamas/Managers/UserEmpEditManager.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.44366196" vertical-offset="0" max-vertical-offset="568">
-          <caret line="14" column="4" selection-start-line="14" selection-start-column="4" selection-end-line="14" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Incubamas/Managers/UserEmpManager.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.44366196" vertical-offset="0" max-vertical-offset="568">
-          <caret line="14" column="4" selection-start-line="14" selection-start-column="4" selection-end-line="14" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Incubamas/Managers/UserManager.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4753521" vertical-offset="0" max-vertical-offset="568">
-          <caret line="15" column="4" selection-start-line="15" selection-start-column="4" selection-end-line="15" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Incubamas/Managers/ValidationException.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="595">
@@ -595,13 +583,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/IncubaController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.3513513" vertical-offset="2415" max-vertical-offset="3456">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/ProyectoController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.2972973" vertical-offset="165" max-vertical-offset="936">
@@ -620,20 +601,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="9954">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/EmprendedoresController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.2222223" vertical-offset="23331" max-vertical-offset="24264">
-          <caret line="1321" column="4" selection-start-line="1321" selection-start-column="4" selection-end-line="1325" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/blogs/index.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.19459459" vertical-offset="216" max-vertical-offset="4248">
-          <caret line="18" column="32" selection-start-line="18" selection-start-column="32" selection-end-line="18" selection-end-column="32" />
         </state>
       </provider>
     </entry>
@@ -724,13 +691,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/LoginController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.56216216" vertical-offset="3378" max-vertical-offset="3960">
-          <caret line="212" column="4" selection-start-line="212" selection-start-column="4" selection-end-line="219" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Incubamas/Entities/NoHorarios.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.31690142" vertical-offset="0" max-vertical-offset="568">
@@ -753,28 +713,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Incubamas/Repositories/HorariosRepo.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.772973" vertical-offset="1641" max-vertical-offset="3042">
-          <caret line="115" column="8" selection-start-line="115" selection-start-column="8" selection-end-line="115" selection-end-column="8" />
-          <folding>
-            <element signature="e#41#73#0#PHP" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Incubamas/Managers/EventoManager.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.28521127" vertical-offset="0" max-vertical-offset="568">
           <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/routes.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.74054056" vertical-offset="1911" max-vertical-offset="2466">
-          <caret line="129" column="101" selection-start-line="121" selection-start-column="4" selection-end-line="129" selection-end-column="101" />
         </state>
       </provider>
     </entry>
@@ -810,18 +753,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Incubamas/Repositories/UserRepo.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.51891893" vertical-offset="1134" max-vertical-offset="2034">
-          <caret line="47" column="70" selection-start-line="47" selection-start-column="70" selection-end-line="47" selection-end-column="70" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Incubamas/Entities/User.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.3943661" vertical-offset="0" max-vertical-offset="1026">
           <caret line="47" column="0" selection-start-line="47" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -847,38 +783,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/emprendedores/update.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.9405406" vertical-offset="15573" max-vertical-offset="18126">
-          <caret line="925" column="28" selection-start-line="925" selection-start-column="28" selection-end-line="925" selection-end-column="51" />
-          <folding>
-            <marker date="1429744421824" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1429744421824" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1429744421824" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1429744421824" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1429744421824" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1429744421824" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1429744421824" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1429744421824" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1429744421824" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1429744421824" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1429744421824" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1429744421824" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1429744421824" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1429744421824" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1429744421824" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1429744421824" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1429744421824" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1429744421824" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1429744421824" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1429744421824" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1429744421824" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1429744421824" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1429744421824" expanded="true" signature="-1:-1" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/emprendedores/create.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-9.222222" vertical-offset="5115" max-vertical-offset="6102">
@@ -887,37 +791,199 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/calendario/index.blade.php">
+    <entry file="file://$PROJECT_DIR$/app/views/emails/recibo.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-13.888889" vertical-offset="5151" max-vertical-offset="9378">
-          <caret line="307" column="47" selection-start-line="307" selection-start-column="47" selection-end-line="307" selection-end-column="47" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2358">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/emails/estandar.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3150">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/emprendedores/index.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.9513514" vertical-offset="1083" max-vertical-offset="2286">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/blogs/index.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.22702703" vertical-offset="1026" max-vertical-offset="4248">
+          <caret line="64" column="22" selection-start-line="63" selection-start-column="16" selection-end-line="71" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/IncubaController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.38918918" vertical-offset="0" max-vertical-offset="3546">
+          <caret line="12" column="25" selection-start-line="12" selection-start-column="25" selection-end-line="12" selection-end-column="25" />
           <folding>
-            <element signature="e#18177#18203#0#HTML" expanded="true" />
-            <element signature="e#18838#18864#0#HTML" expanded="true" />
+            <element signature="e#7#44#0#PHP" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Incubamas/Repositories/EventoRepo.php">
+    <entry file="file://$PROJECT_DIR$/app/views/emails/atendidos.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.333333" vertical-offset="990" max-vertical-offset="1890">
-          <caret line="69" column="26" selection-start-line="69" selection-start-column="26" selection-end-line="69" selection-end-column="26" />
+        <state vertical-scroll-proportion="-1.2648649" vertical-offset="702" max-vertical-offset="2682">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/emails/confirmacion.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.68108106" vertical-offset="378" max-vertical-offset="1386">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/emails/solicitud.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1476">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/emprendedores/update.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-10.666667" vertical-offset="972" max-vertical-offset="18126">
+          <caret line="70" column="54" selection-start-line="70" selection-start-column="32" selection-end-line="70" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Incubamas/Repositories/DocumentoRepo.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-15.333333" vertical-offset="0" max-vertical-offset="594">
+          <caret line="24" column="48" selection-start-line="24" selection-start-column="48" selection-end-line="24" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Incubamas/Repositories/UserRepo.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.41621622" vertical-offset="615" max-vertical-offset="2034">
+          <caret line="47" column="70" selection-start-line="47" selection-start-column="70" selection-end-line="47" selection-end-column="70" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/LoginController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.46486485" vertical-offset="2514" max-vertical-offset="3960">
+          <caret line="161" column="7" selection-start-line="161" selection-start-column="7" selection-end-line="165" selection-end-column="60" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/routes.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.888889" vertical-offset="1785" max-vertical-offset="2502">
+          <caret line="114" column="4" selection-start-line="114" selection-start-column="4" selection-end-line="119" selection-end-column="88" />
+          <folding>
+            <marker date="1430892581829" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1430892581829" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1430892581829" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1430892581829" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1430892581829" expanded="true" signature="-1:-1" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Incubamas/Repositories/HorariosRepo.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.5555553" vertical-offset="2037" max-vertical-offset="3726">
+          <caret line="122" column="61" selection-start-line="122" selection-start-column="61" selection-end-line="122" selection-end-column="61" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/CalendarController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.28648648" vertical-offset="1785" max-vertical-offset="6390">
-          <caret line="108" column="38" selection-start-line="108" selection-start-column="38" selection-end-line="108" selection-end-column="38" />
+        <state vertical-scroll-proportion="-5.6545453" vertical-offset="445" max-vertical-offset="7794">
+          <caret line="42" column="5" selection-start-line="42" selection-start-column="5" selection-end-line="42" selection-end-column="5" />
           <folding>
             <element signature="e#7#43#0#PHP" expanded="true" />
-            <marker date="1430861124594" expanded="true" signature="3521:3614" placeholder="..." />
-            <marker date="1430861124594" expanded="true" signature="4541:4634" placeholder="..." />
-            <marker date="1430861124594" expanded="true" signature="5917:6010" placeholder="..." />
-            <marker date="1430861124594" expanded="true" signature="7866:7959" placeholder="..." />
-            <marker date="1430861124594" expanded="true" signature="8931:9024" placeholder="..." />
-            <marker date="1430861124594" expanded="true" signature="9878:9971" placeholder="..." />
+            <marker date="1430893450052" expanded="true" signature="3521:3614" placeholder="..." />
+            <marker date="1430893450052" expanded="true" signature="4541:4634" placeholder="..." />
+            <marker date="1430893450052" expanded="true" signature="6583:6676" placeholder="..." />
+            <marker date="1430893450052" expanded="true" signature="7466:7559" placeholder="..." />
+            <marker date="1430893450052" expanded="true" signature="7821:8863" placeholder="..." />
+            <marker date="1430893450052" expanded="true" signature="7889:8319" placeholder="..." />
+            <marker date="1430893450052" expanded="true" signature="8414:8844" placeholder="..." />
+            <marker date="1430893450052" expanded="true" signature="9948:10041" placeholder="..." />
+            <marker date="1430893450052" expanded="true" signature="11897:11990" placeholder="..." />
+            <marker date="1430893450052" expanded="true" signature="12962:13055" placeholder="..." />
+            <marker date="1430893450052" expanded="true" signature="13909:14002" placeholder="..." />
+            <marker date="1430893450052" expanded="true" signature="15946:16039" placeholder="..." />
+            <marker date="1430893450052" expanded="true" signature="16869:16962" placeholder="..." />
+            <marker date="1430893450052" expanded="true" signature="17798:17891" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/EmprendedoresController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-10.666667" vertical-offset="864" max-vertical-offset="24822">
+          <caret line="78" column="55" selection-start-line="78" selection-start-column="38" selection-end-line="78" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Incubamas/Repositories/EventoRepo.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-14.0" vertical-offset="810" max-vertical-offset="2016">
+          <caret line="66" column="49" selection-start-line="66" selection-start-column="49" selection-end-line="66" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/calendario/index.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3837838" vertical-offset="4737" max-vertical-offset="9522">
+          <caret line="275" column="48" selection-start-line="275" selection-start-column="48" selection-end-line="275" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/emprendedores/perfil.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.45351043" vertical-offset="7915" max-vertical-offset="14436">
+          <caret line="453" column="57" selection-start-line="453" selection-start-column="57" selection-end-line="453" selection-end-column="57" />
+          <folding>
+            <element signature="e#4318#4371#0#HTML" expanded="true" />
+            <element signature="e#9051#9104#0#HTML" expanded="true" />
+            <element signature="e#11039#11065#0#HTML" expanded="true" />
+            <element signature="e#12713#12766#0#HTML" expanded="true" />
+            <element signature="e#13011#13030#0#HTML" expanded="true" />
+            <element signature="e#13181#13200#0#HTML" expanded="true" />
+            <element signature="e#13279#13298#0#HTML" expanded="true" />
+            <element signature="e#13394#13413#0#HTML" expanded="true" />
+            <element signature="e#16308#16361#0#HTML" expanded="true" />
+            <element signature="e#21064#21134#0#HTML" expanded="true" />
+            <element signature="e#21216#21259#0#HTML" expanded="true" />
+            <element signature="e#21812#21833#0#HTML" expanded="true" />
+            <element signature="e#22561#22591#0#HTML" expanded="true" />
+            <element signature="e#28171#28196#0#HTML" expanded="true" />
+            <element signature="e#32631#32656#0#HTML" expanded="true" />
+            <element signature="e#34184#34223#0#HTML" expanded="true" />
+            <element signature="e#35779#35819#0#HTML" expanded="true" />
+            <element signature="e#36130#36156#0#HTML" expanded="true" />
+            <element signature="e#36624#36650#0#HTML" expanded="true" />
+            <element signature="e#40504#40529#0#HTML" expanded="true" />
           </folding>
         </state>
       </provider>
