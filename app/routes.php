@@ -120,7 +120,7 @@ Route::get('pruebas', function()
         'Solicitud de Cita', $usuario->email, $usuario->nombre.' '.$usuario->apellidos);
     */
 
-    $titulo = "Solicitud de Cita";
+    $titulo = "Confirmacion de Cita";
     $mensaje = '<p>Hola <strong>Nombre Asesor</strong>:</p><p> El emprendedor <strong>Nombre del emprendedor</strong> ha solicitado una cita contigo en el sistema.</p>';
     $seccion = "Detalles de la Cita";
     $imagen = false;

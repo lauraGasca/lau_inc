@@ -77,25 +77,18 @@ class EventoRepo extends BaseRepo
         $evento->delete();
     }
 
-    public function existe($evento_id)
+    public function cancelar($evento1, $evento2)
     {
-        $evento = Evento::find($evento_id);
-        if(count($evento)<=0)
-            return false;
-        else
-            return true;
+        $evento1->delete();
+        $evento2->delete();
     }
 
-    public function confirmado($evento_id)
+    public function confirmar($evento1, $evento2)
     {
-        $evento = Evento::find($evento_id);
-        if(count($evento)<=0)
-            return false;
-        else
-            if($evento->confirmation == 0)
-                return false;
-            else
-                return true;
+        $evento1->confirmation = true;
+        $evento1->save();
+        $evento2->confirmation = true;
+        $evento2->save();
     }
 
     public function evento($evento_id)

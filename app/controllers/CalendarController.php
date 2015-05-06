@@ -87,7 +87,7 @@ class CalendarController extends BaseController
         $manager = new EventoManager($eventoPropio, ['user_id'=>Auth::user()->id]+Input::all());
         $manager->save();
         $usuario = $this->userRepo->usuario(Input::get('user'));
-        $eventoOtro = $this->eventoRepo->newCita();
+        $eventoOtro = $this->eventoRepo->newSolicitaCita();
         $manager = new EventoManager($eventoOtro, ['user_id'=>$usuario->id]+Input::all());
         $manager->save();
         $this->eventoRepo->ponerDetalles($eventoPropio, $usuario->nombre.' '.$usuario->apellidos, Input::get('start'), $eventoOtro->id);
@@ -254,6 +254,79 @@ class CalendarController extends BaseController
         return Redirect::back()->with(array('confirm' => 'Se ha eliminado correctamente.'));
     }
 
+    public function getConfirmar($id)
+    {
+        $this->_soloAsesores();
+        $primerEvento = $this->eventoRepo->evento($id);
+        $segundoEvento = $this->eventoRepo->evento($primerEvento->evento_id);
+
+        if (count($primerEvento)>0 && count($segundoEvento)>0) {
+            if ($primerEvento->confirmation == 1 && $segundoEvento->confirmation == 1)
+            {
+                $titulo = 'Error';
+                $subtitulo = 'El evento ya fue confirmado. Por favor revise la URL';
+                $recomendacion = 'Si continuan los problemas, contacte al administrador del sitio.';
+                return View::make('login/mensaje', compact('titulo', 'subtitulo', 'recomendacion'));
+            } else {
+                $this->eventoRepo->confirmar($primerEvento, $segundoEvento);
+                $usuario = $this->userRepo->usuario($segundoEvento->user_id);
+                $asunto = '';
+                if($primerEvento->cuerpo!='')
+                    $asunto = '<tr><td><strong>Asunto: </strong></td><td>'.$primerEvento->cuerpo.'</td></tr>';
+                $this->_mail('emails.estandar', ['titulo'=>"Cita Confirmada", 'seccion' => "Detalles de la Cita", 'imagen' => false,
+                    'mensaje'=>'<p>Hola <strong>'.$usuario->nombre.' '.$usuario->apellidos.'</strong>:</p><p><strong>'.Auth::user()->nombre.' '.Auth::user()->apellidos.'</strong> ha confirmado la cita que solicitaste en el sistema, abajo podras ver todos los detalles.</p><p>Si tienes dudas no dudes en ponerte en contacto con nosotros.</p>',
+                    'tabla' => "<div align='center'><table style='font-family:Arial, Helvetica, sans-serif; font-size:19px; color:#444444; text-align: justify;'><tr><td width='30%'><strong>Fecha: </strong></td><td>".$primerEvento->fecha."</td></tr><tr><td colspan='2'></td></tr><tr><td><strong>Horario: </strong></td><td>".$primerEvento->horario->hora." hrs</td></tr>" . $asunto . "</table><br/><br/></div>"],
+                    'Cita Confirmada', $usuario->email, $usuario->nombre.' '.$usuario->apellidos);
+                $titulo = 'Confirmado';
+                $subtitulo = 'El evento ha sido confirmado.';
+                $recomendacion = 'Se ha notificado al emprendedor por correo.';
+                return View::make('login/mensaje', compact('titulo', 'subtitulo', 'recomendacion'));
+            }
+        } else {
+            $titulo = 'Error';
+            $subtitulo = 'No se ha podido confirmar el evento. Por favor revise la URL';
+            $recomendacion = 'Si continuan los problemas, contacte al administrador del sitio.';
+            return View::make('login/mensaje', compact('titulo', 'subtitulo', 'recomendacion'));
+        }
+    }
+
+    public function getCancelar($id)
+    {
+        $this->_soloAsesores();
+        $primerEvento = $this->eventoRepo->evento($id);
+        $segundoEvento = $this->eventoRepo->evento($primerEvento->evento_id);
+
+        if (count($primerEvento)>0 && count($segundoEvento)>0)
+        {
+            if ($primerEvento->confirmation == 1 && $segundoEvento->confirmation == 1)
+            {
+                $titulo = 'Error';
+                $subtitulo = 'El evento ya fue confirmado. Por favor revise la URL';
+                $recomendacion = 'Si continuan los problemas, contacte al administrador del sitio.';
+                return View::make('login/mensaje', compact('titulo', 'subtitulo', 'recomendacion'));
+            } else {
+                $usuario = $this->userRepo->usuario($segundoEvento->user_id);
+                $asunto = '';
+                if($primerEvento->cuerpo!='')
+                    $asunto = '<tr><td><strong>Asunto: </strong></td><td>'.$primerEvento->cuerpo.'</td></tr>';
+                $this->_mail('emails.estandar', ['titulo'=>"Cita Cancelada", 'seccion' => "Detalles de la Cita", 'imagen' => false,
+                    'mensaje'=>'<p>Hola <strong>'.$usuario->nombre.' '.$usuario->apellidos.'</strong>:</p><p><strong>'.Auth::user()->nombre.' '.Auth::user()->apellidos.'</strong> ha cancelado la cita que solicitaste en el sistema.</p><p>Por favor verifica otro horario o ponte directamente en contacto con nosotros.</p>',
+                    'tabla' => "<div align='center'><table style='font-family:Arial, Helvetica, sans-serif; font-size:19px; color:#444444; text-align: justify;'><tr><td width='30%'><strong>Fecha: </strong></td><td>".$primerEvento->fecha."</td></tr><tr><td colspan='2'></td></tr><tr><td><strong>Horario: </strong></td><td>".$primerEvento->horario->hora." hrs</td></tr>" . $asunto . "</table><br/><br/></div>"],
+                    'Cita Cancelada', $usuario->email, $usuario->nombre.' '.$usuario->apellidos);
+                $this->eventoRepo->cancelar($primerEvento, $segundoEvento);
+                $titulo = 'Cancelado';
+                $subtitulo = 'El evento ha sido cancelado.';
+                $recomendacion = 'Se ha notificado al emprendedor por correo.';
+                return View::make('login/mensaje', compact('titulo', 'subtitulo', 'recomendacion'));
+            }
+        } else {
+            $titulo = 'Error';
+            $subtitulo = 'No se ha podido cancelar el evento. Por favor revise la URL';
+            $recomendacion = 'Si continuan los problemas, contacte al administrador del sitio.';
+            return View::make('login/mensaje', compact('titulo', 'subtitulo', 'recomendacion'));
+        }
+    }
+
     /* Regresa el JSON que consume Boobstrap calendar para imprimir las citas
     * { "success": 1,"result": [{"id": 293,"title": "Event 1","url": "http://example.com",
     *	  "class": "event-important","start": 12039485678000, // MilliS "end": 1234576967000 // MilliS}, ...]}*/
@@ -319,110 +392,4 @@ class CalendarController extends BaseController
             return Redirect::to('sistema');
     }
 
-
-
-
-
-
-
-
-    //Verificar
-    public function getConfirmar($id, $id2)
-    {
-        if (Auth::user()->type_id != 1 && Auth::user()->type_id != 2)
-            return Redirect::to('sistema');
-
-        if ($this->eventoRepo->existe($id) && $this->eventoRepo->existe($id2)) {
-            if ($this->eventoRepo->confirmado($id) && $this->eventoRepo->confirmado($id2)) {
-                $mensaje = 'El evento ya fue confirmado';
-                $this->layout->content = View::make('calendario/mensaje', compact('mensaje'));
-            } else {
-                $evento1 = $this->eventoRepo->evento($id);
-                $evento2 = $this->eventoRepo->evento($id2);
-
-                if ($this->asesoresRepo->existe($evento1->user_id)) {
-                    $asesor = $this->asesoresRepo->usuario($evento1->user_id);
-                    $emprendedor = $this->emprendedoresRepo->emprendedor($evento2->user_id);
-                } else {
-                    $asesor = $this->asesoresRepo->usuario($evento2->user_id);
-                    $emprendedor = $this->emprendedoresRepo->emprendedor($evento1->user_id);
-                }
-                $emprendedor_nombre = $emprendedor->name . " " . $emprendedor->apellidos;
-                $consultor_nombre = $asesor->nombre . " " . $asesor->apellidos;
-                $correo_emp = $emprendedor->email;
-                $correo_con = $asesor->email;
-                $hora = $this->horariosRepo->hora($evento1->horario);
-                $asunto = $evento1->cuerpo;
-                setlocale(LC_ALL, "es_ES@euro", "es_ES", "esp");
-                $fecha = strftime("%d de %B de %Y", strtotime($evento1->fecha));
-
-                $evento1->confirmation = true;
-                $evento1->save();
-                $evento2->confirmation = true;
-                $evento2->save();
-
-                //Enviar correo al emprendedor de confirmacion de la cita
-                Mail::send('emails.confirmacion', array('consultor' => $consultor_nombre, 'fecha' => $fecha, 'hora' => $hora,
-                    'asunto' => $asunto, 'contacto' => $correo_con, 'emprendedor' => $emprendedor_nombre,
-                ), function ($message) use ($correo_emp, $emprendedor_nombre) {
-                    $message->subject('Confirmación de Cita');
-                    $message->to($correo_emp, $emprendedor_nombre);
-                });
-                $mensaje = 'El evento ha sido confirmado';
-                $this->layout->content = View::make('calendario/mensaje', compact('mensaje'));
-            }
-        } else {
-            $mensaje = 'El evento ya fue cancelado';
-            $this->layout->content = View::make('calendario/mensaje', compact('mensaje'));
-        }
-    }
-    //Verificar
-    public function getCancelar($id, $id2)
-    {
-        if (Auth::user()->type_id != 1 && Auth::user()->type_id != 2)
-            return Redirect::to('sistema');
-
-        if ($this->eventoRepo->existe($id) && $this->eventoRepo->existe($id2)) {
-            if ($this->eventoRepo->confirmado($id) && $this->eventoRepo->confirmado($id2)) {
-                $mensaje = 'El evento ya fue confirmado';
-                $this->layout->content = View::make('calendario/mensaje', compact('mensaje'));
-            } else {
-                $evento1 = $this->eventoRepo->evento($id);
-                $evento2 = $this->eventoRepo->evento($id2);
-
-                if ($this->asesoresRepo->existe($evento1->user_id)) {
-                    $asesor = $this->asesoresRepo->usuario($evento1->user_id);
-                    $emprendedor = $this->emprendedoresRepo->emprendedor($evento2->user_id);
-                } else {
-                    $asesor = $this->asesoresRepo->usuario($evento2->user_id);
-                    $emprendedor = $this->emprendedoresRepo->emprendedor($evento1->user_id);
-                }
-                $emprendedor_nombre = $emprendedor->name . " " . $emprendedor->apellidos;
-                $consultor_nombre = $asesor->nombre . " " . $asesor->apellidos;
-                $correo_emp = $emprendedor->email;
-                $correo_con = $asesor->email;
-                $hora = $this->horariosRepo->hora($evento1->horario);
-                $asunto = $evento1->cuerpo;
-                setlocale(LC_ALL, "es_ES@euro", "es_ES", "esp");
-                $fecha = strftime("%d de %B de %Y", strtotime($evento1->fecha));
-
-                $evento1->delete();
-                $evento2->delete();
-
-                //Enviar correo al emprendedor sobre la cancelacion de la cita
-                Mail::send('emails.cancelacion', array('consultor' => $consultor_nombre, 'fecha' => $fecha, 'hora' => $hora,
-                    'asunto' => $asunto, 'contacto' => $correo_con, 'emprendedor' => $emprendedor_nombre,
-                ), function ($message) use ($correo_emp, $emprendedor_nombre) {
-
-                    $message->subject('Cancelación de Cita');
-                    $message->to($correo_emp, $emprendedor_nombre);
-                });
-                $mensaje = 'El evento ha sido cancelado';
-                $this->layout->content = View::make('calendario/mensaje', compact('mensaje'));
-            }
-        } else {
-            $mensaje = 'El evento ya fue cancelado';
-            $this->layout->content = View::make('calendario/mensaje', compact('mensaje'));
-        }
-    }
 }
