@@ -133,7 +133,7 @@ Route::get('pruebas', function()
 
     $value = '07/05/2015 12:00';
     echo $value.'<br/>';
-    $sistema = strtotime(substr($value, 6, 4) . "-" . substr($value, 3, 2) . "-" . substr($value, 0, 2) . " " . substr($value, 10, 6)) * 1000;
+    $sistema = strtotime('+1 hour', strtotime(substr($value, 6, 4) . "-" . substr($value, 3, 2) . "-" . substr($value, 0, 2) . " " . substr($value, 10, 6))) * 1000;
     echo $sistema.'<br/>';
     echo strftime("%d de %B de %Y a las %H:%M hrs", ($sistema/1000));
 });

@@ -352,8 +352,8 @@ class CalendarController extends BaseController
                     'title' => $texto,
                     'url' => $evento->url,
                     'class' => $evento->clase,
-                    'start' => $evento->start,
-                    'end' => $evento->end
+                    'start' => strtotime('+1 hour', $evento->start),
+                    'end' => strtotime('+1 hour', $evento->end)
                 );
             }
             $JSON = array("success" => 1, "result" => $JSON2);
