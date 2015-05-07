@@ -14,7 +14,7 @@ class Evento extends \Eloquent
     {
         if(!empty($value))
         {
-            $this->attributes['start'] = strtotime('+6 hour', strtotime(substr($value, 6, 4) . "-" . substr($value, 3, 2) . "-" . substr($value, 0, 2) . " " . substr($value, 10, 6))) * 1000;
+            $this->attributes['start'] = strtotime(substr($value, 6, 4) . "-" . substr($value, 3, 2) . "-" . substr($value, 0, 2) . " " . substr($value, 10, 6)) * 1000;
         }
     }
 
@@ -22,7 +22,7 @@ class Evento extends \Eloquent
     {
         if(!empty($value))
         {
-            $this->attributes['end'] = strtotime('+6 hour', strtotime(substr($value, 6, 4) . "-" . substr($value, 3, 2) . "-" . substr($value, 0, 2) . " " . substr($value, 10, 6))) * 1000;
+            $this->attributes['end'] = strtotime(substr($value, 6, 4) . "-" . substr($value, 3, 2) . "-" . substr($value, 0, 2) . " " . substr($value, 10, 6)) * 1000;
         }
     }
 
