@@ -76,7 +76,7 @@ class EmprendedoresController extends BaseController
 
         $emprendedor = $this->emprendedoresRepo->emprendedor($emprendedor_id);
         $documentos = $this->documentoRepo->documentos_listar();
-        $eventos = $this->eventoRepo->eventosFuturosEmp();
+        $eventos = $this->eventoRepo->eventosFuturos();
         $minDate = $this->_noSabadoDomingo(strtotime(date('j-m-Y')), 2);
         $maxDate = $this->_noSabadoDomingo(strtotime(date('j-m-Y')), 30);
         $asesores = [null=>'Selecciona al Asesor']+$this->userRepo->listar_asesores();
