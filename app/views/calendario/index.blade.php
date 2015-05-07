@@ -500,13 +500,11 @@
         $(function () {
             $('#from').datetimepicker({
                 language: 'es',
-                defaultDate: new Date(),
-                minDate: '{{date ( 'm/j/Y')}}'
+                defaultDate: new Date()
             });
             $('#to').datetimepicker({
                 language: 'es',
-                defaultDate: new Date(),
-                minDate: '{{date ( 'm/j/Y')}}'
+                defaultDate: new Date()
             });
             $("#from").on("dp.change", function (e) {
                 if ($("#from").val() > $('#to').val()) {
