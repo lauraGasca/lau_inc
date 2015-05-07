@@ -81,20 +81,9 @@ class EmprendedoresController extends BaseController
         $maxDate = $this->_noSabadoDomingo(strtotime(date('j-m-Y')), 30);
         $asesores = [null=>'Selecciona al Asesor']+$this->userRepo->listar_asesores();
 
-        $this->layout->content = View::make('emprendedores.perfil', compact('emprendedor', 'documentos', 'eventos', 'asesores', 'maxDate', 'minDate'));
-
-
-/*
-        $asesores = $this->asesoresRepo->listar();
-        $asesor = $this->asesoresRepo->primer();
-        $id = $asesor->user_id;
-
-        //Busca la fecha en la que se puede hacer la cita
-        $fecha = $this->_noSD(date('j-m-Y'));
-        $horarios_disponibles = [];/*$this->horariosRepo->disponible(
-            $asesor->id, date("w", strtotime($fecha)), $fecha, $id, $emprendedor[0]->user_id);
-        //dd($horarios_disponibles);
-        //3,1, "2014-12-22",19
+        //Verificar todo esto
+        $empresas_listado = $this->emprendedoresRepo->listar_empresas($emprendedor_id);
+        $socios_listado = $this->emprendedoresRepo->listar_socios($emprendedor_id);
 
         //Informacion de los pagos
         $pagos = $this->_number_format($this->pagoRepo->pagos($emprendedor_id));
@@ -104,60 +93,7 @@ class EmprendedoresController extends BaseController
         $num_documentos = $this->documentoRepo->num_documentos();
         $subidas = $this->documentoRepo->num_subidos($emprendedor_id);
 
-
-        $empresas_listado = $this->emprendedoresRepo->listar_empresas($emprendedor_id);
-        $socios_listado = $this->emprendedoresRepo->listar_socios($emprendedor_id);*/
-
-        //Ve si hay eventos para este dia
-        /*if ($this->eventoRepo->warning(date('Y-m-j'), $emprendedor[0]->user_id))
-            $warning = "Hay eventos";
-        if ($this->eventoRepo->warning_cita($fecha, $id, $emprendedor[0]->user_id))
-            $warning_cita = "Hay eventos";*/
-
-        /*Aqui lo que voy a adaptar*/
-
-        /*if (Auth::user()->type_id == 3) {
-            $active_chat = null;
-            $active_user = null;
-            $active_group = null;
-            $active_nombre = null;
-            $mensajes = null;
-
-            $chats = $this->chatRepo->emprendedor();
-
-            if (count($chats) > 0) {
-                if ($chat == null) {
-                    $active_chat = $chats[0]->chat;
-                    $active_user = $chats[0]->user_id;
-                    $active_group = $chats[0]->grupo;
-                    $active_nombre = $chats[0]->nombre;
-                    $mensajes = $this->mensajeRepo->mensajes($chats[0]->chat);
-                    $this->chatRepo->leido($chats[0]->chat, date("Y-m-d H:i:s"));
-                } else {
-                    $active_chat = $chat;
-                    $active_user = $user;
-                    $active_group = $group;
-                    $active_nombre = $name;
-                    $mensajes = $this->mensajeRepo->mensajes($chat);
-                }
-                Session::put('chat', $active_chat);
-                Session::put('num_men', count(0));
-            } else {
-                Session::put('chat', 0);
-            }
-            Session::put('num_chat', count($chats));
-
-            $this->layout->content = View::make('emprendedores.perfil',
-                compact('asesores', 'horarios', 'warning', 'warning_cita', 'emprendedor', 'empresas',
-                    'pagos', 'adeudo', 'num_documentos', 'subidas', 'documentos', 'empresas_listado',
-                    'socios_listado', 'horarios_disponibles', 'chats', 'mensajes', 'active_chat',
-                    'active_user', 'active_group', 'active_nombre'));
-        } else {
-            $this->layout->content = View::make('emprendedores.perfil',
-                compact('asesores', 'horarios', 'warning', 'warning_cita', 'emprendedor', 'empresas',
-                    'pagos', 'adeudo', 'num_documentos', 'subidas', 'documentos', 'empresas_listado',
-                    'socios_listado', 'horarios_disponibles'));
-        }*/
+        $this->layout->content = View::make('emprendedores.perfil', compact('emprendedor', 'documentos', 'eventos', 'asesores', 'maxDate', 'minDate', 'pagos', 'adeudo', 'num_documentos', 'subidas', 'empresas_listado', 'socios_listado'));
     }
 
 

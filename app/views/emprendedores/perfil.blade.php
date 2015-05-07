@@ -46,6 +46,72 @@
             ¡Por favor, revise los datos del formulario!
         </div>
     @endif
+    <div class="row" id="powerwidgets">
+        <div class="col-md-4 col-sm-6 bootstrap-grid sortable-grid ui-sortable">
+            <div role="widget" style="" class="powerwidget powerwidget-as-portlet powerwidget-as-portlet-green-alt powerwidget-sortable" id="widget1" data-widget-editbutton="false">
+                <div role="content" class="inner-spacer nopadding">
+                    <div class="portlet-big-icon">
+                        <i class="fa fa-money"></i><br/>
+                        <span style="font-size: 20px;">Estado de Cuenta</span>
+                    </div>
+                    <ul class="portlet-bottom-block">
+                        <li class="col-md-6 col-sm-6 col-xs-6"><strong>{{$pagos}}</strong>
+                            <small>Pagos Realizados</small>
+                        </li>
+                        <li class="col-md-6 col-sm-6 col-xs-6"><strong>{{$adeudo}}</strong>
+                            <small>Adeudo</small>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-6 bootstrap-grid sortable-grid ui-sortable">
+            <div role="widget" style="" class="powerwidget powerwidget-as-portlet powerwidget-as-portlet-cold-grey powerwidget-sortable" id="widget2" data-widget-editbutton="false">
+                <div role="content" class="inner-spacer nopadding">
+                    <div class="portlet-big-icon">
+                        <a href="{{url('plan-negocios/index/'.$emprendedor->id)}}" style="color: #FFF;">
+                            <i class="fa fa-child"></i><br/>
+                            <span style="font-size: 20px;">Mi Modelo de Negocio</span>
+                        </a>
+                    </div>
+                    <ul class="portlet-bottom-block">
+                        <li class="col-md-6 col-sm-6 col-xs-6"><strong>5</strong>
+                            <small>Completado</small>
+                        </li>
+                        <li class="col-md-6 col-sm-6 col-xs-6"><strong>100</strong>
+                            <small>Disponibles</small>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-6 bootstrap-grid sortable-grid ui-sortable">
+            <div role="widget" style="" class="powerwidget powerwidget-as-portlet powerwidget-as-portlet-purple powerwidget-sortable" id="widget3" data-widget-editbutton="false">
+                <div role="content" class="inner-spacer nopadding">
+                    <div class="portlet-big-icon">
+                        <i class="fa fa-archive"></i><br/>
+                        <span style="font-size: 20px;">Documentos</span>
+                    </div>
+                    <ul class="portlet-bottom-block">
+                        <li class="col-md-4 col-sm-4 col-xs-4"><strong>{{$subidas}}</strong>
+                            <small>Subidos</small>
+                        </li>
+                        <li class="col-md-4 col-sm-4 col-xs-4">
+                            <strong>
+                                <a href="" href="#myModal2" data-target="#myModal2" data-toggle="modal" style="color:#FFF">
+                                    <span class="glyphicon glyphicon-cloud-upload"></span>
+                                </a>
+                            </strong>
+                            <small>Subir</small>
+                        </li>
+                        <li class="col-md-4 col-sm-4 col-xs-4"><strong>{{$num_documentos}}</strong>
+                            <small>Total</small>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
     <!------------------------------------------------- Perfil------------------------------------------------->
     <div class="powerwidget cold-grey" id="profile" data-widget-editbutton="false">
         <div class="inner-spacer">
@@ -583,15 +649,24 @@
                         <div class="col-md-6 espacio_abajo">
                             {{Form::label('empresa', '* Empresa', array('class' => 'label'))}}
                             <label class="select">
-                                    {{Form::select('empresa', [])}}
+                                @if(count($empresas_listado)>0)
+                                    {{Form::select('empresa', $empresas_listado)}}
+                                @else
+                                    {{Form::select('empresa', array(null=>$emprendedor->name." ".$emprendedor->apellidos))}}
+                                @endif
                             </label>
                             <span class="message-error">{{$errors->first('empresa')}}</span>
                         </div>
                         <div class="col-md-5 espacio_abajo">
+                            @if(count($socios_listado)>0)
+                                {{Form::checkbox('emprendedor', 'yes', 'yes',array('id'=>'emp_event','onchange'=>'evento(3);'))}}
+                                Documento del emprendedor
+                            @else
                                 {{Form::checkbox('emprendedor', 'yes', 'yes', array('disabled'=>''))}} Documento del
                                 emprendedor
+                            @endif
                             <label class="select">
-                                {{Form::select('socios', [],null, array('id'=>'socios_event','disabled'=>''))}}
+                                {{Form::select('socios', $socios_listado,null, array('id'=>'socios_event','disabled'=>''))}}
                             </label>
                             <span class="message-error">{{$errors->first('socios')}}</span>
                         </div>
