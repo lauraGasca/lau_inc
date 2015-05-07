@@ -337,7 +337,7 @@ class CalendarController extends BaseController
         $eventos = $this->eventoRepo->eventos($user_id);
         if (count($eventos) > 0) {
             foreach ($eventos as $evento) {
-                $hora = strtotime('-6 hour', $evento->start / 1000);
+                $hora = $evento->start / 1000;
                 $texto = date("H:i", $hora) . " - " . $evento->titulo;
                 if ($evento->cuerpo <> '')
                     $texto .= ": " . $evento->cuerpo;
