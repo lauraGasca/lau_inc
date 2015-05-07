@@ -275,7 +275,7 @@ class CalendarController extends BaseController
                     $asunto = '<tr><td><strong>Asunto: </strong></td><td>'.$primerEvento->cuerpo.'</td></tr>';
                 $this->_mail('emails.estandar', ['titulo'=>"Cita Confirmada", 'seccion' => "Detalles de la Cita", 'imagen' => false,
                     'mensaje'=>'<p>Hola <strong>'.$usuario->nombre.' '.$usuario->apellidos.'</strong>:</p><p><strong>'.Auth::user()->nombre.' '.Auth::user()->apellidos.'</strong> ha confirmado la cita que solicitaste en el sistema, abajo podras ver todos los detalles.</p><p>Si tienes dudas no dudes en ponerte en contacto con nosotros.</p>',
-                    'tabla' => "<div align='center'><table style='font-family:Arial, Helvetica, sans-serif; font-size:19px; color:#444444; text-align: justify;'><tr><td width='30%'><strong>Fecha: </strong></td><td>".$primerEvento->fecha."</td></tr><tr><td colspan='2'></td></tr><tr><td><strong>Horario: </strong></td><td>".$primerEvento->horario->hora." hrs</td></tr>" . $asunto . "</table><br/><br/></div>"],
+                    'tabla' => "<div align='center'><table style='font-family:Arial, Helvetica, sans-serif; font-size:19px; color:#444444; text-align: justify;'><tr><td width='30%'><strong>Fecha: </strong></td><td>".$primerEvento->fecha."</td></tr><tr><td colspan='2'></td></tr><tr><td><strong>Horario: </strong></td><td>".$primerEvento->horario->horario." hrs</td></tr>" . $asunto . "</table><br/><br/></div>"],
                     'Cita Confirmada', $usuario->email, $usuario->nombre.' '.$usuario->apellidos);
                 $titulo = 'Confirmado';
                 $subtitulo = 'El evento ha sido confirmado.';
@@ -311,7 +311,7 @@ class CalendarController extends BaseController
                     $asunto = '<tr><td><strong>Asunto: </strong></td><td>'.$primerEvento->cuerpo.'</td></tr>';
                 $this->_mail('emails.estandar', ['titulo'=>"Cita Cancelada", 'seccion' => "Detalles de la Cita", 'imagen' => false,
                     'mensaje'=>'<p>Hola <strong>'.$usuario->nombre.' '.$usuario->apellidos.'</strong>:</p><p><strong>'.Auth::user()->nombre.' '.Auth::user()->apellidos.'</strong> ha cancelado la cita que solicitaste en el sistema.</p><p>Por favor verifica otro horario o ponte directamente en contacto con nosotros.</p>',
-                    'tabla' => "<div align='center'><table style='font-family:Arial, Helvetica, sans-serif; font-size:19px; color:#444444; text-align: justify;'><tr><td width='30%'><strong>Fecha: </strong></td><td>".$primerEvento->fecha."</td></tr><tr><td colspan='2'></td></tr><tr><td><strong>Horario: </strong></td><td>".$primerEvento->horario->hora." hrs</td></tr>" . $asunto . "</table><br/><br/></div>"],
+                    'tabla' => "<div align='center'><table style='font-family:Arial, Helvetica, sans-serif; font-size:19px; color:#444444; text-align: justify;'><tr><td width='30%'><strong>Fecha: </strong></td><td>".$primerEvento->fecha."</td></tr><tr><td colspan='2'></td></tr><tr><td><strong>Horario: </strong></td><td>".$primerEvento->horario->horario." hrs</td></tr>" . $asunto . "</table><br/><br/></div>"],
                     'Cita Cancelada', $usuario->email, $usuario->nombre.' '.$usuario->apellidos);
                 $this->eventoRepo->cancelar($primerEvento, $segundoEvento);
                 $titulo = 'Cancelado';
