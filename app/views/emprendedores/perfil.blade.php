@@ -588,7 +588,6 @@
                         <div class="modal-body">
                             <fieldset>
                                 <div class="col-md-11 espacio_abajo" style=" overflow: auto; height: 200px;">
-                                    <h5>Para cancelar citas confirmadas, por favor comunicate con nosotros.</h5><br/>
                                     <table class="table table-striped table-bordered table-hover">
                                         <thead>
                                         <tr>
