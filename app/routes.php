@@ -120,7 +120,7 @@ Route::get('pruebas', function()
         'Solicitud de Cita', $usuario->email, $usuario->nombre.' '.$usuario->apellidos);
     */
 
-    $titulo = "Confirmacion de Cita";
+    /*$titulo = "Confirmacion de Cita";
     $mensaje = '<p>Hola <strong>Nombre Asesor</strong>:</p><p> El emprendedor <strong>Nombre del emprendedor</strong> ha solicitado una cita contigo en el sistema.</p>';
     $seccion = "Detalles de la Cita";
     $imagen = false;
@@ -129,5 +129,11 @@ Route::get('pruebas', function()
     <div align='center'><a href=\"".url('calendario/confirmar/')."\"style='text-decoration:none; padding: 14px 24px; font-size: 21px;color: #fff; background-color: #5cb85c; display: inline-block; margin-bottom: 0;font-weight: 400; line-height: 1.42857143; text-align: center; white-space: nowrap; vertical-align: middle; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; background-image: none; border: 1px solid transparent; border-radius: 4px;'>Confirmar</a> &nbsp;&nbsp;
     <a href=\"".url('calendario/cancelar/')."\" style='text-decoration:none; padding: 14px 24px; font-size: 21px;color: #fff; background-color: #B33C3C; display: inline-block; margin-bottom: 0;font-weight: 400; line-height: 1.42857143; text-align: center; white-space: nowrap; vertical-align: middle; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; background-image: none; border: 1px solid transparent; border-radius: 4px;'>Cancelar</a></div>";
 
-    return View::make('emails.estandar', compact('titulo', 'mensaje', 'seccion', 'imagen', 'tabla'));
+    return View::make('emails.estandar', compact('titulo', 'mensaje', 'seccion', 'imagen', 'tabla'));*/
+
+    $value = '07/05/2015 12:00';
+    echo $value.'<br/>';
+    $sistema = strtotime(substr($value, 6, 4) . "-" . substr($value, 3, 2) . "-" . substr($value, 0, 2) . " " . substr($value, 10, 6)) * 1000;
+    echo $sistema.'<br/>';
+    echo strftime("%d de %B de %Y a las %H:%M hrs", ($sistema/1000));
 });

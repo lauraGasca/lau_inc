@@ -148,7 +148,7 @@
                                         <td width="55%" align="left" valign="middle" style="color:#595959; font-size:11px; font-family:Arial, Helvetica, sans-serif;">
                                             <b>Sinaloa Ote 119 Alameda, Celaya, Guanajuato, México</b><br>
                                             Visitanos: <a href="http://incubamas.com/" target="_blank" style="color:#595959; text-decoration:none;">http://incubamas.com/</a><br>
-                                            <br><b>Horarios:</b> 9:00 - 13:00 / 15:00 - 18:00<br>
+                                            <br><b>Horarios:</b> 9:00 - 16:00<br>
                                             <b>Email:</b> <a href="mailto:hola@incubamas.com" style="color:#595959; text-decoration:none;">hola@incubamas.com</a>
                                         </td>
                                     </tr>
