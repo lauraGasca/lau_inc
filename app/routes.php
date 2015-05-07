@@ -131,12 +131,12 @@ Route::get('pruebas', function()
 
     return View::make('emails.estandar', compact('titulo', 'mensaje', 'seccion', 'imagen', 'tabla'));*/
 
-    $value = '07/05/2015 12:00';
+    /*$value = '07/05/2015 12:00';
     echo $value.'<br/>';
     $sistema = strtotime(substr($value, 6, 4) . "-" . substr($value, 3, 2) . "-" . substr($value, 0, 2) . " " . substr($value, 10, 6)) * 1000;
     echo $sistema.'<br/>';
     echo strftime("%d de %B de %Y a las %H:%M hrs", ($sistema/1000)).'<br/>';
     $sistema = $sistema+14400000;
     echo $sistema.'<br/>';
-    echo strftime("%d de %B de %Y a las %H:%M hrs", ($sistema/1000));
+    echo strftime("%d de %B de %Y a las %H:%M hrs", ($sistema/1000));*/
 });

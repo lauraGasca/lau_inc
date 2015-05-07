@@ -13,6 +13,18 @@
     {{ HTML::script('Orb/js/ckeditor/ckeditor.js') }}
     {{ HTML::style('Orb/js/fileinput/css/fileinput.min.css') }}
     {{ HTML::script('Orb/js/fileinput/js/fileinput.min.js') }}
+    <script>
+        @foreach($modulos as $modulo)@foreach($modulo->preguntas as $pregunta)function guardar{{$pregunta->id}}()
+        {
+            $("#form{{$pregunta->id}}").submit();
+        }
+
+        @endforeach @endforeach
+        window.onload = function() {
+            <?php $m = 1200000?>@foreach($modulos as $modulo)@foreach($modulo->preguntas as $pregunta)setInterval(guardar{{$pregunta->id}}, {{$m}});
+            <?php $m+= 1000 ?>@endforeach @endforeach
+        }
+    </script>
 @stop
 
 @section('titulo-seccion')
@@ -56,40 +68,40 @@
                                             <div class="tab-content">
                                                 <div class="tab-pane active" id="one-normal{{$pregunta->id}}">
                                                     {{$pregunta->instruccion}}<br/>
-                                                    {{ Form::open(array('url'=>'plan-negocios/update-pregunta', 'class'=>'orb-form','method' => 'post', 'enctype'=>'multipart/form-data', 'target'=>"subir_archivo") )}}
+                                                    {{ Form::open(array('url'=>'plan-negocios/update-pregunta', 'class'=>'orb-form','method' => 'post', 'enctype'=>'multipart/form-data', 'target'=>"subir_archivo", 'id'=>'form'.$pregunta->id) )}}
                                                     <!--, 'target'=>"subir_archivo"-->
-                                                        {{Form::hidden('pregunta_id',$pregunta->id)}}
-                                                        {{Form::hidden('emprendedor_id', $emprendedor_id)}}
-                                                        <?php $texto = ""; ?>
-                                                        @foreach($progresos as $progreso)
-                                                            @if($progreso->pregunta_id == $pregunta->id)
-                                                                <?php $texto = $progreso->texto; ?>
-                                                            @endif
-                                                        @endforeach
-                                                        <label class="textarea">
-                                                            {{Form::textarea('texto',$texto,['id'=>'texto'.$pregunta->id])}}
-                                                            <script type="text/javascript">
-                                                                CKEDITOR.replace('texto{{$pregunta->id}}', {toolbar: 'Incuba'});
-                                                            </script>
-                                                        </label><br/>
-                                                        @if($pregunta->archive==1)
-                                                            {{Form::file('archivo',['id'=>'archivo'.$pregunta->id])}}
-                                                            <script>
-                                                                $("#archivo{{$pregunta->id}}").fileinput({
-                                                                    showCaption: false,
-                                                                    browseClass: "btn btn-success",
-                                                                    browseLabel: "Subir Archivo",
-                                                                    removeClass: "btn btn-danger",
-                                                                    removeLabel: "Borrar",
-                                                                    removeIcon: '<i class="glyphicon glyphicon-trash"></i>',
-                                                                    showUpload: false
-                                                                });
-                                                            </script>
-                                                        @endif<br/><br/><br/>
-                                                        <div id="correcto{{$pregunta->id}}"></div><br/>
-                                                        <div style="text-align: right;">
-                                                            <input type="submit" class="btn btn-success" value="Guardar">
-                                                        </div>
+                                                    {{Form::hidden('pregunta_id',$pregunta->id)}}
+                                                    {{Form::hidden('emprendedor_id', $emprendedor_id)}}
+                                                    <?php $texto = ""; ?>
+                                                    @foreach($progresos as $progreso)
+                                                        @if($progreso->pregunta_id == $pregunta->id)
+                                                            <?php $texto = $progreso->texto; ?>
+                                                        @endif
+                                                    @endforeach
+                                                    <label class="textarea">
+                                                        {{Form::textarea('texto',$texto,['id'=>'texto'.$pregunta->id])}}
+                                                        <script type="text/javascript">
+                                                            CKEDITOR.replace('texto{{$pregunta->id}}', {toolbar: 'Incuba'});
+                                                        </script>
+                                                    </label><br/>
+                                                    @if($pregunta->archive==1)
+                                                        {{Form::file('archivo',['id'=>'archivo'.$pregunta->id])}}
+                                                        <script>
+                                                            $("#archivo{{$pregunta->id}}").fileinput({
+                                                                showCaption: false,
+                                                                browseClass: "btn btn-success",
+                                                                browseLabel: "Subir Archivo",
+                                                                removeClass: "btn btn-danger",
+                                                                removeLabel: "Borrar",
+                                                                removeIcon: '<i class="glyphicon glyphicon-trash"></i>',
+                                                                showUpload: false
+                                                            });
+                                                        </script>
+                                                    @endif<br/><br/><br/>
+                                                    <div id="correcto{{$pregunta->id}}"></div><br/>
+                                                    <div style="text-align: right;">
+                                                        <input type="submit" class="btn btn-success" value="Guardar">
+                                                    </div>
                                                     {{Form::close()}}
                                                 </div>
                                                 <div class="tab-pane estilo" id="two-normal{{$pregunta->id}}" style="font-family: 'Open Sans', sans-serif;font-size: medium; font-weight: 400; color: #555;">
