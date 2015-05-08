@@ -141,7 +141,7 @@
             initialPreview: [
                 "<img src='{{url('Orb/images/entradas/'.$blog->imagen)}}' class='file-preview-image'>"
             ],
-            browseLabel: " Selecciona la imagen ",
+            browseLabel: " Selecciona otra imagen ",
             browseIcon: '<i class="glyphicon glyphicon-picture"></i>',
             showCaption: false,
             showRemove: false,
