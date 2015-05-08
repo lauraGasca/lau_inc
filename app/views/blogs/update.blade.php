@@ -144,9 +144,7 @@
             browseLabel: " Selecciona la imagen ",
             browseIcon: '<i class="glyphicon glyphicon-picture"></i>',
             showCaption: false,
-            removeClass: "btn btn-danger",
-            removeLabel: "Borrar",
-            removeIcon: '<i class="glyphicon glyphicon-trash"></i>',
+            showRemove: false,
             showUpload: false
         });
     </script>
