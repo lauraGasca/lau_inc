@@ -97,7 +97,7 @@ class BlogController extends BaseController
 
     public function postEditar()
     {
-        $blog = $this->blogRepo->blog(Input::get('id'));
+        $blog = $this->blogRepo->blogAdmin(Input::get('id'));
         $manager = new BlogEditarManager($blog, Input::all());
         $manager->save();
         $this->blogRepo->actualizarSlug($blog);

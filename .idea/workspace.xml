@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5a5b8e23-e436-4e8b-9d61-9e95ce82aba0" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/blogs/update.blade.php" afterPath="$PROJECT_DIR$/app/views/blogs/update.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/BlogController.php" afterPath="$PROJECT_DIR$/app/controllers/BlogController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Incubamas.iws" />
@@ -28,11 +28,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="update.blade.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="BlogController.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/controllers/BlogController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.35135135" vertical-offset="1425" max-vertical-offset="3384">
+              <caret line="99" column="42" selection-start-line="99" selection-start-column="42" selection-end-line="99" selection-end-column="42" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="update.blade.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/blogs/update.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.62204725" vertical-offset="1653" max-vertical-offset="2790">
-              <caret line="105" column="113" selection-start-line="105" selection-start-column="113" selection-end-line="105" selection-end-column="113" />
+            <state vertical-scroll-proportion="-29.444445" vertical-offset="1113" max-vertical-offset="2790">
+              <caret line="106" column="26" selection-start-line="106" selection-start-column="26" selection-end-line="106" selection-end-column="26" />
               <folding />
             </state>
           </provider>
@@ -41,7 +51,7 @@
       <file leaf-file-name="update.blade.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/emprendedores/update.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-8.777778" vertical-offset="14721" max-vertical-offset="15588">
+            <state vertical-scroll-proportion="-20.777779" vertical-offset="14397" max-vertical-offset="15588">
               <caret line="831" column="12" selection-start-line="831" selection-start-column="12" selection-end-line="831" selection-end-column="30" />
               <folding>
                 <marker date="1431069061169" expanded="true" signature="9574:9994" placeholder="..." />
@@ -129,8 +139,8 @@
         <option value="$PROJECT_DIR$/app/Incubamas/Managers/SocioManager.php" />
         <option value="$PROJECT_DIR$/app/views/blogs/create.blade.php" />
         <option value="$PROJECT_DIR$/app/Incubamas/Repositories/BlogsRepo.php" />
-        <option value="$PROJECT_DIR$/app/controllers/BlogController.php" />
         <option value="$PROJECT_DIR$/app/views/blogs/update.blade.php" />
+        <option value="$PROJECT_DIR$/app/controllers/BlogController.php" />
       </list>
     </option>
   </component>
@@ -572,7 +582,7 @@
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.329582" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27974278" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27974278" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -994,14 +1004,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/BlogController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.44864866" vertical-offset="1209" max-vertical-offset="3384">
-          <caret line="90" column="32" selection-start-line="90" selection-start-column="32" selection-end-line="90" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Incubamas/Repositories/BlogsRepo.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.45405406" vertical-offset="810" max-vertical-offset="3960">
@@ -1012,7 +1014,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/emprendedores/update.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.777778" vertical-offset="14721" max-vertical-offset="15588">
+        <state vertical-scroll-proportion="-20.777779" vertical-offset="14397" max-vertical-offset="15588">
           <caret line="831" column="12" selection-start-line="831" selection-start-column="12" selection-end-line="831" selection-end-column="30" />
           <folding>
             <marker date="1431069061169" expanded="true" signature="9574:9994" placeholder="..." />
@@ -1039,8 +1041,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/blogs/update.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.62204725" vertical-offset="1653" max-vertical-offset="2790">
-          <caret line="105" column="113" selection-start-line="105" selection-start-column="113" selection-end-line="105" selection-end-column="113" />
+        <state vertical-scroll-proportion="-29.444445" vertical-offset="1113" max-vertical-offset="2790">
+          <caret line="106" column="26" selection-start-line="106" selection-start-column="26" selection-end-line="106" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/BlogController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.35135135" vertical-offset="1425" max-vertical-offset="3384">
+          <caret line="99" column="42" selection-start-line="99" selection-start-column="42" selection-end-line="99" selection-end-column="42" />
           <folding />
         </state>
       </provider>
