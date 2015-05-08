@@ -235,8 +235,7 @@
                     <div class="col-md-5 espacio_abajo" id="emprendido" @if(!$errors->first('veces_emprendido')) style="visibility: hidden" @endif >
                         {{Form::label('veces_emprendido', '* ¿Cuántas veces has emprendido un negocio?', ['class' => 'label'])}}
                         <label class="select">
-                            {{Form::select('veces_emprendido', [null=>'Selecciona','0'=>'0','1'=>'1','2...'=>'2...',
-                            '...4'=>'...4','5'=>'5','Más de 10'=>'Más de 10'], null)}}
+                            {{Form::select('veces_emprendido', [null=>'Selecciona','0'=>'0','1'=>'1','2...'=>'2...', '...4'=>'...4','5'=>'5','Más de 10'=>'Más de 10'], null, ['id'=> 'veces_emp'])}}
                             <span class="message-error">{{$errors->first('veces_emprendido')}}</span>
                         </label>
                     </div>
@@ -295,10 +294,12 @@
     {{ HTML::script('Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js') }}
     <script type="text/javascript">
         $( "#select" ).change(function() {
-            if(select.selectedIndex == 2)
-                $( "#emprendido" ).css('visibility', 'visible');
-            else
-                $( "#emprendido" ).css('visibility', 'hidden');
+            if(select.selectedIndex == 2) {
+                $("#emprendido").css('visibility', 'visible');
+            }else {
+                $("#emprendido").css('visibility', 'hidden');
+                $("#veces_emp").val('');
+            }
         });
         $(function ()
         {

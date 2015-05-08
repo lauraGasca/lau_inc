@@ -124,6 +124,12 @@ class ValidatorManager
                     'evento_id'   	    =>    'required|exists:eventos,id',
                 ];
                 break;
+            //Para eliminar empresas
+            case 'empresa':
+                $rules = [
+                    'empresa_id'   	    =>    'required|exists:empresas,id',
+                ];
+                break;
             //Crear un emprendedor desde el panel de administrador
             case 'user':
                 $rules = [

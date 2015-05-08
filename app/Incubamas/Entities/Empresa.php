@@ -3,6 +3,8 @@
 class Empresa extends \Eloquent
 {
     protected $table = 'empresas';
+
+    protected $guarded = ['id', 'logo'];
     
     public function emprendedor()
     {
