@@ -79,7 +79,7 @@
                                                         @endif
                                                     @endforeach
                                                     <label class="textarea">
-                                                        {{Form::textarea('texto',$texto,['id'=>'texto'.$pregunta->id])}}
+                                                        {{Form::textarea('texto'.$pregunta->id,$texto,['id'=>'texto'.$pregunta->id])}}
                                                         <script type="text/javascript">
                                                             CKEDITOR.replace('texto{{$pregunta->id}}', {toolbar: 'Incuba'});
                                                         </script>

@@ -19,6 +19,7 @@
     </head>
 
     <body @if($errors->first('nombre')) class="modal-open" @endif>
+
     <div class="smooth-overflow">
         <nav class="main-header clearfix" role="navigation">
             <a class="navbar-brand" href="#">
@@ -129,6 +130,24 @@
                         @section('contenido')
                         @show
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!---------------------------------------------Usuario Bloqueado--------------------------------------------------------->
+    @if(Auth::user()->active == 2) <div class="modal-backdrop  in"></div> @endif
+    <div class="modal @if(Auth::user()->active == 2) animated fadeInLeft @endif" data-easein="fadeInLeft" data-easeout="fadeOutLeft" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" @if(Auth::user()->active == 2) style="display: block;" @endif>
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header" >
+                    <h4 class="modal-title" id="myModalLabel">Lo sentimos</h4>
+                </div>
+                <div class="modal-body">
+                    <h5>Ha ocurrido un error, para utilizar el sistema pongase en contacto con nosotros</h5>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-primary" href="{{url('sistema/logout')}}">Salir del Sistema</a>
                 </div>
             </div>
         </div>
