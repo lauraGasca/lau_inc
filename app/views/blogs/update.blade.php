@@ -104,7 +104,6 @@
                         {{Form::label('imagen', 'Imagen', ['class' => 'label'])}}
                         {{Form::file('imagen', ['accept'=>"image/*"])}}<br/>
                         <span class="message-error" style="font-weight: bold">{{$errors->first('imagen')}}</span>
-                        <div class="note"><strong>Nota:</strong>La imagen debe medir 300 x 300</div>
                     </div>
                 </fieldset>
                 <footer>
