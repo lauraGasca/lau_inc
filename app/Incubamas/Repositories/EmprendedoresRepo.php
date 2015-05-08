@@ -111,16 +111,7 @@ class EmprendedoresRepo extends BaseRepo
             return $emprendedor->id;
         }
     }
-    
 
-    
-
-    
-    public function primer()
-    {
-        return Emprendedor::orderBy('apellidos', 'asc')->first();
-    }
-    
     public function listado()
     {
         return Emprendedor::selectRaw('CONCAT( "\"", id, "\":\"", name, " ", apellidos, "\"," ) as texto')->get();

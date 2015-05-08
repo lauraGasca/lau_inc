@@ -132,8 +132,7 @@
                 pickTime: false,
                 language: 'es',
                 minDate:'1/1/2000',
-                defaultDate: new Date(),
-                maxDate: new Date()
+                defaultDate: new Date()
             });
         });
         $("#imagen").fileinput({

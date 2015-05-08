@@ -244,8 +244,9 @@ class EmprendedoresController extends BaseController
         return Redirect::back()->with(array('confirm' => 'Se ha eliminado correctamente.'));
     }
 
-    /**************************Documentos*******************************/
+    /**************************Socios*******************************/
 
+    //Verificar
     public function postCrearsocio()
     {
         if (Auth::user()->type_id != 1 && Auth::user()->type_id != 2)
@@ -286,6 +287,7 @@ class EmprendedoresController extends BaseController
         }
     }
 
+    //Verificar
     public function getDeletesocio($socio_id)
     {
         if (Auth::user()->type_id != 1 && Auth::user()->type_id != 2)
@@ -307,6 +309,7 @@ class EmprendedoresController extends BaseController
 
     /**************************Documentos*******************************/
 
+    //Verificar
     public function postSubirdocumento()
     {
         if (Auth::user()->type_id == 1 && Auth::user()->type_id != 2 && Auth::user()->type_id != 3)
@@ -357,6 +360,7 @@ class EmprendedoresController extends BaseController
         }
     }
 
+    //Verificar
     public function getDeletedocumento($subida_id)
     {
         if (Auth::user()->type_id != 1 && Auth::user()->type_id != 2)
@@ -381,6 +385,7 @@ class EmprendedoresController extends BaseController
 
     /**************************Pagos*******************************/
 
+    //Verificar
     public function getPagos($emprendedor_id)
     {
         if (Auth::user()->type_id != 1 && Auth::user()->type_id != 2)
@@ -440,6 +445,7 @@ class EmprendedoresController extends BaseController
             ->with('pagos_emp', $pagos_emp);
     }
 
+    //Verificar
     public function getImprimirpago($pago_id, $type = null)
     {
         if (Auth::user()->type_id != 1 && Auth::user()->type_id != 2)
@@ -473,6 +479,7 @@ class EmprendedoresController extends BaseController
         $this->layout->content = PDF::load($html, 'A4', 'portrait')->show();
     }
 
+    //Verificar
     public function getEnviarpago($pago_id, $emprendedor_id, $type = null)
     {
         if (Auth::user()->type_id != 1 && Auth::user()->type_id != 2)
@@ -522,6 +529,7 @@ class EmprendedoresController extends BaseController
         }
     }
 
+    //Verificar
     public function postCambiaprograma()
     {
         if (Auth::user()->type_id != 1 && Auth::user()->type_id != 2)
@@ -545,6 +553,7 @@ class EmprendedoresController extends BaseController
         }
     }
 
+    //Verificar
     public function postCrearservicio()
     {
         if (Auth::user()->type_id != 1 && Auth::user()->type_id != 2)
@@ -614,6 +623,7 @@ class EmprendedoresController extends BaseController
         }
     }
 
+    //Verificar
     public function getEditarservicio()
     {
         if (Auth::user()->type_id != 1 && Auth::user()->type_id != 2)
@@ -630,6 +640,7 @@ class EmprendedoresController extends BaseController
         return Response::json($solicitud_JSON);
     }
 
+    //Verificar
     public function postEditarservicio()
     {
         if (Auth::user()->type_id != 1 && Auth::user()->type_id != 2)
@@ -722,6 +733,7 @@ class EmprendedoresController extends BaseController
         }
     }
 
+    //Verificar
     public function getDeletesolicitud($solicitud_id)
     {
         if (Auth::user()->type_id != 1 && Auth::user()->type_id != 2)
@@ -745,6 +757,7 @@ class EmprendedoresController extends BaseController
         }
     }
 
+    //Verificar
     public function postCrearPago()
     {
         $this->_soloAsesores();
@@ -817,6 +830,7 @@ class EmprendedoresController extends BaseController
         }
     }
 
+    //Verificar
     public function getEditarpago()
     {
         if (Auth::user()->type_id != 1 && Auth::user()->type_id != 2)
@@ -833,6 +847,7 @@ class EmprendedoresController extends BaseController
         return Response::json($pago_JSON);
     }
 
+    //Verificar
     public function postEditarpago()
     {
         if (Auth::user()->type_id != 1 && Auth::user()->type_id != 2)
@@ -944,6 +959,7 @@ class EmprendedoresController extends BaseController
         }
     }
 
+    //Verificar
     public function getDeletepago($pago_id)
     {
         if (Auth::user()->type_id != 1 && Auth::user()->type_id != 2)
@@ -988,6 +1004,7 @@ class EmprendedoresController extends BaseController
         }
     }
 
+    //Verificar
     public function revision_emprendedor($emprendedor_id)
     {
         if (Auth::user()->type_id != 1 && Auth::user()->type_id != 2)
@@ -1018,21 +1035,6 @@ class EmprendedoresController extends BaseController
             }
             $emprendedor->save();
         }
-    }
-
-    //Si la fecha indicada cae en fin de semana, se recorre para el lunes
-    private function _noSD($f)
-    {
-        $s_f = strtotime($f);
-
-        if (date("w", strtotime('+2 day', $s_f)) == 0)
-            $fecha = date('Y-m-d', strtotime('+3 day', $s_f));
-        elseif (date("w", strtotime('+2 day', $s_f)) == 6)
-            $fecha = date('Y-m-d', strtotime('+4 day', $s_f));
-        else
-            $fecha = date('Y-m-d', strtotime('+2 day', $s_f));
-
-        return $fecha;
     }
 
     //Convierte una cantidad a moneda

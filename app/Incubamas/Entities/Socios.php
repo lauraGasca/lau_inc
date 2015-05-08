@@ -3,5 +3,7 @@
 class Socios extends \Eloquent
 {
     protected $table = 'socios';
+
+    protected $guarded = ['id'];
     
 }

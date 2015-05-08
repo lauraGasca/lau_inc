@@ -88,7 +88,7 @@ class BlogController extends BaseController
 
     public function getEditar($blog_id)
     {
-        $blog = $this->blogRepo->blog($blog_id);
+        $blog = $this->blogRepo->blogAdmin($blog_id);
         $categorias = $this->categoriaRepo->categorias_listar();
         $tags = $this->tagRepo->tag_tags();
         $etiquetados = $this->etiquetaRepo->relaciones_tags($blog_id);
