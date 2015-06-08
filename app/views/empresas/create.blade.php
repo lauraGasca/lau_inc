@@ -9,6 +9,7 @@
 @section('mapa')
     <li><a href="#"><i class="fa fa-home"></i></a></li>
     <li>{{HTML::link('emprendedores','Emprendedores')}}</li>
+    <li>{{HTML::link('emprendedores/editar/'.$emprendedor_id,'Emprendedor')}}</li>
     <li class="active">Crear Empresa</li>
 @stop
 
@@ -28,10 +29,16 @@
     </script>
 @stop
 
-@section('contenido')    
+@section('contenido')
+    @if(count($errors)>0)
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="fa fa-times-circle"></i></button>
+            ¡Por favor, revise los datos del formulario!
+        </div>
+    @endif
     <div class="powerwidget col-grey" id="user-directory" data-widget-editbutton="false">
         <div class="inner-spacer">
-            {{ Form::open(['url'=>'emprendedores/crear-empresa', 'class'=>'orb-form','method' => 'post', 'enctype'=>'multipart/form-data'])}}
+            {{ Form::open(['url'=>'empresas/crear', 'class'=>'orb-form','method' => 'post', 'enctype'=>'multipart/form-data'])}}
                 {{Form::hidden('emprendedor_id', $emprendedor_id)}}
                 <fieldset>
                     <div class="col-md-6 espacio_abajo">

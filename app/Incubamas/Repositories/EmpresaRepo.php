@@ -40,4 +40,14 @@ class EmpresaRepo extends BaseRepo
             \File::delete(public_path() . '/Orb/images/empresas/'.$logo);
     }
 
+    public function empresas($emprendedor_id)
+    {
+        return Emprendedor::where('id','=',$emprendedor_id)->get();
+    }
+
+    public function listar_empresas($emprendedor_id)
+    {
+        return Empresa::where('emprendedor_id','=',$emprendedor_id)->lists('nombre_empresa','id');
+    }
+
 }

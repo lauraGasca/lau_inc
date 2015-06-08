@@ -22,7 +22,6 @@
             $("#tel_fijo").mask("(999) 999-9999");
             $("#curp").mask("aaaa999999aaaaaa**");
             $("#cp").mask("99999");
-            $("#cpEmp").mask("99999");
         });
     </script>
 @stop
@@ -42,15 +41,13 @@
 @section('contenido')
     @if(Session::get('confirm'))
         <div class="alert alert-success alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i
-                        class="fa fa-times-circle"></i></button>
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="fa fa-times-circle"></i></button>
             {{Session::get('confirm')}}
         </div>
     @endif
     @if(count($errors)>0)
         <div class="alert alert-danger alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i
-                        class="fa fa-times-circle"></i></button>
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="fa fa-times-circle"></i></button>
             ¡Por favor, revise los datos del formulario!
         </div>
     @endif
@@ -59,8 +56,8 @@
             <div class="user-profile-info">
                 <div class="tabs-white">
                     <ul id="myTab" class="nav nav-tabs nav-justified">
-                        <li class="active"><a href="#emprendedor" data-toggle="tab">Emprendedor</a></li>
-                        <li><a href="#empresas" data-toggle="tab">Empresas</a></li>
+                        <li @if(count($errors)<=0||Session::get('form')==1)class="active" @endif><a href="#emprendedor" data-toggle="tab">Emprendedor</a></li>
+                        <li @if(count($errors)>0&&Session::get('form')==2)class="active" @endif><a href="#empresas" data-toggle="tab">Empresas</a></li>
                         <li><a href="#socios" data-toggle="tab">Socios</a></li>
                         <li><a href="#documentos" data-toggle="tab">Documentos</a></li>
                     </ul>
@@ -166,42 +163,54 @@
                                         {{Form::label('calle', '* Calle', ['class' => 'label'])}}
                                         <label class="input">
                                             <i class="icon-prepend fa fa-book"></i>{{Form::text('calle')}}
-                                            <span class="message-error">{{$errors->first('calle')}}</span>
+                                            @if(Session::get('form')==1)
+                                                <span class="message-error">{{$errors->first('calle')}}</span>
+                                            @endif
                                         </label>
                                     </div>
                                     <div class="col-md-3 espacio_abajo">
                                         {{Form::label('num_ext', '* N&uacute;mero Exterior', ['class' => 'label'])}}
                                         <label class="input">
                                             <i class="icon-prepend fa fa-slack"></i>{{Form::text('num_ext')}}
-                                            <span class="message-error">{{$errors->first('num_ext')}}</span>
+                                            @if(Session::get('form')==1)
+                                                <span class="message-error">{{$errors->first('num_ext')}}</span>
+                                            @endif
                                         </label>
                                     </div>
                                     <div class="col-md-3 espacio_abajo">
                                         {{Form::label('num_int', 'N&uacute;mero Interior', ['class' => 'label'])}}
                                         <label class="input">
                                             <i class="icon-prepend fa fa-slack"></i>{{Form::text('num_int')}}
-                                            <span class="message-error">{{$errors->first('num_int')}}</span>
+                                            @if(Session::get('form')==1)
+                                                <span class="message-error">{{$errors->first('num_int')}}</span>
+                                            @endif
                                         </label>
                                     </div>
                                     <div class="col-md-4 espacio_abajo">
                                         {{Form::label('colonia', '* Colonia o Fraccionamiento', ['class' => 'label'])}}
                                         <label class="input">
                                             <i class="icon-prepend fa fa-book"></i>{{Form::text('colonia')}}
-                                            <span class="message-error">{{$errors->first('colonia')}}</span>
+                                            @if(Session::get('form')==1)
+                                                <span class="message-error">{{$errors->first('colonia')}}</span>
+                                            @endif
                                         </label>
                                     </div>
                                     <div class="col-md-4 espacio_abajo">
                                         {{Form::label('municipio', '* Municipio', ['class' => 'label'])}}
                                         <label class="input">
                                             <i class="icon-prepend fa fa-book"></i>{{Form::text('municipio')}}
-                                            <span class="message-error">{{$errors->first('municipio')}}</span>
+                                            @if(Session::get('form')==1)
+                                                <span class="message-error">{{$errors->first('municipio')}}</span>
+                                            @endif
                                         </label>
                                     </div>
                                     <div class="col-md-2 espacio_abajo">
                                         {{Form::label('cp', '* C&oacute;digo Postal', ['class' => 'label'])}}
                                         <label class="input">
                                             <i class="icon-prepend fa fa-book"></i>{{Form::text('cp',null,['id'=>'cp'])}}
-                                            <span class="message-error">{{$errors->first('cp')}}</span>
+                                            @if(Session::get('form')==1)
+                                                <span class="message-error">{{$errors->first('cp')}}</span>
+                                            @endif
                                         </label>
                                     </div>
                                     <div class="col-md-5 espacio_abajo">
@@ -217,7 +226,9 @@
                                             'Querétaro'=>'Querétaro','Quintana Roo'=>'Quintana Roo', 'San Luis Potosí'=>'San Luis Potosí',
                                             'Sinaloa'=>'Sinaloa', 'Sonora'=>'Sonora','Tabasco'=>'Tabasco', 'Tamaulipas'=>'Tamaulipas',
                                             'Tlaxcala'=>'Tlaxcala','Veracruz'=>'Veracruz','Yucatán'=>'Yucatán', 'Zacatecas'=>'Zacatecas'])}}
-                                            <span class="message-error">{{$errors->first('estado')}}</span>
+                                            @if(Session::get('form')==1)
+                                                <span class="message-error">{{$errors->first('estado')}}</span>
+                                            @endif
                                         </label>
                                     </div>
                                 </fieldset>
@@ -300,7 +311,7 @@
                                 </fieldset>
                                 <footer>
                                     <div class="col-md-6 espacio_abajo">
-                                        {{ Form::submit('Guardar', array('class'=>'btn btn-default')) }}
+                                        {{ Form::submit('Guardar', array('class'=>'btn btn-info')) }}
                                     </div>
                                     <div class="col-md-5 espacio_abajo" style="text-align: right;">
                                         * Los campos son obligatorios
@@ -312,288 +323,199 @@
                         <div class="tab-pane" id="empresas">
                             <div class="profile-header">
                                 Editar Empresas&nbsp;&nbsp;
-                                {{HTML::link('emprendedores/crear-empresa/'.$emprendedor->id,'Añadir Empresa',array('class'=>'btn btn-default', 'style'=>'color:#FFF'))}}
+                                {{HTML::link('empresas/crear/'.$emprendedor->id,'Añadir Empresa',array('class'=>'btn btn-primary', 'style'=>'color:#FFF'))}}
                             </div>
-                            @if(count($emprendedor->empresas) > 0)
-                                @foreach($emprendedor->empresas as $empresa)
-                                    {{Form::model($empresa, ['url'=>'emprendedores/editar-empresa', 'class'=>'orb-form','method' => 'post', 'enctype'=>'multipart/form-data'])}}
-                                        {{Form::hidden('id')}}
-                                        <fieldset>
-                                            <div class="col-md-6 espacio_abajo">
-                                                {{Form::label('nombre_empresa', '* Nombre del proyecto', ['class' => 'label'])}}
-                                                <label class="input">
-                                                    <i class="icon-prepend fa fa-building"></i>{{Form::text('nombre_empresa')}}
-                                                    <span class="message-error">{{$errors->first('nombre_empresa')}}</span>
-                                                </label>
-                                            </div>
-                                            <div class="col-md-5 espacio_abajo">
-                                                {{Form::label('regimen_fiscal', 'Tipo de  Régimen fiscal', ['class' => 'label'])}}
-                                                <label class="select">
-                                                    {{Form::select('regimen_fiscal', [null=>'Selecciona', 'Incorporaci&oacute;n Fiscal'=>'Incorporaci&oacute;n Fiscal', 'Actividad Empresarial y Profesional'=>'Actividad Empresarial y Profesional'])}}
-                                                    <span class="message-error">{{$errors->first('regimen_fiscal')}}</span>
-                                                </label>
-                                            </div>
-                                            <div class="col-md-6 espacio_abajo">
-                                                {{Form::label('idea_negocio', '* Describe la idea de negocio o las actividades de tu negocio ', ['class' => 'label'])}}
-                                                <label class="textarea">
-                                                    {{Form::textarea('idea_negocio')}}
-                                                    <span class="message-error">{{$errors->first('idea_negocio')}}</span>
-                                                </label>
-                                                <div class="note">
-                                                    <strong>Nota:</strong>Maximo 500 caracteres
-                                                </div>
-                                            </div>
-                                            <div class="col-md-5 espacio_abajo">
-                                                {{Form::label('necesidad', '¿Qu&eacute; problema o necesidad resuelves con esto?', ['class' => 'label'])}}
-                                                <label class="textarea">
-                                                    {{Form::textarea('necesidad')}}
-                                                    <span class="message-error">{{$errors->first('necesidad')}}</span>
-                                                </label>
-                                                <div class="note">
-                                                    <strong>Nota:</strong>Maximo 500 caracteres
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 espacio_abajo">
-                                                {{Form::label('producto_servicio', '* Describe el producto o servicio que ofreces o quieres ofrecer', ['class' => 'label'])}}
-                                                <label class="textarea">
-                                                    {{Form::textarea('producto_servicio', null, ['style'=>'height: 200px;'])}}
-                                                    <span class="message-error">{{$errors->first('producto_servicio')}}</span>
-                                                </label>
-                                                <div class="note">
-                                                    <strong>Nota:</strong>Maximo 500 caracteres
-                                                </div>
-                                            </div>
-                                            <div class="col-md-5 espacio_abajo">
-                                                {{Form::label('director', 'Director General', ['class' => 'label'])}}
-                                                <label class="input">
-                                                    <i class="icon-prepend fa fa-group"></i>{{Form::text('director')}}
-                                                    <span class="message-error">{{$errors->first('director')}}</span>
-                                                </label>
-                                            </div>
-                                            <div class="col-md-5 espacio_abajo">
-                                                {{Form::label('asistente', 'Asistente o Administrador', ['class' => 'label'])}}
-                                                <label class="input">
-                                                    <i class="icon-prepend fa fa-group"></i>{{Form::text('asistente')}}
-                                                    <span class="message-error">{{$errors->first('asistente')}}</span>
-                                                </label>
-                                            </div>
-                                            <div class="col-md-5 espacio_abajo">
-                                                {{Form::label('pagina_web', 'Página Web de la Empresa', ['class' => 'label'])}}
-                                                <label class="input">
-                                                    <i class="icon-prepend fa fa-globe"></i>{{Form::text('pagina_web')}}
-                                                    <span class="message-error">{{$errors->first('pagina_web')}}</span><br/><br/>
-                                                </label>
-                                            </div>
-                                            <div class="col-md-6 espacio_abajo">
-                                                {{Form::label('giro_actividad', 'Rubro, Giro y/o Actividad', ['class' => 'label'])}}
-                                                <label class="select">
-                                                    {{Form::select('giro_actividad', [null=>'Selecciona', 'Servicio y Comercio'=>'Servicio y Comercio','Industria Ligera'=>'Industria Ligera'])}}
-                                                    <span class="message-error">{{$errors->first('giro_actividad')}}</span>
-                                                </label>
-                                            </div>
-                                            <div class="col-md-5 espacio_abajo">
-                                                {{Form::label('sector', 'Sector Estrat&eacute;gico', ['class' => 'label'])}}
-                                                <label class="select">
-                                                    {{Form::select('sector', [null=>'Selecciona', 'Agro industrial'=>'Agro industrial','Automotriz'=>'Automotriz',
-                                                    'Productos Químicos'=>'Productos Químicos','Cuero Calzado'=>'Cuero Calzado',
-                                                    'Servicios de Investigación'=>'Servicios de Investigación','Turístico'=>'Turístico',
-                                                    'Equipo medico'=>'Equipo medico','Farmacéuticos y Cosméticos'=>'Farmacéuticos y Cosméticos',
-                                                    'Aeronáutica'=>'Aeronáutica','Construcción'=>'Construcción','Químico'=>'Químico',
-                                                    'Agricultura'=>'Agricultura','Comercio'=>'Comercio','Software'=>'Software',
-                                                    'Electrónica'=>'Electrónica','Textil y Confección'=>'Textil y Confección',
-                                                    'Maquiladoras'=>'Maquiladoras','Otro'=>'Otro'])}}
-                                                    <span class="message-error">{{$errors->first('sector')}}</span>
-                                                </label>
-                                            </div>
-                                        </fieldset>
-                                        <fieldset>
-                                            <div class="col-md-11 espacio_abajo">
-                                                <h3>Datos Fiscales</h3><br/>
-                                            </div>
-                                            <div class="col-md-6 espacio_abajo">
-                                                {{Form::label('razon_social', '* Raz&oacute;n Social', ['class' => 'label'])}}
-                                                <label class="input">
-                                                    <i class="icon-prepend fa fa-building"></i>{{Form::text('razon_social')}}
-                                                    <span class="message-error">{{$errors->first('razon_social')}}</span>
-                                                </label>
-                                            </div>
-                                            <div class="col-md-5 espacio_abajo">
-                                                {{Form::label('rfc', 'RCF con homoclave', ['class' => 'label'])}}
-                                                <label class="input">
-                                                    <i class="icon-prepend fa fa-gavel"></i>{{Form::text('rfc')}}
-                                                    <span class="message-error">{{$errors->first('rfc')}}</span>
-                                                </label>
-                                            </div>
-                                            <div class="col-md-11 espacio_abajo">
-                                                {{Form::label('negocio_casa', '* ¿La dirección de tu negocio es la misma que tú casa?', ['class' => 'label'])}}
-                                                <label class="select">
-                                                    {{Form::select('negocio_casa', [null=>'Selecciona', 1=>'No', 2=>'Si'], null, ['id'=>'direccion'])}}
-                                                    <span class="message-error">{{$errors->first('negocio_casa')}}</span>
-                                                </label>
-                                            </div>
-                                            <div id="divDireccion" @if($empresa->negocio_casa!=1&&!$errors->first('calle')&&!$errors->first('num_ext')&&!$errors->first('num_int')&&!$errors->first('colonia')&&!$errors->first('municipio')&&!$errors->first('cp')&&!$errors->first('estado')) style="visibility: hidden" @endif>
-                                                <div class="col-md-4 espacio_abajo">
-                                                    {{Form::label('calle', 'Calle', ['class' => 'label'])}}
-                                                    <label class="input">
-                                                        <i class="icon-prepend fa fa-book"></i>{{Form::text('calle', null, ['id'=>'calleEmp'])}}
-                                                        <span class="message-error">{{$errors->first('calle')}}</span>
-                                                    </label>
-                                                </div>
-                                                <div class="col-md-3 espacio_abajo">
-                                                    {{Form::label('num_ext', 'N&uacute;mero Exterior', ['class' => 'label'])}}
-                                                    <label class="input">
-                                                        <i class="icon-prepend fa fa-slack"></i>{{Form::text('num_ext', null, ['id'=>'num_extEmp'])}}
-                                                        <span class="message-error">{{$errors->first('num_ext')}}</span>
-                                                    </label>
-                                                </div>
-                                                <div class="col-md-3 espacio_abajo">
-                                                    {{Form::label('num_int', 'N&uacute;mero Interior', ['class' => 'label'])}}
-                                                    <label class="input">
-                                                        <i class="icon-prepend fa fa-slack"></i>{{Form::text('num_int', null, ['id'=>'num_intEmp'])}}
-                                                        <span class="message-error">{{$errors->first('num_int')}}</span>
-                                                    </label>
-                                                </div>
-                                                <div class="col-md-4 espacio_abajo">
-                                                    {{Form::label('colonia', 'Colonia o Fraccionamiento', ['class' => 'label'])}}
-                                                    <label class="input">
-                                                        <i class="icon-prepend fa fa-book"></i>{{Form::text('colonia', null, ['id'=>'coloniaEmp'])}}
-                                                        <span class="message-error">{{$errors->first('colonia')}}</span>
-                                                    </label>
-                                                </div>
-                                                <div class="col-md-4 espacio_abajo">
-                                                    {{Form::label('municipio', 'Municipio', ['class' => 'label'])}}
-                                                    <label class="input">
-                                                        <i class="icon-prepend fa fa-book"></i>{{Form::text('municipio', null, ['id'=>'municipioEmp'])}}
-                                                        <span class="message-error">{{$errors->first('municipio')}}</span>
-                                                    </label>
-                                                </div>
-                                                <div class="col-md-2 espacio_abajo">
-                                                    {{Form::label('cp', 'C&oacute;digo Postal', ['class' => 'label'])}}
-                                                    <label class="input">
-                                                        <i class="icon-prepend fa fa-book"></i>{{Form::text('cp', null, ['id'=>'cpEmp'])}}
-                                                        <span class="message-error">{{$errors->first('cp')}}</span>
-                                                    </label>
-                                                </div>
-                                                <div class="col-md-5 espacio_abajo">
-                                                    {{Form::label('estado', 'Estado', ['class' => 'label'])}}
-                                                    <label class="select">
-                                                        {{Form::select('estado', [null=>'Selecciona un Estado','Aguascalientes'=>'Aguascalientes', 'Baja California'=>'Baja California',
-                                                        'Baja California Sur'=>'Baja California Sur', 'Campeche'=>'Campeche','Coahuila'=>'Coahuila',
-                                                        'Colima'=>'Colima', 'Chiapas'=>'Chiapas', 'Chihuahua'=> 'Chihuahua', 'Distrito Federal'=>'Distrito Federal',
-                                                        'Durango'=>'Durango', 'Guanajuato'=>'Guanajuato', 'Guerrero'=>'Guerrero', 'Hidalgo'=>'Hidalgo', 'Jalisco'=>'Jalisco',
-                                                        'Estado de México'=>'Estado de México', 'Michoacán'=>'Michoacán', 'Morelos'=>'Morelos', 'Nayarit'=>'Nayarit',
-                                                        'Nuevo León'=>'Nuevo León', 'Oaxaca'=>'Oaxaca', 'Puebla'=>'Puebla', 'Querétaro'=>'Querétaro',
-                                                        'Quintana Roo'=>'Quintana Roo', 'San Luis Potosí'=>'San Luis Potosí', 'Sinaloa'=>'Sinaloa', 'Sonora'=>'Sonora',
-                                                        'Tabasco'=>'Tabasco', 'Tamaulipas'=>'Tamaulipas','Tlaxcala'=>'Tlaxcala','Veracruz'=>'Veracruz','Yucatán'=>'Yucatán',
-                                                        'Zacatecas'=>'Zacatecas'], null, ['id'=>'estadoEmp'])}}
-                                                        <span class="message-error">{{$errors->first('estado')}}</span>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </fieldset>
-                                        <fieldset>
-                                            <div class="col-md-6 espacio_abajo">
-                                                {{Form::label('financiamiento', '* ¿Desea un  acceder un financiamiento?', ['class' => 'label'])}}
-                                                <label class="select">
-                                                    {{Form::select('financiamiento', [null=> 'Selecciona', 1=>'No', 2=>'Si'], null, ['id'=>'desea'])}}
-                                                    <span class="message-error">{{$errors->first('financiamiento')}}</span>
-                                                </label>
-                                            </div>
-                                            <div id="divFinanciamiento" @if($empresa->financiamiento!=2&&!$errors->first('monto_financiamiento')&&!$errors->first('costo_proyecto')&&!$errors->first('aportacion')) style="visibility: hidden" @endif>
-                                                <div class="col-md-5 espacio_abajo">
-                                                    {{Form::label('monto_financiamiento', 'Monto a solicitar del financiamiento', ['class' => 'label'])}}
-                                                    <label class="input">
-                                                        <i class="icon-prepend fa fa-money"></i>{{Form::text('monto_financiamiento', null, ['id'=>'monto_financiamiento'])}}
-                                                        <span class="message-error">{{$errors->first('monto_financiamiento')}}</span>
-                                                    </label>
-                                                </div>
-                                                <div class="col-md-6 espacio_abajo">
-                                                    {{Form::label('costo_proyecto', 'Costo total del proyecto', ['class' => 'label'])}}
-                                                    <label class="input">
-                                                        <i class="icon-prepend fa fa-money"></i>{{Form::text('costo_proyecto', null, ['id'=>'costo_proyecto'])}}
-                                                        <span class="message-error">{{$errors->first('costo_proyecto')}}</span>
-                                                    </label>
-                                                </div>
-                                                <div class="col-md-5 espacio_abajo">
-                                                    {{Form::label('aportacion', 'Aportación de Emprendedor', ['class' => 'label'])}}
-                                                    <label class="input">
-                                                        <i class="icon-prepend fa fa-money"></i>{{Form::text('aportacion', null, ['id'=>'aportacion'])}}
-                                                        <span class="message-error">{{$errors->first('aportacion')}}</span>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </fieldset>
-                                        <fieldset>
-                                            <div class="col-md-5 espacio_abajo">
-                                                {{Form::label('logo', 'Logo de la Empresa', ['class' => 'label'])}}
-                                                {{Form::file('logo', ['accept'=>"image/*", 'id'=>'logo'.$empresa->id])}}
-                                                <span class="message-error">{{$errors->first('logo')}}</span>
-                                                <div class="note"><strong>Nota:</strong>La imagen debe medir 300 x 300</div>
-                                                <script>
-                                                    $("#logo{{$empresa->id}}").fileinput({
-                                                        previewFileType: "image",
-                                                        initialPreview: [
-                                                            "<img src='{{url('Orb/images/empresas/'.$empresa->logo)}}' class='file-preview-image'>"
-                                                        ],
-                                                        browseClass: "btn btn-success",
-                                                        browseLabel: " Selecciona otro Logo ",
-                                                        browseIcon: '<i class="glyphicon glyphicon-picture"></i>',
-                                                        showCaption: false,
-                                                        showUpload: false,
-                                                        showRemove: false
-                                                    });
-                                                </script>
-                                            </div>
-                                        </fieldset>
-                                        <fieldset>
-                                            <div class="col-md-6 espacio_abajo" >
-                                                {{ Form::submit('Guardar', ['class'=>'btn btn-default'])}}
-                                                {{HTML::link('emprendedores/delete-empresa/'.$empresa->id,'Eliminar '.$empresa->nombre_empresa,array('class'=>'btn btn-default'))}}
-                                            </div>
-                                            <div class="col-md-5 espacio_abajo" style="text-align: right;">
-                                                * Los campos son obligatorios
-                                            </div>
-                                        </fieldset>
-                                    {{Form::close()}}
-                                    <div class="profile-header"></div>
-                                @endforeach
-                            @else
-                                <i>No hay empresas registradas</i>
-                            @endif
+                            <!----------------------------------------------Empresas------------------------------------------------------>
+                            <div class="tab-pane" id="empresas">
+                                @if(count($emprendedor->empresas) > 0)
+                                    @foreach($emprendedor->empresas as $empresa)
+                                        <br/>
+                                        <div class="panel-heading" style="background-color: #82b964; color: #fff;">
+                                            <div class="panel-title pull-left">{{$empresa->nombre_empresa}}</div>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <table class="table" style="table-layout:fixed">
+                                            <tr>
+                                                <td><strong>Idea del Negocio:</strong></td>
+                                                <td colspan="2">{{$empresa->idea_negocio}}</td>
+                                                <td rowspan="4">
+                                                    {{ HTML::image('Orb/images/empresas/'.$empresa->logo, $empresa->nombre_empresa, ['class' => 'file-preview-image']) }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Problema o Necesidad que resuelve:</strong></td>
+                                                <td colspan="2">{{$empresa->necesidad}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Producto o servicio que Ofrece:</strong></td>
+                                                <td colspan="2">{{$empresa->producto_servicio}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Tipo de R&eacute;gimen Fiscal:</strong></td>
+                                                <td colspan="2">{{$empresa->regimen_fiscal}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Rubro y/o Actividad:</strong></td>
+                                                <td>{{$empresa->giro_actividad}}</td>
+                                                <td colspan="2"
+                                                    style="text-align:center; background-color: #F0F0F0;"><strong>Datos
+                                                        Fiscales</strong></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 25%;"><strong>Sector Estrat&eacute;gico:</strong>
+                                                </td>
+                                                <td style="width: 25%;">{{$empresa->sector}}</td>
+                                                <td style="width: 25%;"><strong>Raz&oacute;n Social:</strong></td>
+                                                <td style="width: 25%;">{{$empresa->razon_social}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Director General:</strong></td>
+                                                <td>{{$empresa->director}}</td>
+                                                <td><strong>RFC con Homoclave:</strong></td>
+                                                <td>{{$empresa->rfc}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>Asistente o Administrador:</strong></td>
+                                                <td>{{$empresa->asistente}}</td>
+                                                <td><strong>Calle:</strong></td>
+                                                @if($empresa->negocio_casa)
+                                                    <td>{{$emprendedor->calle}}</td>
+                                                @else
+                                                    <td>{{$empresa->calle}}</td>
+                                                @endif
+                                            </tr>
+                                            <tr>
+                                                <td><strong>P&aacute;gina Web de la Empresa:</strong></td>
+                                                <td>{{$empresa->pagina_web}}</td>
+                                                <td><strong>N&uacute;mero exterior:</strong></td>
+                                                @if($empresa->negocio_casa)
+                                                    <td>{{$emprendedor->num_ext}}</td>
+                                                @else
+                                                    <td>{{$empresa->num_ext}}</td>
+                                                @endif
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td><strong>N&uacute;mero interior:</strong></td>
+                                                @if($empresa->negocio_casa)
+                                                    <td>{{$emprendedor->num_int}}</td>
+                                                @else
+                                                    <td>{{$empresa->num_int}}</td>
+                                                @endif
+                                            </tr>
+                                            <tr>
+                                                @if($empresa->financiamiento)
+                                                    <td colspan="2"
+                                                        style="text-align:center; background-color: #F0F0F0;">
+                                                        <strong>Solicitud de Financiamiento</strong></td>
+                                                @else
+                                                    <td></td>
+                                                    <td></td>
+                                                @endif
+                                                <td><strong>Colonia o Fraccionamiento:</strong></td>
+                                                @if($empresa->negocio_casa)
+                                                    <td>{{$emprendedor->colonia}}</td>
+                                                @else
+                                                    <td>{{$empresa->colonia}}</td>
+                                                @endif
+                                            </tr>
+                                            <tr>
+                                                @if($empresa->financiamiento)
+                                                    <td><strong>Monto Solicitado:</strong></td>
+                                                    <td>{{$empresa->monto_financiamiento}}</td>
+                                                @else
+                                                    <td></td>
+                                                    <td></td>
+                                                @endif
+                                                <td><strong>Municipio:</strong></td>
+                                                @if($empresa->negocio_casa)
+                                                    <td>{{$emprendedor->municipio}}</td>
+                                                @else
+                                                    <td>{{$empresa->municipio}}</td>
+                                                @endif
+                                            </tr>
+                                            <tr>
+                                                @if($empresa->financiamiento)
+                                                    <td><strong>Costo Total del Proyecto:</strong></td>
+                                                    <td>{{$empresa->costo_proyecto}}</td>
+                                                @else
+                                                    <td></td>
+                                                    <td></td>
+                                                @endif
+                                                <td><strong>Estado:</strong></td>
+                                                @if($empresa->negocio_casa)
+                                                    <td>{{$emprendedor->estado}}</td>
+                                                @else
+                                                    <td>{{$empresa->estado}}</td>
+                                                @endif
+                                            </tr>
+                                            <tr>
+                                                @if($empresa->financiamiento)
+                                                    <td><strong>Aportacion del emprendedor:</strong></td>
+                                                    <td>{{$empresa->aportacion}}</td>
+                                                @else
+                                                    <td></td>
+                                                    <td></td>
+                                                @endif
+                                                <td><strong>CP:</strong></td>
+                                                @if($empresa->negocio_casa)
+                                                    <td>{{$emprendedor->cp}}</td>
+                                                @else
+                                                    <td>{{$empresa->cp}}</td>
+                                                @endif
+                                            </tr>
+                                            <tr><td colspan="4"><br/></td></tr>
+                                            <tr>
+                                                <td colspan="4">
+                                                    {{HTML::link('empresas/editar/'.$empresa->id,'Editar Empresa',array('class'=>'btn btn-warning'))}}
+                                                    &nbsp; &nbsp; &nbsp;
+                                                    {{HTML::link('empresas/delete/'.$empresa->id,'Eliminar Empresa',array('class'=>'btn btn-danger', 'onClick'=>"return confirm('\u00BFSeguro que deseas eliminar?');"))}}
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    @endforeach
+                                @else
+                                    <i>No hay empresas registradas</i>
+                                @endif
+                            </div>
                         </div>
                         <!----------------------------------------Socios---------------------------------------->
                         <div class="tab-pane" id="socios">
                             <div class="profile-header">
-                                Socios
-                                <a href="#myModal3" role="button" class="btn btn-default" data-toggle="modal">Agregar
-                                    Socios</a>
+                                Socios&nbsp;&nbsp;
+                                @if(count($emprendedor->empresas) > 0)
+                                    {{HTML::link('emprendedores/crear-socio/'.$emprendedor->id,'Agregar Socios',array('class'=>'btn btn-primary', 'style'=>'color:#FFF'))}}
+                                @else
+                                    <span style="font-style: italic; color: rgb(205, 205, 205); font-size: 15px;">Para agregar socios, añade primero la empresa</span>
+                                @endif
                             </div>
-                            <fieldset>
-                                <br/>
+                            <fieldset><br/>
                                 <table class="table table-striped table-bordered table-hover">
                                     <thead>
-                                    <tr>
-                                        <th>Nombre</th>
-                                        <th>Correo</th>
-                                        <th>Telefono</th>
-                                        <th>Empresa</th>
-                                        <th></th>
-                                    </tr>
+                                        <tr>
+                                            <th>Nombre</th>
+                                            <th>Correo</th>
+                                            <th>Telefono</th>
+                                            <th>Empresa</th>
+                                            <th></th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                    @if(count($socios) > 0)
-                                        @foreach($socios as $socio)
+                                        @if(count($socios) > 0)
+                                            @foreach($socios as $socio)
+                                                <tr>
+                                                    <td>{{$socio->nombre}} {{$socio->apellidos}}</td>
+                                                    <td>{{$socio->email}}</td>
+                                                    <td>{{$socio->telefono}}</td>
+                                                    <td>{{$socio->empresa->nombre_empresa}}</td>
+                                                    <td><a onClick="return confirm('\u00BFSeguro que deseas eliminar?');" href="{{url('emprendedores/delete-socio/'.$socio->id)}}"><i class="fa fa-trash-o"></i></a></td>
+                                                </tr>
+                                            @endforeach
+                                        @else
                                             <tr>
-                                                <td>{{$socio->nombre}} {{$socio->apellidos}}</td>
-                                                <td>{{$socio->email}}</td>
-                                                <td>{{$socio->telefono}}</td>
-                                                <td>{{$socio->nombre_empresa}}</td>
-                                                <td><a onClick="return confirm('\u00BFSeguro que deseas eliminar?');"
-                                                       href="{{url('emprendedores/deletesocio/'.$socio->id)}}"><i
-                                                                class="fa fa-trash-o"></i></a></td>
+                                                <td colspan="5" style="font-style: italic; color: rgb(155, 155, 155);">No hay socios</td>
                                             </tr>
-                                        @endforeach
-                                    @endif
+                                        @endif
                                     </tbody>
                                 </table>
                             </fieldset>
@@ -602,18 +524,15 @@
                         <div class="tab-pane" id="documentos">
                             <div class="profile-header">
                                 Editar Documentos
-                                <a href="#myModal1" role="button" data-target="#myModal1" class="btn btn-default"
-                                   data-toggle="modal">Subir Documentos</a>
+                                {{HTML::link('emprendedores/subir-documento/'.$emprendedor->id,'Subir Documentos',array('class'=>'btn btn-primary', 'style'=>'color:#FFF'))}}
                             </div>
-                            <fieldset>
-                                <br/>
+                            <fieldset><br/>
                                 <table class="table table-striped table-bordered table-hover">
                                     <thead>
                                     <tr>
-                                        <th>Documentos</th>
+                                        <th>Documento</th>
                                         <th>Fecha de Subida</th>
-                                        <th>Nombre</th>
-                                        <th>Empresa</th>
+                                        <th colspan="2">Pertenece A</th>
                                         <th colspan="2"></th>
                                     </tr>
                                     </thead>
@@ -621,166 +540,30 @@
                                     @if(count($subidas) > 0)
                                         @foreach($subidas as $subida)
                                             <tr>
-                                                @if($subida->nombre=='Otro...')
-                                                    <td>{{$subida->nombre_sub}}</td>
+                                                @if($subida->documento_id<>20)
+                                                    <td>{{$subida->documentos->nombre}}</td>
                                                 @else
                                                     <td>{{$subida->nombre}}</td>
                                                 @endif
-                                                <?php
-                                                $date = date_create($subida->created_at);
-                                                $fecha = date_format($date, 'd-m-Y');
-                                                ?>
-                                                <td>{{$fecha}}</td>
+                                                <td>{{$subida->subida}}</td>
+
                                                 @if($subida->socio_id<>'')
-                                                    <td>{{$subida->nombre_socio}}</td>
+                                                    <td><strong>Socio: </strong>{{$subida->socio->nombre}} {{$subida->socio->apellidos}}</td>
                                                 @else
-                                                    <td>{{$subida->name}} {{$subida->apellidos}}</td>
+                                                    @if($subida->empresa_id<>'')
+                                                        <td><strong>Empresa: </strong>{{$subida->empresa->nombre_empresa}}</td>
+                                                    @else
+                                                        <td>{{$emprendedor->usuario->nombre}} {{$emprendedor->usuario->apellidos}}</td>
+                                                    @endif
                                                 @endif
-                                                <td>{{$subida->nombre_empresa}}</td>
-                                                <td><a target="_blank"
-                                                       href="{{URL::asset('Orb/documentos/'.$subida->documento)}}"><span
-                                                                class="glyphicon glyphicon-cloud-download"></span></a>
-                                                </td>
-                                                <td><a onClick="return confirm('\u00BFSeguro que deseas eliminar?');"
-                                                       href="{{url('emprendedores/deletedocumento/'.$subida->id."/".$emprendedor->id)}}"><i
-                                                                class="fa fa-trash-o"></i></a></td>
+                                                <td><a target="_blank" href="{{URL::asset('Orb/documentos/'.$subida->documento)}}"><span class="glyphicon glyphicon-cloud-download"></span></a></td>
+                                                <td><a onClick="return confirm('\u00BFSeguro que deseas eliminar?');" href="{{url('emprendedores/delete-documento/'.$subida->id)}}"><i class="fa fa-trash-o"></i></a></td>
                                             </tr>
                                         @endforeach
                                     @endif
                                     </tbody>
                                 </table>
                             </fieldset>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="myModal1" class="modal" data-easein="fadeInLeft" data-easeout="fadeOutLeft" role="dialog"
-                 aria-labelledby="myModalLabel" aria-hidden="false">
-                <div class="modal-dialog modal-sm">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            <h4 class="modal-title" id="myModalLabel">Subir Documentos</h4>
-                        </div>
-                        <div class="modal-body">
-                            {{ Form::open(array('url'=>'emprendedores/subirdocumento', 'class'=>'orb-form','method' => 'post', 'id'=>'data-pickers', 'enctype'=>'multipart/form-data') )}}
-                            {{Form::hidden('emprendedor_id',$emprendedor->id)}}
-                            <span class="message-error">{{$errors->first('emprendedor')}}</span>
-                            <fieldset>
-                                <div class="col-md-6 espacio_abajo">
-                                    {{Form::label('empresa', '* Empresa', array('class' => 'label'))}}
-                                    <label class="select">
-                                        {{Form::select('empresa', $empresas_listado)}}
-                                    </label>
-                                    <span class="message-error">{{$errors->first('empresa')}}</span>
-                                </div>
-                                <div class="col-md-5 espacio_abajo">
-                                    @if(count($socios_listado)>0)
-                                        {{Form::checkbox('emprendedor', 'yes', 'yes',array('id'=>'emp_event','onchange'=>'evento(3);'))}}
-                                        Documento del emprendedor
-                                    @else
-                                        {{Form::checkbox('emprendedor', 'yes', 'yes', array('disabled'=>''))}} Documento
-                                        del emprendedor
-                                    @endif
-                                    <label class="select">
-                                        {{Form::select('socios', $socios_listado,null, array('id'=>'socios_event','disabled'=>''))}}
-                                    </label>
-                                    <span class="message-error">{{$errors->first('socios')}}</span>
-                                </div>
-                                <div class="col-md-6 espacio_abajo">
-                                    {{Form::label('documento', '* Documento', array('class' => 'label'))}}
-                                    <label class="select">
-                                        {{Form::select('documento', $documentos, null, array('id'=>'doc_event', 'onchange'=>'evento(2);'))}}
-                                    </label>
-                                    <span class="message-error">{{$errors->first('documento')}}</span>
-                                </div>
-                                <div class="col-md-5 espacio_abajo">
-                                    {{Form::label('nombre', 'Otro...', array('class' => 'label'))}}
-                                    <label class="input">
-                                        <i class="icon-prepend fa fa-archive"></i>
-                                        {{Form::text('nombre','',array('id'=>'otro','disabled'=>''))}}
-                                    </label>
-                                    <span class="message-error">{{$errors->first('nombre')}}</span>
-                                </div>
-                                <div class="col-md-6 espacio_abajo">
-                                    {{Form::label('imagen', '* Documento', array('class' => 'label'))}}
-                                    {{Form::file('imagen')}}
-                                    <span class="message-error">{{$errors->first('imagen')}}</span>
-                                </div>
-
-                                <div class="col-md-11 espacio_abajo" style="text-align: left;">
-                                    * Los campos son obligatorios
-                                </div>
-                            </fieldset>
-                        </div>
-                        <div class="modal-footer">
-                            <button class="btn btn-primary">Subir</button>
-                            {{Form::close()}}
-                            <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancelar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="myModal3" class="modal" data-easein="fadeInUp" data-easeout="fadeOutUp" tabindex="-1" role="dialog"
-                 aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-sm">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                            <h4 class="modal-title">Agregar Socio</h4>
-                        </div>
-                        <div class="modal-body">
-                            {{ Form::open(array('url'=>'emprendedores/crearsocio', 'class'=>'orb-form','method' => 'post', 'id'=>'data-pickers', 'enctype'=>'multipart/form-data') )}}
-                            {{Form::hidden('emprendedor_id',$emprendedor->id)}}
-                            <fieldset>
-                                <div class="col-md-11 espacio_abajo">
-                                    {{Form::label('empresa_id', '* Empresas', array('class' => 'label'))}}
-                                    <label class="select">
-                                        {{Form::select('empresa_id', $empresas_listado)}}
-                                    </label>
-                                    <span class="message-error">{{$errors->first('empresa_id')}}</span>
-                                </div>
-                                <div class="col-md-6 espacio_abajo">
-                                    {{Form::label('nombre', '* Nombre', array('class' => 'label'))}}
-                                    <label class="input">
-                                        <i class="icon-prepend fa fa-user"></i>
-                                        {{Form::text('nombre')}}
-                                    </label>
-                                    <span class="message-error">{{$errors->first('nombre')}}</span>
-                                </div>
-                                <div class="col-md-5 espacio_abajo">
-                                    {{Form::label('apellidos', '* Apellidos', array('class' => 'label'))}}
-                                    <label class="input">
-                                        <i class="icon-prepend fa fa-user"></i>
-                                        {{Form::text('apellidos')}}
-                                    </label>
-                                    <span class="message-error">{{$errors->first('apellidos')}}</span>
-                                </div>
-                                <div class="col-md-6 espacio_abajo">
-                                    {{Form::label('email', '* Email', array('class' => 'label'))}}
-                                    <label class="input">
-                                        <i class="icon-prepend fa fa-envelope"></i>
-                                        {{Form::text('email')}}
-                                    </label>
-                                    <span class="message-error">{{$errors->first('email')}}</span>
-                                </div>
-                                <div class="col-md-5 espacio_abajo">
-                                    {{Form::label('telefono', '* Telefono', array('class' => 'label'))}}
-                                    <label class="input">
-                                        <i class="icon-prepend fa fa-phone"></i>
-                                        {{Form::text('telefono')}}
-                                    </label>
-                                    <span class="message-error">{{$errors->first('telefono')}}</span>
-                                </div>
-                                <div class="col-md-11 espacio_abajo" style="text-align: left;">
-                                    * Los campos son obligatorios
-                                </div>
-                            </fieldset>
-                        </div>
-                        <div class="modal-footer">
-                            <button class="btn btn-primary">Crear</button>
-                            {{Form::close()}}
-                            <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancelar</button>
                         </div>
                     </div>
                 </div>
@@ -831,31 +614,6 @@
             showCaption: false,
             showRemove: false,
             showUpload: false
-        });
-        $( "#direccion" ).change(function() {
-            if(direccion.selectedIndex == 1)
-                $( "#divDireccion" ).css('visibility', 'visible');
-            else {
-                $("#divDireccion").css('visibility', 'hidden');
-                $("#calleEmp").val('');
-                $("#num_extEmp").val('');
-                $("#num_intEmp").val('');
-                $("#coloniaEmp").val('');
-                $("#municipioEmp").val('');
-                $("#cpEmp").val('');
-                $("#estadoEmp").val('');
-            }
-        });
-        $( "#desea" ).change(function() {
-            if (desea.selectedIndex == 2)
-                $("#divFinanciamiento").css('visibility', 'visible');
-            else
-            {
-                $("#divFinanciamiento").css('visibility', 'hidden');
-                $("#monto_financiamiento").val('');
-                $("#costo_proyecto").val('');
-                $("#aportacion").val('');
-            }
         });
     </script>
 @stop

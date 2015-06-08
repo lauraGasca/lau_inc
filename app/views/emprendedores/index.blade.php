@@ -94,7 +94,7 @@
                                         </p>
                                         <div class="btn-group">
                                             <div class="btn-group btn-group-xs">
-                                                <a href="{{url('emprendedores/pagos/'.$emprendedor->id)}}" type="button" class="btn btn-default"><i class="fa fa-money"></i> Pagos</a>
+                                                <a href="{{url('pagos/index/'.$emprendedor->id)}}" type="button" class="btn btn-default"><i class="fa fa-money"></i> Pagos</a>
                                             </div>
                                             <div class="btn-group btn-group-xs">
                                                 <a onClick="return confirm('\u00BFSeguro que deseas eliminar?');" href="{{url('emprendedores/delete/'.$emprendedor->usuario->id)}}" type="button" class="btn btn-danger"><i class="fa fa-times-circle"></i> Eliminar</a>

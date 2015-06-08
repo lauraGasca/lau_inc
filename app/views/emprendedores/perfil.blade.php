@@ -75,10 +75,10 @@
                         </a>
                     </div>
                     <ul class="portlet-bottom-block">
-                        <li class="col-md-6 col-sm-6 col-xs-6"><strong>5</strong>
+                        <li class="col-md-6 col-sm-6 col-xs-6"><strong>{{$completados}}</strong>
                             <small>Completado</small>
                         </li>
-                        <li class="col-md-6 col-sm-6 col-xs-6"><strong>100</strong>
+                        <li class="col-md-6 col-sm-6 col-xs-6"><strong>{{$disponibles}}</strong>
                             <small>Disponibles</small>
                         </li>
                     </ul>
@@ -98,7 +98,7 @@
                         </li>
                         <li class="col-md-4 col-sm-4 col-xs-4">
                             <strong>
-                                <a href="" href="#myModal2" data-target="#myModal2" data-toggle="modal" style="color:#FFF">
+                                <a href="{{url('emprendedores/subir-documento/'.$emprendedor->id.'/1')}}" style="color:#FFF">
                                     <span class="glyphicon glyphicon-cloud-upload"></span>
                                 </a>
                             </strong>
@@ -628,77 +628,6 @@
                         {{Form::close()}}
                     </fieldset>
                 </div>
-            </div>
-        </div>
-    </div>
-    <!--------------------------------------Subir Documentos -------------------------------------------------->
-    <div id="myModal2" class="modal" data-easein="fadeInLeft" data-easeout="fadeOutLeft" role="dialog"
-         aria-labelledby="myModalLabel" aria-hidden="false">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title" id="myModalLabel">Subir Documentos</h4>
-                </div>
-                {{ Form::open(array('url'=>'emprendedores/subirdocumento', 'class'=>'orb-form','method' => 'post', 'id'=>'data-pickers', 'enctype'=>'multipart/form-data') )}}
-                {{Form::hidden('emprendedor_id',$emprendedor->id)}}
-                <div class="modal-body">
-                    <span class="message-error">{{$errors->first('emprendedor')}}</span>
-                    <fieldset>
-                        <div class="col-md-6 espacio_abajo">
-                            {{Form::label('empresa', '* Empresa', array('class' => 'label'))}}
-                            <label class="select">
-                                @if(count($empresas_listado)>0)
-                                    {{Form::select('empresa', $empresas_listado)}}
-                                @else
-                                    {{Form::select('empresa', array(null=>$emprendedor->name." ".$emprendedor->apellidos))}}
-                                @endif
-                            </label>
-                            <span class="message-error">{{$errors->first('empresa')}}</span>
-                        </div>
-                        <div class="col-md-5 espacio_abajo">
-                            @if(count($socios_listado)>0)
-                                {{Form::checkbox('emprendedor', 'yes', 'yes',array('id'=>'emp_event','onchange'=>'evento(3);'))}}
-                                Documento del emprendedor
-                            @else
-                                {{Form::checkbox('emprendedor', 'yes', 'yes', array('disabled'=>''))}} Documento del
-                                emprendedor
-                            @endif
-                            <label class="select">
-                                {{Form::select('socios', $socios_listado,null, array('id'=>'socios_event','disabled'=>''))}}
-                            </label>
-                            <span class="message-error">{{$errors->first('socios')}}</span>
-                        </div>
-                        <div class="col-md-6 espacio_abajo">
-                            {{Form::label('documento', '* Documento', array('class' => 'label'))}}
-                            <label class="select">
-                                {{Form::select('documento', $documentos, null, array('id'=>'doc_event', 'onchange'=>'evento(2);'))}}
-                            </label>
-                            <span class="message-error">{{$errors->first('documento')}}</span>
-                        </div>
-                        <div class="col-md-5 espacio_abajo">
-                            {{Form::label('nombre', 'Otro...', array('class' => 'label'))}}
-                            <label class="input">
-                                <i class="icon-prepend fa fa-archive"></i>
-                                {{Form::text('nombre','',array('id'=>'otro','disabled'=>''))}}
-                            </label>
-                            <span class="message-error">{{$errors->first('nombre')}}</span>
-                        </div>
-                        <div class="col-md-6 espacio_abajo">
-                            {{Form::label('imagen', '* Documento', array('class' => 'label'))}}
-                            {{Form::file('imagen')}}
-                            <span class="message-error">{{$errors->first('imagen')}}</span>
-                        </div>
-                        <div class="col-md-11 espacio_abajo" style="text-align: left;">
-                            * Los campos son obligatorios
-                        </div>
-                    </fieldset>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-primary">Subir</button>
-                    <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancelar</button>
-                </div>
-                {{Form::close()}}
             </div>
         </div>
     </div>

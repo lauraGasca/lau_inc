@@ -52,4 +52,15 @@ class ProyectoRepo extends BaseRepo
         return Pregunta::find($id);
     }
 
+    public function numPreguntas()
+    {
+        return count(Pregunta::all());
+    }
+
+    public function numProgresos($emprendedor_id)
+    {
+        return count(Progreso::where('emprendedor_id','=', $emprendedor_id)
+            ->where('estado','=', 1)->get());
+    }
+
 }

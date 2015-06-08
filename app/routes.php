@@ -22,6 +22,8 @@ Route::controller('chat', 'ChatController');
 Route::controller('calendario', 'CalendarController');
 Route::controller('atendidos', 'AtendidoController');
 Route::controller('plan-negocios', 'ProyectoController');
+Route::controller('empresas', 'EmpresasController');
+Route::controller('pagos', 'PagosController');
 
 //Funcion para mostrar cuando una pagina no se encuentra
 App::missing(function($exception)

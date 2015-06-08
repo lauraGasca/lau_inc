@@ -1,10 +1,9 @@
 <?php namespace Incubamas\Repositories;
 
 use Incubamas\Entities\Emprendedor;
-use Incubamas\Entities\Empresa;
-use Incubamas\Entities\Socios;
 use Incubamas\Entities\Solicitud;
 use Incubamas\Entities\Pago;
+use Incubamas\Entities\Subidas;
 
 class EmprendedoresRepo extends BaseRepo
 {
@@ -51,6 +50,13 @@ class EmprendedoresRepo extends BaseRepo
             ->orWhereHas('empresas',function($query) use ($parametro)
             { $query->whereRaw('razon_social LIKE "%'.$parametro.'%"'); })
             ->orderBy('fecha_ingreso', 'desc')->paginate(12);;
+    }
+
+    public function subidos($emprendedor_id)
+    {
+        return Subidas::with('emprendedor')->with('empresa')
+            ->with('socio')->with('documentos')
+            ->where('emprendedor_id', '=', $emprendedor_id)->get();
     }
 
     public function verificar($fecha_actual)
@@ -120,22 +126,6 @@ class EmprendedoresRepo extends BaseRepo
     public function similar($nombre)
     {
         return Emprendedor::whereRaw("CONCAT(name,' ',apellidos) LIKE '%".$nombre."%'")->first();
-    }
-    
-    public function empresas($emprendedor_id)
-    {
-        return Emprendedor::where('id','=',$emprendedor_id)->get();
-    }
-    
-    public function listar_empresas($emprendedor_id)
-    {
-        return Empresa::where('emprendedor_id','=',$emprendedor_id)->lists('nombre_empresa','id');
-    }
-    
-    public function listar_socios($emprendedor_id)
-    {
-        return Socios::selectRaw('id, CONCAT(nombre, " ", apellidos) AS nombre_completo')
-		->where('emprendedor_id','=',$emprendedor_id)->lists('nombre_completo','id');
     }
 
 }

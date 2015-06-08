@@ -9,6 +9,30 @@ class DocumentoRepo extends BaseRepo
     {
         return new Documento;
     }
+
+    public function newSubida()
+    {
+        return new Subidas();
+    }
+
+    public function actualizarDocumento($subida, $documento)
+    {
+        $this->borrarDocumento($subida->documento);
+        $subida->documento = $documento;
+        $subida->save();
+    }
+
+    public function borrarSubida($id)
+    {
+        $subida = Subidas::find($id);
+        $this->borrarDocumento($subida->documento);
+        $subida->delete();
+    }
+
+    public function borrarDocumento($documento)
+    {
+        \File::delete(public_path() . '/Orb/documentos/'.$documento);
+    }
     
     public function num_documentos()
     {
@@ -17,7 +41,7 @@ class DocumentoRepo extends BaseRepo
     
     public function num_subidos($emprendedor_id)
     {
-        return Subidas::where('id_emprendedor','=',$emprendedor_id)->count();
+        return Subidas::where('emprendedor_id','=',$emprendedor_id)->count();
     }
 
     public function documentos_listar()

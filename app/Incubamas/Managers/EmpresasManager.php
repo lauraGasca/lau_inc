@@ -30,7 +30,7 @@ class EmpresasManager extends BaseManager
             "financiamiento"        => 'required|size:1',
             "monto_financiamiento"  => 'required_if:financiamiento,2|max:50',
             "costo_proyecto"        => 'required_if:financiamiento,2|max:50',
-            "aportacion"            => 'required_if:financiamiento,2|max:50'
+            "aportacion"            => 'required_if:financiamiento,2|max:50',
         ];
         return $rules;
     }

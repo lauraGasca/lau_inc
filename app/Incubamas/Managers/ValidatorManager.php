@@ -130,6 +130,18 @@ class ValidatorManager
                     'empresa_id'   	    =>    'required|exists:empresas,id',
                 ];
                 break;
+            //Para eliminar socios
+            case 'socio':
+                $rules = [
+                    'socio_id'   	    =>    'required|exists:socios,id',
+                ];
+                break;
+            //Para eliminar documentos subidos
+            case 'subidas':
+                $rules = [
+                    'subida_id'   	    =>    'required|exists:subidas,id',
+                ];
+                break;
             //Crear un emprendedor desde el panel de administrador
             case 'user':
                 $rules = [
