@@ -6,11 +6,6 @@ class Subidas extends \Eloquent
 
     protected $guarded = ['id','documento', 'pertenece'];
 
-    public function emprendedor()
-    {
-        return $this->belongsTo('Emprendedor');
-    }
-
     public function empresa()
     {
         return $this->belongsTo('Empresa');

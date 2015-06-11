@@ -22,9 +22,13 @@
     {{ HTML::style('Orb/js/fileinput/css/fileinput.min.css') }}
     {{ HTML::script('Orb/js/fileinput/js/fileinput.min.js') }}
     {{ HTML::script('Orb/js/jquery.maskedinput.js')}}
+    {{ HTML::script('Orb/js/jquery.maskMoney.js') }}
     <script type="text/javascript">
         $(function() {
             $("#cpEmp").mask("99999");
+            $("#monto_financiamiento").maskMoney();
+            $("#costo_proyecto").maskMoney();
+            $("#aportacion").maskMoney();
         });
     </script>
 @stop
@@ -225,21 +229,21 @@
                         <div class="col-md-5 espacio_abajo">
                             {{Form::label('monto_financiamiento', 'Monto a solicitar del financiamiento', ['class' => 'label'])}}
                             <label class="input">
-                                <i class="icon-prepend fa fa-money"></i>{{Form::text('monto_financiamiento', null, ['id'=>'monto_financiamiento'])}}
+                                <i class="icon-prepend fa fa-money"></i>{{Form::text('monto_financiamiento', null, ['id'=>'monto_financiamiento', 'data-prefix'=>"$ "])}}
                                 <span class="message-error">{{$errors->first('monto_financiamiento')}}</span>
                             </label>
                         </div>
                         <div class="col-md-6 espacio_abajo">
                             {{Form::label('costo_proyecto', 'Costo total del proyecto', ['class' => 'label'])}}
                             <label class="input">
-                                <i class="icon-prepend fa fa-money"></i>{{Form::text('costo_proyecto', null, ['id'=>'costo_proyecto'])}}
+                                <i class="icon-prepend fa fa-money"></i>{{Form::text('costo_proyecto', null, ['id'=>'costo_proyecto', 'data-prefix'=>"$ "])}}
                                 <span class="message-error">{{$errors->first('costo_proyecto')}}</span>
                             </label>
                         </div>
                         <div class="col-md-5 espacio_abajo">
                             {{Form::label('aportacion', 'Aportación de Emprendedor', ['class' => 'label'])}}
                             <label class="input">
-                                <i class="icon-prepend fa fa-money"></i>{{Form::text('aportacion', null, ['id'=>'aportacion'])}}
+                                <i class="icon-prepend fa fa-money"></i>{{Form::text('aportacion', null, ['id'=>'aportacion', 'data-prefix'=>"$ "])}}
                                 <span class="message-error">{{$errors->first('aportacion')}}</span>
                             </label>
                         </div>

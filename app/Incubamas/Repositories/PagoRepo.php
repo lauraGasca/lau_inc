@@ -9,21 +9,74 @@ class PagoRepo extends BaseRepo
     {
         return new Pago;
     }
-    
-    public function pagos($emprendedor_id)
+
+    public function newPago()
+    {
+        return new Pago();
+    }
+
+    public function deletePago($pago_id)
+    {
+        $pago = Pago::find($pago_id);
+        $pago->delete();
+    }
+
+    public function adeudoServicio($solicitud_id)
+    {
+        $solicitud = Solicitud::find($solicitud_id);
+        if(count($solicitud)>0)
+            return $solicitud->monto;
+        else
+            return 0;
+    }
+
+    public function pagosServicio($solicitud_id, $pago_id)
     {
         $pagos = Pago::selectRaw('SUM(monto) as total')
-        ->where('pago.emprendedor_id','=',$emprendedor_id)->first();
+            ->where('solicitud_id','=',$solicitud_id)
+            ->where('id', '<>', $pago_id)->first();
         if(count($pagos)>0)
             return $pagos->total;
         else
-            return null;
+            return 0;
+    }
+
+    public function verificarMonto($pago_id, $solicitud_id, $monto)
+    {
+        $monto_formateado = str_replace("$", "", str_replace(",", "", $monto));
+        $adeudo = $this->adeudoServicio($solicitud_id);
+        $pagado = $this->pagosServicio($solicitud_id, $pago_id);
+        $faltante = $adeudo - $pagado;
+        if ($monto_formateado > $faltante)
+            return true;
+        return false;
+    }
+
+    public function pagosRealizados($emprendedor_id)
+    {
+        $pagos = Pago::selectRaw('SUM(monto) as total')
+            ->where('emprendedor_id','=',$emprendedor_id)->first();
+        if(count($pagos)>0)
+            return '$ '.number_format($pagos->total, 2, '.', ',');
+        else
+            return '$ 0.00';
+    }
+
+    public function pago($pago_id)
+    {
+        return Pago::find($pago_id);
+    }
+
+    public function pagos($emprendedor_id)
+    {
+        return Pago::with('solicitud')->with('recibido')
+            ->where('pago.emprendedor_id', '=', $emprendedor_id)->get();
     }
     
     public function servicios($emprendedor_id)
     {
         $servicios = Solicitud::selectRaw('SUM(monto) as total')
-	->where('solicitud.emprendedor_id','=',$emprendedor_id)->first();
+	        ->where('solicitud.emprendedor_id','=',$emprendedor_id)->first();
         if(count($servicios)>0)
             return $servicios->total;
         else

@@ -54,9 +54,16 @@ class EmprendedoresRepo extends BaseRepo
 
     public function subidos($emprendedor_id)
     {
-        return Subidas::with('emprendedor')->with('empresa')
+        return Subidas::with('empresa')
             ->with('socio')->with('documentos')
             ->where('emprendedor_id', '=', $emprendedor_id)->get();
+    }
+
+    public function cambiar_programa($emprendedor_id, $programa)
+    {
+        $emprendedor = Emprendedor::find($emprendedor_id);
+        $emprendedor->programa = $programa;
+        $emprendedor->save();
     }
 
     public function verificar($fecha_actual)
@@ -77,8 +84,8 @@ class EmprendedoresRepo extends BaseRepo
                     } else {
                         if ($solicitud->estado <> "Liquidado")
                         {
-                            $pagos = Pago::selectRaw('MAX(siguiente_pago) as siguiente')->where("emprendedor_id", "=", $emprendedor->id)->where("solicitud_id", "=", $solicitud->id)->first();
-                            $fecha_limite = strtotime(date_format(date_create($pagos->siguiente), 'Y-m-d'));
+                            $pagos = Pago::selectRaw('MAX(siguiente_pago) as sigue')->where("emprendedor_id", "=", $emprendedor->id)->where("solicitud_id", "=", $solicitud->id)->first();
+                            $fecha_limite = strtotime(date_format(date_create($pagos->sigue), 'Y-m-d'));
                             if ($fecha_actual > $fecha_limite)
                             {
                                 $emprendedor->estatus = "Suspendido";

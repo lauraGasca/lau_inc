@@ -142,6 +142,45 @@ class ValidatorManager
                     'subida_id'   	    =>    'required|exists:subidas,id',
                 ];
                 break;
+            //Para eliminar solicitudes de servicios de emprendedor
+            case 'solicitud':
+                $rules = [
+                    'solicitud_id'   	    =>    'required|exists:solicitud,id',
+                ];
+                break;
+            //Para eliminar pagos
+            case 'pago':
+                $rules = [
+                    'pago_id'   	    =>    'required|exists:pago,id',
+                ];
+                break;
+            //Para verificar los datos de la solicitud antes de guardarla y poder hacer otras validaciones
+            case 'editaSolicitud':
+                $rules = [
+                    "empresa_id"        => 'exists:empresas,id',
+                    "servicio_id"       => 'required|exists:servicios_incuba,id',
+                    "nombre"            => 'required_if:servicio_id,5|max:50',
+                    "monto"             => 'required|max:50',
+                    "fecha_limite"      => 'required|date_format:d/m/Y'
+                ];
+                break;
+            //Para verificar los datos del pago antes de crearlo y poder hacer otras validaciones
+            case 'creaPago':
+                $rules = [
+                    "emprendedor_id"    => 'exists:emprendedores,id',
+                    "solicitud_id"      => 'required|exists:solicitud,id',
+                    "recibido_by"       => 'required|exists:users,id',
+                    "monto"             => 'required|max:50',
+                    "fecha_emision"     => 'required|date_format:d/m/Y',
+                    "siguiente_pago"    => 'date_format:d/m/Y'
+                ];
+                break;
+            //Para cambiar el programa del emprendedor
+            case 'programa':
+                $rules = [
+                    'programa'   	    =>    'required|max:50',
+                ];
+                break;
             //Crear un emprendedor desde el panel de administrador
             case 'user':
                 $rules = [

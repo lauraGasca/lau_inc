@@ -33,6 +33,34 @@ App::missing(function($exception)
 
 Route::get('pruebas', function()
 {
+    $solicitudes = Solicitud::all();
+    foreach($solicitudes as $solicitud)
+    {
+
+        if($solicitud->servicio_id<>5) {
+            $servicio = Servicios::find($solicitud->servicio_id);
+            if ($solicitud->empresa_id <> '') {
+                $empresa = Empresa::find($solicitud->empresa_id);
+                $nombre = $empresa->nombre_empresa . ' - ' . $servicio->nombre;
+            } else {
+                $emprendedor = Emprendedor::find($solicitud->emprendedor_id);
+                $usuario = User::find($emprendedor->user_id);
+                $nombre = $usuario->nombre . ' ' . $usuario->apellidos . ' - ' . $servicio->nombre;
+            }
+
+        }else{
+            $nombre = "Otro Servicio";
+        }
+        $solicitud->nombre = $nombre;
+        $solicitud->save();
+    }
+    /*$pagos = Pago::all();
+    foreach($pagos as $pago)
+    {
+        $asesor = Asesor::find($pago->recibido_by);
+        $pago->recibido_by = $asesor->user_id;
+        $pago->save();
+    }*/
     /*$blogs = Blogs::all();
     foreach($blogs as $blog)
     {
