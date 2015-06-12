@@ -25,11 +25,11 @@ class SolicitudRepo extends BaseRepo
             $servicio = Servicios::find($solicitud->servicio_id);
             if ($solicitud->empresa_id <> '') {
                 $empresa = Empresa::find($solicitud->empresa_id);
-                $nombre = $empresa->nombre_empresa . ' - ' . $servicio->nombre;
+                $nombre = $servicio->nombre. ' - ' . $empresa->nombre_empresa;
             } else {
                 $emprendedor = Emprendedor::find($solicitud->emprendedor_id);
                 $usuario = User::find($emprendedor->user_id);
-                $nombre = $usuario->nombre . ' ' . $usuario->apellidos . ' - ' . $servicio->nombre;
+                $nombre = $servicio->nombre. ' - ' .$usuario->nombre . ' ' . $usuario->apellidos;
             }
         }else{
             $nombre = $nombreServicio;
@@ -53,10 +53,16 @@ class SolicitudRepo extends BaseRepo
         return Solicitud::find($solicitud_id);
     }
 
+    public function solicitud_recibo($solicitud_id)
+    {
+        return Solicitud::with('empresa')->with('servicio')->with('pagos')
+            ->where('id', '=', $solicitud_id)->first();
+    }
+
     public function solicitudes($emprendedor_id)
     {
         return Solicitud::with('empresa')->with('servicio')->with('pagos')
-            ->where('solicitud.emprendedor_id', '=', $emprendedor_id)->get();
+            ->where('emprendedor_id', '=', $emprendedor_id)->get();
     }
 
     public function solicitudes_listado($emprendedor_id)

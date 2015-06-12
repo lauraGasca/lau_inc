@@ -1,69 +1,53 @@
 <!DOCTYPE html>
 <html lang="es">
     <head>
-        <style>
-            html{
-                font-family:sans-serif;
-                font-size: 12px;
-                font-weight: 300;
-            }
-            .jumbotron{
-                background-color:#eee
-            }
-            th, td {
-                border: 1px solid #aaa;
-                border-collapse: collapse;
-            }
-            table{
-                border-collapse: collapse;
-            }
-        </style>
+        <style>html{font-family:sans-serif;font-size: 12px;font-weight: 300;}  .jumbotron{background-color:#eee}  th, td {border: 1px solid #aaa;  border-collapse: collapse;  }  table{border-collapse: collapse;  }</style>
     </head>
     <body>
         <div class="container">
             <div class="header">
                 <div style="position:float; float: right; ">
-                    <img src="{{URL::asset('Orb/images/pagado.jpg')}}" alt="Logo" style="width:15%; padding-left: 600px; padding-top:0px"/>
+                    {{ HTML::image('Orb/images/pagado.jpg', 'Pagado', array('style' => 'width:15%; padding-left: 600px; padding-top:0px')) }}
                     <br/><br/>
                     <div style="position:float; float: right; text-align: right;">
                         <span style="font-size: 25px;">IncubaM&aacute;s</span><br/>
-                        <span>Divisi&oacute;n del Norte No. 124 B</span><br/>
-                        <span>Col. El Vergel, C.P 38000</span><br/>
+                        <span>Sinaloa Ote No. 119</span><br/>
+                        <span>Col. Alameda</span><br/>
                         <span>Celaya, Gto</span><br/>
                         <span>M&eacute;xico</span><br/>
                     </div>
                     <div style="position: absolute; top:120px;">
-                        <img src="{{URL::asset('Orb/images/Logo_footer.png')}}" alt="Logo" style="width:40%"/>
+                        {{ HTML::image('Orb/images/Logo_footer.png', 'Logo Incubamas', array('style' => 'width:40%')) }}
                     </div>
                 </div>
             </div>
             <br/><br/>
             <div class="jumbotron" style="padding: 0px; line-height: 5px; margin:0px;">
                 <p style="font-size: 20px;"><strong> &nbsp; Orden No. {{$pago->id}}</strong></p>
-                <p> &nbsp; Fecha del Recibo: {{date('d-m-Y')}}</p>
+                <p> &nbsp; Fecha del Recibo: {{strftime("%d/%b/%Y", strtotime(date('d-m-Y')));}}</p>
             </div>
             <br/><br/>
             <div style="position:float; float: right; text-align: left;">
                 <span style="font-size: 20px;"><strong>A nombre de </strong></span><br/>
-                <span>{{utf8_decode($pago->name)}} {{utf8_decode($pago->apellido_emp)}}</span><br/>
-                @if($pago->calle<>""||$pago->num_ext<>""||$pago->colonia<>""||$pago->cp<>""||$pago->municipio<>""||$pago->estado<>"")
-                        <span>
-                        {{utf8_decode($pago->calle)}} No. {{utf8_decode($pago->num_ext)}}
+                <span>{{utf8_decode($emprendedor->usuario->nombre)}} {{utf8_decode($emprendedor->usuario->apellidos)}}</span><br/>
+                @if($solicitud->empresa_id <> '' && $solicitud->empresa->negocio_casa<>2)
+                    <span>
+                        {{utf8_decode($solicitud->empresa->calle)}} No. {{utf8_decode($solicitud->empresa->num_ext)}}
                         @if($pago->num_int<>"")
-                            No. exterior {{utf8_decode($pago->num_int)}}
+                            No. exterior {{utf8_decode($solicitud->empresa->num_int)}}
                         @endif
                     </span><br/>
-                    <span>Col. {{utf8_decode($pago->colonia)}}, C.P {{$pago->cp}}</span><br/>
-                    <span>{{utf8_decode($pago->municipio)}}, {{utf8_decode($pago->estado)}}</span><br/>
+                    <span>Col. {{utf8_decode($solicitud->empresa->colonia)}}, C.P {{$solicitud->empresa->cp}}</span><br/>
+                    <span>{{utf8_decode($solicitud->empresa->municipio)}}, {{utf8_decode($solicitud->empresa->estado)}}</span><br/>
                 @else
-                        <span>
-                        {{utf8_decode($pago->calle_2)}} No. {{utf8_decode($pago->num_ext_2)}}
-                        @if($pago->num_int_2<>"")
-                            No. exterior {{utf8_decode($pago->num_int_2)}}
+                    <span>
+                        {{utf8_decode($emprendedor->calle)}} No. {{utf8_decode($emprendedor->num_ext)}}
+                        @if($emprendedor->num_int<>"")
+                            No. exterior {{utf8_decode($emprendedor->num_int)}}
                         @endif
                     </span><br/>
-                    <span>Col. {{utf8_decode($pago->colonia_2)}}, C.P {{$pago->cp_2}}</span><br/>
-                    <span>{{utf8_decode($pago->municipio_2)}}, {{utf8_decode($pago->estado_2)}}</span><br/>
+                    <span>Col. {{utf8_decode($emprendedor->colonia)}}, C.P {{$emprendedor->cp}}</span><br/>
+                    <span>{{utf8_decode($emprendedor->municipio)}}, {{utf8_decode($emprendedor->estado)}}</span><br/>
                 @endif                
                 <span>M&eacute;xico</span><br/>
             </div>
@@ -74,12 +58,12 @@
                     <td></td>
                 </tr>
                 <tr>
-                    <td style="text-align: center;">Pago de servicio de: {{utf8_decode($pago->servicios)}} para {{utf8_decode($pago->nombre_empresa)}}</td>
-                    <td style="text-align: center;">$ {{number_format($pago->monto, 2, '.', ',');}}</td>
+                    <td style="text-align: center;">Pago de servicio de: {{utf8_decode($solicitud->nombre)}}</td>
+                    <td style="text-align: center;">{{$pago->monto_total}}</td>
                 </tr>
                 <tr BGCOLOR="#eee">
                     <td style="text-align: right;"><strong>Subtotal&nbsp; </strong></td>
-                    <td style="text-align: center;">$ {{number_format($pago->monto, 2, '.', ',');}}</td>	
+                    <td style="text-align: center;">{{$pago->monto_total}}</td>
                 </tr>
                 <tr BGCOLOR="#eee">
                     <td style="text-align: right;"><strong>Impuestos&nbsp; </strong></td>
@@ -87,7 +71,7 @@
                 </tr>
                 <tr style="border: none;">
                     <td style="text-align: right; border: none;"><strong>Total&nbsp; </strong></td>
-                    <td style="text-align: center; border: none;">$ {{number_format($pago->monto, 2, '.', ',');}}</td>	
+                    <td style="text-align: center; border: none;">{{$pago->monto_total}}</td>
                 </tr>
             </table>                
             <br/><br/><br/>
@@ -100,22 +84,14 @@
                     <td style="text-align: center;"><strong>Fecha del Siguiente Pago</strong></td>
                 </tr>
                 <tr>
-                    <?php
-                        $date = date_create($pago->fecha_emision);
-                        $fecha=date_format($date, 'd-m-Y');
-                    ?>
-                    <td style="text-align: center;">{{$fecha}}</td>
+                    <td style="text-align: center;">{{$pago->emision}}</td>
                     <td style="text-align: center;">Efectivo</td>
-                    <td style="text-align: center;">{{utf8_decode($pago->nombre)}}  {{utf8_decode($pago->apellidos)}}</td>
-                    <?php
-                        if($pago->siguiente_pago==null)
-                            $fecha = "Cuenta Liquidada";
-                        else{
-                            $date = date_create($pago->siguiente_pago);
-                            $fecha=date_format($date, 'd-m-Y');
-                        }
-                    ?>
-                    <td style="text-align: center;">{{$fecha}}</td>
+                    <td style="text-align: center;">{{utf8_decode($asesor->nombre)}}  {{utf8_decode($asesor->apellidos)}}</td>
+                    @if($solicitud->estado=='Liquidado')
+                        <td style="text-align: center;">Cuenta Liquidada</td>
+                    @else
+                        <td style="text-align: center;">{{$pago->siguiente}}</td>
+                    @endif
                 </tr>
             </table>
             
@@ -128,6 +104,6 @@
             <div style="position:float; float: right; text-align: right;">
                 <span style="font-size: 18px;">www.IncubaMas.com</span><br/>
             </div>
-        </div> <!-- /container -->  
+        </div>
     </body>
 </html>

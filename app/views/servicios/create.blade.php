@@ -60,7 +60,7 @@
                         {{Form::label('fecha_limite', '* Fecha Limite de Pago', array('class' => 'label'))}}
                         <label class="input">
                             <i class="icon-prepend  fa fa-calendar"></i>
-                            {{Form::text('fecha_limite', null, ['id'=>'fecha_limite'])}}
+                            {{Form::text('fecha_limite', null, ['id'=>'fecha_limite', 'readonly'])}}
                         </label>
                         <span class="message-error">{{$errors->first('fecha_limite')}}</span>
                     </div>

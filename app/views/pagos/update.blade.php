@@ -49,6 +49,7 @@
     <div class="powerwidget cold-grey" id="profile" data-widget-editbutton="false">
         <div class="inner-spacer">
             {{Form::model($pago, ['url'=>'pagos/editar-pago', 'class'=>'orb-form','method' => 'post'])}}
+                {{Form::hidden('id')}}
                 {{Form::hidden('emprendedor_id', $emprendedor_id)}}
                 <fieldset>
                     <div class="col-md-6 espacio_abajo">
@@ -71,7 +72,7 @@
                         {{Form::label('fecha_emision', '* Fecha de Emision', array('class' => 'label'))}}
                         <label class="input">
                             <i class="icon-prepend fa fa-calendar"></i>
-                            {{Form::text('fecha_emision', $pago->emisiones, ['id'=>'fecha_emision'])}}
+                            {{Form::text('fecha_emision', $pago->emisiones, ['id'=>'fecha_emision', 'readonly'])}}
                         </label>
                         <span class="message-error">{{$errors->first('fecha_emision')}}</span>
                     </div>
@@ -86,14 +87,14 @@
                         {{Form::label('siguiente_pago', 'Fecha del Siguiente Pago', array('class' => 'label'))}}
                         <label class="input">
                             <i class="icon-prepend  fa fa-calendar"></i>
-                            {{Form::text('siguiente_pago', $pago->siguientes, ['id'=>'siguiente_pago'])}}
+                            {{Form::text('siguiente_pago', $pago->siguientes, ['id'=>'siguiente_pago', 'readonly'])}}
                         </label>
                         <span class="message-error">{{$errors->first('siguiente_pago')}}</span>
                     </div>
                 </fieldset>
                 <fieldset>
                     <div class="col-md-6 espacio_abajo" >
-                        {{ Form::submit('Crear', ['class'=>'btn btn-info'])}}
+                        {{ Form::submit('Guardar', ['class'=>'btn btn-info'])}}
                     </div>
                     <div class="col-md-5 espacio_abajo" style="text-align: right;">
                         * Los campos son obligatorios
@@ -115,7 +116,7 @@
                 language: 'es',
                 minDate:'1/1/2000',
                 defaultDate: new Date(),
-                maxDate: '1/1/2100'
+                maxDate: '{{$fecha_limite}}'
             });
         });
         $(function () {
@@ -124,7 +125,7 @@
                 language: 'es',
                 minDate:'1/1/2000',
                 defaultDate: new Date(),
-                maxDate: '1/1/2100'
+                maxDate: '{{$fecha_limite}}'
             });
         });
         $("#fecha_emision").on("dp.change", function (e) {

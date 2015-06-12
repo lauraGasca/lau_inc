@@ -163,8 +163,8 @@
                                 @foreach($pagos as $pago)
                                     <tr class="active">
                                         @if($emprendedor->usuario->email<>'')
-                                            <td><a target="_blank" href="{{url('emprendedores/imprimir-pago/'.$pago->id)}}" ><i class="fa fa-print"></i></a></td>
-                                            <td><a onClick="return confirm('\u00BFSeguro que deseas enviar?');" href="{{url('emprendedores/enviar-pago/'.$pago->id.'/'.$emprendedor->id)}}" ><i class="fa fa-paper-plane"></i></a></td>
+                                            <td><a target="_blank" href="{{url('pagos/imprimir-pago/'.$pago->id)}}" ><i class="fa fa-print"></i></a></td>
+                                            <td><a onClick="return confirm('\u00BFSeguro que deseas enviar?');" href="{{url('pagos/enviar-pago/'.$pago->id)}}" ><i class="fa fa-paper-plane"></i></a></td>
                                         @else
                                             <td colspan="2" style="text-align: center"><a target="_blank" href="{{url('emprendedores/imprimir-pago/'.$pago->id)}}" ><i class="fa fa-print"></i></a></td>
                                         @endif

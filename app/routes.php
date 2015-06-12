@@ -41,11 +41,11 @@ Route::get('pruebas', function()
             $servicio = Servicios::find($solicitud->servicio_id);
             if ($solicitud->empresa_id <> '') {
                 $empresa = Empresa::find($solicitud->empresa_id);
-                $nombre = $empresa->nombre_empresa . ' - ' . $servicio->nombre;
+                $nombre = $servicio->nombre. ' - ' .$empresa->nombre_empresa;
             } else {
                 $emprendedor = Emprendedor::find($solicitud->emprendedor_id);
                 $usuario = User::find($emprendedor->user_id);
-                $nombre = $usuario->nombre . ' ' . $usuario->apellidos . ' - ' . $servicio->nombre;
+                $nombre = $servicio->nombre. ' - ' .$usuario->nombre . ' ' . $usuario->apellidos;
             }
 
         }else{

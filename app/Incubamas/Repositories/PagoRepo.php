@@ -67,16 +67,22 @@ class PagoRepo extends BaseRepo
         return Pago::find($pago_id);
     }
 
+    public function pago_recibo($pago_id)
+    {
+        return Pago::with('solicitud')->with('recibido')
+            ->where('id', '=', $pago_id)->first();
+    }
+
     public function pagos($emprendedor_id)
     {
         return Pago::with('solicitud')->with('recibido')
-            ->where('pago.emprendedor_id', '=', $emprendedor_id)->get();
+            ->where('emprendedor_id', '=', $emprendedor_id)->get();
     }
     
     public function servicios($emprendedor_id)
     {
         $servicios = Solicitud::selectRaw('SUM(monto) as total')
-	        ->where('solicitud.emprendedor_id','=',$emprendedor_id)->first();
+	        ->where('emprendedor_id','=',$emprendedor_id)->first();
         if(count($servicios)>0)
             return $servicios->total;
         else

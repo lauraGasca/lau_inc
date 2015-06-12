@@ -65,7 +65,7 @@
                         {{Form::label('fecha_emision', '* Fecha de Emision', array('class' => 'label'))}}
                         <label class="input">
                             <i class="icon-prepend fa fa-calendar"></i>
-                            {{Form::text('fecha_emision', null, ['id'=>'fecha_emision'])}}
+                            {{Form::text('fecha_emision', null, ['id'=>'fecha_emision', 'readonly'])}}
                         </label>
                         <span class="message-error">{{$errors->first('fecha_emision')}}</span>
                     </div>
@@ -80,7 +80,7 @@
                         {{Form::label('siguiente_pago', 'Fecha del Siguiente Pago', array('class' => 'label'))}}
                         <label class="input">
                             <i class="icon-prepend  fa fa-calendar"></i>
-                            {{Form::text('siguiente_pago', null, ['id'=>'siguiente_pago'])}}
+                            {{Form::text('siguiente_pago', null, ['id'=>'siguiente_pago', 'readonly'])}}
                         </label>
                         <span class="message-error">{{$errors->first('siguiente_pago')}}</span>
                     </div>
