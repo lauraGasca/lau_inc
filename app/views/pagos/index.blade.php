@@ -118,7 +118,7 @@
                                     @endforeach
                                 @else
                                     <tr>
-                                        <td colspan="6"><i>No hay servicios registrados</i></td>
+                                        <td colspan="9"><i>No hay servicios registrados</i></td>
                                     </tr>
                                 @endif
                             </tbody>
@@ -184,7 +184,7 @@
                                 @endforeach
                             @else
                                 <tr>
-                                    <td colspan="6"><i>No hay pagos registrados</i></td>
+                                    <td colspan="10"><i>No hay pagos registrados</i></td>
                                 </tr>
                             @endif
                         </tbody>

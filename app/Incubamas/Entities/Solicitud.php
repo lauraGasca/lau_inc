@@ -30,6 +30,15 @@ class Solicitud extends \Eloquent
     }
 
     //Transforma dd/mm/yyyy a yyyy/mm/dd para guardar en la BD
+    public function setEmpresaIdAttribute($value)
+    {
+        if(!empty($value))
+        {
+            $this->attributes['empresa_id'] = $value;
+        }
+    }
+
+    //Transforma dd/mm/yyyy a yyyy/mm/dd para guardar en la BD
     public function setMontoAttribute($value)
     {
         if(!empty($value))

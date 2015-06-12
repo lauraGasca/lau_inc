@@ -8,6 +8,7 @@
 
 @section('mapa')
     <li><a href="#"><i class="fa fa-home"></i></a></li>
+    <li>{{HTML::link('emprendedores','Emprendedores')}}</li>
     <li>{{HTML::link('pagos/index/'.$emprendedor_id,'Pagos')}}</li>
     <li class="active">Editar</li>
 @stop

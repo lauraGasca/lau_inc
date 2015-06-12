@@ -68,7 +68,7 @@ class PagosController extends BaseController
         $manager = new SolicitudManager($solicitud, Input::all());
         $manager->save();
         $this->soliciturRepo->actualizarNombre($solicitud, Input::get('nombre'));
-        $this->soliciturRepo->verificarSolicitud($solicitud);
+        $this->soliciturRepo->verificarSolicitud($solicitud->id);
         return Redirect::to('pagos/index/'.Input::get("emprendedor_id"))->with(array('confirm' => 'Se ha creado correctamente.'));
     }
 
