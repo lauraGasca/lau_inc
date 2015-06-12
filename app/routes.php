@@ -33,7 +33,18 @@ App::missing(function($exception)
 
 Route::get('pruebas', function()
 {
-    $solicitudes = Solicitud::all();
+    //return View::make('emails.recibo');
+    $titulo = "Recibo de Pago";
+    $mensaje = '<p>Hola <strong>Nombre Emprendedor</strong>:</p><p> Adjuntamos el recibo del pago que ha realizado.</p><p>Cualquier duda o comentario, no dude en ponerse en contacto con nosotros.</p>';
+    $seccion = "";
+    $imagen = false;
+    $asunto = '<tr><td><strong>Asunto: </strong></td><td>Asunto indicado en el formulario</td></tr>';
+    $tabla = "";
+
+    return View::make('emails.estandar', compact('titulo', 'mensaje', 'seccion', 'imagen', 'tabla'));
+
+
+    /*$solicitudes = Solicitud::all();
     foreach($solicitudes as $solicitud)
     {
 
@@ -53,7 +64,7 @@ Route::get('pruebas', function()
         }
         $solicitud->nombre = $nombre;
         $solicitud->save();
-    }
+    }*/
     /*$pagos = Pago::all();
     foreach($pagos as $pago)
     {

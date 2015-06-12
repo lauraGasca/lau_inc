@@ -208,7 +208,6 @@ class PagosController extends BaseController
             return Response::view('errors.missing', array(), 404);
     }
 
-    //Verificar
     public function getEnviarPago($pago_id)
     {
         $this->_soloAsesores();
@@ -221,7 +220,13 @@ class PagosController extends BaseController
             $PDF = PDF::load($html, 'A4', 'portrait')->output();
             $correo = $emprendedor->usuario->email;
             $nombre = $emprendedor->usuario->nombre." ".$emprendedor->usuario->apellidos;
-            Mail::send('emails.recibo', [], function ($message) use ($PDF, $correo, $nombre) {
+            $titulo = "Recibo de Pago";
+            $mensaje = '<p>Hola <strong>'.$nombre.'</strong>:</p><p> Adjuntamos el recibo del pago que ha realizado.</p><p>Cualquier duda o comentario, no dude en ponerse en contacto con nosotros.</p>';
+            $seccion = "";
+            $imagen = false;
+            $tabla = "";
+            Mail::send('emails.estandar', ['titulo'=>$titulo, 'mensaje'=> $mensaje, 'seccion'=> $seccion, 'imagen'=> $imagen, 'tabla'=> $tabla],
+                function ($message) use ($PDF, $correo, $nombre) {
                 $message->subject('Recibo de Pago');
                 $message->to($correo, $nombre);
                 $message->attachData($PDF, 'recibo_pago.pdf');
