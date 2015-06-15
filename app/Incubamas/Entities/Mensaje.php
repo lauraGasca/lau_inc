@@ -13,7 +13,7 @@ class Mensaje extends \Eloquent
     //Transforma yyyy/mm/dd a dd/mm/yyyy
     public function getEnvioAttribute()
     {
-        return strftime("%I:%M %d/%b/%Y", strtotime(date_format(date_create($this->fecha_enviado), 'd-m-Y H:i:s')));
+        return strftime("%I:%M %d/%b/%Y", strtotime(date_format(date_create($this->created_at), 'd-m-Y H:i:s')));
     }
     
 }

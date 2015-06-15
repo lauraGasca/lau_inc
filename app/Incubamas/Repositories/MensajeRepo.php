@@ -33,14 +33,14 @@ class MensajeRepo extends BaseRepo
 
     public function fecha($mensaje, $fecha)
     {
-        $mensaje->fecha_enviado = $fecha;
+        $mensaje->created_at = $fecha;
         $mensaje->save();
     }
     
     public function mensajes($chat_id)
     {
         return Mensaje::with('usuario')->where('chat_id','=',$chat_id)
-            ->orderBy('fecha_enviado', 'asc')->get();
+            ->orderBy('created_at', 'asc')->get();
     }
 
     public function hora_local($zona_horaria = 0)
