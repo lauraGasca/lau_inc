@@ -81,11 +81,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="perfil.blade.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="perfil.blade.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/views/emprendedores/perfil.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-10.666667" vertical-offset="8280" max-vertical-offset="18126">
-              <caret line="476" column="169" selection-start-line="476" selection-start-column="169" selection-end-line="476" selection-end-column="169" />
+            <state vertical-scroll-proportion="0.8636364" vertical-offset="7524" max-vertical-offset="17802">
+              <caret line="437" column="157" selection-start-line="437" selection-start-column="157" selection-end-line="437" selection-end-column="157" />
               <folding>
                 <element signature="e#2497#2521#0#HTML" expanded="true" />
                 <element signature="e#3528#3548#0#HTML" expanded="true" />
@@ -102,46 +102,46 @@
                 <element signature="e#17752#17771#0#HTML" expanded="true" />
                 <element signature="e#20666#20719#0#HTML" expanded="true" />
                 <element signature="e#28286#28311#0#HTML" expanded="true" />
-                <element signature="e#30592#30617#0#HTML" expanded="true" />
-                <element signature="e#32808#32833#0#HTML" expanded="true" />
-                <element signature="e#33819#33839#0#HTML" expanded="true" />
-                <element signature="e#36953#36987#0#HTML" expanded="true" />
-                <element signature="e#37193#37227#0#HTML" expanded="true" />
-                <element signature="e#38115#38135#0#HTML" expanded="true" />
-                <element signature="e#40228#40258#0#HTML" expanded="true" />
-                <element signature="e#41272#41297#0#HTML" expanded="true" />
-                <element signature="e#43757#43796#0#HTML" expanded="true" />
-                <element signature="e#44702#44772#0#HTML" expanded="true" />
-                <element signature="e#44854#44897#0#HTML" expanded="true" />
-                <element signature="e#45450#45471#0#HTML" expanded="true" />
-                <element signature="e#46199#46229#0#HTML" expanded="true" />
-                <element signature="e#51809#51834#0#HTML" expanded="true" />
-                <element signature="e#56269#56294#0#HTML" expanded="true" />
-                <element signature="e#57822#57861#0#HTML" expanded="true" />
-                <element signature="e#59299#59339#0#HTML" expanded="true" />
-                <element signature="e#59650#59676#0#HTML" expanded="true" />
-                <element signature="e#60144#60170#0#HTML" expanded="true" />
+                <element signature="e#29574#29599#0#HTML" expanded="true" />
+                <element signature="e#30748#30773#0#HTML" expanded="true" />
+                <element signature="e#31759#31779#0#HTML" expanded="true" />
+                <element signature="e#34893#34927#0#HTML" expanded="true" />
+                <element signature="e#35133#35167#0#HTML" expanded="true" />
+                <element signature="e#36055#36075#0#HTML" expanded="true" />
+                <element signature="e#38168#38198#0#HTML" expanded="true" />
+                <element signature="e#39212#39237#0#HTML" expanded="true" />
+                <element signature="e#41697#41736#0#HTML" expanded="true" />
+                <element signature="e#42642#42712#0#HTML" expanded="true" />
+                <element signature="e#42794#42837#0#HTML" expanded="true" />
+                <element signature="e#43390#43411#0#HTML" expanded="true" />
+                <element signature="e#44139#44169#0#HTML" expanded="true" />
+                <element signature="e#49749#49774#0#HTML" expanded="true" />
+                <element signature="e#54209#54234#0#HTML" expanded="true" />
+                <element signature="e#55762#55801#0#HTML" expanded="true" />
+                <element signature="e#57239#57279#0#HTML" expanded="true" />
+                <element signature="e#57590#57616#0#HTML" expanded="true" />
+                <element signature="e#58084#58110#0#HTML" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.blade.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.blade.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/chat/index.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.37630662" vertical-offset="1944" max-vertical-offset="4410">
-              <caret line="120" column="141" selection-start-line="120" selection-start-column="141" selection-end-line="120" selection-end-column="141" />
+            <state vertical-scroll-proportion="-7.3333335" vertical-offset="1512" max-vertical-offset="4086">
+              <caret line="95" column="50" selection-start-line="95" selection-start-column="50" selection-end-line="95" selection-end-column="50" />
               <folding>
                 <element signature="e#3643#3668#0#HTML" expanded="true" />
-                <element signature="e#5362#5387#0#HTML" expanded="true" />
-                <element signature="e#7019#7044#0#HTML" expanded="true" />
-                <element signature="e#7638#7658#0#HTML" expanded="true" />
-                <element signature="e#10072#10106#0#HTML" expanded="true" />
-                <element signature="e#10256#10290#0#HTML" expanded="true" />
-                <element signature="e#10814#10834#0#HTML" expanded="true" />
-                <element signature="e#12365#12395#0#HTML" expanded="true" />
-                <element signature="e#13156#13181#0#HTML" expanded="true" />
-                <element signature="e#14939#14978#0#HTML" expanded="true" />
+                <element signature="e#4596#4621#0#HTML" expanded="true" />
+                <element signature="e#5463#5488#0#HTML" expanded="true" />
+                <element signature="e#6082#6102#0#HTML" expanded="true" />
+                <element signature="e#8516#8550#0#HTML" expanded="true" />
+                <element signature="e#8700#8734#0#HTML" expanded="true" />
+                <element signature="e#9258#9278#0#HTML" expanded="true" />
+                <element signature="e#10809#10839#0#HTML" expanded="true" />
+                <element signature="e#11600#11625#0#HTML" expanded="true" />
+                <element signature="e#13383#13422#0#HTML" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -209,8 +209,8 @@
         <option value="$PROJECT_DIR$/app/controllers/ChatController.php" />
         <option value="$PROJECT_DIR$/app/Incubamas/Managers/MensajeManager.php" />
         <option value="$PROJECT_DIR$/app/Incubamas/Repositories/MensajeRepo.php" />
-        <option value="$PROJECT_DIR$/app/views/emprendedores/perfil.blade.php" />
         <option value="$PROJECT_DIR$/app/views/chat/index.blade.php" />
+        <option value="$PROJECT_DIR$/app/views/emprendedores/perfil.blade.php" />
       </list>
     </option>
   </component>
@@ -662,7 +662,7 @@
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32970452" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27682737" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.27682737" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -1118,10 +1118,29 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/chat/index.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.3333335" vertical-offset="1512" max-vertical-offset="4086">
+          <caret line="95" column="50" selection-start-line="95" selection-start-column="50" selection-end-line="95" selection-end-column="50" />
+          <folding>
+            <element signature="e#3643#3668#0#HTML" expanded="true" />
+            <element signature="e#4596#4621#0#HTML" expanded="true" />
+            <element signature="e#5463#5488#0#HTML" expanded="true" />
+            <element signature="e#6082#6102#0#HTML" expanded="true" />
+            <element signature="e#8516#8550#0#HTML" expanded="true" />
+            <element signature="e#8700#8734#0#HTML" expanded="true" />
+            <element signature="e#9258#9278#0#HTML" expanded="true" />
+            <element signature="e#10809#10839#0#HTML" expanded="true" />
+            <element signature="e#11600#11625#0#HTML" expanded="true" />
+            <element signature="e#13383#13422#0#HTML" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/emprendedores/perfil.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.666667" vertical-offset="8280" max-vertical-offset="18126">
-          <caret line="476" column="169" selection-start-line="476" selection-start-column="169" selection-end-line="476" selection-end-column="169" />
+        <state vertical-scroll-proportion="0.8636364" vertical-offset="7524" max-vertical-offset="17802">
+          <caret line="437" column="157" selection-start-line="437" selection-start-column="157" selection-end-line="437" selection-end-column="157" />
           <folding>
             <element signature="e#2497#2521#0#HTML" expanded="true" />
             <element signature="e#3528#3548#0#HTML" expanded="true" />
@@ -1138,44 +1157,25 @@
             <element signature="e#17752#17771#0#HTML" expanded="true" />
             <element signature="e#20666#20719#0#HTML" expanded="true" />
             <element signature="e#28286#28311#0#HTML" expanded="true" />
-            <element signature="e#30592#30617#0#HTML" expanded="true" />
-            <element signature="e#32808#32833#0#HTML" expanded="true" />
-            <element signature="e#33819#33839#0#HTML" expanded="true" />
-            <element signature="e#36953#36987#0#HTML" expanded="true" />
-            <element signature="e#37193#37227#0#HTML" expanded="true" />
-            <element signature="e#38115#38135#0#HTML" expanded="true" />
-            <element signature="e#40228#40258#0#HTML" expanded="true" />
-            <element signature="e#41272#41297#0#HTML" expanded="true" />
-            <element signature="e#43757#43796#0#HTML" expanded="true" />
-            <element signature="e#44702#44772#0#HTML" expanded="true" />
-            <element signature="e#44854#44897#0#HTML" expanded="true" />
-            <element signature="e#45450#45471#0#HTML" expanded="true" />
-            <element signature="e#46199#46229#0#HTML" expanded="true" />
-            <element signature="e#51809#51834#0#HTML" expanded="true" />
-            <element signature="e#56269#56294#0#HTML" expanded="true" />
-            <element signature="e#57822#57861#0#HTML" expanded="true" />
-            <element signature="e#59299#59339#0#HTML" expanded="true" />
-            <element signature="e#59650#59676#0#HTML" expanded="true" />
-            <element signature="e#60144#60170#0#HTML" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/chat/index.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.37630662" vertical-offset="1944" max-vertical-offset="4410">
-          <caret line="120" column="141" selection-start-line="120" selection-start-column="141" selection-end-line="120" selection-end-column="141" />
-          <folding>
-            <element signature="e#3643#3668#0#HTML" expanded="true" />
-            <element signature="e#5362#5387#0#HTML" expanded="true" />
-            <element signature="e#7019#7044#0#HTML" expanded="true" />
-            <element signature="e#7638#7658#0#HTML" expanded="true" />
-            <element signature="e#10072#10106#0#HTML" expanded="true" />
-            <element signature="e#10256#10290#0#HTML" expanded="true" />
-            <element signature="e#10814#10834#0#HTML" expanded="true" />
-            <element signature="e#12365#12395#0#HTML" expanded="true" />
-            <element signature="e#13156#13181#0#HTML" expanded="true" />
-            <element signature="e#14939#14978#0#HTML" expanded="true" />
+            <element signature="e#29574#29599#0#HTML" expanded="true" />
+            <element signature="e#30748#30773#0#HTML" expanded="true" />
+            <element signature="e#31759#31779#0#HTML" expanded="true" />
+            <element signature="e#34893#34927#0#HTML" expanded="true" />
+            <element signature="e#35133#35167#0#HTML" expanded="true" />
+            <element signature="e#36055#36075#0#HTML" expanded="true" />
+            <element signature="e#38168#38198#0#HTML" expanded="true" />
+            <element signature="e#39212#39237#0#HTML" expanded="true" />
+            <element signature="e#41697#41736#0#HTML" expanded="true" />
+            <element signature="e#42642#42712#0#HTML" expanded="true" />
+            <element signature="e#42794#42837#0#HTML" expanded="true" />
+            <element signature="e#43390#43411#0#HTML" expanded="true" />
+            <element signature="e#44139#44169#0#HTML" expanded="true" />
+            <element signature="e#49749#49774#0#HTML" expanded="true" />
+            <element signature="e#54209#54234#0#HTML" expanded="true" />
+            <element signature="e#55762#55801#0#HTML" expanded="true" />
+            <element signature="e#57239#57279#0#HTML" expanded="true" />
+            <element signature="e#57590#57616#0#HTML" expanded="true" />
+            <element signature="e#58084#58110#0#HTML" expanded="true" />
           </folding>
         </state>
       </provider>

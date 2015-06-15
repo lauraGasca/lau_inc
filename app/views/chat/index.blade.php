@@ -80,15 +80,6 @@
                                                             {{ HTML::image('Orb/images/chats/'.$chat->chat->foto, $chat->chat->nombre)}}
                                                         </span>
                                                         <span class="label label-success" style="font-size: 0.6em;">Grupal</span>
-                                                        @if($chat->chat->ultimo_mensaje!=null)
-                                                            @if($chat->ultimo_visto==null)
-                                                                <span class="badge">Nuevos</span>
-                                                            @else
-                                                                @if($chat->ultimo_mensaje > $chat->ultimo_visto)
-                                                                    <span class="badge">Nuevos</span>
-                                                                @endif
-                                                            @endif
-                                                        @endif
                                                     </a>
                                                 @endif
                                             @else
@@ -100,15 +91,6 @@
                                                             {{ HTML::image('Orb/images/chats/'.$chat->chat->foto, $chat->chat->nombre) }}
                                                         </span>
                                                         <span class="label label-success" style="font-size: 0.6em;">Publico</span>
-                                                        @if($chat->chat->ultimo_mensaje!=null)
-                                                            @if(Auth::user()->visto_mensajes==null)
-                                                                <span class="badge">Nuevos</span>
-                                                            @else
-                                                                @if($chat->chat->ultimo_mensaje > Auth::user()->visto_mensajes)
-                                                                    <span class="badge">Nuevos</span>
-                                                                @endif
-                                                            @endif
-                                                        @endif
                                                     </a>
                                                 @endif
                                             @endif
