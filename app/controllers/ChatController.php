@@ -200,8 +200,6 @@ class ChatController extends BaseController
         $manager->save();
         if (Input::hasFile('archivo'))
             $this->mensajeRepo->archivo($mensaje, Input::file('archivo'));
-        if (Input::hasFile('imagen'))
-            $this->mensajeRepo->imagen($mensaje, Input::file('imagen'));
         $this->chatRepo->actualizar_mensaje($mensaje->chat_id);
         $this->userRepo->actualizar_visto(Auth::user()->id);
         $this->mensajeRepo->fecha($mensaje, $fecha);

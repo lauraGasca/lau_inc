@@ -19,16 +19,9 @@ class MensajeRepo extends BaseRepo
     public function archivo($mensaje, $file)
     {
         $mensaje->archivo = $mensaje->id."file.".$file->getClientOriginalExtension();
-        $mensaje->nombre_archivo = $file->getClientOriginalName();
+        $mensaje->original = $file->getClientOriginalName();
         $mensaje->save();
         $file->move('Orb/images/adjuntos',$mensaje->archivo);
-    }
-
-    public function imagen($mensaje, $file)
-    {
-        $mensaje->imagen = $mensaje->id."image.".$file->getClientOriginalExtension();
-        $mensaje->save();
-        $file->move('Orb/images/adjuntos',$mensaje->imagen);
     }
 
     public function fecha($mensaje, $fecha)

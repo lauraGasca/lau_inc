@@ -3,7 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="5a5b8e23-e436-4e8b-9d61-9e95ce82aba0" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/js/fileinput" afterPath="$PROJECT_DIR$/web/Orb/js/fileinput" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Incubamas/Repositories/UserRepo.php" afterPath="$PROJECT_DIR$/app/Incubamas/Repositories/UserRepo.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/ChatController.php" afterPath="$PROJECT_DIR$/app/controllers/ChatController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Incubamas/Managers/MensajeManager.php" afterPath="$PROJECT_DIR$/app/Incubamas/Managers/MensajeManager.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Incubamas/Repositories/MensajeRepo.php" afterPath="$PROJECT_DIR$/app/Incubamas/Repositories/MensajeRepo.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/chat/index.blade.php" afterPath="$PROJECT_DIR$/app/views/chat/index.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/emprendedores/perfil.blade.php" afterPath="$PROJECT_DIR$/app/views/emprendedores/perfil.blade.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Incubamas.iws" />
@@ -32,8 +36,8 @@
       <file leaf-file-name="ChatController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/controllers/ChatController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.5263158" vertical-offset="411" max-vertical-offset="1926">
-              <caret line="18" column="33" selection-start-line="18" selection-start-column="33" selection-end-line="18" selection-end-column="33" />
+            <state vertical-scroll-proportion="-4.7894735" vertical-offset="951" max-vertical-offset="1890">
+              <caret line="201" column="74" selection-start-line="201" selection-start-column="74" selection-end-line="201" selection-end-column="74" />
               <folding>
                 <element signature="e#7#43#0#PHP" expanded="true" />
                 <element signature="n#__construct#0;n#ChatController#0;n#!!top" expanded="false" />
@@ -51,18 +55,18 @@
       <file leaf-file-name="MensajeRepo.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Incubamas/Repositories/MensajeRepo.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-3.4561403" vertical-offset="541" max-vertical-offset="1098">
-              <caret line="41" column="60" selection-start-line="41" selection-start-column="60" selection-end-line="41" selection-end-column="60" />
+            <state vertical-scroll-proportion="-3.7719297" vertical-offset="163" max-vertical-offset="972">
+              <caret line="21" column="26" selection-start-line="21" selection-start-column="26" selection-end-line="21" selection-end-column="26" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UserRepo.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="UserRepo.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Incubamas/Repositories/UserRepo.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.47560975" vertical-offset="321" max-vertical-offset="2106">
-              <caret line="33" column="5" selection-start-line="33" selection-start-column="5" selection-end-line="33" selection-end-column="5" />
+            <state vertical-scroll-proportion="-1.4444444" vertical-offset="321" max-vertical-offset="2106">
+              <caret line="20" column="27" selection-start-line="20" selection-start-column="27" selection-end-line="20" selection-end-column="27" />
               <folding />
             </state>
           </provider>
@@ -80,11 +84,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="perfil.blade.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="perfil.blade.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/views/emprendedores/perfil.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.6666665" vertical-offset="216" max-vertical-offset="18720">
-              <caret line="22" column="13" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
+            <state vertical-scroll-proportion="0.5017422" vertical-offset="8946" max-vertical-offset="18216">
+              <caret line="513" column="219" selection-start-line="513" selection-start-column="219" selection-end-line="513" selection-end-column="219" />
               <folding>
                 <element signature="e#2497#2521#0#HTML" expanded="true" />
                 <element signature="e#3528#3548#0#HTML" expanded="true" />
@@ -104,24 +108,22 @@
                 <element signature="e#30592#30617#0#HTML" expanded="true" />
                 <element signature="e#32808#32833#0#HTML" expanded="true" />
                 <element signature="e#34380#34400#0#HTML" expanded="true" />
-                <element signature="e#38055#38089#0#HTML" expanded="true" />
-                <element signature="e#38295#38329#0#HTML" expanded="true" />
-                <element signature="e#39217#39237#0#HTML" expanded="true" />
-                <element signature="e#41330#41360#0#HTML" expanded="true" />
-                <element signature="e#42431#42456#0#HTML" expanded="true" />
-                <element signature="e#43930#43960#0#HTML" expanded="true" />
-                <element signature="e#44974#44999#0#HTML" expanded="true" />
-                <element signature="e#47459#47498#0#HTML" expanded="true" />
-                <element signature="e#48404#48474#0#HTML" expanded="true" />
-                <element signature="e#48556#48599#0#HTML" expanded="true" />
-                <element signature="e#49152#49173#0#HTML" expanded="true" />
-                <element signature="e#49901#49931#0#HTML" expanded="true" />
-                <element signature="e#55511#55536#0#HTML" expanded="true" />
-                <element signature="e#59971#59996#0#HTML" expanded="true" />
-                <element signature="e#61524#61563#0#HTML" expanded="true" />
-                <element signature="e#63001#63041#0#HTML" expanded="true" />
-                <element signature="e#63352#63378#0#HTML" expanded="true" />
-                <element signature="e#63846#63872#0#HTML" expanded="true" />
+                <element signature="e#37514#37548#0#HTML" expanded="true" />
+                <element signature="e#37754#37788#0#HTML" expanded="true" />
+                <element signature="e#38676#38696#0#HTML" expanded="true" />
+                <element signature="e#40789#40819#0#HTML" expanded="true" />
+                <element signature="e#41833#41858#0#HTML" expanded="true" />
+                <element signature="e#44318#44357#0#HTML" expanded="true" />
+                <element signature="e#45263#45333#0#HTML" expanded="true" />
+                <element signature="e#45415#45458#0#HTML" expanded="true" />
+                <element signature="e#46011#46032#0#HTML" expanded="true" />
+                <element signature="e#46760#46790#0#HTML" expanded="true" />
+                <element signature="e#52370#52395#0#HTML" expanded="true" />
+                <element signature="e#56830#56855#0#HTML" expanded="true" />
+                <element signature="e#58383#58422#0#HTML" expanded="true" />
+                <element signature="e#59860#59900#0#HTML" expanded="true" />
+                <element signature="e#60211#60237#0#HTML" expanded="true" />
+                <element signature="e#60705#60731#0#HTML" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -130,21 +132,19 @@
       <file leaf-file-name="index.blade.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/chat/index.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-12.0" vertical-offset="0" max-vertical-offset="5004">
-              <caret line="18" column="4" selection-start-line="18" selection-start-column="4" selection-end-line="23" selection-end-column="13" />
+            <state vertical-scroll-proportion="-12.0" vertical-offset="2502" max-vertical-offset="4500">
+              <caret line="157" column="191" selection-start-line="157" selection-start-column="191" selection-end-line="157" selection-end-column="191" />
               <folding>
                 <element signature="e#3643#3668#0#HTML" expanded="true" />
                 <element signature="e#5362#5387#0#HTML" expanded="true" />
                 <element signature="e#7019#7044#0#HTML" expanded="true" />
                 <element signature="e#8059#8079#0#HTML" expanded="true" />
-                <element signature="e#10950#10984#0#HTML" expanded="true" />
-                <element signature="e#11134#11168#0#HTML" expanded="true" />
-                <element signature="e#11692#11712#0#HTML" expanded="true" />
-                <element signature="e#13217#13247#0#HTML" expanded="true" />
-                <element signature="e#14038#14063#0#HTML" expanded="true" />
-                <element signature="e#15117#15147#0#HTML" expanded="true" />
-                <element signature="e#15881#15906#0#HTML" expanded="true" />
-                <element signature="e#17638#17677#0#HTML" expanded="true" />
+                <element signature="e#10493#10527#0#HTML" expanded="true" />
+                <element signature="e#10677#10711#0#HTML" expanded="true" />
+                <element signature="e#11235#11255#0#HTML" expanded="true" />
+                <element signature="e#12786#12816#0#HTML" expanded="true" />
+                <element signature="e#13577#13602#0#HTML" expanded="true" />
+                <element signature="e#15360#15399#0#HTML" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -207,13 +207,13 @@
         <option value="$PROJECT_DIR$/app/views/chat/createEmprendedor.blade.php" />
         <option value="$PROJECT_DIR$/app/Incubamas/Repositories/ChatRepo.php" />
         <option value="$PROJECT_DIR$/app/controllers/EmprendedoresController.php" />
-        <option value="$PROJECT_DIR$/app/views/chat/index.blade.php" />
-        <option value="$PROJECT_DIR$/app/Incubamas/Managers/MensajeManager.php" />
-        <option value="$PROJECT_DIR$/app/controllers/ChatController.php" />
-        <option value="$PROJECT_DIR$/app/views/emprendedores/perfil.blade.php" />
         <option value="$PROJECT_DIR$/app/Incubamas/Entities/Mensaje.php" />
-        <option value="$PROJECT_DIR$/app/Incubamas/Repositories/MensajeRepo.php" />
         <option value="$PROJECT_DIR$/app/Incubamas/Repositories/UserRepo.php" />
+        <option value="$PROJECT_DIR$/app/controllers/ChatController.php" />
+        <option value="$PROJECT_DIR$/app/Incubamas/Managers/MensajeManager.php" />
+        <option value="$PROJECT_DIR$/app/Incubamas/Repositories/MensajeRepo.php" />
+        <option value="$PROJECT_DIR$/app/views/chat/index.blade.php" />
+        <option value="$PROJECT_DIR$/app/views/emprendedores/perfil.blade.php" />
       </list>
     </option>
   </component>
@@ -1054,27 +1054,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/chat/index.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.0" vertical-offset="0" max-vertical-offset="5004">
-          <caret line="18" column="4" selection-start-line="18" selection-start-column="4" selection-end-line="23" selection-end-column="13" />
-          <folding>
-            <element signature="e#3643#3668#0#HTML" expanded="true" />
-            <element signature="e#5362#5387#0#HTML" expanded="true" />
-            <element signature="e#7019#7044#0#HTML" expanded="true" />
-            <element signature="e#8059#8079#0#HTML" expanded="true" />
-            <element signature="e#10950#10984#0#HTML" expanded="true" />
-            <element signature="e#11134#11168#0#HTML" expanded="true" />
-            <element signature="e#11692#11712#0#HTML" expanded="true" />
-            <element signature="e#13217#13247#0#HTML" expanded="true" />
-            <element signature="e#14038#14063#0#HTML" expanded="true" />
-            <element signature="e#15117#15147#0#HTML" expanded="true" />
-            <element signature="e#15881#15906#0#HTML" expanded="true" />
-            <element signature="e#17638#17677#0#HTML" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/config/database.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-2.6088018" vertical-offset="1067" max-vertical-offset="2340">
@@ -1083,10 +1062,88 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/Incubamas/Entities/Mensaje.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4599659" vertical-offset="0" max-vertical-offset="587">
+          <caret line="15" column="93" selection-start-line="15" selection-start-column="83" selection-end-line="15" selection-end-column="93" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Incubamas/Repositories/ChatRepo.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.5925926" vertical-offset="1370" max-vertical-offset="1944">
+          <caret line="77" column="5" selection-start-line="77" selection-start-column="5" selection-end-line="77" selection-end-column="5" />
+          <folding>
+            <element signature="e#41#69#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Incubamas/Repositories/UserRepo.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.4444444" vertical-offset="321" max-vertical-offset="2106">
+          <caret line="20" column="27" selection-start-line="20" selection-start-column="27" selection-end-line="20" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Incubamas/Managers/MensajeManager.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.27597955" vertical-offset="0" max-vertical-offset="587">
+          <caret line="9" column="61" selection-start-line="9" selection-start-column="61" selection-end-line="9" selection-end-column="61" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Incubamas/Repositories/MensajeRepo.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.7719297" vertical-offset="163" max-vertical-offset="972">
+          <caret line="21" column="26" selection-start-line="21" selection-start-column="26" selection-end-line="21" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/ChatController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.7894735" vertical-offset="951" max-vertical-offset="1890">
+          <caret line="201" column="74" selection-start-line="201" selection-start-column="74" selection-end-line="201" selection-end-column="74" />
+          <folding>
+            <element signature="e#7#43#0#PHP" expanded="true" />
+            <element signature="n#__construct#0;n#ChatController#0;n#!!top" expanded="false" />
+            <element signature="n#getCrear#0;n#ChatController#0;n#!!top" expanded="false" />
+            <element signature="n#postCrear#0;n#ChatController#0;n#!!top" expanded="false" />
+            <element signature="n#getCrearIncubito#0;n#ChatController#0;n#!!top" expanded="false" />
+            <element signature="n#postCrearIncubito#0;n#ChatController#0;n#!!top" expanded="false" />
+            <element signature="n#getCrearEmprendedor#0;n#ChatController#0;n#!!top" expanded="false" />
+            <element signature="n#postCrearEmprendedor#0;n#ChatController#0;n#!!top" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/chat/index.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-12.0" vertical-offset="2502" max-vertical-offset="4500">
+          <caret line="157" column="191" selection-start-line="157" selection-start-column="191" selection-end-line="157" selection-end-column="191" />
+          <folding>
+            <element signature="e#3643#3668#0#HTML" expanded="true" />
+            <element signature="e#5362#5387#0#HTML" expanded="true" />
+            <element signature="e#7019#7044#0#HTML" expanded="true" />
+            <element signature="e#8059#8079#0#HTML" expanded="true" />
+            <element signature="e#10493#10527#0#HTML" expanded="true" />
+            <element signature="e#10677#10711#0#HTML" expanded="true" />
+            <element signature="e#11235#11255#0#HTML" expanded="true" />
+            <element signature="e#12786#12816#0#HTML" expanded="true" />
+            <element signature="e#13577#13602#0#HTML" expanded="true" />
+            <element signature="e#15360#15399#0#HTML" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/emprendedores/perfil.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.6666665" vertical-offset="216" max-vertical-offset="18720">
-          <caret line="22" column="13" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
+        <state vertical-scroll-proportion="0.5017422" vertical-offset="8946" max-vertical-offset="18216">
+          <caret line="513" column="219" selection-start-line="513" selection-start-column="219" selection-end-line="513" selection-end-column="219" />
           <folding>
             <element signature="e#2497#2521#0#HTML" expanded="true" />
             <element signature="e#3528#3548#0#HTML" expanded="true" />
@@ -1106,84 +1163,23 @@
             <element signature="e#30592#30617#0#HTML" expanded="true" />
             <element signature="e#32808#32833#0#HTML" expanded="true" />
             <element signature="e#34380#34400#0#HTML" expanded="true" />
-            <element signature="e#38055#38089#0#HTML" expanded="true" />
-            <element signature="e#38295#38329#0#HTML" expanded="true" />
-            <element signature="e#39217#39237#0#HTML" expanded="true" />
-            <element signature="e#41330#41360#0#HTML" expanded="true" />
-            <element signature="e#42431#42456#0#HTML" expanded="true" />
-            <element signature="e#43930#43960#0#HTML" expanded="true" />
-            <element signature="e#44974#44999#0#HTML" expanded="true" />
-            <element signature="e#47459#47498#0#HTML" expanded="true" />
-            <element signature="e#48404#48474#0#HTML" expanded="true" />
-            <element signature="e#48556#48599#0#HTML" expanded="true" />
-            <element signature="e#49152#49173#0#HTML" expanded="true" />
-            <element signature="e#49901#49931#0#HTML" expanded="true" />
-            <element signature="e#55511#55536#0#HTML" expanded="true" />
-            <element signature="e#59971#59996#0#HTML" expanded="true" />
-            <element signature="e#61524#61563#0#HTML" expanded="true" />
-            <element signature="e#63001#63041#0#HTML" expanded="true" />
-            <element signature="e#63352#63378#0#HTML" expanded="true" />
-            <element signature="e#63846#63872#0#HTML" expanded="true" />
+            <element signature="e#37514#37548#0#HTML" expanded="true" />
+            <element signature="e#37754#37788#0#HTML" expanded="true" />
+            <element signature="e#38676#38696#0#HTML" expanded="true" />
+            <element signature="e#40789#40819#0#HTML" expanded="true" />
+            <element signature="e#41833#41858#0#HTML" expanded="true" />
+            <element signature="e#44318#44357#0#HTML" expanded="true" />
+            <element signature="e#45263#45333#0#HTML" expanded="true" />
+            <element signature="e#45415#45458#0#HTML" expanded="true" />
+            <element signature="e#46011#46032#0#HTML" expanded="true" />
+            <element signature="e#46760#46790#0#HTML" expanded="true" />
+            <element signature="e#52370#52395#0#HTML" expanded="true" />
+            <element signature="e#56830#56855#0#HTML" expanded="true" />
+            <element signature="e#58383#58422#0#HTML" expanded="true" />
+            <element signature="e#59860#59900#0#HTML" expanded="true" />
+            <element signature="e#60211#60237#0#HTML" expanded="true" />
+            <element signature="e#60705#60731#0#HTML" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Incubamas/Managers/MensajeManager.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.27597955" vertical-offset="0" max-vertical-offset="587">
-          <caret line="9" column="40" selection-start-line="9" selection-start-column="40" selection-end-line="9" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Incubamas/Entities/Mensaje.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4599659" vertical-offset="0" max-vertical-offset="587">
-          <caret line="15" column="93" selection-start-line="15" selection-start-column="83" selection-end-line="15" selection-end-column="93" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/ChatController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.5263158" vertical-offset="411" max-vertical-offset="1926">
-          <caret line="18" column="33" selection-start-line="18" selection-start-column="33" selection-end-line="18" selection-end-column="33" />
-          <folding>
-            <element signature="e#7#43#0#PHP" expanded="true" />
-            <element signature="n#__construct#0;n#ChatController#0;n#!!top" expanded="false" />
-            <element signature="n#getCrear#0;n#ChatController#0;n#!!top" expanded="false" />
-            <element signature="n#postCrear#0;n#ChatController#0;n#!!top" expanded="false" />
-            <element signature="n#getCrearIncubito#0;n#ChatController#0;n#!!top" expanded="false" />
-            <element signature="n#postCrearIncubito#0;n#ChatController#0;n#!!top" expanded="false" />
-            <element signature="n#getCrearEmprendedor#0;n#ChatController#0;n#!!top" expanded="false" />
-            <element signature="n#postCrearEmprendedor#0;n#ChatController#0;n#!!top" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Incubamas/Repositories/ChatRepo.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.5925926" vertical-offset="1370" max-vertical-offset="1944">
-          <caret line="77" column="5" selection-start-line="77" selection-start-column="5" selection-end-line="77" selection-end-column="5" />
-          <folding>
-            <element signature="e#41#69#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Incubamas/Repositories/MensajeRepo.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.4561403" vertical-offset="541" max-vertical-offset="1098">
-          <caret line="41" column="60" selection-start-line="41" selection-start-column="60" selection-end-line="41" selection-end-column="60" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Incubamas/Repositories/UserRepo.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.47560975" vertical-offset="321" max-vertical-offset="2106">
-          <caret line="33" column="5" selection-start-line="33" selection-start-column="5" selection-end-line="33" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>

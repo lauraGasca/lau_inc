@@ -510,11 +510,8 @@
                                                                                                 <span class="badge">{{$mensaje->envio}}</span>
                                                                                             </div>
                                                                                             <p>{{$mensaje->cuerpo}}</p>
-                                                                                            @if($mensaje->imagen!=null)
-                                                                                                <span class="borde"><a target="_blank" href="{{URL::asset('Orb/images/adjuntos/'.$mensaje->imagen)}}">{{ HTML::image('Orb/images/adjuntos/'.$mensaje->imagen, $mensaje->imagen, ['style'=> "height: 100px;"]) }}</a></span>
-                                                                                            @endif
                                                                                             @if($mensaje->archivo!=null)
-                                                                                                <span class="borde"><a target="_blank" href="{{URL::asset('Orb/images/adjuntos/'.$mensaje->archivo)}}">{{$mensaje->nombre_archivo}}</a></span>
+                                                                                                <span class="borde"><a target="_blank" href="{{URL::asset('Orb/images/adjuntos/'.$mensaje->archivo)}}">{{$mensaje->original}}</a></span>
                                                                                             @endif
                                                                                         </div>
                                                                                     </li>
@@ -557,31 +554,6 @@
                                                         @endif
                                                         <div class="col-md-7 col-sm-8 col-xs-8">
                                                             <div class="btn-group">
-                                                                <span style="display: inline-block;">
-                                                                    @if(count($active_chat)>0)
-                                                                        @if($active_chat->chat->grupo!=1)
-                                                                            {{Form::file('imagen', ['id'=>'imagen', 'accept'=>"image/*"])}}
-                                                                        @else
-                                                                            {{Form::file('imagen', ['id'=>'imagen', 'accept'=>"image/*", 'disabled'=>"true"])}}
-                                                                        @endif
-                                                                    @else
-                                                                        {{Form::file('imagen', ['id'=>'imagen', 'accept'=>"image/*", 'disabled'=>"true"])}}
-                                                                    @endif
-                                                                    <br/><br/><span class="message-error" style="font-weight: bold">{{$errors->first('imagen')}}</span>
-                                                                    <script>
-                                                                        $("#imagen").fileinput({
-                                                                            previewFileType: "image",
-                                                                            browseClass: "btn btn-success",
-                                                                            browseLabel: "",
-                                                                            browseIcon: '<i class="glyphicon glyphicon-picture"></i>',
-                                                                            showCaption: false,
-                                                                            removeClass: "btn btn-danger",
-                                                                            removeLabel: "Borrar",
-                                                                            removeIcon: '<i class="glyphicon glyphicon-trash"></i>',
-                                                                            showUpload: false
-                                                                        });
-                                                                    </script>
-                                                                </span>
                                                                 <span style="display: inline-block;">
                                                                     @if(count($active_chat)>0)
                                                                         @if($active_chat->chat->grupo!=1)
