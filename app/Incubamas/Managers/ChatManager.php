@@ -5,10 +5,9 @@ class ChatManager extends BaseManager
     public function getRules()
     {
         $rules = [
-            "nombre"	        =>  'min:1|max:100',
-            "foto"	        =>  'min:1|max:100',
-            "grupo"	        =>  'required|min:1|max:1',
-            "ultimo_mensaje"    =>  'required|date'
+            "grupo"     =>  'required|size:1',
+            "nombre"    =>  'required_if:grupo,1|max:100',
+            "foto"	    =>  'required_if:grupo,1|required_if:grupo,3|max:100'
         ];
         
         return $rules;

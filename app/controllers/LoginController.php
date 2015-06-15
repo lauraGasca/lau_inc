@@ -36,7 +36,7 @@ class LoginController extends BaseController
                     switch (Auth::user()->type_id) {
                         case 1:
                         case 2: return Redirect::to('emprendedores');
-                        case 3: return Redirect::to('emprendedores/perfil/' . $this->emprendedoreRepo->emprendedorid(Auth::user()->id));
+                        case 3: return Redirect::to('emprendedores/perfil/' . $this->emprendedoreRepo->userxemprendedor_id(Auth::user()->id));
                         case 4: return Redirect::to('blog');
                         default: return Redirect::back()->with(array('confirm' => 'No tiene permiso para acceder.'));
                     }
@@ -59,7 +59,7 @@ class LoginController extends BaseController
                     case 2:
                         return Redirect::to('emprendedores');
                     case 3:
-                        return Redirect::to('emprendedores/perfil/' . $this->emprendedoreRepo->emprendedorid(Auth::user()->id));
+                        return Redirect::to('emprendedores/perfil/' . $this->emprendedoreRepo->userxemprendedor_id(Auth::user()->id));
                     case 4:
                         return Redirect::to('blog');
                     default:
@@ -98,7 +98,7 @@ class LoginController extends BaseController
                 switch(Auth::user()->type_id)
                 {
                     case 1: case 2: $direccion = 'emprendedores'; break;
-                    case 3: $direccion = 'emprendedores/perfil/' . $this->emprendedoreRepo->emprendedorid(Auth::user()->id); break;
+                    case 3: $direccion = 'emprendedores/perfil/' . $this->emprendedoreRepo->userxemprendedor_id(Auth::user()->id); break;
                     case 4: $direccion = 'blog';
                 }
                 return '<html><head></head><body><script>

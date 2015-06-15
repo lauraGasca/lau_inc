@@ -18,7 +18,7 @@ Route::controller('usuarios', 'UserController');
 Route::controller('sistema', 'LoginController');
 Route::controller('casos', 'CasoController');
 Route::controller('emprendedores', 'EmprendedoresController');
-Route::controller('chat', 'ChatController');
+Route::controller('mensajes', 'ChatController');
 Route::controller('calendario', 'CalendarController');
 Route::controller('atendidos', 'AtendidoController');
 Route::controller('plan-negocios', 'ProyectoController');

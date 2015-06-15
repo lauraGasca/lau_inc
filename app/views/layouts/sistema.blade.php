@@ -94,14 +94,14 @@
                                 href="{{url('blog')}}" title="Blog"><i class="entypo-box"></i><span>Blog</span></a>
                         </li>
                         <li><a
-                            @section('chat')
+                            @section('mensajes')
                                 @show
-                                href="{{url('chat')}}" title="Chat"><i class="fa fa-comments"></i><span>Mensajes</span></a>
+                                href="{{url('mensajes')}}" title="Mensajes"><i class="fa fa-comments"></i><span>Mensajes</span></a>
                         </li>
                         <li><a
                             @section('atendidos')
                                 @show
-                                href="{{url('atendidos')}}" title="Chat"><i class="fa fa-joomla"></i><span>Personas atendidas</span></a>
+                                href="{{url('atendidos')}}" title="Mensajes"><i class="fa fa-joomla"></i><span>Personas atendidas</span></a>
                         </li>
                         @if(Auth::user()->type_id<>3)
                             <li><a

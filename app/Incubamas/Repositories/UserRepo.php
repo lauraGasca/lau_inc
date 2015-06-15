@@ -30,6 +30,13 @@ class UserRepo extends BaseRepo
         return User::find($id);
     }
 
+    public function actualizar_visto($user_id)
+    {
+        $usuario = User::find($user_id);
+        $usuario->visto_mensajes = date("Y-m-d H:i:s");
+        $usuario->save();
+    }
+
     public function buscarxEmail($email)
     {
         if($email<>'')
@@ -38,9 +45,9 @@ class UserRepo extends BaseRepo
             return null;
     }
 
-    public function listar_asesores()
+    public function listar_asesores($user_id=0)
     {
-        return User::where('type_id', '=', 2)->where('active', '=', 1)->orderBy('apellidos', 'asc')->get()->lists('FullName','id');
+        return User::where('type_id', '=', 2)->where('active', '=', 1)->where('id', '!=', $user_id)->orderBy('apellidos', 'asc')->get()->lists('FullName','id');
     }
 
     public function listar_emprendedores()

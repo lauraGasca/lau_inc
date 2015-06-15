@@ -26,6 +26,12 @@ class EmprendedoresRepo extends BaseRepo
             ->where('id','=',$emprendedor_id)->first();
     }
 
+    public function userxemprendedor_id($user_id)
+    {
+        $emprendedor = Emprendedor::where('user_id','=',$user_id)->first();
+        return $emprendedor->id;
+    }
+
     public function emprendedores()
     {
         return Emprendedor::with('usuario')
@@ -96,43 +102,4 @@ class EmprendedoresRepo extends BaseRepo
                     }
             }
     }
-
-
-
-
-
-
-
-
-
-    public function nombre($user_id)
-    {
-        $emprendedor = Emprendedor::where('user_id','=',$user_id)->first();
-        if(count($emprendedor)<=0){
-            return null;
-        }else{
-            return $emprendedor->Fullname;
-        }
-    }
-    
-    public function emprendedorid($user_id)
-    {
-        $emprendedor = Emprendedor::where('user_id','=',$user_id)->first();
-        if(count($emprendedor)<=0){
-            return null;
-        }else{
-            return $emprendedor->id;
-        }
-    }
-
-    public function listado()
-    {
-        return Emprendedor::selectRaw('CONCAT( "\"", id, "\":\"", name, " ", apellidos, "\"," ) as texto')->get();
-    }
-    
-    public function similar($nombre)
-    {
-        return Emprendedor::whereRaw("CONCAT(name,' ',apellidos) LIKE '%".$nombre."%'")->first();
-    }
-
 }

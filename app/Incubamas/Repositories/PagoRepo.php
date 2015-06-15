@@ -21,6 +21,45 @@ class PagoRepo extends BaseRepo
         $pago->delete();
     }
 
+    //Verifica al editar solicitudes
+    public function verificarMonto($pago_id, $solicitud_id, $monto)
+    {
+        $monto_formateado = str_replace("$", "", str_replace(",", "", $monto));
+        $adeudo = $this->adeudoServicio($solicitud_id);
+        $pagado = $this->pagosServicio($solicitud_id, $pago_id);
+        $faltante = $adeudo - $pagado;
+        if ($monto_formateado > $faltante)
+            return true;
+        return false;
+    }
+
+    public function pago($pago_id)
+    {
+        return Pago::find($pago_id);
+    }
+
+    public function pago_recibo($pago_id)
+    {
+        return Pago::with('solicitud')->with('recibido')
+            ->where('id', '=', $pago_id)->first();
+    }
+
+    public function pagos($emprendedor_id)
+    {
+        return Pago::with('solicitud')->with('recibido')
+            ->where('emprendedor_id', '=', $emprendedor_id)->get();
+    }
+
+    public function servicios($emprendedor_id)
+    {
+        $servicios = Solicitud::selectRaw('SUM(monto) as total')
+            ->where('emprendedor_id','=',$emprendedor_id)->first();
+        if(count($servicios)>0)
+            return $servicios->total;
+        else
+            return null;
+    }
+
     public function adeudoServicio($solicitud_id)
     {
         $solicitud = Solicitud::find($solicitud_id);
@@ -41,17 +80,6 @@ class PagoRepo extends BaseRepo
             return 0;
     }
 
-    public function verificarMonto($pago_id, $solicitud_id, $monto)
-    {
-        $monto_formateado = str_replace("$", "", str_replace(",", "", $monto));
-        $adeudo = $this->adeudoServicio($solicitud_id);
-        $pagado = $this->pagosServicio($solicitud_id, $pago_id);
-        $faltante = $adeudo - $pagado;
-        if ($monto_formateado > $faltante)
-            return true;
-        return false;
-    }
-
     public function pagosRealizados($emprendedor_id)
     {
         $pagos = Pago::selectRaw('SUM(monto) as total')
@@ -62,36 +90,6 @@ class PagoRepo extends BaseRepo
             return '$ 0.00';
     }
 
-    public function pago($pago_id)
-    {
-        return Pago::find($pago_id);
-    }
 
-    public function pago_recibo($pago_id)
-    {
-        return Pago::with('solicitud')->with('recibido')
-            ->where('id', '=', $pago_id)->first();
-    }
-
-    public function pagos($emprendedor_id)
-    {
-        return Pago::with('solicitud')->with('recibido')
-            ->where('emprendedor_id', '=', $emprendedor_id)->get();
-    }
-    
-    public function servicios($emprendedor_id)
-    {
-        $servicios = Solicitud::selectRaw('SUM(monto) as total')
-	        ->where('emprendedor_id','=',$emprendedor_id)->first();
-        if(count($servicios)>0)
-            return $servicios->total;
-        else
-            return null;
-    }
-    
-    public function adeudo($emprendedor_id)
-    {
-        return $this->servicios($emprendedor_id)-$this->pagos($emprendedor_id);
-    }
 
 }

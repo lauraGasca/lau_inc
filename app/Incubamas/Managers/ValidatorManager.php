@@ -155,6 +155,21 @@ class ValidatorManager
                 ];
                 break;
             //Para verificar los datos de la solicitud antes de guardarla y poder hacer otras validaciones
+            case 'nuevaConversacion':
+                $rules = [
+                    "para"          => 'required',
+                    "emprendedor"   => 'required_if:para,1|max:50',
+                    "asesor"        => 'required_if:para,2|max:50'
+                ];
+                break;
+            //Para verificar los datos de la solicitud antes de guardarla y poder hacer otras validaciones
+            case 'nuevaConversacionIncubito':
+                $rules = [
+                    "tipo"          => 'required',
+                    "nombre"        => 'required|max:100'
+                ];
+                break;
+            //Para verificar los datos de la solicitud antes de guardarla y poder hacer otras validaciones
             case 'editaSolicitud':
                 $rules = [
                     "empresa_id"        => 'exists:empresas,id',

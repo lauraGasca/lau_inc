@@ -1,6 +1,5 @@
 <?php
 
-use Incubamas\Repositories\AsesoresRepo;
 use Incubamas\Repositories\EventoRepo;
 use Incubamas\Repositories\HorariosRepo;
 use Incubamas\Repositories\CalendarioRepo;
@@ -13,6 +12,7 @@ use Incubamas\Repositories\EmprendedoresRepo;
 use Incubamas\Repositories\EmpresaRepo;
 use Incubamas\Repositories\SocioRepo;
 use Incubamas\Repositories\ProyectoRepo;
+use Incubamas\Repositories\SolicitudRepo;
 use Incubamas\Managers\ValidatorManager;
 use Incubamas\Managers\UserEmpManager;
 use Incubamas\Managers\EmprendedoresManager;
@@ -24,7 +24,6 @@ use Incubamas\Managers\SubidasManager;
 class EmprendedoresController extends BaseController
 {
     protected $layout = 'layouts.sistema';
-    protected $asesoresRepo;
     protected $userRepo;
     protected $eventoRepo;
     protected $horariosRepo;
@@ -36,8 +35,9 @@ class EmprendedoresController extends BaseController
     protected $empresaRepo;
     protected $socioRepo;
     protected $proyectoRepo;
+    protected $soliciturRepo;
 
-    public function __construct(CalendarioRepo $calendarioRepo, AsesoresRepo $asesoresRepo, ProyectoRepo $proyectoRepo,
+    public function __construct(CalendarioRepo $calendarioRepo, ProyectoRepo $proyectoRepo, SolicitudRepo $solicitudRepo,
                                 EventoRepo $eventoRepo, HorariosRepo $horariosRepo, EmprendedoresRepo $emprendedoresRepo,
                                 PagoRepo $pagoRepo, DocumentoRepo $documentoRepo, ChatRepo $chatRepo, MensajeRepo $mensajeRepo,
                                 UserRepo $userRepo, EmpresaRepo $empresaRepo, SocioRepo $socioRepo)
@@ -45,7 +45,6 @@ class EmprendedoresController extends BaseController
         $this->beforeFilter('auth');
         $this->beforeFilter('csrf', array('on' => array('put', 'patch', 'delete')));
         $this->calendarioRepo = $calendarioRepo;
-        $this->asesoresRepo = $asesoresRepo;
         $this->eventoRepo = $eventoRepo;
         $this->horariosRepo = $horariosRepo;
         $this->emprendedoresRepo = $emprendedoresRepo;
@@ -57,6 +56,7 @@ class EmprendedoresController extends BaseController
         $this->empresaRepo = $empresaRepo;
         $this->socioRepo = $socioRepo;
         $this->proyectoRepo = $proyectoRepo;
+        $this->soliciturRepo = $solicitudRepo;
     }
 
     /**************************Listar Emprendedores*******************************/
@@ -81,8 +81,7 @@ class EmprendedoresController extends BaseController
 
     /**************************Perfil Emprendedores*******************************/
 
-    //Verificar
-    public function getPerfil($emprendedor_id)
+    public function getPerfil($emprendedor_id, $chat_id=null)
     {
         $this->_emprendedorAsesor($emprendedor_id);
         $emprendedor = $this->emprendedoresRepo->emprendedor($emprendedor_id);
@@ -97,14 +96,23 @@ class EmprendedoresController extends BaseController
         //Documentos
         $num_documentos = $this->documentoRepo->num_documentos();
         $subidas = $this->documentoRepo->num_subidos($emprendedor_id);
-
-        //verificar si se puede mejorar
         //Informacion de los pagos
-        $pagos = $this->_number_format($this->pagoRepo->pagos($emprendedor_id));
-        $adeudo = $this->_number_format($this->pagoRepo->adeudo($emprendedor_id));
-
-        $this->layout->content = View::make('emprendedores.perfil', compact('emprendedor', 'eventos', 'asesores', 'maxDate',
-            'minDate', 'pagos', 'adeudo', 'num_documentos', 'subidas', 'completados', 'disponibles'));
+        $pagos = $this->pagoRepo->pagosRealizados($emprendedor_id);
+        $adeudo = $this->soliciturRepo->adeudo($emprendedor_id);
+        //Mensajes
+        $mensajes = null;
+        $active_chat = null;
+        $chats = $this->chatRepo->consultor();
+        if (count($chats) > 0 && $chat_id <> null) {
+            $active_chat = $this->chatRepo->chat($chat_id);
+            $mensajes = $this->mensajeRepo->mensajes($chat_id);
+            if($active_chat->chat->grupo == 1)
+                $this->userRepo->actualizar_visto(Auth::user()->id);
+            else
+                $this->chatRepo->leido($active_chat->chat_id, date("Y-m-d H:i:s"));
+        }
+        $this->layout->content = View::make('emprendedores.perfil', compact('emprendedor', 'eventos', 'asesores', 'maxDate', 'minDate',
+            'pagos', 'adeudo', 'num_documentos', 'subidas', 'completados', 'disponibles', 'chats', 'mensajes', 'active_chat'));
     }
 
 
@@ -246,13 +254,6 @@ class EmprendedoresController extends BaseController
 
     /**************************Otros*******************************/
 
-    //Verificar si es necesaria
-    //Convierte una cantidad a moneda
-    private function _number_format($numero)
-    {
-        return '$ ' . number_format($numero, 2, '.', ',');
-    }
-
     //Filtro para que solo los trabajadores entren a la funcion
     private function _soloAsesores()
     {
@@ -266,9 +267,9 @@ class EmprendedoresController extends BaseController
         if (Auth::user()->type_id == 1 && Auth::user()->type_id != 2 && Auth::user()->type_id != 3)
             return Redirect::to('sistema');
         elseif (Auth::user()->type_id == 3) {
-            $id = $this->emprendedoresRepo->emprendedorid(Auth::user()->id);
-            if ($emprendedor_id <> $id)
-                return Redirect::to('emprendedores/perfil/' . $id);
+            $emprendedor = $this->emprendedoresRepo->userxemprendedor_id(Auth::user()->id);
+            if ($emprendedor_id <> $emprendedor)
+                return Redirect::to('emprendedores/perfil/' . $emprendedor);
         }
     }
 

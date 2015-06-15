@@ -3,11 +3,16 @@
 class Miembro extends \Eloquent
 {
     protected $table = 'miembros';
-    protected $fillable = array('type_id','user_id','chat_id','ultimo_visto');
+    protected $guarded = ['id'];
     
     public function chat()
     {
         return $this->belongsTo('Chat');
+    }
+
+    public function usuario()
+    {
+        return $this->belongsTo('User', 'user_id','id');
     }
     
 }

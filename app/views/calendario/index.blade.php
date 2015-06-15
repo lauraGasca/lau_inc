@@ -36,7 +36,7 @@
     @if(count($errors)>0)
         <div class="alert alert-danger alert-dismissable">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="fa fa-times-circle"></i></button>
-            ¡Por favor, revise los datos del formulario! {{var_dump($errors)}}
+            ¡Por favor, revise los datos del formulario!
         </div>
     @endif
 

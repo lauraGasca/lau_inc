@@ -95,9 +95,7 @@
                         <br/><br/><span class="message-error" style="font-weight: bold">{{$errors->first('documento')}}</span>
                         <script>
                             $("#documento").fileinput({
-                                browseClass: "btn btn-success",
                                 browseLabel: " Documento a subir ",
-                                browseIcon: '<i class="glyphicon glyphicon-picture"></i>',
                                 showCaption: false,
                                 removeClass: "btn btn-danger",
                                 removeLabel: "Borrar",

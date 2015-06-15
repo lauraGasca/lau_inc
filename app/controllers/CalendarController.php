@@ -3,7 +3,6 @@
 use Incubamas\Repositories\UserRepo;
 use Incubamas\Repositories\CalendarioRepo;
 use Incubamas\Repositories\HorariosRepo;
-use Incubamas\Repositories\AsesoresRepo;
 use Incubamas\Repositories\EmprendedoresRepo;
 use Incubamas\Repositories\EventoRepo;
 use Incubamas\Repositories\NoHorarioRepo;
@@ -18,21 +17,19 @@ class CalendarController extends BaseController
     protected $layout = 'layouts.sistema';
     protected $calendarioRepo;
     protected $horariosRepo;
-    protected $asesoresRepo;
     protected $emprendedoresRepo;
     protected $eventoRepo;
     protected $nohorarioRepo;
     protected $userRepo;
 
     public function __construct(CalendarioRepo $calendarioRepo, UserRepo $userRepo,
-                                HorariosRepo $horariosRepo, AsesoresRepo $asesoresRepo,
+                                HorariosRepo $horariosRepo,
                                 EmprendedoresRepo $emprendedoresRepo, EventoRepo $eventoRepo, NoHorarioRepo $nohorarioRepo)
     {
         $this->beforeFilter('auth');
         $this->beforeFilter('csrf', array('on' => array('put', 'patch', 'delete')));
         $this->calendarioRepo = $calendarioRepo;
         $this->horariosRepo = $horariosRepo;
-        $this->asesoresRepo = $asesoresRepo;
         $this->emprendedoresRepo = $emprendedoresRepo;
         $this->eventoRepo = $eventoRepo;
         $this->nohorarioRepo = $nohorarioRepo;
