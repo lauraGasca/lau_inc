@@ -3,9 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="5a5b8e23-e436-4e8b-9d61-9e95ce82aba0" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/js/fileinput" afterPath="$PROJECT_DIR$/web/Orb/js/fileinput" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/ChatController.php" afterPath="$PROJECT_DIR$/app/controllers/ChatController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Incubamas/Managers/MensajeManager.php" afterPath="$PROJECT_DIR$/app/Incubamas/Managers/MensajeManager.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Incubamas/Repositories/MensajeRepo.php" afterPath="$PROJECT_DIR$/app/Incubamas/Repositories/MensajeRepo.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/chat/index.blade.php" afterPath="$PROJECT_DIR$/app/views/chat/index.blade.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/emprendedores/perfil.blade.php" afterPath="$PROJECT_DIR$/app/views/emprendedores/perfil.blade.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
@@ -84,11 +81,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="perfil.blade.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="perfil.blade.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/emprendedores/perfil.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5017422" vertical-offset="8946" max-vertical-offset="18216">
-              <caret line="513" column="219" selection-start-line="513" selection-start-column="219" selection-end-line="513" selection-end-column="219" />
+            <state vertical-scroll-proportion="-10.666667" vertical-offset="8280" max-vertical-offset="18126">
+              <caret line="476" column="169" selection-start-line="476" selection-start-column="169" selection-end-line="476" selection-end-column="169" />
               <folding>
                 <element signature="e#2497#2521#0#HTML" expanded="true" />
                 <element signature="e#3528#3548#0#HTML" expanded="true" />
@@ -107,44 +104,44 @@
                 <element signature="e#28286#28311#0#HTML" expanded="true" />
                 <element signature="e#30592#30617#0#HTML" expanded="true" />
                 <element signature="e#32808#32833#0#HTML" expanded="true" />
-                <element signature="e#34380#34400#0#HTML" expanded="true" />
-                <element signature="e#37514#37548#0#HTML" expanded="true" />
-                <element signature="e#37754#37788#0#HTML" expanded="true" />
-                <element signature="e#38676#38696#0#HTML" expanded="true" />
-                <element signature="e#40789#40819#0#HTML" expanded="true" />
-                <element signature="e#41833#41858#0#HTML" expanded="true" />
-                <element signature="e#44318#44357#0#HTML" expanded="true" />
-                <element signature="e#45263#45333#0#HTML" expanded="true" />
-                <element signature="e#45415#45458#0#HTML" expanded="true" />
-                <element signature="e#46011#46032#0#HTML" expanded="true" />
-                <element signature="e#46760#46790#0#HTML" expanded="true" />
-                <element signature="e#52370#52395#0#HTML" expanded="true" />
-                <element signature="e#56830#56855#0#HTML" expanded="true" />
-                <element signature="e#58383#58422#0#HTML" expanded="true" />
-                <element signature="e#59860#59900#0#HTML" expanded="true" />
-                <element signature="e#60211#60237#0#HTML" expanded="true" />
-                <element signature="e#60705#60731#0#HTML" expanded="true" />
+                <element signature="e#33819#33839#0#HTML" expanded="true" />
+                <element signature="e#36953#36987#0#HTML" expanded="true" />
+                <element signature="e#37193#37227#0#HTML" expanded="true" />
+                <element signature="e#38115#38135#0#HTML" expanded="true" />
+                <element signature="e#40228#40258#0#HTML" expanded="true" />
+                <element signature="e#41272#41297#0#HTML" expanded="true" />
+                <element signature="e#43757#43796#0#HTML" expanded="true" />
+                <element signature="e#44702#44772#0#HTML" expanded="true" />
+                <element signature="e#44854#44897#0#HTML" expanded="true" />
+                <element signature="e#45450#45471#0#HTML" expanded="true" />
+                <element signature="e#46199#46229#0#HTML" expanded="true" />
+                <element signature="e#51809#51834#0#HTML" expanded="true" />
+                <element signature="e#56269#56294#0#HTML" expanded="true" />
+                <element signature="e#57822#57861#0#HTML" expanded="true" />
+                <element signature="e#59299#59339#0#HTML" expanded="true" />
+                <element signature="e#59650#59676#0#HTML" expanded="true" />
+                <element signature="e#60144#60170#0#HTML" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.blade.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="index.blade.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/views/chat/index.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-12.0" vertical-offset="2502" max-vertical-offset="4500">
-              <caret line="157" column="191" selection-start-line="157" selection-start-column="191" selection-end-line="157" selection-end-column="191" />
+            <state vertical-scroll-proportion="0.37630662" vertical-offset="1944" max-vertical-offset="4410">
+              <caret line="120" column="141" selection-start-line="120" selection-start-column="141" selection-end-line="120" selection-end-column="141" />
               <folding>
                 <element signature="e#3643#3668#0#HTML" expanded="true" />
                 <element signature="e#5362#5387#0#HTML" expanded="true" />
                 <element signature="e#7019#7044#0#HTML" expanded="true" />
-                <element signature="e#8059#8079#0#HTML" expanded="true" />
-                <element signature="e#10493#10527#0#HTML" expanded="true" />
-                <element signature="e#10677#10711#0#HTML" expanded="true" />
-                <element signature="e#11235#11255#0#HTML" expanded="true" />
-                <element signature="e#12786#12816#0#HTML" expanded="true" />
-                <element signature="e#13577#13602#0#HTML" expanded="true" />
-                <element signature="e#15360#15399#0#HTML" expanded="true" />
+                <element signature="e#7638#7658#0#HTML" expanded="true" />
+                <element signature="e#10072#10106#0#HTML" expanded="true" />
+                <element signature="e#10256#10290#0#HTML" expanded="true" />
+                <element signature="e#10814#10834#0#HTML" expanded="true" />
+                <element signature="e#12365#12395#0#HTML" expanded="true" />
+                <element signature="e#13156#13181#0#HTML" expanded="true" />
+                <element signature="e#14939#14978#0#HTML" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -212,8 +209,8 @@
         <option value="$PROJECT_DIR$/app/controllers/ChatController.php" />
         <option value="$PROJECT_DIR$/app/Incubamas/Managers/MensajeManager.php" />
         <option value="$PROJECT_DIR$/app/Incubamas/Repositories/MensajeRepo.php" />
-        <option value="$PROJECT_DIR$/app/views/chat/index.blade.php" />
         <option value="$PROJECT_DIR$/app/views/emprendedores/perfil.blade.php" />
+        <option value="$PROJECT_DIR$/app/views/chat/index.blade.php" />
       </list>
     </option>
   </component>
@@ -1121,29 +1118,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/chat/index.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.0" vertical-offset="2502" max-vertical-offset="4500">
-          <caret line="157" column="191" selection-start-line="157" selection-start-column="191" selection-end-line="157" selection-end-column="191" />
-          <folding>
-            <element signature="e#3643#3668#0#HTML" expanded="true" />
-            <element signature="e#5362#5387#0#HTML" expanded="true" />
-            <element signature="e#7019#7044#0#HTML" expanded="true" />
-            <element signature="e#8059#8079#0#HTML" expanded="true" />
-            <element signature="e#10493#10527#0#HTML" expanded="true" />
-            <element signature="e#10677#10711#0#HTML" expanded="true" />
-            <element signature="e#11235#11255#0#HTML" expanded="true" />
-            <element signature="e#12786#12816#0#HTML" expanded="true" />
-            <element signature="e#13577#13602#0#HTML" expanded="true" />
-            <element signature="e#15360#15399#0#HTML" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/emprendedores/perfil.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5017422" vertical-offset="8946" max-vertical-offset="18216">
-          <caret line="513" column="219" selection-start-line="513" selection-start-column="219" selection-end-line="513" selection-end-column="219" />
+        <state vertical-scroll-proportion="-10.666667" vertical-offset="8280" max-vertical-offset="18126">
+          <caret line="476" column="169" selection-start-line="476" selection-start-column="169" selection-end-line="476" selection-end-column="169" />
           <folding>
             <element signature="e#2497#2521#0#HTML" expanded="true" />
             <element signature="e#3528#3548#0#HTML" expanded="true" />
@@ -1162,23 +1140,42 @@
             <element signature="e#28286#28311#0#HTML" expanded="true" />
             <element signature="e#30592#30617#0#HTML" expanded="true" />
             <element signature="e#32808#32833#0#HTML" expanded="true" />
-            <element signature="e#34380#34400#0#HTML" expanded="true" />
-            <element signature="e#37514#37548#0#HTML" expanded="true" />
-            <element signature="e#37754#37788#0#HTML" expanded="true" />
-            <element signature="e#38676#38696#0#HTML" expanded="true" />
-            <element signature="e#40789#40819#0#HTML" expanded="true" />
-            <element signature="e#41833#41858#0#HTML" expanded="true" />
-            <element signature="e#44318#44357#0#HTML" expanded="true" />
-            <element signature="e#45263#45333#0#HTML" expanded="true" />
-            <element signature="e#45415#45458#0#HTML" expanded="true" />
-            <element signature="e#46011#46032#0#HTML" expanded="true" />
-            <element signature="e#46760#46790#0#HTML" expanded="true" />
-            <element signature="e#52370#52395#0#HTML" expanded="true" />
-            <element signature="e#56830#56855#0#HTML" expanded="true" />
-            <element signature="e#58383#58422#0#HTML" expanded="true" />
-            <element signature="e#59860#59900#0#HTML" expanded="true" />
-            <element signature="e#60211#60237#0#HTML" expanded="true" />
-            <element signature="e#60705#60731#0#HTML" expanded="true" />
+            <element signature="e#33819#33839#0#HTML" expanded="true" />
+            <element signature="e#36953#36987#0#HTML" expanded="true" />
+            <element signature="e#37193#37227#0#HTML" expanded="true" />
+            <element signature="e#38115#38135#0#HTML" expanded="true" />
+            <element signature="e#40228#40258#0#HTML" expanded="true" />
+            <element signature="e#41272#41297#0#HTML" expanded="true" />
+            <element signature="e#43757#43796#0#HTML" expanded="true" />
+            <element signature="e#44702#44772#0#HTML" expanded="true" />
+            <element signature="e#44854#44897#0#HTML" expanded="true" />
+            <element signature="e#45450#45471#0#HTML" expanded="true" />
+            <element signature="e#46199#46229#0#HTML" expanded="true" />
+            <element signature="e#51809#51834#0#HTML" expanded="true" />
+            <element signature="e#56269#56294#0#HTML" expanded="true" />
+            <element signature="e#57822#57861#0#HTML" expanded="true" />
+            <element signature="e#59299#59339#0#HTML" expanded="true" />
+            <element signature="e#59650#59676#0#HTML" expanded="true" />
+            <element signature="e#60144#60170#0#HTML" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/chat/index.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.37630662" vertical-offset="1944" max-vertical-offset="4410">
+          <caret line="120" column="141" selection-start-line="120" selection-start-column="141" selection-end-line="120" selection-end-column="141" />
+          <folding>
+            <element signature="e#3643#3668#0#HTML" expanded="true" />
+            <element signature="e#5362#5387#0#HTML" expanded="true" />
+            <element signature="e#7019#7044#0#HTML" expanded="true" />
+            <element signature="e#7638#7658#0#HTML" expanded="true" />
+            <element signature="e#10072#10106#0#HTML" expanded="true" />
+            <element signature="e#10256#10290#0#HTML" expanded="true" />
+            <element signature="e#10814#10834#0#HTML" expanded="true" />
+            <element signature="e#12365#12395#0#HTML" expanded="true" />
+            <element signature="e#13156#13181#0#HTML" expanded="true" />
+            <element signature="e#14939#14978#0#HTML" expanded="true" />
           </folding>
         </state>
       </provider>

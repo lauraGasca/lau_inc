@@ -475,11 +475,6 @@
                                                                                 {{ HTML::image('Orb/images/emprendedores/'.$chat->usuario->foto, $chat->usuario->nombre.' '.$chat->usuario->apellidos) }}
                                                                             </span>
                                                                             <span class="label label-success" style="font-size: 0.6em;">{{$chat->usuario->puesto}}</span>
-                                                                            @if($chat->chat->ultimo_mensaje!=null && $chat->ultimo_visto!=null)
-                                                                                @if($chat->ultimo_mensaje > $chat->ultimo_visto)
-                                                                                    <span class="badge">Nuevos</span>
-                                                                                @endif
-                                                                            @endif
                                                                         </a>
                                                                     @endif
                                                                 </li>
