@@ -32,9 +32,6 @@ class UserRepo extends BaseRepo
 
     public function actualizar_visto($user_id)
     {
-        $usuario = User::find($user_id);
-        $usuario->visto_mensajes = date("Y-m-d H:i:s");
-        $usuario->save();
     }
 
     public function buscarxEmail($email)
