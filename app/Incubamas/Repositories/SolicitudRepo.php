@@ -98,10 +98,13 @@ class SolicitudRepo extends BaseRepo
 
     public function adeudo($emprendedor_id)
     {
-        $adeudo = Solicitud::selectRaw('SUM(monto) as total')
-            ->where('solicitud.emprendedor_id', '=', $emprendedor_id)->first();;
+        $total = Solicitud::selectRaw('SUM(monto) as total')
+            ->where('solicitud.emprendedor_id', '=', $emprendedor_id)->first();
+        $pagos = Pago::selectRaw('SUM(monto) as total')
+            ->where('emprendedor_id','=',$emprendedor_id)->first();
+        $adeudo = $total->total - $pagos->total;
         if(count($adeudo)>0)
-            return '$ '.number_format($adeudo->total, 2, '.', ',');
+            return '$ '.number_format($adeudo, 2, '.', ',');
         else
             return '$ 0.00';
     }
