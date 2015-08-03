@@ -51,7 +51,7 @@ class UserController extends BaseController
     public function getActivar($user_id)
     {
         $this->_soloAsesores();
-        $user = $this->userRepo->find($user_id);
+        $user = $this->userRepo->usuario($user_id);
         if(count($user)>0)
         {
             if($user->active == 0)
@@ -81,7 +81,7 @@ class UserController extends BaseController
     public function getBloquear($user_id)
     {
         $this->_soloAsesores();
-        $user = $this->userRepo->find($user_id);
+        $user = $this->userRepo->usuario($user_id);
         if(count($user)>0)
         {
             if($user->active == 0)

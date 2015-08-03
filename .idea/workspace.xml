@@ -2,90 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5a5b8e23-e436-4e8b-9d61-9e95ce82aba0" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/nuget/NuGet.exe" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/nuget/NuGet.exe" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/js/fileinput" afterPath="$PROJECT_DIR$/web/Orb/js/fileinput" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/.bower.json" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/.bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/nuget/Bootstrap.v3.Datetimepicker.CSS.nuspec" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/nuget/Bootstrap.v3.Datetimepicker.CSS.nuspec" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/nuget/Bootstrap.v3.Datetimepicker.nuspec" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/nuget/Bootstrap.v3.Datetimepicker.nuspec" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/CONTRIBUTING.md" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/CONTRIBUTING.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/Gruntfile.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/Gruntfile.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/LICENSE" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/LICENSE" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/Makefile" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/Makefile" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/README.md" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Incubamas/Repositories/SolicitudRepo.php" afterPath="$PROJECT_DIR$/app/Incubamas/Repositories/SolicitudRepo.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/less/bootstrap-datetimepicker-build.less" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/less/bootstrap-datetimepicker-build.less" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.ar-ma.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.ar-ma.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.ar.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.ar.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.bg.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.bg.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.br.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.br.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.bs.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.bs.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.ca.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.ca.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.cs.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.cs.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.cv.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.cv.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.da.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.da.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.de.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.de.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.el.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.el.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.en-au.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.en-au.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.en-ca.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.en-ca.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.en-gb.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.en-gb.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.eo.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.eo.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.es.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.es.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.et.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.et.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.eu.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.eu.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.fa.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.fa.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.fi.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.fi.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.fr-ca.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.fr-ca.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.fr.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.fr.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.gl.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.gl.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.he.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.he.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.hi.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.hi.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.hr.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.hr.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.hu.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.hu.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.id.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.id.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.is.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.is.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.it.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.it.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.ja.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.ja.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.ka.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.ka.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.ko.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.ko.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/less/bootstrap-datetimepicker.less" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/less/bootstrap-datetimepicker.less" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.lt.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.lt.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.lv.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.lv.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.ml.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.ml.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.mr.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.mr.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.ms-my.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.ms-my.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.nb.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.nb.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.ne.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.ne.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.nl.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.nl.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.nn.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.nn.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.pl.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.pl.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.pt-BR.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.pt-BR.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.pt.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.pt.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.ro.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.ro.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.ru.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.ru.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.sk.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.sk.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.sl.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.sl.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.sq.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.sq.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.sv.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.sv.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.th.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.th.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.tr.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.tr.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.tzm-la.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.tzm-la.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.tzm.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.tzm.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.uk.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.uk.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.uz.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.uz.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.vn.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.vn.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.zh-CN.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.zh-CN.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.zh-TW.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.zh-TW.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/bootstrap/bootstrap.min.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/bootstrap/bootstrap.min.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/bower.json" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/bower.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/tasks/bump_version.js" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/tasks/bump_version.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/component.json" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/component.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/composer.json" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/composer.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/nuget/install.ps1" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/nuget/install.ps1" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/package.json" afterPath="$PROJECT_DIR$/web/Orb/bower_components/eonasdan-bootstrap-datetimepicker/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/UserController.php" afterPath="$PROJECT_DIR$/app/controllers/UserController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/config/local/database.php" afterPath="$PROJECT_DIR$/app/config/local/database.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Incubamas.iws" />
@@ -111,42 +30,29 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="PagosController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/controllers/PagosController.php">
+      <file leaf-file-name="LoginController.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/controllers/LoginController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.8596492" vertical-offset="377" max-vertical-offset="4410">
-              <caret line="38" column="14" selection-start-line="38" selection-start-column="8" selection-end-line="38" selection-end-column="14" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SolicitudRepo.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/Incubamas/Repositories/SolicitudRepo.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6305147" vertical-offset="1475" max-vertical-offset="3978">
-              <caret line="106" column="45" selection-start-line="106" selection-start-column="45" selection-end-line="106" selection-end-column="45" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PagoRepo.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Incubamas/Repositories/PagoRepo.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-14.407408" vertical-offset="1105" max-vertical-offset="1800">
-              <caret line="84" column="8" selection-start-line="84" selection-start-column="8" selection-end-line="85" selection-end-column="67" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="EmprendedoresController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/controllers/EmprendedoresController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.9122806" vertical-offset="1259" max-vertical-offset="4950">
-              <caret line="114" column="28" selection-start-line="114" selection-start-column="22" selection-end-line="114" selection-end-column="28" />
-              <folding />
+            <state vertical-scroll-proportion="-1.5714285" vertical-offset="2576" max-vertical-offset="3960">
+              <caret line="100" column="111" selection-start-line="100" selection-start-column="111" selection-end-line="100" selection-end-column="111" />
+              <folding>
+                <marker date="1434382190872" expanded="true" signature="4228:4397" placeholder="..." />
+                <marker date="1434382190872" expanded="true" signature="4247:4390" placeholder="..." />
+                <marker date="1434382190872" expanded="true" signature="4255:4383" placeholder="..." />
+                <marker date="1434382190872" expanded="true" signature="4502:4670" placeholder="..." />
+                <marker date="1434382190872" expanded="true" signature="4521:4663" placeholder="..." />
+                <marker date="1434382190872" expanded="true" signature="4529:4656" placeholder="..." />
+                <marker date="1434382190872" expanded="true" signature="5556:5580" placeholder="..." />
+                <marker date="1434382190872" expanded="true" signature="6197:6627" placeholder="..." />
+                <marker date="1434382190872" expanded="true" signature="6712:7142" placeholder="..." />
+                <marker date="1434382190872" expanded="true" signature="7313:7481" placeholder="..." />
+                <marker date="1434382190872" expanded="true" signature="7332:7474" placeholder="..." />
+                <marker date="1434382190872" expanded="true" signature="7340:7467" placeholder="..." />
+                <marker date="1434382190872" expanded="true" signature="8866:9296" placeholder="..." />
+                <marker date="1434382190872" expanded="true" signature="9381:9811" placeholder="..." />
+                <marker date="1434382190872" expanded="true" signature="10964:11056" placeholder="..." />
+                <marker date="1434382190872" expanded="true" signature="11325:11755" placeholder="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -164,9 +70,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/views/emprendedores/socios.blade.php" />
-        <option value="$PROJECT_DIR$/app/Incubamas/Managers/SubidasManager.php" />
-        <option value="$PROJECT_DIR$/app/views/emprendedores/update.blade.php" />
         <option value="$PROJECT_DIR$/app/Incubamas/Repositories/DocumentoRepo.php" />
         <option value="$PROJECT_DIR$/app/Incubamas/Repositories/ProyectoRepo.php" />
         <option value="$PROJECT_DIR$/app/Incubamas/Entities/Subidas.php" />
@@ -215,6 +118,9 @@
         <option value="$PROJECT_DIR$/app/views/emprendedores/perfil.blade.php" />
         <option value="$PROJECT_DIR$/app/controllers/PagosController.php" />
         <option value="$PROJECT_DIR$/app/Incubamas/Repositories/SolicitudRepo.php" />
+        <option value="$PROJECT_DIR$/app/config/database.php" />
+        <option value="$PROJECT_DIR$/app/config/local/database.php" />
+        <option value="$PROJECT_DIR$/app/controllers/UserController.php" />
       </list>
     </option>
   </component>
@@ -484,50 +390,6 @@
               <option name="myItemId" value="Incubamas" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Managers" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Incubamas" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Incubamas" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Incubamas" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Entities" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Incubamas" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Incubamas" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Incubamas" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -544,6 +406,24 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="controllers" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Incubamas" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Incubamas" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="config" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -637,11 +517,11 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1366" height="743" extended-state="6" />
+    <frame x="0" y="0" width="1366" height="743" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3281493" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18081181" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1690037" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
@@ -689,34 +569,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/views/servicios/create.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.6666665" vertical-offset="0" max-vertical-offset="2394">
-          <caret line="10" column="60" selection-start-line="10" selection-start-column="60" selection-end-line="10" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/servicios/update.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.31358886" vertical-offset="0" max-vertical-offset="2484">
-          <caret line="10" column="60" selection-start-line="10" selection-start-column="60" selection-end-line="10" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Incubamas/Repositories/SocioRepo.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.42930153" vertical-offset="162" max-vertical-offset="828">
-          <caret line="23" column="23" selection-start-line="23" selection-start-column="23" selection-end-line="23" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Incubamas/Entities/Socios.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="614">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Incubamas/Entities/Solicitud.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.0909091" vertical-offset="216" max-vertical-offset="1332">
@@ -892,13 +744,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/LoginController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="61.407406" vertical-offset="3332" max-vertical-offset="3960">
-          <caret line="100" column="111" selection-start-line="100" selection-start-column="111" selection-end-line="100" selection-end-column="111" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Incubamas/Repositories/EmprendedoresRepo.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.65505224" vertical-offset="128" max-vertical-offset="1944">
@@ -948,25 +793,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/config/database.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.6088018" vertical-offset="1067" max-vertical-offset="2340">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Incubamas/Entities/Mensaje.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.4599659" vertical-offset="0" max-vertical-offset="587">
           <caret line="15" column="93" selection-start-line="15" selection-start-column="83" selection-end-line="15" selection-end-column="93" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Incubamas/Repositories/UserRepo.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="321" max-vertical-offset="2106">
-          <caret line="20" column="27" selection-start-line="20" selection-start-column="27" selection-end-line="20" selection-end-column="27" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -981,16 +811,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="303" max-vertical-offset="1890">
           <caret line="201" column="74" selection-start-line="201" selection-start-column="74" selection-end-line="201" selection-end-column="74" />
-          <folding>
-            <element signature="e#7#43#0#PHP" expanded="true" />
-            <element signature="n#__construct#0;n#ChatController#0;n#!!top" expanded="false" />
-            <element signature="n#getCrear#0;n#ChatController#0;n#!!top" expanded="false" />
-            <element signature="n#postCrear#0;n#ChatController#0;n#!!top" expanded="false" />
-            <element signature="n#getCrearIncubito#0;n#ChatController#0;n#!!top" expanded="false" />
-            <element signature="n#postCrearIncubito#0;n#ChatController#0;n#!!top" expanded="false" />
-            <element signature="n#getCrearEmprendedor#0;n#ChatController#0;n#!!top" expanded="false" />
-            <element signature="n#postCrearEmprendedor#0;n#ChatController#0;n#!!top" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1005,7 +825,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="163" max-vertical-offset="972">
           <caret line="21" column="26" selection-start-line="21" selection-start-column="26" selection-end-line="21" selection-end-column="26" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1013,9 +832,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.1567944" vertical-offset="722" max-vertical-offset="1944">
           <caret line="77" column="5" selection-start-line="77" selection-start-column="5" selection-end-line="77" selection-end-column="5" />
-          <folding>
-            <element signature="e#41#69#0#PHP" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1023,7 +839,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.34494773" vertical-offset="7524" max-vertical-offset="17802">
           <caret line="429" column="98" selection-start-line="429" selection-start-column="98" selection-end-line="429" selection-end-column="98" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1031,7 +846,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.34494773" vertical-offset="1512" max-vertical-offset="4086">
           <caret line="95" column="50" selection-start-line="95" selection-start-column="50" selection-end-line="95" selection-end-column="50" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1039,15 +853,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-7.9122806" vertical-offset="1259" max-vertical-offset="4950">
           <caret line="114" column="28" selection-start-line="114" selection-start-column="22" selection-end-line="114" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/PagosController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.8596492" vertical-offset="377" max-vertical-offset="4410">
-          <caret line="38" column="14" selection-start-line="38" selection-start-column="8" selection-end-line="38" selection-end-column="14" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1055,15 +860,103 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-14.407408" vertical-offset="1105" max-vertical-offset="1800">
           <caret line="84" column="8" selection-start-line="84" selection-start-column="8" selection-end-line="85" selection-end-column="67" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Incubamas/Repositories/SolicitudRepo.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6305147" vertical-offset="1475" max-vertical-offset="3978">
-          <caret line="106" column="45" selection-start-line="106" selection-start-column="45" selection-end-line="106" selection-end-column="45" />
+        <state vertical-scroll-proportion="0.7297794" vertical-offset="2537" max-vertical-offset="3978">
+          <caret line="168" column="9" selection-start-line="168" selection-start-column="9" selection-end-line="168" selection-end-column="9" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/PagosController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.29963234" vertical-offset="377" max-vertical-offset="4410">
+          <caret line="38" column="14" selection-start-line="38" selection-start-column="8" selection-end-line="38" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/config/local/database.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.24531516" vertical-offset="216" max-vertical-offset="954">
+          <caret line="20" column="27" selection-start-line="20" selection-start-column="27" selection-end-line="20" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/config/database.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.39011925" vertical-offset="743" max-vertical-offset="2340">
+          <caret line="54" column="8" selection-start-line="54" selection-start-column="8" selection-end-line="63" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Incubamas/Entities/Emprendedor.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.2264808" vertical-offset="704" max-vertical-offset="1386">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/UserController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4076655" vertical-offset="756" max-vertical-offset="2340">
+          <caret line="56" column="34" selection-start-line="56" selection-start-column="34" selection-end-line="56" selection-end-column="34" />
+          <folding>
+            <marker date="1438638418351" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1438638418351" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1438638418351" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1438638418351" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1438638418351" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1438638418351" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1438638418351" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1438638418351" expanded="true" signature="-1:-1" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Incubamas/Repositories/UserRepo.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.533101" vertical-offset="54" max-vertical-offset="2106">
+          <caret line="20" column="27" selection-start-line="20" selection-start-column="27" selection-end-line="20" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Incubamas/Entities/User.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.7478705" vertical-offset="439" max-vertical-offset="1026">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/LoginController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.5714285" vertical-offset="2576" max-vertical-offset="3960">
+          <caret line="100" column="111" selection-start-line="100" selection-start-column="111" selection-end-line="100" selection-end-column="111" />
+          <folding>
+            <marker date="1434382190872" expanded="true" signature="4228:4397" placeholder="..." />
+            <marker date="1434382190872" expanded="true" signature="4247:4390" placeholder="..." />
+            <marker date="1434382190872" expanded="true" signature="4255:4383" placeholder="..." />
+            <marker date="1434382190872" expanded="true" signature="4502:4670" placeholder="..." />
+            <marker date="1434382190872" expanded="true" signature="4521:4663" placeholder="..." />
+            <marker date="1434382190872" expanded="true" signature="4529:4656" placeholder="..." />
+            <marker date="1434382190872" expanded="true" signature="5556:5580" placeholder="..." />
+            <marker date="1434382190872" expanded="true" signature="6197:6627" placeholder="..." />
+            <marker date="1434382190872" expanded="true" signature="6712:7142" placeholder="..." />
+            <marker date="1434382190872" expanded="true" signature="7313:7481" placeholder="..." />
+            <marker date="1434382190872" expanded="true" signature="7332:7474" placeholder="..." />
+            <marker date="1434382190872" expanded="true" signature="7340:7467" placeholder="..." />
+            <marker date="1434382190872" expanded="true" signature="8866:9296" placeholder="..." />
+            <marker date="1434382190872" expanded="true" signature="9381:9811" placeholder="..." />
+            <marker date="1434382190872" expanded="true" signature="10964:11056" placeholder="..." />
+            <marker date="1434382190872" expanded="true" signature="11325:11755" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
