@@ -3,6 +3,6 @@
 class Atendido extends \Eloquent
 {
     protected $table = 'personas_atendidas';
-    protected $guarded = ['programa', 'enviar'];
+    protected $guarded = ['enviar'];
     
 }

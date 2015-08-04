@@ -75,12 +75,17 @@
                     <span class="message-error">{{$errors->first('direccion')}}</span>
                 </div>
                 <div class="col-md-6 espacio_abajo">
-                    {{Form::label('programa', '* Programa', array('class' => 'label'))}}
-                    <label class="input">
-                        <i class="icon-prepend fa fa-book"></i>
-                        {{Form::text('programa')}}
+                    {{Form::label('programa', 'Programa a Vincular', array('class' => 'label'))}}
+                    <label class="select select-multiple">
+                        {{Form::select('programa[]', $programas, "", array('multiple'))}}
                     </label>
                     <span class="message-error">{{$errors->first('programa')}}</span>
+                    <div class="note">
+                        <strong>
+                            Nota:
+                        </strong>
+                        Manten precionado Ctrl para seleccionar multiples programas
+                    </div>
                 </div>
                 <div class="col-md-5 espacio_abajo">
                     {{Form::label('monto', 'Monto a solicitar', array('class' => 'label'))}}
