@@ -21,16 +21,26 @@ class UserController extends BaseController
 
     }
 
-    public function getEditar()
+    public function getEditar($user_id = null)
     {
-        $this->layout->content = View::make('users.update');
+        if($user_id==null)
+            $usuario = \Auth::user();
+        else
+            $usuario = $this->userRepo->usuario($user_id);
+        $this->layout->content = View::make('users.update', compact('usuario'));
     }
 
     public function postEditar()
     {
-        $manager = new UsuariosManager(\Auth::user(), Input::all());
-        $manager->save();
-        return Redirect::back()->with(array('confirm' => 'Se ha guardado correctamente.'));
+        $usuario = $this->userRepo->usuario(Input::get('id'));
+        if(count($usuario)>0)
+        {
+            $manager = new UsuariosManager($usuario, Input::all());
+            $manager->save();
+            return Redirect::back()->with(array('confirm' => 'Se ha guardado correctamente.'));
+        }
+        else
+            return Response::view('errors.missing', array(), 404);
     }
 
     public function getError()

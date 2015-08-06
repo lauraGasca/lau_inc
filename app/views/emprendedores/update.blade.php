@@ -64,7 +64,12 @@
                     <div id="myTabContent" class="tab-content">
                         <!----------------------------------------Emprendedor---------------------------------------->
                         <div class="tab-pane in active" id="emprendedor">
-                            <div class="profile-header">Editar Emprendedor</div>
+                            <div class="profile-header">
+                                Editar Emprendedor&nbsp;&nbsp;
+                                @if($emprendedor->usuario->facebook_id=='')
+                                    {{HTML::link('usuarios/editar/'.$emprendedor->usuario->id,'Editar Perfil de Usuario',array('class'=>'btn btn-primary', 'style'=>'color:#FFF'))}}
+                                @endif
+                            </div>
                             {{Form::model($emprendedor, ['url'=>'emprendedores/editar', 'class'=>'orb-form','method' => 'post', 'enctype'=>'multipart/form-data'])}}
                                 {{Form::hidden('id')}}
                                 <fieldset>
@@ -213,7 +218,7 @@
                                             @endif
                                         </label>
                                     </div>
-                                    <div class="col-md-5 espacio_abajo">
+                                    <div class="col-md-6 espacio_abajo">
                                         {{Form::label('estado', '* Estado', ['class' => 'label'])}}
                                         <label class="select">
                                             {{Form::select('estado', [null=>'Selecciona un Estado','Aguascalientes'=>'Aguascalientes',

@@ -28,7 +28,8 @@
     @endif
     <div class="powerwidget cold-grey" id="profile" data-widget-editbutton="false">
         <div class="inner-spacer">
-            {{Form::model(\Auth::user(), ['url'=>'usuarios/editar', 'class'=>'orb-form','method' => 'post',])}}
+            {{Form::model($usuario, ['url'=>'usuarios/editar', 'class'=>'orb-form','method' => 'post',])}}
+                {{Form::hidden('id')}}
                 <fieldset>
                     <div class="col-md-8 espacio_abajo">
                         {{Form::label('user', '* Nombre de Usuario', array('class' => 'label'))}}
@@ -38,24 +39,22 @@
                         </label>
                         <span class="message-error">{{$errors->first('user')}}</span>
                     </div>
-                    @if(\Auth::user()->facebook_id=='')
-                        <div class="col-md-8 espacio_abajo">
-                            {{Form::label('password', 'Contraseña', array('class' => 'label'))}}
-                            <label class="input">
-                                <i class="icon-prepend fa fa-user"></i>
-                                {{Form::password('password')}}
-                            </label>
-                            <span class="message-error">{{$errors->first('password')}}</span>
-                        </div>
-                        <div class="col-md-8 espacio_abajo">
-                            {{Form::label('password_confirmation', 'Confirma la contraseña', array('class' => 'label'))}}
-                            <label class="input">
-                                <i class="icon-prepend fa fa-user"></i>
-                                {{Form::password('password_confirmation')}}
-                            </label>
-                            <span class="message-error">{{$errors->first('password_confirmation')}}</span>
-                        </div>
-                    @endif
+                    <div class="col-md-8 espacio_abajo">
+                        {{Form::label('password', 'Contraseña', array('class' => 'label'))}}
+                        <label class="input">
+                            <i class="icon-prepend fa fa-user"></i>
+                            {{Form::password('password')}}
+                        </label>
+                        <span class="message-error">{{$errors->first('password')}}</span>
+                    </div>
+                    <div class="col-md-8 espacio_abajo">
+                        {{Form::label('password_confirmation', 'Confirma la contraseña', array('class' => 'label'))}}
+                        <label class="input">
+                            <i class="icon-prepend fa fa-user"></i>
+                            {{Form::password('password_confirmation')}}
+                        </label>
+                        <span class="message-error">{{$errors->first('password_confirmation')}}</span>
+                    </div>
                 </fieldset>
                 <fieldset>
                     <div class="col-md-6 espacio_abajo" >
