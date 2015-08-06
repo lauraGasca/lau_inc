@@ -19,75 +19,79 @@
 
 @section('contenido')
     @if(Session::get('confirm'))
-        <div class="row">
-            <div class="col-md-12">
-                <div class="breadcrumb clearfix">
-                    {{Session::get('confirm')}}
-                </div>
-            </div>
+        <div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="fa fa-times-circle"></i></button>
+            {{Session::get('confirm')}}
         </div>
     @endif
     @if(count($errors)>0)
-        <script>
-            alert("¡Por favor, revise los datos del formulario!");
-        </script>
-        @endif
-                <!-- New widget -->
-        <div class="powerwidget powerwidget-as-portlet-white" id="darkportletdarktable" data-widget-editbutton="false">
-            <div class="inner-spacer">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="input-group">
-                            {{ Form::open(array('url'=>'atendidos/busqueda', 'method' => 'post') )}}
-                            <span class="input-group-btn">
-                                {{Form::text('buscar', null, array('class'=>'form-control', 'placeholder'=>'Buscar', 'data-provide'=>'typeahead'))}}
-                                {{ Form::submit('Ir!', array('class'=>'btn btn-default')) }}
-                            </span>
-                            <span class="message-error">{{$errors->first('buscar')}}</span>
-                            {{Form::close()}}
-                        </div>
-                    </div>
-                    <div class="col-md-5">
-                        {{HTML::link('atendidos/crear','Nuevo Registro',array('class'=>'btn btn-default'))}}
-                    </div>
-                </div>
-                <br/>
-                <table class="table table-striped table-bordered table-hover">
-                    <thead>
-                    <tr>
-                        <th width="15%">Nombre</th>
-                        <th width="15%">Correo</th>
-                        <th width="15%">Telefono</th>
-                        <th width="55%">Direcci&oacute;n</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @if(count($atendidos) > 0)
-                        @foreach($atendidos as $atendido)
-                            <tr>
-                                <td>{{$atendido->nombre_completo}}</td>
-                                <td>{{$atendido->correo}}</td>
-                                <td>{{$atendido->telefono}}</td>
-                                <td>{{$atendido->direccion}}</td>
-                            </tr>
-                        @endforeach
-                    @else
-                        <tr>
-                            <th colspan="4">No hay ninguna entrada registrada</th>
-                        </tr>
-                    @endif
-                    </tbody>
-                    <tfoot>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Correo</th>
-                        <th>Telefono</th>
-                        <th>Direcci&oacute;n</th>
-                    </tr>
-                    </tfoot>
-                </table>
-                {{$atendidos->links();}}
-            </div>
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="fa fa-times-circle"></i></button>
+            ¡Por favor, revise los datos del formulario!
         </div>
-        <!-- /New widget -->
+    @endif
+    <div class="powerwidget powerwidget-as-portlet-white" id="darkportletdarktable" data-widget-editbutton="false">
+        <div class="inner-spacer">
+            <div class="row">
+                <div class="col-md-5">
+                    {{HTML::link('atendidos/crear','+ Nuevo Registro',array('class'=>'btn btn-primary'))}}<br/>
+                </div>
+            </div>
+            <br/>
+            <table class="table table-striped table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th width="40%">Nombre</th>
+                    <th width="25%">Correo</th>
+                    <th width="20%">Telefono</th>
+                    <th colspan="4" width="15%" class="text-center">Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                @if(count($atendidos) > 0)
+                    @foreach($atendidos as $atendido)
+                        <tr>
+                            <td>{{$atendido->nombre_completo}}</td>
+                            <td>{{$atendido->correo}}</td>
+                            <td>{{$atendido->telefono}}</td>
+                            <td>
+                                <a title="Imprimir" target="_blank" href="{{url('atendidos/imprimir/'.$atendido->id)}}" >
+                                    <i class="fa fa-print"></i>
+                                </a>
+                            </td>
+                            <td>
+                                <a title="Enviar" onClick="return confirm('\u00BFSeguro que deseas enviar?');" href="{{url('atendidos/enviar/'.$atendido->id)}}" >
+                                    <i class="fa fa-paper-plane"></i>
+                                </a>
+                            </td>
+                            <td class="text-center">
+                                <a title="Editar" href="{{URL('atendidos/editar/'.$atendido->id)}}">
+                                    <i class="fa fa-cog"></i>
+                                </a>
+                            </td>
+                            <td class="text-center">
+                                <a title="Eliminar" href="{{URL('atendidos/delete/'.$atendido->id)}}" onClick="return confirm('\u00BFSeguro que deseas eliminar?');">
+                                    <i class="fa fa-times-circle"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    @endforeach
+                @else
+                    <tr>
+                        <th colspan="7">No hay ninguna entrada registrada</th>
+                    </tr>
+                @endif
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Correo</th>
+                    <th>Telefono</th>
+                    <th colspan="4">Acciones</th>
+                </tr>
+                </tfoot>
+            </table>
+            {{$atendidos->links();}}
+        </div>
+    </div>
 @stop  

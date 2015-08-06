@@ -20,27 +20,32 @@
 @section('mapa')
     <li><a href="#"><i class="fa fa-home"></i></a></li>
     <li>{{HTML::link('atendidos','Personas Atendidas')}}</li>
-    <li class="active">Crear</li>
+    <li class="active">Editar</li>
 @stop
 
 @section('titulo-seccion')
     <h1>Personas Atendidas
-        <small>Registrar</small>
+        <small>Editar</small>
     </h1>
 @stop
 
 @section('contenido')
     @if(Session::get('confirm'))
         <div class="alert alert-success alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
-                <i class="fa fa-times-circle"></i>
-            </button>
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="fa fa-times-circle"></i></button>
             {{Session::get('confirm')}}
+        </div>
+    @endif
+    @if(count($errors)>0)
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="fa fa-times-circle"></i></button>
+            ¡Por favor, revise los datos del formulario!
         </div>
     @endif
     <div class="powerwidget col-grey" id="user-directory" data-widget-editbutton="false">
         <div class="inner-spacer">
-            {{ Form::open(array('url'=>'atendidos/crear', 'class'=>'orb-form','method' => 'post') )}}
+            {{ Form::model($atendida, array('url'=>'atendidos/editar', 'class'=>'orb-form','method' => 'post') )}}
+            {{Form::hidden('id')}}
             <fieldset>
                 <div class="col-md-5 espacio_abajo">
                     {{Form::label('nombre_completo', '* Nombre Completo', array('class' => 'label'))}}
@@ -62,7 +67,7 @@
                     {{Form::label('telefono', '* Tel&eacute;fono Fijo', array('class' => 'label'))}}
                     <label class="input">
                         <i class="icon-prepend fa fa-phone"></i>
-                        {{Form::text('telefono','',array('id'=>'telefono'))}}
+                        {{Form::text('telefono', null ,array('id'=>'telefono'))}}
                     </label>
                     <span class="message-error">{{$errors->first('telefono')}}</span>
                 </div>
@@ -75,17 +80,12 @@
                     <span class="message-error">{{$errors->first('direccion')}}</span>
                 </div>
                 <div class="col-md-6 espacio_abajo">
-                    {{Form::label('programa', 'Programa a Vincular', array('class' => 'label'))}}
-                    <label class="select select-multiple">
-                        {{Form::select('programa[]', $programas, "", array('multiple'))}}
+                    {{Form::label('programa', '* Programa', array('class' => 'label'))}}
+                    <label class="input">
+                        <i class="icon-prepend fa fa-book"></i>
+                        {{Form::text('programa')}}
                     </label>
                     <span class="message-error">{{$errors->first('programa')}}</span>
-                    <div class="note">
-                        <strong>
-                            Nota:
-                        </strong>
-                        Manten precionado Ctrl para seleccionar multiples programas
-                    </div>
                 </div>
                 <div class="col-md-5 espacio_abajo">
                     {{Form::label('monto', 'Monto a solicitar', array('class' => 'label'))}}
@@ -95,21 +95,10 @@
                     </label>
                     <span class="message-error">{{$errors->first('monto')}}</span>
                 </div>
-                <div class="col-md-12 espacio_abajo">
-                </div>
-                <div class="col-md-4 espacio_abajo">
-                    {{Form::checkbox('enviar', 1)}} Enviar por correo
-                </div>
-                <div class="col-md-3 espacio_abajo">
-                    {{Form::checkbox('imprimir', 1)}} Imprimir
-                </div>
-                <div class="col-md-12 espacio_abajo">
-                    <span class="message-error">{{$errors->first('enviar')}}</span>
-                </div>
             </fieldset>
             <footer>
                 <div class="col-md-6 espacio_abajo">
-                    {{ Form::submit('Guardar', array('class'=>'btn btn-default')) }}
+                    {{ Form::submit('Guardar', array('class'=>'btn btn-success')) }}
                 </div>
                 <div class="col-md-5 espacio_abajo" style="text-align: right;">
                     * Los campos son obligatorios

@@ -2,6 +2,7 @@
 
 use Incubamas\Repositories\AtendidoRepo;
 use Incubamas\Managers\AtendidosManager;
+use Incubamas\Managers\ValidatorManager;
 
 class AtendidoController extends BaseController
 {
@@ -20,21 +21,6 @@ class AtendidoController extends BaseController
     {
         $atendidos = $this->atendidoRepo->atentidas();
         $this->layout->content = View::make('atendidos.index', compact('atendidos'));
-    }
-
-    public function postBusqueda()
-    {
-        $buscar = Input::get("buscar");
-        $dataUpload = array("buscar" => $buscar);
-        $rules = array("buscar" => 'required|min:3|max:100');
-        $messages = array('required' => 'Por favor, ingresa los parametros de busqueda.');
-        $validation = Validator::make($dataUpload, $rules, $messages);
-        if ($validation->fails())
-            return Redirect::back()->withErrors($validation)->withInput();
-        else {
-            $atendidos = $this->atendidoRepo->buscar($buscar);
-            $this->layout->content = View::make('atendidos.index', compact('atendidos'));
-        }
     }
 
     public function getCrear()
@@ -63,4 +49,66 @@ class AtendidoController extends BaseController
 
         return Redirect::to('atendidos')->with(array('confirm' => 'Se ha registrado correctamente.'));
     }
+
+    public function getEditar($persona_id)
+    {
+        $atendida = $this->atendidoRepo->atendida($persona_id);
+        if(count($atendida)>0)
+        {
+            $this->layout->content = View::make('atendidos.update', compact('atendida'));
+        }
+        else
+            return Response::view('errors.missing', array(), 404);
+    }
+
+    public function postEditar()
+    {
+        $atendida = $this->atendidoRepo->atendida(Input::get('id'));
+        if(count($atendida)>0)
+        {
+            $manager = new AtendidosManager($atendida, Input::all());
+            $manager->save();
+            return Redirect::back()->with(array('confirm' => 'Se ha guardado correctamente.'));
+        }
+        else
+            return Response::view('errors.missing', array(), 404);
+    }
+
+    public function getDelete($persona_id)
+    {
+        $manager = new ValidatorManager('atendido', ["atendido_id" => $persona_id]);
+        $manager->validar();
+        $this->atendidoRepo->borrarAtendido($persona_id);
+        return Redirect::back()->with(array('confirm' => 'Se ha eliminado correctamente.'));
+    }
+
+    public function getImprimir($persona_id)
+    {
+        $atendida = $this->atendidoRepo->atendida($persona_id);
+        if(count($atendida)>0)
+        {
+            $html = View::make("atendidos.pdf");
+            $this->layout->content = PDF::load($html, 'A4', 'portrait')->show();
+        }
+        else
+            return Response::view('errors.missing', array(), 404);
+    }
+
+    public function getEnviar($persona_id)
+    {
+        $atendida = $this->atendidoRepo->atendida($persona_id);
+        if(count($atendida)>0)
+        {
+            $correo = $atendida->correo;
+            $nombre = $atendida->nombre_completo;
+            Mail::send('emails.atendidos', [],function ($message) use ($correo, $nombre) {
+                $message->subject('Prueba');
+                $message->to($correo, $nombre);
+            });
+            return Redirect::back()->with(array('confirm' => 'Se ha enviado correctamente.'));
+        }
+        else
+            return Response::view('errors.missing', array(), 404);
+    }
+
 }

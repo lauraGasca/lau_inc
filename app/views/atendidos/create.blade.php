@@ -30,12 +30,10 @@
 @stop
 
 @section('contenido')
-    @if(Session::get('confirm'))
-        <div class="alert alert-success alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
-                <i class="fa fa-times-circle"></i>
-            </button>
-            {{Session::get('confirm')}}
+    @if(count($errors)>0)
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="fa fa-times-circle"></i></button>
+            ¡Por favor, revise los datos del formulario!
         </div>
     @endif
     <div class="powerwidget col-grey" id="user-directory" data-widget-editbutton="false">
@@ -104,7 +102,7 @@
             </fieldset>
             <footer>
                 <div class="col-md-6 espacio_abajo">
-                    {{ Form::submit('Guardar', array('class'=>'btn btn-default')) }}
+                    {{ Form::submit('Guardar', array('class'=>'btn btn-success')) }}
                 </div>
                 <div class="col-md-5 espacio_abajo" style="text-align: right;">
                     * Los campos son obligatorios

@@ -16,25 +16,20 @@ class AtendidoRepo extends BaseRepo
         return new Atendido();
     }
 
-    public function newVinculacion()
-    {
-        return new Vinculacion();
-    }
-
     public function atentidas()
     {
         return Atendido::orderBy('created_at', 'desc')->paginate(20);
     }
 
-    public function programas()
+    public function atendida($id)
     {
-        return Programa::lists('nombre','id');
+        return Atendido::find($id);
     }
 
-    public function buscar($termino)
+    public function borrarAtendido($id)
     {
-       return Atendido::where('nombre_completo', 'LIKE', '%' . $termino . '%')
-        ->orderBy('created_at', 'desc')->paginate(20);
+        $atendido = Atendido::find($id);
+        $atendido->delete();
     }
 
 }

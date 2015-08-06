@@ -160,10 +160,16 @@ class ValidatorManager
                     'pregunta_id'   	    =>    'required|exists:preguntas,id',
                 ];
                 break;
-            //Para eliminar preguntas del modelo de negocio
+            //Para eliminar modulos del modelo de negocio
             case 'modulo':
                 $rules = [
                     'modulo_id'   	    =>    'required|exists:modulos,id',
+                ];
+                break;
+            //Para eliminar personas atendidas
+            case 'atendido':
+                $rules = [
+                    'atendido_id'   	    =>    'required|exists:personas_atendidas,id',
                 ];
                 break;
             //Para eliminar pagos
