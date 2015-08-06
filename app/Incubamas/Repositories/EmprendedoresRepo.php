@@ -18,6 +18,13 @@ class EmprendedoresRepo extends BaseRepo
         return $emprendedor;
     }
 
+    public  function newRegEmprendedor()
+    {
+        $emprendedor = new Emprendedor();
+        $emprendedor->estatus ="Inactivo";
+        return $emprendedor;
+    }
+
     public function emprendedor($emprendedor_id)
     {
         return Emprendedor::with('usuario')
@@ -76,7 +83,7 @@ class EmprendedoresRepo extends BaseRepo
     {
         $emprendedores = Emprendedor::all();
         foreach ($emprendedores as $emprendedor)
-            if ($emprendedor->estatus <> "Cancelado")
+            if ($emprendedor->estatus <> "Cancelado" && $emprendedor->estatus <> "Inactivo")
             {
                 $emprendedor->estatus = "Activo";
                 $emprendedor->save();

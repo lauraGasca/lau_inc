@@ -90,6 +90,4 @@ class PagoRepo extends BaseRepo
             return '$ 0.00';
     }
 
-
-
 }

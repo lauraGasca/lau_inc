@@ -121,7 +121,8 @@
                                                 @if($emprendedor->estatus=="Activo") label-success
                                                 @else
                                                     @if($emprendedor->estatus=="Suspendido") label-warning
-                                                    @else @if($emprendedor->estatus=="Cancelado") label-danger @endif
+                                                    @else @if($emprendedor->estatus=="Cancelado") label-danger
+                                                          @else label-default @endif
                                                     @endif
                                                 @endif
                                                     ">{{$emprendedor->estatus}}

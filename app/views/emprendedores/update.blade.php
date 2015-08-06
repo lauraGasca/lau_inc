@@ -68,6 +68,8 @@
                                 Editar Emprendedor&nbsp;&nbsp;
                                 @if($emprendedor->usuario->facebook_id=='')
                                     {{HTML::link('usuarios/editar/'.$emprendedor->usuario->id,'Editar Perfil de Usuario',array('class'=>'btn btn-primary', 'style'=>'color:#FFF'))}}
+                                @else
+                                    <small>Usuario registrado mediante Facebook</small>
                                 @endif
                             </div>
                             {{Form::model($emprendedor, ['url'=>'emprendedores/editar', 'class'=>'orb-form','method' => 'post', 'enctype'=>'multipart/form-data'])}}
@@ -292,7 +294,7 @@
                                     <div class="col-md-3 espacio_abajo">
                                         {{Form::label('estatus', '* Estatus', ['class' => 'label'])}}
                                         <label class="select">
-                                            {{Form::select('estatus', [null=>'Selecciona','Activo'=>'Activo', 'Suspendido'=>'Suspendido', 'Cancelado'=>'Cancelado'])}}
+                                            {{Form::select('estatus', [null=>'Selecciona','Activo'=>'Activo', 'Inactivo'=>'Inactivo', 'Suspendido'=>'Suspendido', 'Cancelado'=>'Cancelado'])}}
                                             <span class="message-error">{{$errors->first('estatus')}}</span>
                                         </label>
                                     </div>

@@ -176,8 +176,12 @@ class EmprendedoresController extends BaseController
         {
             $manager = new EmprendedoresEditarManager($emprendedor, Input::all());
             $manager->save();
+            if($emprendedor->estatus=="Inactivo")
+                $active = 0;
+            else
+                $active = 1;
             $user = $this->userRepo->usuario($emprendedor->user_id);
-            $manager = new UserEmpEditManager($user, Input::all());
+            $manager = new UserEmpEditManager($user, Input::all()+['active'=>$active]);
             $manager->save();
             if(Input::hasfile('foto'))
             {
