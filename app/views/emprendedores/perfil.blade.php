@@ -77,7 +77,7 @@
             <div role="widget" style="" class="powerwidget powerwidget-as-portlet powerwidget-as-portlet-cold-grey powerwidget-sortable" id="widget2" data-widget-editbutton="false">
                 <div role="content" class="inner-spacer nopadding">
                     <div class="portlet-big-icon">
-                        <a href="{{url('plan-negocios/index/'.$emprendedor->id)}}" style="color: #FFF;">
+                        <a href="{{url('plan-negocios/modelo/'.$emprendedor->id)}}" style="color: #FFF;">
                             <i class="fa fa-child"></i><br/>
                             <span style="font-size: 20px;">Mi Modelo de Negocio</span>
                         </a>

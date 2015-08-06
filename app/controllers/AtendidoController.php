@@ -2,7 +2,6 @@
 
 use Incubamas\Repositories\AtendidoRepo;
 use Incubamas\Managers\AtendidosManager;
-use Incubamas\Managers\VinculacionManager;
 
 class AtendidoController extends BaseController
 {

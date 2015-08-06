@@ -4,7 +4,6 @@ abstract class BaseManager
 {
     protected $entity;
     protected $data;
-    protected $errors;
     
     public function __construct($entity, $data)
     {
@@ -27,21 +26,22 @@ abstract class BaseManager
             throw new ValidationException('Error de Validacion', $validation->messages());
         }
     }
+
+    public function prepareData($data)
+    {
+        return $data;
+    }
     
     public function save()
     {
+
         $this->isValid();
 
-        $this->entity->fill($this->data);
+        $this->entity->fill($this->prepareData($this->data));
 
         $this->entity->save();
 
         return true;
-    }
-    
-    public function getErrors()
-    {
-        return $this->errors;
     }
     
 }

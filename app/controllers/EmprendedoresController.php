@@ -79,6 +79,13 @@ class EmprendedoresController extends BaseController
         $this->layout->content = View::make('emprendedores.index', compact('emprendedores', 'parametro'));
     }
 
+    public function getBusqueda()
+    {
+        $parametro = Input::get("buscar");
+        $emprendedores = $this->emprendedoresRepo->burcarEmprendedores($parametro);
+        return Response::json($emprendedores);
+    }
+
     /**************************Perfil Emprendedores*******************************/
 
     public function getPerfil($emprendedor_id, $chat_id=null)

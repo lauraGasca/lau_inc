@@ -143,10 +143,18 @@ a {
 	text-decoration: none;
 }
 
+h5 a {
+    color: #333;
+}
+
+ a strong{
+    color: #333;
+}
+
 a:hover,
 a:focus {
 	color: #3e6f82;
-	text-decoration: underline;
+	text-decoration: none;
 }
 
 .espacio_abajo{
@@ -9311,3 +9319,5 @@ code {
 .css .o,
 .css .o+.nt,
 .css .nt+.nt { color: #999 }
+
+

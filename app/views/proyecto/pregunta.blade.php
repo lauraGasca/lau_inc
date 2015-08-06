@@ -8,11 +8,13 @@
 
 @section('mapa')
     <li><a href="#"><i class="fa fa-home"></i></a></li>
-    <li class="active">Modelo de Negocio</li>
+    <li><a href="{{url('plan-negocios')}}">Modelo de Negocio</a></li>
+    <li><a href="{{url('plan-negocios/modulo/'.$pregunta->modulo_id)}}">{{$pregunta->modulo->nombre}}</a></li>
+    <li class="active">{{$pregunta->pregunta}}</li>
 @stop
 
 @section('titulo-seccion')
-    <h1>Modelo de Negocio<small> Modulos</small></h1>
+    <h1>Pregunta<small> Ejemplos</small></h1>
 @stop
 
 @section('contenido')
@@ -31,31 +33,28 @@
     <div class="powerwidget powerwidget-as-portlet-white" id="darkportletdarktable" data-widget-editbutton="false">
         <div class="inner-spacer">
             <div class="row">
-                <div class="col-md-12">
-                    {{HTML::link('plan-negocios/crear','+ Nuevo Modulo', ['class'=>'btn btn-primary'])}}<br/><br/>
+                <div class="col-md-2">
+                    {{HTML::link('plan-negocios/crear-ejemplo/'.$pregunta->id,'+ Nuevo Ejemplo', ['class'=>'btn btn-primary'])}}<br/><br/>
                 </div>
             </div>
             <table class="table table-striped table-bordered table-hover">
                 <thead>
                 <tr>
-                    <th width="60%" colspan="2">Modulo</th>
-                    <th width="20%" class="text-center">Preguntas</th>
-                    <th width="20%" colspan="2" class="text-center">Acciones</th>
+                    <th width="90%" >Ejemplo</th>
+                    <th width="10%" colspan="2" class="text-center">Acciones</th>
                 </tr>
                 </thead>
                 <tbody>
-                    @foreach($modulos as $modulo)
+                    @foreach($pregunta->ejemplos as $ejemplo)
                         <tr>
-                            <td width="5%"><span class="num">{{$modulo->orden}}</span></td>
-                            <td><h5><a href="{{url('plan-negocios/modulo/'.$modulo->id)}}">{{$modulo->nombre}}</a></h5></td>
-                            <td class="text-center"> <a href="{{url('plan-negocios/modulo/'.$modulo->id)}}"><strong>{{count($modulo->preguntas)}}</strong></a></td>
+                            <td>{{$ejemplo->texto}}</td>
                             <td class="text-center">
-                                <a title="Editar" href="{{URL('plan-negocios/editar/'.$modulo->id)}}">
+                                <a title="Editar" href="{{URL('plan-negocios/editar-ejemplo/'.$ejemplo->id)}}">
                                     <i class="fa fa-cog"></i>
                                 </a>
                             </td>
                             <td class="text-center">
-                                <a title="Eliminar" href="{{URL('plan-negocios/delete/'.$modulo->id)}}" onClick="return confirm('\u00BFSeguro que deseas eliminar?');">
+                                <a title="Eliminar" href="{{URL('plan-negocios/delete-ejemplo/'.$ejemplo->id)}}" onClick="return confirm('\u00BFSeguro que deseas eliminar?');">
                                     <i class="fa fa-times-circle"></i>
                                 </a>
                             </td>
@@ -64,8 +63,7 @@
                 </tbody>
                 <tfoot>
                 <tr>
-                    <th colspan="2">Modulos</th>
-                    <th>Preguntas</th>
+                    <th>Ejemplo</th>
                     <th colspan="2">Acciones</th>
                 </tr>
                 </tfoot>

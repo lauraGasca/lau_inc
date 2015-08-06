@@ -117,6 +117,7 @@ return array(
 
 'attributes' => array(
     'username' => 'usuario',
-    'password' => 'contraseña'
+    'password' => 'contraseña',
+    'archive' => 'archivo'
 ),
 );

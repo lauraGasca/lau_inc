@@ -4,6 +4,8 @@ class Modulo extends \Eloquent
 {
     protected $table = 'modulos';
 
+    protected $guarded = ['id'];
+
     public function preguntas()
     {
         return $this->hasMany('Incubamas\Entities\Pregunta');

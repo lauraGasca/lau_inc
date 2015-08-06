@@ -2,6 +2,15 @@
 
 use Incubamas\Repositories\ProyectoRepo;
 use Incubamas\Managers\ProgresoManager;
+use Incubamas\Managers\ValidatorManager;
+/****************Ejemplos***************/
+use Incubamas\Managers\EjemploManager;
+use Incubamas\Managers\EjemploUpdateManager;
+/****************Preguntas***************/
+use Incubamas\Managers\PreguntaManager;
+use Incubamas\Managers\PreguntaUpdateManager;
+/****************Modulos***************/
+use Incubamas\Managers\ModuloManager;
 
 class ProyectoController extends BaseController
 {
@@ -15,12 +24,85 @@ class ProyectoController extends BaseController
         $this->proyectoRepo = $proyectoRepo;
     }
 
-    public function getIndex($emprendedor_id)
+    public function getIndex()
+    {
+        $modulos = $this->proyectoRepo->modulos();
+        $this->layout->content = View::make('proyecto.index', compact('modulos'));
+    }
+
+    public function getModulo($modulo_id)
+    {
+        $modulo = $this->proyectoRepo->modulo($modulo_id);
+        $this->layout->content = View::make('proyecto.modulo', compact('modulo'));
+    }
+
+    public function getPregunta($pregunta_id)
+    {
+        $pregunta = $this->proyectoRepo->pregunta($pregunta_id);
+        $this->layout->content = View::make('proyecto.pregunta', compact('pregunta'));
+    }
+
+    public function getModelo($emprendedor_id)
     {
         $modulos = $this->proyectoRepo->modulos();
         $progresos = $this->proyectoRepo->progresos($emprendedor_id);
-        $this->layout->content = View::make('proyecto.index', compact('modulos','emprendedor_id', 'progresos'));
+        $this->layout->content = View::make('proyecto.modelo', compact('modulos','emprendedor_id', 'progresos'));
     }
+
+    /***************************** Modulos *******************************/
+
+    public function getCrear()
+    {
+        $this->_soloAsesores();
+        $modulos = $this->proyectoRepo->modulos();
+        $this->layout->content = View::make('proyecto.modulo.create', compact('modulos'));
+    }
+
+    public function postCrear()
+    {
+        $this->_soloAsesores();
+        $modulo = $this->proyectoRepo->newModulo();
+        $manager = new ModuloManager($modulo, Input::all());
+        $manager->save();
+        return Redirect::to('plan-negocios')->with(array('confirm' => 'Se ha creado correctamente.'));
+    }
+
+    public function getEditar($modulo_id)
+    {
+        $this->_soloAsesores();
+        $modulo = $this->proyectoRepo->modulo($modulo_id);
+        if(count($modulo)>0)
+        {
+            $this->layout->content = View::make('proyecto.modulo.update', compact('modulo'));
+        }
+        else
+            return Response::view('errors.missing', array(), 404);
+    }
+
+    public function postEditar()
+    {
+        $this->_soloAsesores();
+        $modulo = $this->proyectoRepo->modulo(Input::get('id'));
+        if(count($modulo)>0)
+        {
+            $manager = new ModuloManager($modulo, Input::all());
+            $manager->save();
+            return Redirect::back()->with(array('confirm' => 'Se ha guardado correctamente.'));
+        }
+        else
+            return Response::view('errors.missing', array(), 404);
+    }
+
+    public function getDelete($modulo_id)
+    {
+        $this->_soloAsesores();
+        $manager = new ValidatorManager('modulo', ["modulo_id" => $modulo_id]);
+        $manager->validar();
+        $this->proyectoRepo->borrarModulo($modulo_id);
+        return Redirect::back()->with(array('confirm' => 'Se ha eliminado correctamente.'));
+    }
+
+    /***************************** Progresos *******************************/
 
     public function postUpdatePregunta()
     {
@@ -42,6 +124,132 @@ class ProyectoController extends BaseController
         return '<!DOCTYPE html><html><head></head><body><script type="text/javascript">
 				parent.mensaje('.Input::get('pregunta_id').','.$pregunta->archive.');
 			</script></body></html>';
+    }
+
+    /***************************** Preguntas *******************************/
+
+    public function getCrearPregunta($modulo_id)
+    {
+        $this->_soloAsesores();
+        $modulo = $this->proyectoRepo->modulo($modulo_id);
+        $this->layout->content = View::make('proyecto.pregunta.create', compact('modulo'));
+    }
+
+    public function postCrearPregunta()
+    {
+        $this->_soloAsesores();
+        $pregunta = $this->proyectoRepo->newPregunta();
+        $manager = new PreguntaManager($pregunta, Input::all());
+        $manager->save();
+        return Redirect::to('plan-negocios/modulo/'.Input::get("modulo_id"))->with(array('confirm' => 'Se ha creado correctamente.'));
+    }
+
+    public function getEditarPregunta($pregunta_id)
+    {
+        $this->_soloAsesores();
+        $pregunta = $this->proyectoRepo->pregunta($pregunta_id);
+        if(count($pregunta)>0)
+        {
+            $this->layout->content = View::make('proyecto.pregunta.update', compact('pregunta'));
+        }
+        else
+            return Response::view('errors.missing', array(), 404);
+    }
+
+    public function postEditarPregunta()
+    {
+        $this->_soloAsesores();
+        $pregunta = $this->proyectoRepo->pregunta(Input::get('id'));
+        if(count($pregunta)>0)
+        {
+            $manager = new PreguntaUpdateManager($pregunta, Input::all());
+            $manager->save();
+            return Redirect::back()->with(array('confirm' => 'Se ha guardado correctamente.'));
+        }
+        else
+            return Response::view('errors.missing', array(), 404);
+    }
+
+    public function getDeletePregunta($pregunta_id)
+    {
+        $this->_soloAsesores();
+        $manager = new ValidatorManager('pregunta', ["pregunta_id" => $pregunta_id]);
+        $manager->validar();
+        $this->proyectoRepo->borrarPregunta($pregunta_id);
+        return Redirect::back()->with(array('confirm' => 'Se ha eliminado correctamente.'));
+    }
+
+    /***************************** Ejemplos *******************************/
+
+    public function getCrearEjemplo($pregunta_id)
+    {
+        $this->_soloAsesores();
+        $pregunta = $this->proyectoRepo->pregunta($pregunta_id);
+        $this->layout->content = View::make('proyecto.ejemplo.create', compact('pregunta'));
+    }
+
+    public function postCrearEjemplo()
+    {
+        $this->_soloAsesores();
+        $ejemplo = $this->proyectoRepo->newEjemplo();
+        $manager = new EjemploManager($ejemplo, Input::all());
+        $manager->save();
+        if(Input::hasfile('archivo'))
+        {
+            $this->proyectoRepo->actualizarArchivoEjemplo($ejemplo, $ejemplo->id . "." . Input::file("archivo")->getClientOriginalExtension());
+            Input::file('archivo')->move('Orb/images/ejemplos/', $ejemplo->archivo);
+        }
+        return Redirect::to('plan-negocios/pregunta/'.Input::get("pregunta_id"))->with(array('confirm' => 'Se ha creado correctamente.'));
+    }
+
+    public function getEditarEjemplo($ejemplo_id)
+    {
+        $this->_soloAsesores();
+        $ejemplo = $this->proyectoRepo->ejemplo($ejemplo_id);
+        if(count($ejemplo)>0)
+        {
+            $this->layout->content = View::make('proyecto.ejemplo.update', compact('ejemplo'));
+        }
+        else
+            return Response::view('errors.missing', array(), 404);
+    }
+
+    public function postEditarEjemplo()
+    {
+        $this->_soloAsesores();
+        $ejemplo = $this->proyectoRepo->ejemplo(Input::get('id'));
+        if(count($ejemplo)>0)
+        {
+            $manager = new EjemploUpdateManager($ejemplo, Input::all());
+            $manager->save();
+            if(Input::hasfile('archivo'))
+            {
+                $this->proyectoRepo->actualizarArchivoEjemplo($ejemplo, $ejemplo->id.".".Input::file("archivo")->getClientOriginalExtension());
+                Input::file('archivo')->move('Orb/images/ejemplos/', $ejemplo->archivo);
+            }elseif (Input::get("empresa") == 'yes')
+                $this->proyectoRepo->actualizarArchivoEjemplo($ejemplo, '');
+            return Redirect::back()->with(array('confirm' => 'Se ha guardado correctamente.'));
+        }
+        else
+            return Response::view('errors.missing', array(), 404);
+    }
+
+    public function getDeleteEjemplo($ejemplo_id)
+    {
+        $this->_soloAsesores();
+        $manager = new ValidatorManager('ejemplo', ["ejemplo_id" => $ejemplo_id]);
+        $manager->validar();
+        $this->proyectoRepo->borrarEjemplo($ejemplo_id);
+        return Redirect::back()->with(array('confirm' => 'Se ha eliminado correctamente.'));
+    }
+
+    /**************************Otros*******************************/
+
+    //Filtro para que solo los trabajadores entren a la funcion
+    private function _soloAsesores()
+    {
+        if (Auth::user()->type_id != 1 && Auth::user()->type_id != 2)
+            return Redirect::to('sistema');
     }
 
 }
