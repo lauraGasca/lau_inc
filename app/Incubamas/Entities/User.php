@@ -10,7 +10,7 @@ class User extends \Eloquent implements UserInterface, RemindableInterface
 	use UserTrait, RemindableTrait;
 
 	protected $table = 'users';
-    protected $guarded = ['id', 'foto'];
+    protected $guarded = ['id', 'foto', 'password_confirmation'];
 	protected $hidden = ['password', 'remember_token'];
 	
 	public function setPasswordAttribute($value)

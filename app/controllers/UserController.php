@@ -2,6 +2,7 @@
 
 use Incubamas\Managers\ValidatorManager;
 use Incubamas\Repositories\UserRepo;
+use Incubamas\Managers\UsuariosManager;
 
 class UserController extends BaseController
 {
@@ -18,6 +19,18 @@ class UserController extends BaseController
     public function getIndex()
     {
 
+    }
+
+    public function getEditar()
+    {
+        $this->layout->content = View::make('users.update');
+    }
+
+    public function postEditar()
+    {
+        $manager = new UsuariosManager(\Auth::user(), Input::all());
+        $manager->save();
+        return Redirect::back()->with(array('confirm' => 'Se ha guardado correctamente.'));
     }
 
     public function getError()

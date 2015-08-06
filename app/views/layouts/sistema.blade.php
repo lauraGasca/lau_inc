@@ -55,6 +55,10 @@
                                 </div><br/>
                                 <div class="list-group">
                                     <div class="empthy"></div>
+                                    <a href="{{url('usuarios/editar')}}" class="list-group-item">
+                                        <i class="fa fa-user"></i>
+                                        Editar Perfil
+                                    </a>
                                     <a data-toggle="modal" href="{{url('usuarios/error')}}" class="list-group-item goaway">
                                         <i class="fa fa-warning"></i>
                                         Reportar Error
