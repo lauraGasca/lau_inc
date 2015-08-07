@@ -25,3 +25,4 @@ Thumbs.d
 idea/*
 .idea/*
 .idea/workspace.xml
+/nbproject/private/

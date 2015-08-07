@@ -42,6 +42,41 @@
 @stop
 
 @section('contenido')
+ <table class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>Documento</th>
+                                        <th>Fecha de Subida</th>
+                                        <th colspan="2">Pertenece A</th>
+                                        <th colspan="2"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @if(count($subidos) > 0)
+                                        @foreach($subidos as $subida)
+                                            <tr>
+                                                @if($subida->documento_id<>20)
+                                                    <td>{{$subida->documentos->nombre}}</td>
+                                                @else
+                                                    <td>{{$subida->nombre}}</td>
+                                                @endif
+                                                <td>{{$subida->subida}}</td>
+
+                                                @if($subida->socio_id<>'')
+                                                    <td><strong>Socio: </strong>{{$subida->socio->nombre}} {{$subida->socio->apellidos}}</td>
+                                                @else
+                                                    @if($subida->empresa_id<>'')
+                                                        <td><strong>Empresa: </strong>{{$subida->empresa->nombre_empresa}}</td>
+                                                    @else
+                                                        <td>{{$emprendedor->usuario->nombre}} {{$emprendedor->usuario->apellidos}}</td>
+                                                    @endif
+                                                @endif
+                                                <td><a target="_blank" href="{{URL::asset('Orb/documentos/'.$subida->documento)}}"><span class="glyphicon glyphicon-cloud-download"></span></a></td>
+                                            </tr>
+                                        @endforeach
+                                    @endif
+                                    </tbody>
+                                </table>
     @if(Session::get('confirm'))
         <div class="alert alert-success alert-dismissable">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="fa fa-times-circle"></i></button>
@@ -120,7 +155,7 @@
             </div>
         </div>
     </div>
-    <!------------------------------------------------- Perfil------------------------------------------------->
+    <!------------------------------------------------- Perfil -------------------------------------------------->
     <div class="powerwidget cold-grey" id="profile" data-widget-editbutton="false">
         <div class="inner-spacer">
             <div class="user-profile">
@@ -155,7 +190,7 @@
                             <li><a href="#calendario" data-toggle="tab">Calendario de Citas</a></li>
                         </ul>
                         <div id="myTabContent" class="tab-content">
-                            <!------------------------------------------------- Emprendedor------------------------------------------------->
+                            <!------------------------------------------------- Emprendedor----------------------------------------------- -->
                             <div class="tab-pane @if($active_chat==null) in active @endif>" id="emprendedor">
                                 <div class="profile-header">Acerca de mi</div>
                                 <p>{{$emprendedor->about}}</p><br/>
