@@ -173,7 +173,7 @@ class SolicitudRepo extends BaseRepo
     {
         $fecha_actual = strtotime(date("Y-m-d"));
         $emprendedor = Emprendedor::find($emprendedor_id);
-        if ($emprendedor->estatus <> "Cancelado") {
+        if ($emprendedor->estatus <> "Cancelado" && $emprendedor->estatus <> "Inactivo") {
             $emprendedor->estatus = "Activo";
             $emprendedor->save();
             $solicitudes = Solicitud::where("emprendedor_id", "=", $emprendedor->id)->get();

@@ -19,10 +19,7 @@ composer.phar
 composer.lock  # Remove this one after you create a project
 .env.php
 .DS_Store
-Thumbs.d
+Thumbs.db
 /.idea
-/idea
-idea/*
-.idea/*
 .idea/workspace.xml
 /nbproject/private/
