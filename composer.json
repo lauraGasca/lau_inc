@@ -9,7 +9,8 @@
 		"greggilbert/recaptcha": "dev-master",
         "thujohn/pdf": "~1.0",
         "hybridauth/hybridauth": "v2.3.0",
-		"kartik-v/bootstrap-fileinput": "dev-master"
+		"kartik-v/bootstrap-fileinput": "dev-master",
+		"phpoffice/phpword": "^0.12.0"
 	},
 	"autoload": {
 		"psr-4": {

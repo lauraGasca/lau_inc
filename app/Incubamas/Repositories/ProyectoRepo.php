@@ -19,6 +19,25 @@ class ProyectoRepo extends BaseRepo
         return Modulo::with('preguntas')->orderBy('orden')->get();
     }
 
+    public function proyecto()
+    {
+        return Modulo::with('preguntas.ejemplos')->orderBy('orden')->get();
+    }
+
+    public function progreso_exportar($emprendedor_id)
+    {
+        return Progreso::with(['modulo' => function($query)
+            {
+                $query->orderBy('orden');
+            }])
+            ->with(['pregunta' => function($query)
+            {
+                $query->orderBy('orden');
+            }])
+            ->where('emprendedor_id', '=', $emprendedor_id)->where('estado', '=', 1)
+            ->where('texto', '!=', '')->orderBy('modulo_id')->get();
+    }
+
     public function modulo($id)
     {
         return Modulo::with(['preguntas' => function($query)

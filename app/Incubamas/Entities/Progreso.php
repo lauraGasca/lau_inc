@@ -3,6 +3,17 @@
 class Progreso extends \Eloquent
 {
     protected $table = 'progresos';
+
     protected $guarded = ['archivo'];
+
+    public function modulo()
+    {
+        return $this->belongsTo('Incubamas\Entities\Modulo');
+    }
+
+    public function pregunta()
+    {
+        return $this->belongsTo('Incubamas\Entities\Pregunta');
+    }
     
 }

@@ -44,7 +44,7 @@ class ProyectoController extends BaseController
 
     public function getModelo($emprendedor_id)
     {
-        $modulos = $this->proyectoRepo->modulos();
+        $modulos = $this->proyectoRepo->proyecto();
         $progresos = $this->proyectoRepo->progresos($emprendedor_id);
         $this->layout->content = View::make('proyecto.modelo', compact('modulos','emprendedor_id', 'progresos'));
     }
@@ -124,6 +124,39 @@ class ProyectoController extends BaseController
         return '<!DOCTYPE html><html><head></head><body><script type="text/javascript">
 				parent.mensaje('.Input::get('pregunta_id').','.$pregunta->archive.');
 			</script></body></html>';
+    }
+
+    public function getExportarWord($emprendedor_id)
+    {
+
+        $progresos = $this->proyectoRepo->progreso_exportar($emprendedor_id);
+
+        $phpWord = new \PhpOffice\PhpWord\PhpWord();
+        $phpWord->addFontStyle('titulo', array('name'=>'Arial', 'size'=>14, 'color'=>'1B2232', 'bold'=>true));
+        $phpWord->addFontStyle('modulo', array('name'=>'Arial', 'size'=>12, 'color'=>'1B2232', 'bold'=>true));
+        $phpWord->addFontStyle('pregunta', array('name'=>'Arial', 'size'=>11, 'color'=>'1B2232', 'bold'=>true));
+        $phpWord->addFontStyle('respuesta', array('name'=>'Arial', 'size'=>11, 'color'=>'1B2232'));
+        $section = $phpWord->addSection();
+
+        $section->addText(htmlspecialchars('Plan de Negocios'), 'titulo');
+        $section->addTextBreak(1);
+
+        $modulo = "";
+        foreach($progresos as $progreso) {
+            if($progreso->modulo->nombre != $modulo){
+                $section->addTextBreak(1);
+                $section->addTextBreak(1);
+                $section->addText(htmlspecialchars($progreso->modulo->nombre), 'modulo');
+                $modulo = $progreso->modulo->nombre;
+            }
+            $section->addTextBreak(1);
+            $section->addText(htmlspecialchars($progreso->pregunta->pregunta), 'pregunta');
+            $section->addText(htmlspecialchars($progreso->texto), 'respuesta');
+        }
+
+        $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
+        $objWriter->save('Orb\modelo-negocio\\'.$emprendedor_id.'-plan-negocio.docx');
+        return Redirect::to('Orb\modelo-negocio\\'.$emprendedor_id.'-plan-negocio.docx');
     }
 
     /***************************** Preguntas *******************************/
