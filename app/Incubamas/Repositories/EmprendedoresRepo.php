@@ -1,6 +1,6 @@
 <?php namespace Incubamas\Repositories;
 
-use incubamas\Entities\Emprendedor;
+use Incubamas\Entities\Emprendedor;
 use Incubamas\Entities\Solicitud;
 use Incubamas\Entities\Pago;
 use Incubamas\Entities\Subidas;

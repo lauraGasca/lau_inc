@@ -50,12 +50,12 @@
                             <td><h5><a href="{{url('plan-negocios/modulo/'.$modulo->id)}}">{{$modulo->nombre}}</a></h5></td>
                             <td class="text-center"> <a href="{{url('plan-negocios/modulo/'.$modulo->id)}}"><strong>{{count($modulo->preguntas)}}</strong></a></td>
                             <td class="text-center">
-                                <a title="Editar" href="{{URL('plan-negocios/editar/'.$modulo->id)}}">
-                                    <i class="fa fa-cog"></i>
+                                <a  class="editar" title="Editar" href="{{URL('plan-negocios/editar/'.$modulo->id)}}">
+                                    <i class="fa fa-edit"></i>
                                 </a>
                             </td>
                             <td class="text-center">
-                                <a title="Eliminar" href="{{URL('plan-negocios/delete/'.$modulo->id)}}" onClick="return confirm('\u00BFSeguro que deseas eliminar?');">
+                                <a class="eliminar" title="Eliminar" href="{{URL('plan-negocios/delete/'.$modulo->id)}}" onClick="return confirm('\u00BFSeguro que deseas eliminar?');">
                                     <i class="fa fa-times-circle"></i>
                                 </a>
                             </td>

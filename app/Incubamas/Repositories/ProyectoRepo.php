@@ -38,6 +38,14 @@ class ProyectoRepo extends BaseRepo
             ->where('texto', '!=', '')->orderBy('modulo_id')->get();
     }
 
+    public function porcentaje($emprendedor_id)
+    {
+        $total = Modulo::count();
+        $completado = Progreso::where('estado', '=', 1)->where('emprendedor_id', '=', $emprendedor_id)->count();
+        $porcentaje = (int)(($completado*100)/$total);
+        return $porcentaje;
+    }
+
     public function modulo($id)
     {
         return Modulo::with(['preguntas' => function($query)

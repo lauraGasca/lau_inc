@@ -49,12 +49,12 @@
                         <tr>
                             <td>{{$ejemplo->texto}}</td>
                             <td class="text-center">
-                                <a title="Editar" href="{{URL('plan-negocios/editar-ejemplo/'.$ejemplo->id)}}">
-                                    <i class="fa fa-cog"></i>
+                                <a class="editar" title="Editar" href="{{URL('plan-negocios/editar-ejemplo/'.$ejemplo->id)}}">
+                                    <i class="fa fa-edit"></i>
                                 </a>
                             </td>
                             <td class="text-center">
-                                <a title="Eliminar" href="{{URL('plan-negocios/delete-ejemplo/'.$ejemplo->id)}}" onClick="return confirm('\u00BFSeguro que deseas eliminar?');">
+                                <a class="eliminar" title="Eliminar" href="{{URL('plan-negocios/delete-ejemplo/'.$ejemplo->id)}}" onClick="return confirm('\u00BFSeguro que deseas eliminar?');">
                                     <i class="fa fa-times-circle"></i>
                                 </a>
                             </td>

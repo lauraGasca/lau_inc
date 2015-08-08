@@ -61,11 +61,13 @@ class EmprendedoresController extends BaseController
 
     /**************************Listar Emprendedores*******************************/
 
-    public function getIndex()
+    public function getIndex($parametro=null)
     {
         $this->_soloAsesores();
-        $emprendedores = $this->emprendedoresRepo->emprendedores();
-        $parametro = null;
+        if($parametro==null)
+            $emprendedores = $this->emprendedoresRepo->emprendedores();
+        else
+            $emprendedores = $this->emprendedoresRepo->burcarEmprendedores($parametro);
         $this->layout->content = View::make('emprendedores.index',compact('emprendedores', 'parametro'));
     }
 
@@ -75,8 +77,7 @@ class EmprendedoresController extends BaseController
         $parametro = Input::get("buscar");
         $manager = new ValidatorManager('buscar', ['buscar'=> $parametro]);
         $manager->validar();
-        $emprendedores = $this->emprendedoresRepo->burcarEmprendedores($parametro);
-        $this->layout->content = View::make('emprendedores.index', compact('emprendedores', 'parametro'));
+        return Redirect::to('emprendedores/index/'.$parametro);
     }
 
     public function getBusqueda()

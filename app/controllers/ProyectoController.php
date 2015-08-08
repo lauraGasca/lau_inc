@@ -42,67 +42,15 @@ class ProyectoController extends BaseController
         $this->layout->content = View::make('proyecto.pregunta', compact('pregunta'));
     }
 
+    /***************************** Progresos *******************************/
+
     public function getModelo($emprendedor_id)
     {
         $modulos = $this->proyectoRepo->proyecto();
         $progresos = $this->proyectoRepo->progresos($emprendedor_id);
-        $this->layout->content = View::make('proyecto.modelo', compact('modulos','emprendedor_id', 'progresos'));
+        $porcentaje = $this->proyectoRepo->porcentaje($emprendedor_id);
+        $this->layout->content = View::make('proyecto.modelo', compact('modulos','emprendedor_id', 'progresos', 'porcentaje'));
     }
-
-    /***************************** Modulos *******************************/
-
-    public function getCrear()
-    {
-        $this->_soloAsesores();
-        $modulos = $this->proyectoRepo->modulos();
-        $this->layout->content = View::make('proyecto.modulo.create', compact('modulos'));
-    }
-
-    public function postCrear()
-    {
-        $this->_soloAsesores();
-        $modulo = $this->proyectoRepo->newModulo();
-        $manager = new ModuloManager($modulo, Input::all());
-        $manager->save();
-        return Redirect::to('plan-negocios')->with(array('confirm' => 'Se ha creado correctamente.'));
-    }
-
-    public function getEditar($modulo_id)
-    {
-        $this->_soloAsesores();
-        $modulo = $this->proyectoRepo->modulo($modulo_id);
-        if(count($modulo)>0)
-        {
-            $this->layout->content = View::make('proyecto.modulo.update', compact('modulo'));
-        }
-        else
-            return Response::view('errors.missing', array(), 404);
-    }
-
-    public function postEditar()
-    {
-        $this->_soloAsesores();
-        $modulo = $this->proyectoRepo->modulo(Input::get('id'));
-        if(count($modulo)>0)
-        {
-            $manager = new ModuloManager($modulo, Input::all());
-            $manager->save();
-            return Redirect::back()->with(array('confirm' => 'Se ha guardado correctamente.'));
-        }
-        else
-            return Response::view('errors.missing', array(), 404);
-    }
-
-    public function getDelete($modulo_id)
-    {
-        $this->_soloAsesores();
-        $manager = new ValidatorManager('modulo', ["modulo_id" => $modulo_id]);
-        $manager->validar();
-        $this->proyectoRepo->borrarModulo($modulo_id);
-        return Redirect::back()->with(array('confirm' => 'Se ha eliminado correctamente.'));
-    }
-
-    /***************************** Progresos *******************************/
 
     public function postUpdatePregunta()
     {
@@ -157,6 +105,59 @@ class ProyectoController extends BaseController
         $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
         $objWriter->save('Orb\modelo-negocio\\'.$emprendedor_id.'-plan-negocio.docx');
         return Redirect::to('Orb\modelo-negocio\\'.$emprendedor_id.'-plan-negocio.docx');
+    }
+
+    /***************************** Modulos *******************************/
+
+    public function getCrear()
+    {
+        $this->_soloAsesores();
+        $modulos = $this->proyectoRepo->modulos();
+        $this->layout->content = View::make('proyecto.modulo.create', compact('modulos'));
+    }
+
+    public function postCrear()
+    {
+        $this->_soloAsesores();
+        $modulo = $this->proyectoRepo->newModulo();
+        $manager = new ModuloManager($modulo, Input::all());
+        $manager->save();
+        return Redirect::to('plan-negocios')->with(array('confirm' => 'Se ha creado correctamente.'));
+    }
+
+    public function getEditar($modulo_id)
+    {
+        $this->_soloAsesores();
+        $modulo = $this->proyectoRepo->modulo($modulo_id);
+        if(count($modulo)>0)
+        {
+            $this->layout->content = View::make('proyecto.modulo.update', compact('modulo'));
+        }
+        else
+            return Response::view('errors.missing', array(), 404);
+    }
+
+    public function postEditar()
+    {
+        $this->_soloAsesores();
+        $modulo = $this->proyectoRepo->modulo(Input::get('id'));
+        if(count($modulo)>0)
+        {
+            $manager = new ModuloManager($modulo, Input::all());
+            $manager->save();
+            return Redirect::back()->with(array('confirm' => 'Se ha guardado correctamente.'));
+        }
+        else
+            return Response::view('errors.missing', array(), 404);
+    }
+
+    public function getDelete($modulo_id)
+    {
+        $this->_soloAsesores();
+        $manager = new ValidatorManager('modulo', ["modulo_id" => $modulo_id]);
+        $manager->validar();
+        $this->proyectoRepo->borrarModulo($modulo_id);
+        return Redirect::back()->with(array('confirm' => 'Se ha eliminado correctamente.'));
     }
 
     /***************************** Preguntas *******************************/

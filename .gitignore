@@ -27,3 +27,5 @@ btpkry.pub
 web/Orb/images/correo/*
 web/Orb/images/ejemplos/*
 /nbproject/private/
+/.phpintel/*
+/.phpintel

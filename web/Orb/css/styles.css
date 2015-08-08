@@ -9321,3 +9321,16 @@ code {
 .css .nt+.nt { color: #999 }
 
 
+.editar, .eliminar
+{
+    font-size: 15px;
+}
+
+.editar{
+    color: #989800;
+}
+
+.eliminar{
+    color: #C50404;
+}
+
