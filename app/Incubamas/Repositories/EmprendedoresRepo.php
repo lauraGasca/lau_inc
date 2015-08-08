@@ -1,6 +1,6 @@
 <?php namespace Incubamas\Repositories;
 
-use Incubamas\Entities\Emprendedor;
+use incubamas\Entities\Emprendedor;
 use Incubamas\Entities\Solicitud;
 use Incubamas\Entities\Pago;
 use Incubamas\Entities\Subidas;
@@ -15,13 +15,6 @@ class EmprendedoresRepo extends BaseRepo
     public  function newEmprendedor()
     {
         $emprendedor = new Emprendedor();
-        return $emprendedor;
-    }
-
-    public  function newRegEmprendedor()
-    {
-        $emprendedor = new Emprendedor();
-        $emprendedor->estatus ="Inactivo";
         return $emprendedor;
     }
 
@@ -83,7 +76,7 @@ class EmprendedoresRepo extends BaseRepo
     {
         $emprendedores = Emprendedor::all();
         foreach ($emprendedores as $emprendedor)
-            if ($emprendedor->estatus <> "Cancelado" && $emprendedor->estatus <> "Inactivo")
+            if ($emprendedor->estatus <> "Cancelado")
             {
                 $emprendedor->estatus = "Activo";
                 $emprendedor->save();

@@ -102,7 +102,8 @@ class EmprendedoresController extends BaseController
         $disponibles = $this->proyectoRepo->numPreguntas();
         //Documentos
         $num_documentos = $this->documentoRepo->num_documentos();
-        $subidas = $this->documentoRepo->num_subidos($emprendedor_id);
+        $subidas = $this->documentoRepo->num_subidos($emprendedor_id);  
+        $subidos = $this->emprendedoresRepo->subidos($emprendedor_id);
         //Informacion de los pagos
         $pagos = $this->pagoRepo->pagosRealizados($emprendedor_id);
         $adeudo = $this->soliciturRepo->adeudo($emprendedor_id);
@@ -119,7 +120,7 @@ class EmprendedoresController extends BaseController
                 $this->chatRepo->leido($active_chat->chat_id, date("Y-m-d H:i:s"));
         }
         $this->layout->content = View::make('emprendedores.perfil', compact('emprendedor', 'eventos', 'asesores', 'maxDate', 'minDate',
-            'pagos', 'adeudo', 'num_documentos', 'subidas', 'completados', 'disponibles', 'chats', 'mensajes', 'active_chat'));
+            'pagos', 'adeudo', 'num_documentos', 'subidas', 'subidos', 'completados', 'disponibles', 'chats', 'mensajes', 'active_chat'));
     }
 
 
