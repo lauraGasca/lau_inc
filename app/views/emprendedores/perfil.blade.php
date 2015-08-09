@@ -42,11 +42,11 @@
 @stop
 
 @section('contenido')
- <table class="table table-striped table-bordered table-hover">
+ {{-- <table class="table table-striped table-bordered table-hover">
                                     <thead>
                                     <tr>
                                         <th>Documento</th>
-                                        <th>Fecha de Subida</th>
+                                        <th>Fecha de Subidas</th>
                                         <th colspan="2">Pertenece A</th>
                                         <th colspan="2"></th>
                                     </tr>
@@ -76,7 +76,57 @@
                                         @endforeach
                                     @endif
                                     </tbody>
-                                </table>
+                                </table> --}}
+                                <div class="container">
+            <div class="modal fade" id="ventana" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <table class="table table-striped table-bordered table-hover">
+                            <div class="modal-header">
+                                <thead>
+                                    <tr>
+                                        <th>Documento</th>
+                                        <th>Fecha de Subida</th>
+                                        <th colspan="2">Pertenece A</th>
+                                        <th colspan="2"></th>
+                                    </tr>
+                                </thead>
+                            </div>
+                            <div class="modal-body">
+                                
+                                <tbody>
+                                    @if(count($subidos) > 0)
+                                    @foreach($subidos as $subida)
+                                    <tr>
+                                        @if($subida->documento_id<>20)
+                                        <td>{{$subida->documentos->nombre}}</td>
+                                        @else
+                                        <td>{{$subida->nombre}}</td>
+                                        @endif
+                                        <td>{{$subida->subida}}</td>
+                                        @if($subida->socio_id<>'')
+                                        <td><strong>Socio: </strong>{{$subida->socio->nombre}} {{$subida->socio->apellidos}}</td>
+                                        @else
+                                        @if($subida->empresa_id<>'')
+                                        <td><strong>Empresa: </strong>{{$subida->empresa->nombre_empresa}}</td>
+                                        @else
+                                        <td>{{$emprendedor->usuario->nombre}} {{$emprendedor->usuario->apellidos}}</td>
+                                        @endif
+                                        @endif
+                                        <td><a target="_blank" href="{{URL::asset('Orb/documentos/'.$subida->documento)}}"><span class="glyphicon glyphicon-cloud-download"></span></a></td>
+                                    </tr>
+                                    @endforeach
+                                    @endif
+                                </tbody>
+                            </div>
+                            <div class="modal-footer">
+                            </div>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <br />            
+        </div>
     @if(Session::get('confirm'))
         <div class="alert alert-success alert-dismissable">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="fa fa-times-circle"></i></button>
@@ -133,7 +183,10 @@
                 <div role="content" class="inner-spacer nopadding">
                     <div class="portlet-big-icon">
                         <i class="fa fa-archive"></i><br/>
-                        <span style="font-size: 20px;">Documentos</span>
+                        <span style="font-size: 20px;"><a id="id" href="#" data-toggle="modal" data-target="#ventana">Documentos</a>
+
+
+                        </span>
                     </div>
                     <ul class="portlet-bottom-block">
                         <li class="col-md-4 col-sm-4 col-xs-4"><strong>{{$subidas}}</strong>
