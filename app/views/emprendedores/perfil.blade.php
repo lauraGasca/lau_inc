@@ -42,58 +42,22 @@
 @stop
 
 @section('contenido')
- {{-- <table class="table table-striped table-bordered table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th>Documento</th>
-                                        <th>Fecha de Subidas</th>
-                                        <th colspan="2">Pertenece A</th>
-                                        <th colspan="2"></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @if(count($subidos) > 0)
-                                        @foreach($subidos as $subida)
-                                            <tr>
-                                                @if($subida->documento_id<>20)
-                                                    <td>{{$subida->documentos->nombre}}</td>
-                                                @else
-                                                    <td>{{$subida->nombre}}</td>
-                                                @endif
-                                                <td>{{$subida->subida}}</td>
-
-                                                @if($subida->socio_id<>'')
-                                                    <td><strong>Socio: </strong>{{$subida->socio->nombre}} {{$subida->socio->apellidos}}</td>
-                                                @else
-                                                    @if($subida->empresa_id<>'')
-                                                        <td><strong>Empresa: </strong>{{$subida->empresa->nombre_empresa}}</td>
-                                                    @else
-                                                        <td>{{$emprendedor->usuario->nombre}} {{$emprendedor->usuario->apellidos}}</td>
-                                                    @endif
-                                                @endif
-                                                <td><a target="_blank" href="{{URL::asset('Orb/documentos/'.$subida->documento)}}"><span class="glyphicon glyphicon-cloud-download"></span></a></td>
-                                            </tr>
-                                        @endforeach
-                                    @endif
-                                    </tbody>
-                                </table> --}}
-                                <div class="container">
-            <div class="modal fade" id="ventana" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <table class="table table-striped table-bordered table-hover">
-                            <div class="modal-header">
-                                <thead>
-                                    <tr>
-                                        <th>Documento</th>
-                                        <th>Fecha de Subida</th>
-                                        <th colspan="2">Pertenece A</th>
-                                        <th colspan="2"></th>
-                                    </tr>
-                                </thead>
+<div class="container">
+    <div class="modal fade" id="ventana" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <table class="table table-striped table-bordered table-hover">
+                    <div class="modal-header">
+                        <thead>
+                            <tr>
+                                <th>Documento</th>
+                                <th>Fecha de Subida</th>
+                                <th colspan="2">Pertenece A</th>
+                                <th colspan="2"></th>
+                            </tr>
+                            </thead>
                             </div>
                             <div class="modal-body">
-                                
                                 <tbody>
                                     @if(count($subidos) > 0)
                                     @foreach($subidos as $subida)
@@ -122,13 +86,14 @@
                             <tfoot>
                           <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                    </div></tfoot>
+                    </div>
+                    </tfoot>
                         </table>
                     </div>
                 </div>
             </div>
             <br />            
-        </div>
+</div>
     @if(Session::get('confirm'))
         <div class="alert alert-success alert-dismissable">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="fa fa-times-circle"></i></button>
@@ -184,7 +149,7 @@
             <div role="widget" style="" class="powerwidget powerwidget-as-portlet powerwidget-as-portlet-purple powerwidget-sortable" id="widget3" data-widget-editbutton="false">
                 <div role="content" class="inner-spacer nopadding">
                     <div class="portlet-big-icon">
-                        <a id="id" href="#" data-toggle="modal" data-target="#ventana">
+                        <a id="id" href="#" data-toggle="modal" data-target="#ventana" style="color:#FFF">
                         <i class="fa fa-archive"></i><br/>
                             <span style="font-size: 20px;">Documentos</span>
                         </a>
