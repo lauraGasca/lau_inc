@@ -55,7 +55,7 @@ class ProyectoController extends BaseController
     public function postUpdatePregunta()
     {
         $pregunta = $this->proyectoRepo->pregunta(Input::get('pregunta_id'));
-        $progreso = $this->proyectoRepo->existe(Input::get('emprendedor_id'), Input::get('pregunta_id'));
+        /*$progreso = $this->proyectoRepo->existe(Input::get('emprendedor_id'), Input::get('pregunta_id'));
         if($pregunta->archive == 0)
             if(Input::get('texto')<>'') $estado = 1; else $estado = 0;
         else
@@ -68,7 +68,7 @@ class ProyectoController extends BaseController
         {
             $this->proyectoRepo->actualizarArchivo($progreso, $progreso->emprendedor_id.'-'.$progreso->pregunta_id. "." . Input::file('archivo')->getClientOriginalExtension());
             Input::file('archivo')->move('Orb/images/progresos/', $progreso->archivo);
-        }
+        }*/
         return '<!DOCTYPE html><html><head></head><body><script type="text/javascript">
 				parent.mensaje('.Input::get('pregunta_id').','.$pregunta->archive.');
 			</script></body></html>';
@@ -76,7 +76,6 @@ class ProyectoController extends BaseController
 
     public function getExportarWord($emprendedor_id)
     {
-
         $progresos = $this->proyectoRepo->progreso_exportar($emprendedor_id);
 
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
