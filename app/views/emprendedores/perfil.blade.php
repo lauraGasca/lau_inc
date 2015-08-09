@@ -119,8 +119,10 @@
                                     @endif
                                 </tbody>
                             </div>
-                            <div class="modal-footer">
-                            </div>
+                            <tfoot>
+                          <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div></tfoot>
                         </table>
                     </div>
                 </div>
@@ -182,13 +184,12 @@
             <div role="widget" style="" class="powerwidget powerwidget-as-portlet powerwidget-as-portlet-purple powerwidget-sortable" id="widget3" data-widget-editbutton="false">
                 <div role="content" class="inner-spacer nopadding">
                     <div class="portlet-big-icon">
+                        <a id="id" href="#" data-toggle="modal" data-target="#ventana">
                         <i class="fa fa-archive"></i><br/>
-                        <span style="font-size: 20px;"><a id="id" href="#" data-toggle="modal" data-target="#ventana">Documentos</a>
-
-
-                        </span>
+                            <span style="font-size: 20px;">Documentos</span>
+                        </a>
                     </div>
-                    <ul class="portlet-bottom-block">
+                    <ul class="portlet-bottom-block" >
                         <li class="col-md-4 col-sm-4 col-xs-4"><strong>{{$subidas}}</strong>
                             <small>Subidos</small>
                         </li>
