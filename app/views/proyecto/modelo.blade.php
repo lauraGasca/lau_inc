@@ -59,12 +59,12 @@
                                                     @if($progreso->pregunta_id == $pregunta->id)
                                                         @if($progreso->estado == 1)
                                                             <i class="fa-3x entypo-check" style="background: none repeat scroll 50% 0% #5EDE5B; color: white; font-size: 20px; margin-left: 10px;"></i>
-                                                            @if($progreso->texto != '')
-                                                                <?php $texto = $progreso->texto; ?>
-                                                            @endif
-                                                            @if($progreso->archivo != '')
-                                                                <?php $archivo = $progreso->archivo; ?>
-                                                            @endif
+                                                        @endif
+                                                        @if($progreso->texto != '')
+                                                            <?php $texto = $progreso->texto; ?>
+                                                        @endif
+                                                        @if($progreso->archivo != '')
+                                                            <?php $archivo = $progreso->archivo; ?>
                                                         @endif
                                                     @endif
                                                 @endforeach
@@ -77,17 +77,18 @@
                                             <div class="tab-content">
                                                 <div class="tab-pane active" id="one-normal{{$pregunta->id}}">
                                                     {{$pregunta->instruccion}}<br/>
-                                                    {{ Form::open(array('url'=>'plan-negocios/update-pregunta', 'class'=>'orb-form', 'method' => 'post', 'enctype'=>'multipart/form-data', 'target'=>"subir_archivo", 'id'=>'form'.$pregunta->id) )}}
+                                                    {{ Form::open(array('url'=>'plan-negocios/update-pregunta', 'class'=>'orb-form', 'method' => 'post', 'enctype'=>'multipart/form-data',  'id'=>'form'.$pregunta->id, 'target'=>"subir_archivo") )}}
                                                         <!--, 'target'=>"subir_archivo"-->
                                                         {{Form::hidden('pregunta_id',$pregunta->id)}}
                                                         {{Form::hidden('emprendedor_id', $emprendedor_id)}}
+                                                        {{Form::hidden('modulo_id', $modulo->id)}}
                                                         @if($pregunta->texto==1)
                                                             <label class="textarea">
-                                                                {{Form::textarea('texto'.$pregunta->id,$texto,['id'=>'texto'.$pregunta->id])}}
+                                                                {{Form::textarea('texto',$texto,['id'=>'texto'.$pregunta->id])}}
                                                             </label><br/>
                                                         @endif
                                                         @if($pregunta->archive==1)
-                                                            {{Form::file('archivo'.$pregunta->id,['id'=>'archivo'.$pregunta->id])}}
+                                                            {{Form::file('archivo',['id'=>'archivo'.$pregunta->id])}}
                                                             <script>
                                                                 $("#archivo{{$pregunta->id}}").fileinput({
                                                                     showCaption: false,
@@ -141,6 +142,13 @@
         function mensaje(id, archivo)
         {
             $("#correcto"+id).html('<div class="alert alert-success alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="fa fa-times-circle"></i></button>Se ha guardado correctamente </div>');
+            if(archivo != 0)
+                $('#archivo'+id).fileinput('clear');
+        }
+
+        function error(id, archivo)
+        {
+            $("#correcto"+id).html('<div class="alert alert-danger alert-dismissable"><button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="fa fa-times-circle"></i></button>No hay nada para guardar</div>');
             if(archivo != 0)
                 $('#archivo'+id).fileinput('clear');
         }
