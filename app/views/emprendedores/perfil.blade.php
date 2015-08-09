@@ -46,63 +46,88 @@
     <div class="modal fade" id="ventana" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <table class="table table-striped table-bordered table-hover">
-                    <div class="modal-header">
+                <div class="modal-header">
+                <h3 style="text-align:center;">Documentos Subidos</h3>
+                </div>
+                <div class="modal-body">
+                    @if(count($subidos) > 0)
+                    <table class="table table-striped table-bordered table-hover">
                         <thead>
-                            <tr>
+                            <tr style="text-align:center;">
                                 <th>Documento</th>
                                 <th>Fecha de Subida</th>
-                                <th colspan="2">Pertenece A</th>
-                                <th colspan="2"></th>
+                                <th colspan="4">Pertenece A</th>
                             </tr>
-                            </thead>
-                            </div>
-                            <div class="modal-body">
-                                <tbody>
-                                    @if(count($subidos) > 0)
-                                    @foreach($subidos as $subida)
-                                    <tr>
-                                        @if($subida->documento_id<>20)
-                                        <td>{{$subida->documentos->nombre}}</td>
-                                        @else
-                                        <td>{{$subida->nombre}}</td>
-                                        @endif
-                                        <td>{{$subida->subida}}</td>
-                                        @if($subida->socio_id<>'')
-                                        <td><strong>Socio: </strong>{{$subida->socio->nombre}} {{$subida->socio->apellidos}}</td>
-                                        @else
-                                        @if($subida->empresa_id<>'')
-                                        <td><strong>Empresa: </strong>{{$subida->empresa->nombre_empresa}}</td>
-                                        @else
-                                        <td>{{$emprendedor->usuario->nombre}} {{$emprendedor->usuario->apellidos}}</td>
-                                        @endif
-                                        @endif
-                                        <td><a target="_blank" href="{{URL::asset('Orb/documentos/'.$subida->documento)}}"><span class="glyphicon glyphicon-cloud-download"></span></a></td>
-                                    </tr>
-                                    @endforeach
-                                    @endif
-                                </tbody>
-                            </div>
-                            <tfoot>
-                          <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                    </div>
-                    </tfoot>
-                        </table>
-                    </div>
+                        </thead>
+                        <tbody>
+                            @foreach($subidos as $subida)
+                            <tr>
+                                @if($subida->documento_id<>20)
+                                <td>
+                                	{{$subida->documentos->nombre}}
+                                </td>
+                                @else
+                                <td>
+                                	{{$subida->nombre}}
+                                </td>
+                                @endif
+                                <td>
+                                	{{$subida->subida}}
+                                </td>
+                                @if($subida->socio_id<>'')
+                                <td>
+                                	<strong>Socio: </strong>
+                                	{{$subida->socio->nombre}} {{$subida->socio->apellidos}}
+                                </td>
+                                @else
+                                @if($subida->empresa_id<>'')
+                            	<td>
+                            		<strong>Empresa: </strong>
+                            		{{$subida->empresa->nombre_empresa}}
+                            	</td>
+                                @else
+                            	<td>
+                            		{{$emprendedor->usuario->nombre}} {{$emprendedor->usuario->apellidos}}
+                            	</td>
+                                @endif
+                                @endif
+                                <td>
+	                                <a target="_blank" href="{{URL::asset('Orb/documentos/'.$subida->documento)}}">
+	                                	<span class="glyphicon glyphicon-cloud-download"></span>
+	                                </a>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                        <tfoot>
+                        </tfoot>
+	                </table> 
+                    @else
+                    <h4 style="text-align: center;">
+                    	No hay documentos subidos
+                    </h4>
+                    @endif
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                 </div>
             </div>
-            <br />            
+        </div>
+    </div>          
 </div>
     @if(Session::get('confirm'))
         <div class="alert alert-success alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="fa fa-times-circle"></i></button>
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+            	<i class="fa fa-times-circle"></i>
+            </button>
             {{Session::get('confirm')}}
         </div>
     @endif
     @if(count($errors)>0)
         <div class="alert alert-danger alert-dismissable">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true"><i class="fa fa-times-circle"></i></button>
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+            	<i class="fa fa-times-circle"></i>
+            </button>
             ¡Por favor, revise los datos del formulario!
         </div>
     @endif
@@ -111,11 +136,13 @@
             <div role="widget" style="" class="powerwidget powerwidget-as-portlet powerwidget-as-portlet-green-alt powerwidget-sortable" id="widget1" data-widget-editbutton="false">
                 <div role="content" class="inner-spacer nopadding">
                     <div class="portlet-big-icon">
-                        <i class="fa fa-money"></i><br/>
+                        <i class="fa fa-money"></i>
+                        <br/>
                         <span style="font-size: 20px;">Estado de Cuenta</span>
                     </div>
                     <ul class="portlet-bottom-block">
-                        <li class="col-md-6 col-sm-6 col-xs-6"><strong>{{$pagos}}</strong>
+                        <li class="col-md-6 col-sm-6 col-xs-6">
+                        	<strong>{{$pagos}}</strong>
                             <small>Pagos Realizados</small>
                         </li>
                         <li class="col-md-6 col-sm-6 col-xs-6"><strong>{{$adeudo}}</strong>
