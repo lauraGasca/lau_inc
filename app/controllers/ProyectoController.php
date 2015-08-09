@@ -54,29 +54,42 @@ class ProyectoController extends BaseController
 
     public function postUpdatePregunta()
     {
+        //dd(Input::all());
         $pregunta = $this->proyectoRepo->pregunta(Input::get('pregunta_id'));
+
+        if(!Input::hasFile('archivo')&&Input::get('texto')=='')
+            return '<!DOCTYPE html><html><head></head><body><script type="text/javascript">
+				parent.error('.Input::get('pregunta_id').','.$pregunta->archive.');
+			</script></body></html>';
+
         $progreso = $this->proyectoRepo->existe(Input::get('emprendedor_id'), Input::get('pregunta_id'));
-        if($pregunta->archive == 0)
-            if(Input::get('texto')<>'') $estado = 1; else $estado = 0;
-        else
-            if(Input::hasFile('archivo')) $estado = 1; else $estado = 0;
         if(count($progreso)<=0)
             $progreso = $this->proyectoRepo->newProgreso();
-        $manager = new ProgresoManager($progreso, Input::all()+['estado'=>$estado]);
+
+        if($pregunta->archive == 1) {
+            if($pregunta->texto == 1)
+                if(Input::hasFile('archivo')&&Input::get('texto')!='') $estado = 1; else $estado = 0;
+            else
+                $estado = 1;
+        }else
+            $estado = 1;
+
+        $manager = new ProgresoManager($progreso, Input::all() + ['estado' => $estado]);
         $manager->save();
-        if(Input::hasfile('archivo'))
-        {
+
+        if(Input::hasfile('archivo')) {
             $this->proyectoRepo->actualizarArchivo($progreso, $progreso->emprendedor_id.'-'.$progreso->pregunta_id. "." . Input::file('archivo')->getClientOriginalExtension());
             Input::file('archivo')->move('Orb/images/progresos/', $progreso->archivo);
         }
+
         return '<!DOCTYPE html><html><head></head><body><script type="text/javascript">
-				parent.mensaje('.Input::get('pregunta_id').','.$pregunta->archive.');
+				parent.mensaje(' . Input::get('pregunta_id') . ',' . $pregunta->archive . ');
 			</script></body></html>';
+
     }
 
     public function getExportarWord($emprendedor_id)
     {
-
         $progresos = $this->proyectoRepo->progreso_exportar($emprendedor_id);
 
         $phpWord = new \PhpOffice\PhpWord\PhpWord();

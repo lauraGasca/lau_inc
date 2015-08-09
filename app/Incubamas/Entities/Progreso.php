@@ -4,7 +4,7 @@ class Progreso extends \Eloquent
 {
     protected $table = 'progresos';
 
-    protected $guarded = ['archivo'];
+    protected $guarded = ['id','archivo'];
 
     public function modulo()
     {
