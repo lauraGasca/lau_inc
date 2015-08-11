@@ -116,7 +116,7 @@ class ProyectoController extends BaseController
         }
 
         $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
-        $objWriter->save('Orb\modelo-negocio\\'.$emprendedor_id.'-plan-negocio.docx');
+        $objWriter->save('Orb/modelo-negocio/'.$emprendedor_id.'-plan-negocio.docx');
         return Redirect::to('Orb\modelo-negocio\\'.$emprendedor_id.'-plan-negocio.docx');
     }
 

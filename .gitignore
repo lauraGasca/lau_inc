@@ -26,6 +26,7 @@ btpkry
 btpkry.pub
 web/Orb/images/correo/*
 web/Orb/images/ejemplos/*
+web/Orb/modelo-negocio
 /nbproject/private/
 /.phpintel/*
 /.phpintel
