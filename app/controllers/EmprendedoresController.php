@@ -105,6 +105,7 @@ class EmprendedoresController extends BaseController
         $num_documentos = $this->documentoRepo->num_documentos();
         $subidas = $this->documentoRepo->num_subidos($emprendedor_id);  
         $subidos = $this->emprendedoresRepo->subidos($emprendedor_id);
+        $pagos2 = $this->pagoRepo->pagos($emprendedor_id);
         //Informacion de los pagos
         $pagos = $this->pagoRepo->pagosRealizados($emprendedor_id);
         $adeudo = $this->soliciturRepo->adeudo($emprendedor_id);
@@ -121,9 +122,8 @@ class EmprendedoresController extends BaseController
                 $this->chatRepo->leido($active_chat->chat_id, date("Y-m-d H:i:s"));
         }
         $this->layout->content = View::make('emprendedores.perfil', compact('emprendedor', 'eventos', 'asesores', 'maxDate', 'minDate',
-            'pagos', 'adeudo', 'num_documentos', 'subidas', 'subidos', 'completados', 'disponibles', 'chats', 'mensajes', 'active_chat'));
+            'pagos', 'pagos2', 'adeudo', 'num_documentos', 'subidas', 'subidos', 'completados', 'disponibles', 'chats', 'mensajes', 'active_chat'));
     }
-
 
     /**************************Emprendedores*******************************/
 
@@ -206,7 +206,6 @@ class EmprendedoresController extends BaseController
         return Redirect::to('emprendedores')->with(array('confirm' => 'Se ha eliminado correctamente.'));
     }
 
-
     /**************************Socios*******************************/
 
     public function getCrearSocio($emprendedor_id)
@@ -286,7 +285,7 @@ class EmprendedoresController extends BaseController
         }
     }
 
-    //Si la fecha indicada cae en fin de semana, se recorre para el lunes
+    // Si la fecha indicada cae en fin de semana, se recorre para el lunes
     private function _noSabadoDomingo($fecha, $dias)
     {
         if (date("w", strtotime('+'.$dias.' day', $fecha)) == 0)
@@ -295,8 +294,6 @@ class EmprendedoresController extends BaseController
             $fecha_final = date('Y-m-d', strtotime('+'.($dias+2).' day', $fecha));
         else
             $fecha_final = date('Y-m-d', strtotime('+'.$dias.' day', $fecha));
-
         return $fecha_final;
     }
-
 }

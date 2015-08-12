@@ -35,14 +35,13 @@
 
 @section('titulo-seccion')
     @if(Auth::user()->type_id!=3)
-        <h1>Emprendedores
-            <small> Perfil</small>
-        </h1>
+        <h1>Emprendedores<small> Perfil</small></h1>
     @endif
 @stop
 
 @section('contenido')
 <div class="container">
+    {{-- Modal de documentos --}}
     <div class="modal fade" id="ventana" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -113,7 +112,70 @@
                 </div>
             </div>
         </div>
-    </div>          
+    </div>
+    {{-- Modal de Pagos --}}
+    <div class="modal fade" id="ventana2" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+         <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 style="text-align:center;">Pagos Realizados</h3>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-condensed table-bordered margin-0px">
+                        <thead>
+                            <tr>
+                                <th colspan="10" style="text-align: center;">Historial de Pagos</th>
+                            </tr>
+                            <tr>
+                                <th colspan="2"></th>
+                                <th>Folio</th>
+                                <th>Concepto</th>
+                                <th>Quien recibe</th>
+                                <th>Monto</th>
+                                <th>Fecha de Emision</th>
+                                <th colspan="2">Siguiente Pago</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if(count($pagos2) > 0)
+                                @foreach($pagos2 as $pago)
+                                    <tr class="active">
+                                        @if($emprendedor->usuario->email<>'')
+                                            <td>
+                                                <a target="_blank" href="{{url('pagos/imprimir-pago/'.$pago->id)}}" ><i class="fa fa-print"></i></a>
+                                            </td>
+                                            <td>
+                                                <a onClick="return confirm('\u00BFSeguro que deseas enviar?');" href="{{url('pagos/enviar-pago/'.$pago->id)}}" ><i class="fa fa-paper-plane"></i></a>
+                                            </td>
+                                        @else
+                                            <td colspan="2" style="text-align: center"><a target="_blank" href="{{url('emprendedores/imprimir-pago/'.$pago->id)}}" ><i class="fa fa-print"></i></a></td>
+                                        @endif
+                                        <td>{{$pago->id}}</td>
+                                        <td>{{$pago->solicitud->nombre}}</td>
+                                        <td>{{$pago->recibido->nombre}} {{$pago->recibido->apellidos}}</td>
+                                        <td>{{$pago->monto_total}}</td>
+                                        @if($pago->siguiente<>'')
+                                            <td>{{$pago->emision}}</td>
+                                            <td colspan="2">{{$pago->siguiente}}</td>
+                                        @else
+                                            <td>{{$pago->emision}}</td>
+                                        @endif
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td colspan="10"><i>No hay pagos registrados</i></td>
+                                </tr>
+                            @endif
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>    
+        </div>
+    </div>
 </div>
     @if(Session::get('confirm'))
         <div class="alert alert-success alert-dismissable">
@@ -136,13 +198,14 @@
             <div role="widget" style="" class="powerwidget powerwidget-as-portlet powerwidget-as-portlet-green-alt powerwidget-sortable" id="widget1" data-widget-editbutton="false">
                 <div role="content" class="inner-spacer nopadding">
                     <div class="portlet-big-icon">
+                    <a id="id" href="#" data-toggle="modal" data-target="#ventana2" style="color:#FFF">
                         <i class="fa fa-money"></i>
                         <br/>
-                        <span style="font-size: 20px;">Estado de Cuenta</span>
+                        <span style="font-size: 20px;">Estado de Cuenta</span>                
+                    </a>
                     </div>
                     <ul class="portlet-bottom-block">
-                        <li class="col-md-6 col-sm-6 col-xs-6">
-                        	<strong>{{$pagos}}</strong>
+                        <li class="col-md-6 col-sm-6 col-xs-6"><strong>{{$pagos}}</strong>
                             <small>Pagos Realizados</small>
                         </li>
                         <li class="col-md-6 col-sm-6 col-xs-6"><strong>{{$adeudo}}</strong>
@@ -707,7 +770,7 @@
                                                     class="entypo-twitter-circled"></i></a></li>
                                 </ul>
                             </div>
-                            <!---------------------------------------------------/Profile------------------------------------------------->
+                            <!---------------------------------------------------/Profile----------------------------------------------- -->
                         </div>
                     </div>
                 </div>
