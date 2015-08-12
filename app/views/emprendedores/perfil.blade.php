@@ -10,6 +10,12 @@
     @parent
     {{ HTML::style('Orb/bower_components/bootstrap-calendar/css/calendar.css') }}
     {{ HTML::script('Orb/bower_components/bootstrap-calendar/js/language/es-MX.js') }}
+    <style type="text/css">
+ .modal .modal-dialog { width: 80%; }
+th, td{
+    text-align: center;
+ }
+ </style>
     {{ HTML::style('Orb/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css') }}
     {{ HTML::script('Orb/bower_components/moment/moment.js') }}
     {{ HTML::script('Orb/bower_components/eonasdan-bootstrap-datetimepicker/src/js/locales/bootstrap-datetimepicker.es.js') }}
@@ -123,9 +129,6 @@
                 <div class="modal-body">
                     <table class="table table-condensed table-bordered margin-0px">
                         <thead>
-                            <tr>
-                                <th colspan="10" style="text-align: center;">Historial de Pagos</th>
-                            </tr>
                             <tr>
                                 <th colspan="2"></th>
                                 <th>Folio</th>
