@@ -70,15 +70,24 @@
                                     <a href="{{url('emprendedores/perfil/')}}/@{{ emprendedor.id }}">
                                         <img src="{{url('Orb/images/emprendedores/')}}/@{{ emprendedor.usuario.foto }}" alt="@{{ emprendedor.usuario.nombre }} @{{ emprendedor.usuario.apellidos }}" style="width:100%; height: 100%;">
                                         <span class='zoom'>
-                                            <img src="{{url('Orb/images/emprendedores/')}}/@{{ emprendedor.usuario.foto }}" alt="@{{ emprendedor.usuario.nombre }} @{{ emprendedor.usuario.apellidos }}" style="width:100%; height: 100%;">
+                                            <img ng-repeat="empresa in emprendedor.empresas" ng-show="$last" src="{{url('Orb/images/empresas/')}}/@{{ empresa.logo }}" alt="@{{ empresa.nombre_empresa }}" style="width:100%; height: 100%;">
                                         </span>
                                     </a>
                                 </div>
                                 <div class="caption">
-                                    <span class="label">@{{ emprendedor.estatus }}
-                                            </span>
+                                    <span class="label label-success" ng-if="emprendedor.estatus=='Activo'">@{{ emprendedor.estatus }}</span>
+                                    <span class="label label-warning" ng-if="emprendedor.estatus=='Suspendido'">@{{ emprendedor.estatus }}</span>
+                                    <span class="label label-danger" ng-if="emprendedor.estatus=='Cancelado'">@{{ emprendedor.estatus }}</span>
+                                    <span class="label label-default" ng-if="emprendedor.estatus=='Inactivo'">@{{ emprendedor.estatus }}</span>
                                     <br/><br/>
                                     <p class="small">
+                                        @{{(emprendedor.usuario.nombre + emprendedor.usuario.apellidos).substring(0, 20)}}| @{{emprendedor.ingreso}}<br/>
+                                        <i class="fa fa-envelope" ng-if="emprendedor.usuario.email"> @{{emprendedor.usuario.email}} </i>
+                                        <i class="fa fa-envelope" ng-if="!emprendedor.usuario.email"> No dispobible </i><br/>
+                                        <i class="fa fa-phone" ng-if="emprendedor.tel_fijo"> @{{emprendedor.tel_fijo}}</i>
+                                        <i class="fa fa-phone" ng-if="!emprendedor.tel_fijo"> No dispobible </i>
+                                        | <i class="fa fa-mobile" ng-if="emprendedor.tel_movil"> @{{emprendedor.tel_movil}}</i>
+                                        <i class="fa fa-mobile" ng-if="!emprendedor.tel_movil"> No dispobible </i>
                                     </p>
                                     <div class="btn-group">
                                         <div class="btn-group btn-group-xs">
