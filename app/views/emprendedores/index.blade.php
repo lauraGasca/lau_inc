@@ -81,7 +81,7 @@
                                     <span class="label label-default" ng-if="emprendedor.estatus=='Inactivo'">@{{ emprendedor.estatus }}</span>
                                     <br/><br/>
                                     <p class="small">
-                                        @{{(emprendedor.usuario.nombre + emprendedor.usuario.apellidos).substring(0, 20)}}| @{{emprendedor.ingreso}}<br/>
+                                        @{{(emprendedor.usuario.nombre + " " +emprendedor.usuario.apellidos).substring(0, 20)}}| @{{emprendedor.ingreso}}<br/>
                                         <i class="fa fa-envelope" ng-if="emprendedor.usuario.email"> @{{emprendedor.usuario.email}} </i>
                                         <i class="fa fa-envelope" ng-if="!emprendedor.usuario.email"> No dispobible </i><br/>
                                         <i class="fa fa-phone" ng-if="emprendedor.tel_fijo"> @{{emprendedor.tel_fijo}}</i>
