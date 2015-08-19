@@ -88,17 +88,6 @@
                     </label>
                     <span class="message-error">{{$errors->first('monto')}}</span>
                 </div>
-                <div class="col-md-12 espacio_abajo">
-                </div>
-                <div class="col-md-4 espacio_abajo">
-                    {{Form::checkbox('enviar', 1)}} Enviar por correo
-                </div>
-                <div class="col-md-3 espacio_abajo">
-                    {{Form::checkbox('imprimir', 1)}} Imprimir
-                </div>
-                <div class="col-md-12 espacio_abajo">
-                    <span class="message-error">{{$errors->first('enviar')}}</span>
-                </div>
             </fieldset>
             <footer>
                 <div class="col-md-6 espacio_abajo">

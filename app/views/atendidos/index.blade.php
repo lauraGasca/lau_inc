@@ -44,7 +44,7 @@
                     <th width="40%">Nombre</th>
                     <th width="25%">Correo</th>
                     <th width="20%">Telefono</th>
-                    <th colspan="4" width="15%" class="text-center">Acciones</th>
+                    <th colspan="2" width="15%" class="text-center">Acciones</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -54,23 +54,13 @@
                             <td>{{$atendido->nombre_completo}}</td>
                             <td>{{$atendido->correo}}</td>
                             <td>{{$atendido->telefono}}</td>
-                            <td>
-                                <a title="Imprimir" target="_blank" href="{{url('atendidos/imprimir/'.$atendido->id)}}" >
-                                    <i class="fa fa-print"></i>
-                                </a>
-                            </td>
-                            <td>
-                                <a title="Enviar" onClick="return confirm('\u00BFSeguro que deseas enviar?');" href="{{url('atendidos/enviar/'.$atendido->id)}}" >
-                                    <i class="fa fa-paper-plane"></i>
+                            <td class="text-center">
+                                <a  class="editar" title="Editar" href="{{URL('atendidos/editar/'.$atendido->id)}}">
+                                    <i class="fa fa-edit"></i>
                                 </a>
                             </td>
                             <td class="text-center">
-                                <a title="Editar" href="{{URL('atendidos/editar/'.$atendido->id)}}">
-                                    <i class="fa fa-cog"></i>
-                                </a>
-                            </td>
-                            <td class="text-center">
-                                <a title="Eliminar" href="{{URL('atendidos/delete/'.$atendido->id)}}" onClick="return confirm('\u00BFSeguro que deseas eliminar?');">
+                                <a class="eliminar" title="Eliminar" href="{{URL('atendidos/delete/'.$atendido->id)}}" onClick="return confirm('\u00BFSeguro que deseas eliminar?');">
                                     <i class="fa fa-times-circle"></i>
                                 </a>
                             </td>
@@ -78,7 +68,7 @@
                     @endforeach
                 @else
                     <tr>
-                        <th colspan="7">No hay ninguna entrada registrada</th>
+                        <th colspan="5">No hay ninguna entrada registrada</th>
                     </tr>
                 @endif
                 </tbody>
@@ -87,7 +77,7 @@
                     <th>Nombre</th>
                     <th>Correo</th>
                     <th>Telefono</th>
-                    <th colspan="4">Acciones</th>
+                    <th colspan="2">Acciones</th>
                 </tr>
                 </tfoot>
             </table>

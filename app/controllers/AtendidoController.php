@@ -33,20 +33,6 @@ class AtendidoController extends BaseController
         $atendido = $this->atendidoRepo->newAtendido();
         $manager = new AtendidosManager($atendido, Input::all());
         $manager->save();
-
-        $correo =Input::get("correo");
-        $nombre =Input::get("nombre_completo");
-        if(Input::get("enviar")<>'')
-            if(Input::get("correo")<>'')
-                Mail::send('emails.atendidos', [],function ($message) use ($correo,$nombre) {
-                    $message->subject('Prueba');
-                    $message->to($correo, $nombre);
-                });
-        if(Input::get("imprimir")<>''){
-                $html = View::make("atendidos.pdf");
-                $this->layout->content = PDF::load($html, 'A4', 'portrait')->show();
-        }
-
         return Redirect::to('atendidos')->with(array('confirm' => 'Se ha registrado correctamente.'));
     }
 
@@ -82,33 +68,6 @@ class AtendidoController extends BaseController
         return Redirect::back()->with(array('confirm' => 'Se ha eliminado correctamente.'));
     }
 
-    public function getImprimir($persona_id)
-    {
-        $atendida = $this->atendidoRepo->atendida($persona_id);
-        if(count($atendida)>0)
-        {
-            $html = View::make("atendidos.pdf");
-            $this->layout->content = PDF::load($html, 'A4', 'portrait')->show();
-        }
-        else
-            return Response::view('errors.missing', array(), 404);
-    }
 
-    public function getEnviar($persona_id)
-    {
-        $atendida = $this->atendidoRepo->atendida($persona_id);
-        if(count($atendida)>0)
-        {
-            $correo = $atendida->correo;
-            $nombre = $atendida->nombre_completo;
-            Mail::send('emails.atendidos', [],function ($message) use ($correo, $nombre) {
-                $message->subject('Prueba');
-                $message->to($correo, $nombre);
-            });
-            return Redirect::back()->with(array('confirm' => 'Se ha enviado correctamente.'));
-        }
-        else
-            return Response::view('errors.missing', array(), 404);
-    }
 
 }
