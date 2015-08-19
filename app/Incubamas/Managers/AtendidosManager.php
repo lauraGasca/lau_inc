@@ -10,7 +10,9 @@ class AtendidosManager extends BaseManager
             "direccion"   	    =>    'max:200',
             "telefono"   	    =>    'required|max:25',
             "monto"   	        =>    'max:20',
-            "programa"   	    =>    'required|max:100'
+            "programa"   	    =>    'required|max:100',
+            "proyecto"   	    =>    'max:100',
+            "como_entero"       =>    'max:100'
         ];
         return $rules;
     }

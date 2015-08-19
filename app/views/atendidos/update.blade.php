@@ -79,6 +79,22 @@
                     </label>
                     <span class="message-error">{{$errors->first('direccion')}}</span>
                 </div>
+                <div class="col-md-11 espacio_abajo">
+                    {{Form::label('proyecto', 'Proyecto', array('class' => 'label'))}}
+                    <label class="input">
+                        <i class="icon-prepend fa fa-book"></i>
+                        {{Form::text('proyecto')}}
+                    </label>
+                    <span class="message-error">{{$errors->first('proyecto')}}</span>
+                </div>
+                <div class="col-md-11 espacio_abajo">
+                    {{Form::label('como_entero', '¿Como se entero de nosotros?', array('class' => 'label'))}}
+                    <label class="input">
+                        <i class="icon-prepend fa fa-question"></i>
+                        {{Form::text('como_entero')}}
+                    </label>
+                    <span class="message-error">{{$errors->first('como_entero')}}</span>
+                </div>
                 <div class="col-md-6 espacio_abajo">
                     {{Form::label('programa', '* Programa', array('class' => 'label'))}}
                     <label class="input">
@@ -90,7 +106,7 @@
                 <div class="col-md-5 espacio_abajo">
                     {{Form::label('monto', 'Monto a solicitar', array('class' => 'label'))}}
                     <label class="input">
-                        <i class="icon-prepend fa fa-book"></i>
+                        <i class="icon-prepend fa fa-money"></i>
                         {{Form::text('monto',null,['id'=>'monto'])}}
                     </label>
                     <span class="message-error">{{$errors->first('monto')}}</span>
