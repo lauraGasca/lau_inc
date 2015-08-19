@@ -68,6 +68,56 @@ class AtendidoController extends BaseController
         return Redirect::back()->with(array('confirm' => 'Se ha eliminado correctamente.'));
     }
 
+    public function getExcel()
+    {
+        $personas = $this->atendidoRepo->atentidas();
+        $person = [['Personas Atendidas', 'Correo Electronico', 'Telefono', 'Proyecto', 'Dirección', 'Como se entero de nosotros']];
+        foreach($personas as $persona)
+        {
+            $fila = [$persona->nombre_completo, $persona->correo, $persona->telefono, $persona->proyecto, $persona->direccion, $persona->como_entero];
+            array_push($person, $fila);
+        }
+        //dd($person);
+        Excel::create('Personas Atendidas '.strftime("%d/%b/%Y", strtotime(date('d-m-Y'))), function($excel) use ($person)
+        {
+            $excel->setTitle('Personas Atendidas');
+            $excel->setCreator('Incubamas')->setCompany('Incubamas');
+            $excel->setDescription('Personas atendidas');
 
+            $excel->sheet('Listado', function($sheet) use ($person)
+            {
+                $sheet->fromArray($person, null, 'A1', false, false);
+
+                $sheet->setStyle([
+                    'font' =>[
+                        'name'      =>  'Calibri',
+                        'size'      =>  11
+                    ]
+                ]);
+
+
+                $sheet->setBorder('A1', 'thin');
+                $sheet->setBorder('B1', 'thin');
+                $sheet->setBorder('C1', 'thin');
+                $sheet->setBorder('D1', 'thin');
+                $sheet->setBorder('E1', 'thin');
+                $sheet->setBorder('F1', 'thin');
+                $sheet->setBorder('G1', 'thin');
+
+                $sheet->setAutoSize(true);
+
+                $sheet->cells('A1:G1', function($cells)
+                {
+                    $cells->setFont(array(
+                        'family'     => 'Calibri',
+                        'size'       => '12',
+                        'bold'       =>  true
+                    ));
+                    $cells->setFontColor('#ffffff');
+                    $cells->setBackground('#02384b');
+                });
+            });
+        })->download('xlsx');
+    }
 
 }

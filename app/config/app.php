@@ -123,6 +123,7 @@ return array(
 		'Illuminate\Workbench\WorkbenchServiceProvider',
         'Greggilbert\Recaptcha\RecaptchaServiceProvider',
         'Thujohn\Pdf\PdfServiceProvider',
+        'Maatwebsite\Excel\ExcelServiceProvider',
 
 	),
 
@@ -191,6 +192,7 @@ return array(
 		'Validator'         => 'Illuminate\Support\Facades\Validator',
 		'View'              => 'Illuminate\Support\Facades\View',
         'PDF'               => 'Thujohn\Pdf\PdfFacade',
+        'Excel'             => 'Maatwebsite\Excel\Facades\Excel',
 
 	),
 

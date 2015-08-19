@@ -33,8 +33,11 @@
     <div class="powerwidget powerwidget-as-portlet-white" id="darkportletdarktable" data-widget-editbutton="false">
         <div class="inner-spacer">
             <div class="row">
-                <div class="col-md-5">
+                <div class="col-md-2">
                     {{HTML::link('atendidos/crear','+ Nuevo Registro',array('class'=>'btn btn-primary'))}}<br/>
+                </div>
+                <div class="col-md-2">
+                    {{HTML::link('atendidos/excel','Exportar a Excel',array('class'=>'btn btn-success', 'target'=>"subir_archivo"))}}<br/>
                 </div>
             </div>
             <br/>
@@ -84,4 +87,5 @@
             {{$atendidos->links();}}
         </div>
     </div>
-@stop  
+    <iframe width="1" height="1" frameborder="0" name="subir_archivo" style="display: none"></iframe>
+@stop
