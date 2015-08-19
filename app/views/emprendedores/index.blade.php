@@ -78,7 +78,7 @@
                                     <span class="label label-success" ng-if="emprendedor.estatus=='Activo'">@{{ emprendedor.estatus }}</span>
                                     <span class="label label-warning" ng-if="emprendedor.estatus=='Suspendido'">@{{ emprendedor.estatus }}</span>
                                     <span class="label label-danger" ng-if="emprendedor.estatus=='Cancelado'">@{{ emprendedor.estatus }}</span>
-                                    <span class="label label-default" ng-if="emprendedor.estatus=='Inactivo'">@{{ emprendedor.estatus }}</span>
+                                    <span class="label label-dark" ng-if="emprendedor.estatus=='Inactivo'">@{{ emprendedor.estatus }}</span>
                                     <br/><br/>
                                     <p class="small">
                                         @{{(emprendedor.usuario.nombre + " " +emprendedor.usuario.apellidos).substring(0, 20)}}| @{{emprendedor.ingreso}}<br/>
@@ -131,7 +131,7 @@
                                                 @else
                                                     @if($emprendedor->estatus=="Suspendido") label-warning
                                                     @else @if($emprendedor->estatus=="Cancelado") label-danger
-                                                          @else label-default @endif
+                                                          @else label-dark @endif
                                                     @endif
                                                 @endif
                                                     ">{{$emprendedor->estatus}}
