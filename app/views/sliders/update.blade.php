@@ -43,6 +43,7 @@
                     <div class="col-md-5 espacio_abajo">
                         {{Form::label('imagen', '* Imagen', ['class' => 'label'])}}
                         {{Form::file('imagen', ['accept'=>"image/*"])}}<br/>
+                        <div class="note"><strong>Nota:</strong>La imagen debe medir 1370 x 770</div>
                         <span class="message-error" style="font-weight: bold">{{$errors->first('imagen')}}</span>
                         <script type="text/javascript">
                             $("#imagen").fileinput({

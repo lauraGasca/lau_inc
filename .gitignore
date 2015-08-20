@@ -12,6 +12,7 @@ web/Orb/images/entradas/*
 web/Orb/images/gallery/*
 web/Orb/images/adjuntos/*
 web/Orb/images/progresos/*
+web/Orb/images/convocatorias/*
 web/Orb/images/sliders/*
 .env.local.php
 /bootstrap/compiled.php

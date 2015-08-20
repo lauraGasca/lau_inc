@@ -16,6 +16,8 @@
 
 @section('contacto') href="#contactanos" @stop
 
+@section('convocatorias') href="#convocatorias" @stop
+
 @section('contenido')
     <section id="inicio" class="page">
         <section class="section padding-off">
@@ -246,7 +248,7 @@
                 @endforeach
                 </ul>
             @else
-                No hay ningun Casos de &Eacute;xito registrado
+                <p style="color: #949494; font-size: 18px; font-style: italic;"> No hay ningun Casos de &Eacute;xito registrado</p>
             @endif
             <br/><br/>
             <div class="col-xs-12">
@@ -313,11 +315,64 @@
                         </div>
                     </div>
                 @else
-                    <div class="row">
-                        No hay ninguna entrada registrado
-                    </div>
+                    <p style="color: #949494; font-size: 18px; font-style: italic;"> No hay ninguna entrada registrada</p>
                 @endif
             </div>
+        </section>
+    </section>
+    <section id="convocatorias" class="page">
+        <section class="section bg-gray-color">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <hgroup class="section-title align-center opacityRun">
+                            <h1>Convocatorias</h1>
+                            <h2>Conoce las convocatorias vigentes</h2>
+                        </hgroup>
+                    </div>
+                </div>
+            </div>
+            <section class="team-member">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="team-contents clearfix" style="margin-left: 0px;">
+                                @if(count($convocatorias)>0)
+                                    @foreach($convocatorias as $convocatoria)
+                                        <article class="scaleRun">
+                                            <div class="contents clearfix" style="width: 250px;">
+                                                <div class="team-info">
+                                                    <div class="team-image">
+                                                        <a class="single-image team-plus-icon" href="#"><img src="{{url('Orb/images/convocatorias/'. $convocatoria->imagen)}}" alt=""><span class="curtain"></span></a>
+                                                    </div>
+                                                    <hgroup class="team-group">
+                                                        <h2 class="team-title">{{$convocatoria->nombre}}</h2>
+                                                        @if($convocatoria->estatus==1)
+                                                            <h5 style="color: #006400">Activo</h5>
+                                                        @else
+                                                            <h5 style="color: #a9a9a9">Inactivo</h5>
+                                                        @endif
+                                                    </hgroup>
+                                                </div>
+                                                <div class="team-content" style="height: 391px;">
+                                                    <div class="team-entry">
+                                                        <p>
+                                                            {{$convocatoria->descripcion}}
+                                                        </p>
+                                                        <a href="#contactanos" class="button turquoise">Quiero Contactarlos</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </article>
+                                    @endforeach
+                                @else
+                                    <p style="color: #949494; font-size: 18px; font-style: italic;"> No hay ninguna convocatoria registrada</p>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </section>
     </section>
     <section id="contactanos" class="page">

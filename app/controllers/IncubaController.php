@@ -5,6 +5,7 @@ use Incubamas\Repositories\BlogsRepo;
 use Incubamas\Repositories\TagRepo;
 use Incubamas\Repositories\CategoriaRepo;
 use Incubamas\Repositories\SliderRepo;
+use Incubamas\Repositories\ConvocatoriaRepo;
 use Incubamas\Managers\ValidatorManager;
 use Incubamas\Managers\ComentarioManager;
 
@@ -16,8 +17,10 @@ class IncubaController extends BaseController
     protected $tagRepo;
     protected $categoriaRepo;
     protected $sliderRepo;
+    protected $convocatoriaRepo;
 
-    public function __construct(CasosRepo $casosRepo, BlogsRepo $blogsRepo, TagRepo $tagRepo, CategoriaRepo $categoriaRepo, SliderRepo $sliderRepo)
+    public function __construct(CasosRepo $casosRepo, BlogsRepo $blogsRepo, TagRepo $tagRepo, CategoriaRepo $categoriaRepo,
+                                SliderRepo $sliderRepo, ConvocatoriaRepo $convocatoriaRep)
     {
         $this->beforeFilter('csrf', array('on' => array('post', 'put', 'patch', 'delete')));
         $this->casosRepo = $casosRepo;
@@ -25,6 +28,7 @@ class IncubaController extends BaseController
         $this->tagRepo = $tagRepo;
         $this->categoriaRepo = $categoriaRepo;
         $this->sliderRepo = $sliderRepo;
+        $this->convocatoriaRepo = $convocatoriaRep;
     }
 
     public function home()
@@ -32,7 +36,8 @@ class IncubaController extends BaseController
         $casos = $this->casosRepo->ultimos_casos();
         $blogs = $this->blogsRepo->entradas_recientes();
         $sliders = $this->sliderRepo->slidersActivos();
-        $this->layout->content = View::make('incuba.index', compact('casos', 'blogs', 'sliders'));
+        $convocatorias = $this->convocatoriaRepo->convocatorias();
+        $this->layout->content = View::make('incuba.index', compact('casos', 'blogs', 'sliders', 'convocatorias'));
     }
 
     public function contacto()

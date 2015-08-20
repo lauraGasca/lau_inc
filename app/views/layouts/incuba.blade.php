@@ -25,8 +25,8 @@
         {{ HTML::script('accio/js/jquery.modernizr.js') }}
     </head>
     <body data-spy="scroll" data-target="#navigation" class="home">
-        <header id="header" @section('menu-t')@show>
-            <div class="@section('menu-in')@show">
+        <header id="header" @yield('menu-t')>
+            <div class="@yield('menu-in')">
                 <ul class="social-icons" style="display: inline-block; vertical-align: middle;">
                     <li class="twitter">
                         <a href="https://twitter.com/IncubaMas"><i class="icon-twitter"></i>Twitter</a>
@@ -47,19 +47,19 @@
                 <a id="responsive-nav-button" class="responsive-nav-button" href="#"></a>
                 <nav id="navigation" class="navigation">
                     <ul>
-                        <li @section('inicio-c')@show><a @section('inicio')@show>Inicio</a></li>
-                        <li><a @section('incuba')@show>Incuba</a></li>
-                        <li><a @section('servicios')@show>Servicios</a></li>
-                        <li @section('casos-c')@show><a @section('casos')@show>Emprendedores</a></li>
-                        <li @section('blog-c')@show><a @section('blog')@show>Blog</a></li>
-                        <li><a @section('contacto')@show>Cont&aacute;ctanos</a></li>
+                        <li @yield('inicio-c')><a @yield('inicio')>Inicio</a></li>
+                        <li><a @yield('incuba')>Incuba</a></li>
+                        <li><a @yield('servicios')>Servicios</a></li>
+                        <li @yield('casos-c')><a @yield('casos')>Emprendedores</a></li>
+                        <li @yield('blog-c')><a @yield('blog')>Blog</a></li>
+                        <li><a @yield('convocatorias')>Convocatorias</a></li>
+                        <li><a @yield('contacto')>Cont&aacute;ctanos</a></li>
                     </ul>
                 </nav>
             </div>
         </header>
         <div id="wrapper">
-            @section('contenido')
-            @show
+            @yield('contenido')
             <footer id="footer">
                 <div class="wrapper bg_black" style="position:relative; z-index:9;">
                     <div class="container_12">

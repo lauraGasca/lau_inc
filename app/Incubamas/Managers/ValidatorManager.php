@@ -178,6 +178,12 @@ class ValidatorManager
                     'pago_id'   	    =>    'required|exists:pago,id',
                 ];
                 break;
+            //Para eliminar convocatorias
+            case 'convocatoria':
+                $rules = [
+                    'convocatoria_id'   	    =>    'required|exists:convocatorias,id',
+                ];
+                break;
             //Para verificar los datos de la solicitud antes de guardarla y poder hacer otras validaciones
             case 'nuevaConversacion':
                 $rules = [
