@@ -21,33 +21,11 @@
         <section class="section padding-off">
             <div id="layerslider-container">
                 <div id="layerslider">
-                    <div class="ls-layer" style="slidedirection: left; durationin: 1500; durationout: 1500; easingin: easeInOutQuint; timeshift: -500;">
-                        {{ HTML::image('accio/images/body/Slider mas conocimiento.png', 'Mas conocimiento', ['class'=>"ls-bg"]) }}
-                        <h1 class="ls-s2 align-center" style="top: 43%; left: 130px; slidedirection : top; slideoutdirection : fade; scaleout : 0.75; durationin : 2000; durationout : 1000; easingin : easeInOutQuint; easingout : easeInOutQuint;">
-                            Incuba = M&aacute;s
-                        </h1>
-                        <h1 class="ls-s2 align-center" style="top: 57%; left: 380px; slidedirection : bottom; slideoutdirection : fade; scaleout : 0.75; durationin : 2000; durationout : 1000; easingin : easeInOutQuint; easingout : easeInOutQuint;">
-                            Conocimiento
-                        </h1>
-                    </div>
-                    <div class="ls-layer" style="slidedirection: right; durationin: 1500; durationout: 1500; easingin: easeInOutQuint; timeshift: -500;">
-                        {{ HTML::image('accio/images/body/Slider mas crecimiento.png', 'Mas conocimiento', ['class'=>"ls-bg"]) }}
-                        <h1 class="ls-s2 align-center" style="top: 43%; left: 180px; slidedirection : top; slideoutdirection : fade; scaleout : 0.75; durationin : 2000; durationout : 1000; easingin : easeInOutQuint; easingout : easeInOutQuint;">
-                            Incuba = M&aacute;s 
-                        </h1>
-                        <h1 class="ls-s2 align-center" style="top: 57%; left: 260px; slidedirection : bottom; slideoutdirection : fade; scaleout : 0.75; durationin : 2000; durationout : 1000; easingin : easeInOutQuint; easingout : easeInOutQuint;">
-                            crecimiento
-                        </h1>	
-                    </div>
-                    <div class="ls-layer" style="slidedirection: right; durationin: 1500; durationout: 1500; easingin: easeInOutQuint; timeshift: -500;">
-                        {{ HTML::image('accio/images/body/mas exito.png', 'Mas conocimiento', ['class'=>"ls-bg"]) }}
-                        <h1 class="ls-s2 align-center" style="top: 43%; left: 360px; slidedirection : top; slideoutdirection : fade; scaleout : 0.75; durationin : 2000; durationout : 1000; easingin : easeInOutQuint; easingout : easeInOutQuint;">
-                            Incuba = 
-                        </h1>
-                        <h1 class="ls-s2 align-center" style="top: 57%; left: 170px; slidedirection : bottom; slideoutdirection : fade; scaleout : 0.75; durationin : 2000; durationout : 1000; easingin : easeInOutQuint; easingout : easeInOutQuint;">
-                            M&aacute;s &Eacute;xito
-                        </h1>
-                    </div>
+                    @foreach($sliders as $slider)
+                        <div class="ls-layer" style="slidedirection: left; durationin: 1500; durationout: 1500; easingin: easeInOutQuint; timeshift: -500;">
+                            {{ HTML::image('Orb/images/sliders/'.$slider->imagen, null, ['class'=>"ls-bg"]) }}
+                        </div>
+                    @endforeach
                 </div>
             </div>
             <ul class="keydown">

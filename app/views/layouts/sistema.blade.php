@@ -111,13 +111,21 @@
                                     <i class="fa fa-edit"></i><span>Modelo de Negocio</span>
                                 </a>
                             </li>
-                            @if(Auth::user()->type_id<>3)
-                                <li>
-                                    <a @yield('calendario') href="{{url('calendario')}}" title="Calendario">
-                                        <i class="entypo-calendar"></i><span> Calendario</span>
-                                    </a>
-                                </li>
-                            @endif
+                            <li>
+                                <a @yield('convocatorias') href="{{url('convocatorias')}}" title="Convocatorias">
+                                    <i class="fa fa-tasks"></i><span>Convocatorias</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a @yield('usuarios') href="{{url('usuarios')}}" title="Usuarios">
+                                    <i class="fa fa-group"></i><span>Usuarios</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a @yield('sliders') href="{{url('sliders')}}" title="Sliders">
+                                    <i class="fa fa-desktop"></i><span>Sliders</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 @endif
