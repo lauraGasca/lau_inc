@@ -3,6 +3,8 @@
 use Incubamas\Managers\ValidatorManager;
 use Incubamas\Repositories\UserRepo;
 use Incubamas\Managers\UsuariosManager;
+use Incubamas\Managers\AsesoresManager;
+use Incubamas\Managers\AsesoresEditarManager;
 
 class UserController extends BaseController
 {
@@ -18,11 +20,35 @@ class UserController extends BaseController
 
     public function getIndex()
     {
+        $this->_soloAsesores();
+        $asesores = $this->userRepo->asesores(Auth::user()->id);
+        $this->layout->content = View::make('users.index', compact('asesores'));
+    }
 
+    public function getCrear()
+    {
+        $this->_soloAsesores();
+        $tipos = $this->userRepo->listar_tipos();
+        $this->layout->content = View::make('users.create', compact('tipos'));
+    }
+
+    public function postCrear()
+    {
+        $this->_soloAsesores();
+        $usuario = $this->userRepo->newAsesor();
+        $manager = new AsesoresManager($usuario, Input::all());
+        $manager->save();
+        if(Input::hasfile('foto'))
+        {
+            $this->userRepo->actualizarFoto($usuario, $usuario->id."." . Input::file('foto')->getClientOriginalExtension());
+            Input::file('foto')->move('Orb/images/emprendedores/', $usuario->foto);
+        }
+        return Redirect::to('usuarios')->with(array('confirm' => 'Se ha guardado correctamente.'));
     }
 
     public function getEditar($user_id = null)
     {
+        $this->_soloAsesores();
         if($user_id==null)
             $usuario = \Auth::user();
         else
@@ -32,6 +58,7 @@ class UserController extends BaseController
 
     public function postEditar()
     {
+        $this->_soloAsesores();
         $usuario = $this->userRepo->usuario(Input::get('id'));
         if(count($usuario)>0)
         {
@@ -41,6 +68,47 @@ class UserController extends BaseController
         }
         else
             return Response::view('errors.missing', array(), 404);
+    }
+
+    public function getEditarUser($id)
+    {
+        $this->_soloAsesores();
+        $usuario = $this->userRepo->usuario($id);
+        if(count($usuario)>0)
+        {
+            $tipos = $this->userRepo->listar_tipos();
+            $this->layout->content = View::make('users.edit', compact('tipos', 'usuario'));
+        }
+        else
+            return Response::view('errors.missing', array(), 404);
+    }
+
+    public function postEditarUser()
+    {
+        $this->_soloAsesores();
+        $usuario = $this->userRepo->usuario(Input::get('id'));
+        if(count($usuario)>0)
+        {
+            $manager = new AsesoresEditarManager($usuario, Input::all());
+            $manager->save();
+            if(Input::hasfile('foto'))
+            {
+                $this->userRepo->actualizarFoto($usuario, $usuario->id."." . Input::file('foto')->getClientOriginalExtension());
+                Input::file('foto')->move('Orb/images/emprendedores/', $usuario->foto);
+            }
+            return Redirect::back()->with(array('confirm' => 'Se ha guardado correctamente.'));
+        }
+        else
+            return Response::view('errors.missing', array(), 404);
+    }
+
+    public function getDelete($user_id)
+    {
+        $this->_soloAsesores();
+        $manager = new ValidatorManager('usuario', ['user_id'=>$user_id]);
+        $manager->validar();
+        $this->userRepo->borrarUsuario($user_id);
+        return Redirect::back()->with(array('confirm' => 'Se ha eliminado correctamente.'));
     }
 
     public function getError()

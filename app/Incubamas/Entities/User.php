@@ -51,4 +51,9 @@ class User extends \Eloquent implements UserInterface, RemindableInterface
         return $this->apellidos.' '.$this->nombre;
     }
 
+    public function tipos()
+    {
+        return $this->belongsTo('Incubamas\Entities\Tipo', 'type_id', 'id');
+    }
+
 }

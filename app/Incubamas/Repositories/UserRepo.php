@@ -1,12 +1,19 @@
 <?php namespace Incubamas\Repositories;
 
 use Incubamas\Entities\User;
+use Incubamas\Entities\Tipo;
 
 class UserRepo extends BaseRepo
 {
     public function getModel()
     {
         return new User();
+    }
+
+    public function newAsesor()
+    {
+        $user = new User();
+        return $user;
     }
 
     public function newUser()
@@ -30,16 +37,22 @@ class UserRepo extends BaseRepo
         return User::find($id);
     }
 
-    public function actualizar_visto($user_id)
-    {
-    }
-
     public function buscarxEmail($email)
     {
         if($email<>'')
             return User::where('email','=',$email)->first();
         else
             return null;
+    }
+
+    public function asesores()
+    {
+        return User::where('type_id', '!=', 3)->with('tipos')->orderBy('apellidos', 'asc')->get();
+    }
+
+    public function listar_tipos()
+    {
+        return Tipo::where('id', '<>', 3 )->lists('nombre','id');
     }
 
     public function listar_asesores($user_id=0)
