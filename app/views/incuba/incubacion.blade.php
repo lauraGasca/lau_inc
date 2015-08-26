@@ -84,6 +84,7 @@
                                     <button class="button turquoise submit" type="submit" id="submit">Enviar</button>
                                 </div>
                                 <button class="btn btn-default"></button>
+                                <div class="g-recaptcha" data-sitekey="6Ldd3gsTAAAAAPW7OksSy7M8KUF1NSyrCx77pwhX"></div>
                             {{Form::close()}}
                         </div>
                     </div>

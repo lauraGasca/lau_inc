@@ -126,6 +126,7 @@
                                 <p class="input-block">
                                     <button class="button default middle" type="submit" id="submit">Enviar comentario</button>
                                 </p>
+                                <div class="g-recaptcha" data-sitekey="6Ldd3gsTAAAAAPW7OksSy7M8KUF1NSyrCx77pwhX"></div>
                             {{Form::close()}}
                         </section>
 		            </section>

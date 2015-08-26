@@ -23,6 +23,7 @@
         {{ HTML::style('accio/js/layerslider/skins/accio/skin.css') }}
         <!-- MLML5 Shiv================================================== -->
         {{ HTML::script('accio/js/jquery.modernizr.js') }}
+        <script src='https://www.google.com/recaptcha/api.js'></script>
     </head>
     <body data-spy="scroll" data-target="#navigation" class="home">
         <header id="header" @yield('menu-t')>

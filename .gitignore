@@ -1,3 +1,4 @@
+gezher_incuba.sql
 *.sh
 app/config/database.php
 app/config/mail.php

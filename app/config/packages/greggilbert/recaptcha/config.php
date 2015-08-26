@@ -10,8 +10,8 @@ return array(
 	| Set the public and private API keys as provided by reCAPTCHA.
 	|
 	*/
-	'public_key'	=> '6Lc3kvMSAAAAAJoW1ugYSqyJyRSQY8Hmc7pA4sW1',
-	'private_key'	=> '6Lc3kvMSAAAAAF2J0K3EY_MtgDURlePTdDcJHL6o',
+	'public_key'	=> '6Ldd3gsTAAAAAPW7OksSy7M8KUF1NSyrCx77pwhX',
+	'private_key'	=> '6Ldd3gsTAAAAAJvhEOQj_0QEktDX1u9LHEX-pQbI',
 	
 	/*
 	|--------------------------------------------------------------------------

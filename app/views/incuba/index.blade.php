@@ -428,6 +428,7 @@
                             <p class="input-block">
                                 <button class="button turquoise submit" type="submit" id="submit"><i class="icon-paper-plane-2"></i></button>
                             </p>
+                            <div class="g-recaptcha" data-sitekey="6Ldd3gsTAAAAAPW7OksSy7M8KUF1NSyrCx77pwhX"></div>
                         {{Form::close()}}
                     </div>
                     <div class="col-md-6">
