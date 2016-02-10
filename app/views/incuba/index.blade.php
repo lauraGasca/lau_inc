@@ -50,9 +50,9 @@
             <div class="row">
                 <div class="col-xs-12">
                     <ul class="clients-items">
-                        <li class="opacity2x"><a target="_blank" href="http://celaya.gob.mx/en/">{{HTML::image('accio/images/body/LOGO CELAYA.png','Celaya') }}</a></li>
-                        <li class="opacity2x"><a target="_blank" href="http://goo.gl/ZDAZ1T">{{HTML::image('accio/images/body/INADEM.png','INADEM') }}</a></li>
-                        <li class="opacity2x"><a target="_blank" href="http://redincubadoras.inadem.gob.mx/">{{HTML::image('accio/images/body/Logo Federacion.png','INADEM') }}</a></li>
+                        <li class="opacity2x"><a target="_blank" href="http://celaya.gob.mx/">{{HTML::image('accio/images/body/small-logo-celaya.png','Celaya') }}</a></li>
+                        <li class="opacity2x"><a target="_blank" href="https://reconocimiento.inadem.gob.mx/resultados/incubadora-basica.php?id=193">{{HTML::image('accio/images/body/INADEM.png','INADEM') }}</a></li>
+                        <li class="opacity2x"><a target="_blank" href="http://www.gob.mx/">{{HTML::image('accio/images/body/Logo Federacion.png','INADEM') }}</a></li>
                         <li class="opacity2x"><a target="_blank" href="http://sde.guanajuato.gob.mx/">{{HTML::image('accio/images/body/GTO SEDES logo.png','SEDES') }}</a></li>
                     </ul>
                 </div>
