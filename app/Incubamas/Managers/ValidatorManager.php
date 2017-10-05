@@ -22,7 +22,7 @@ class ValidatorManager
                     "email"     => 'required|email',
                     "city"      => 'required|min:3|max:100',
                     "message"   => 'required|min:3',
-                    'recaptcha_response_field' => 'required|recaptcha',
+                    'g-recaptcha-response' => 'required|recaptcha',
                 ];
                 break;
             //Contactar a emprendedor

@@ -15,8 +15,8 @@ return array(
 	*/
 
 	'mailgun' => array(
-		'domain' => '',
-		'secret' => '',
+		'domain' => 'incubamas.com',
+		'secret' => 'key-b341b5c98b0786a1051f338e6d856982',
 	),
 
 	'mandrill' => array(

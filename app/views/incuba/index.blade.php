@@ -423,7 +423,7 @@
                             </p>
                             <p class="input-block">
                                 {{Form::captcha(['theme' => 'clean'])}}
-                                <span class="message-error">{{$errors->first('recaptcha_response_field')}}</span>
+                                <span class="message-error">{{$errors->first('g-recaptcha-response')}}</span>
                             </p>
                             <p class="input-block">
                                 <button class="button turquoise submit" type="submit" id="submit"><i class="icon-paper-plane-2"></i></button>
