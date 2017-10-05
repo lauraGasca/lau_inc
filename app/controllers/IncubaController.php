@@ -47,7 +47,7 @@ class IncubaController extends BaseController
         $this->_mail('emails.estandar',
             ['titulo'=>Input::get('name').' escribe,', 'mensaje'=>Input::get('message'), 'seccion'=>"Datos de contacto", 'imagen' => false,
             'tabla' => "<strong>Correo: </strong><br/> ".Input::get('email')."<br/><br/><strong>Ciudad: </strong><br/>".Input::get('city')],
-            'Contacto desde Sitio Web', 'gezher@gmail.com', 'IncubaMas' );
+            'Contacto desde Sitio Web', 'incubamas0@gmail.com', 'IncubaMas' );
         return Redirect::back()->with(['confirm' => 'Gracias por contactarnos.']);
     }
 
