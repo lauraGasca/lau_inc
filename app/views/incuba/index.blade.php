@@ -91,6 +91,68 @@
                 </div>
             </div>
         </section>
+        <section id="noticias" class="page">
+            <section class="section bg-gray-color">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <hgroup class="section-title align-center opacity">
+                                <h1>NOTICIAS</h1>
+                                <h2>La lectura es placer, conocimiento, emoci&oacute;n y el secreto de la sabiduria</h2>
+                            </hgroup>
+                        </div>
+                    </div>
+                    <?php
+                    $posicion[0]="slideRight";
+                    $posicion[1]="slideUp";
+                    $posicion[2]="slideLeft";
+                    $i=0;
+                    ?>
+                    @if(count($blogs) > 0)
+                        <div class="row">
+                            @foreach($blogs as $blog)
+                                <div class="col-sm-6 col-lg-4 {{$posicion[$i]}}">
+                                    <? $i++;?>
+                                    <article class="entry">
+                                        <div class="entry-image">
+                                            <div class="work-item">
+                                                {{HTML::image('Orb/images/entradas/'.$blog->imagen) }}
+                                                <div class="image-extra">
+                                                    <div class="extra-content">
+                                                        <div class="inner-extra">
+                                                            {{ HTML::link('blogs/'.$blog->slug.'/'.$blog->id, null, ['class'=>"single-image emo-icon"]) }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="entry-meta">
+                                            <span class="date"><a style="color: #5b5e60;">{{$blog->publicacion}}</a></span>
+                                            <span class="comments">{{$blog->comentarios}} Comentarios</span>
+                                        </div>
+                                        <h2 class="entry-title">
+                                            {{ HTML::link('blogs/'.$blog->slug.'/'.$blog->id, $blog->titulo)}}
+                                        </h2>
+                                        <div class="entry-body">
+                                            <p>
+                                                {{substr (strip_tags($blog->entrada), 0, 220)}}...<strong> {{HTML::link('blogs/'.$blog->slug.'/'.$blog->id,'Ver más', ['class'=>'azul'])}}</strong>
+                                            </p>
+                                        </div>
+                                    </article>
+                                </div>
+                            @endforeach
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="align-center opacity">
+                                {{HTML::link('blogs','Ver todas las entradas',array('class'=>'button large default'))}}
+                            </div>
+                        </div>
+                    @else
+                        <p style="color: #949494; font-size: 18px; font-style: italic;"> No hay ninguna entrada registrada</p>
+                    @endif
+                </div>
+            </section>
+        </section>
         <section id="servicios" class="page">
         <section class="section">
             <div class="container">
@@ -255,68 +317,6 @@
                 <div class="align-center opacity">
                     {{HTML::link('nuestros-emprendedores','Ver todos los emprendedores',array('class'=>'button large default'))}}
                 </div>
-            </div>
-        </section>
-    </section>
-    <section id="noticias" class="page">
-        <section class="section bg-gray-color">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xs-12">
-                        <hgroup class="section-title align-center opacity">
-                            <h1>NOTICIAS</h1>
-                            <h2>La lectura es placer, conocimiento, emoci&oacute;n y el secreto de la sabiduria</h2>
-                        </hgroup>
-                    </div>
-                </div>
-                <?php
-                    $posicion[0]="slideRight";
-                    $posicion[1]="slideUp";
-                    $posicion[2]="slideLeft";
-                    $i=0;
-                ?>
-                @if(count($blogs) > 0)
-                    <div class="row">
-                        @foreach($blogs as $blog)
-                            <div class="col-sm-6 col-lg-4 {{$posicion[$i]}}">
-                                <? $i++;?>
-                                <article class="entry">
-                                    <div class="entry-image">
-                                        <div class="work-item">
-                                            {{HTML::image('Orb/images/entradas/'.$blog->imagen) }}
-                                            <div class="image-extra">
-                                                <div class="extra-content">
-                                                    <div class="inner-extra">
-                                                        {{ HTML::link('blogs/'.$blog->slug.'/'.$blog->id, null, ['class'=>"single-image emo-icon"]) }}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="entry-meta">
-                                        <span class="date"><a style="color: #5b5e60;">{{$blog->publicacion}}</a></span>
-                                        <span class="comments">{{$blog->comentarios}} Comentarios</span>
-                                    </div>
-                                    <h2 class="entry-title">
-                                        {{ HTML::link('blogs/'.$blog->slug.'/'.$blog->id, $blog->titulo)}}
-                                    </h2>
-                                    <div class="entry-body">
-                                        <p>
-                                            {{substr (strip_tags($blog->entrada), 0, 220)}}...<strong> {{HTML::link('blogs/'.$blog->slug.'/'.$blog->id,'Ver más', ['class'=>'azul'])}}</strong>
-                                        </p>
-                                    </div>
-                                </article>
-                            </div>
-                        @endforeach
-                    </div>
-                    <div class="col-xs-12">
-                        <div class="align-center opacity">
-                            {{HTML::link('blogs','Ver todas las entradas',array('class'=>'button large default'))}}
-                        </div>
-                    </div>
-                @else
-                    <p style="color: #949494; font-size: 18px; font-style: italic;"> No hay ninguna entrada registrada</p>
-                @endif
             </div>
         </section>
     </section>

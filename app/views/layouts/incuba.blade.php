@@ -50,9 +50,9 @@
                     <ul>
                         <li @yield('inicio-c')><a @yield('inicio')>Inicio</a></li>
                         <li><a @yield('incuba')>Incuba</a></li>
+                        <li @yield('blog-c')><a @yield('blog')>Noticias</a></li>
                         <li><a @yield('servicios')>Servicios</a></li>
                         <li @yield('casos-c')><a @yield('casos')>Emprendedores</a></li>
-                        <li @yield('blog-c')><a @yield('blog')>Noticias</a></li>
                         <li><a @yield('convocatorias')>Convocatorias</a></li>
                         <li><a @yield('contacto')>Cont&aacute;ctanos</a></li>
                     </ul>
