@@ -10,7 +10,7 @@
 
 @section('casos') href="{{url('/#emprendedores')}}" @stop
 
-@section('blog') href="{{url('/#blog')}}" @stop
+@section('blog') href="{{url('/#noticias')}}" @stop
 
 @section('contacto') href="{{url('/#contactanos')}}" @stop
 
@@ -76,9 +76,6 @@
                                     <span class="message-error">{{$errors->first('buscar')}}</span>
                                 </p>
                             {{Form::close()}}
-                        </div>
-                        <div class="widget widget_text">
-                            <a href="{{URL::asset('incubacion')}}"><img alt="" src="{{ URL::asset('accio/images/body/taller en linea INADEM.png') }}" style="width:100%;"/></a>
                         </div>
                         <div class="widget widget_categories">
                             <h3 class="widget-title">Categorias</h3>

@@ -12,11 +12,11 @@
 
 @section('casos') href="#emprendedores" @stop
 
-@section('blog') href="#blog" @stop
-
-@section('contacto') href="#contactanos" @stop
+@section('blog') href="#noticias" @stop
 
 @section('convocatorias') href="#convocatorias" @stop
+
+@section('contacto') href="#contactanos" @stop
 
 @section('contenido')
     <section id="inicio" class="page">
@@ -258,13 +258,13 @@
             </div>
         </section>
     </section>
-    <section id="blog" class="page">
+    <section id="noticias" class="page">
         <section class="section bg-gray-color">
             <div class="container">
                 <div class="row">
                     <div class="col-xs-12">
                         <hgroup class="section-title align-center opacity">
-                            <h1>INCUBA BLOG</h1>
+                            <h1>NOTICIAS</h1>
                             <h2>La lectura es placer, conocimiento, emoci&oacute;n y el secreto de la sabiduria</h2>
                         </hgroup>
                     </div>
@@ -483,7 +483,6 @@
         </section>
         <section class="section padding-off">
             <div class="map-wrapper">
-                <div class="map-top-overlay"></div>
                 <div class="map">
                     <iframe src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d3736.4576186694894!2d-100.81146974418027!3d20.528448995115742!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sSinaloa+119%2C+alamenda%2C+Celaya%2C+Gto.!5e0!3m2!1ses-419!2smx!4v1424726331422" width="100%" height="600" frameborder="0" style="border:0"></iframe>
                 </div>

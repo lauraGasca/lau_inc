@@ -170,24 +170,6 @@ class IncubaController extends BaseController
         $this->layout->content = View::make('incuba.blogs', compact('blogs', 'tags', 'categorias', 'recent_blogs', 'archive_blogs', 'slug'));
     }
 
-    public function incubacion()
-    {
-        $this->layout->content = View::make('incuba.incubacion');
-    }
-
-    public function enviar_incubacion()
-    {
-        $manager = new ValidatorManager('incubacion', Input::all());
-        $manager->validar();
-
-        $this->_mail('emails.estandar',
-            ['titulo'=>Input::get('name'), 'mensaje'=>Input::get('proy').' '.Input::get('dudas'), 'seccion'=>"Datos de contacto", 'imagen' => false,
-                'tabla' => "<strong>Correo: </strong><br/> ".Input::get('email')."<br/><br/><strong>Telefono: </strong><br/>".Input::get('telefono').'<br/><br/><strong>Estado: </strong><br/> '.Input::get('estado')],
-            'Inscripcion al Taller de Incubacion en Linea', 'hola@incubamas.com', 'IncubaMas' );
-
-        return Redirect::back()->with(array('confirm' => 'Gracias por contactarnos.'));
-    }
-
     private function _mail($plantilla, $variables, $asunto, $correo, $nombre)
     {
         Mail::send($plantilla, $variables,

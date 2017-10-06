@@ -10,7 +10,7 @@
 
 @section('casos') href="{{url('/#emprendedores')}}" @stop
 
-@section('blog') href="{{url('/#blog')}}" @stop
+@section('blog') href="{{url('/#noticias')}}" @stop
 
 @section('contacto') href="{{url('/#contactanos')}}" @stop
                 

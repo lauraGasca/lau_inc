@@ -10,8 +10,6 @@ Route::get('incuba/blog/{id}', ['as' => 'blog_ant', 'uses' =>'IncubaController@b
 Route::get('blogs', ['as' => 'todos', 'uses' =>'IncubaController@blogs']);
 Route::get('blogs/{slug}/{id}', ['as' => 'blogs', 'uses' =>'IncubaController@blog']);
 Route::any('blogs/{tipo}/{slug?}/{id?}', ['as' => 'categoria', 'uses' =>'IncubaController@blog_tipo']);
-Route::get('incubacion', ['as' => 'incubacion', 'uses' =>'IncubaController@incubacion']);
-Route::post('incubacion', ['as' => 'incubacion', 'uses' =>'IncubaController@enviar_incubacion']);
 Route::controller('blog', 'BlogController');
 Route::controller('usuarios', 'UserController');
 Route::controller('sistema', 'LoginController');

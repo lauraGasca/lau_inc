@@ -1,0 +1,432 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"tic",
+				"ticket_id"
+			],
+			[
+				"ticke",
+				"tickets"
+			],
+			[
+				"tick",
+				"ticket"
+			],
+			[
+				"res",
+				"response"
+			],
+			[
+				"array_m",
+				"array_merge"
+			],
+			[
+				"array_",
+				"array_combine"
+			],
+			[
+				"fun",
+				"function"
+			],
+			[
+				"t",
+				"this"
+			],
+			[
+				"pu",
+				"public"
+			],
+			[
+				"A",
+				"ApiController"
+			],
+			[
+				"con",
+				"controller"
+			],
+			[
+				"JS",
+				"json_encode"
+			],
+			[
+				"ti",
+				"ticket"
+			],
+			[
+				"U",
+				"Users"
+			],
+			[
+				"u",
+				"user"
+			],
+			[
+				"pass",
+				"password"
+			],
+			[
+				"Us",
+				"UsersForm"
+			],
+			[
+				"user",
+				"users"
+			],
+			[
+				"is_n",
+				"is_null"
+			],
+			[
+				"ticket",
+				"ticket_id"
+			],
+			[
+				"find",
+				"findFirstById"
+			],
+			[
+				"Cu",
+				"CustomersForm"
+			],
+			[
+				"Ti",
+				"TicketsForm"
+			],
+			[
+				"js",
+				"json_encode"
+			],
+			[
+				"cus",
+				"customer"
+			],
+			[
+				"a",
+				"array"
+			],
+			[
+				"for",
+				"foreach\tforeach …"
+			],
+			[
+				"th",
+				"this"
+			],
+			[
+				"Cus",
+				"Customers"
+			],
+			[
+				"P",
+				"Password"
+			],
+			[
+				"Sec",
+				"SecurityPlugin"
+			],
+			[
+				"F",
+				"FlashSession"
+			],
+			[
+				"n",
+				"newRobot"
+			],
+			[
+				"ne",
+				"newRobot"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/home/getmeacafe/Proyectos/Incubamas"
+	],
+	"file_history":
+	[
+		"/home/getmeacafe/Documents/Myspace/Fanfic/Blog/v3/Kinder Chismeja/index.html",
+		"/home/getmeacafe/Videos/It's okey, thats love/IOIL03.srt",
+		"/etc/hosts",
+		"/home/getmeacafe/Downloads/El_Pasajero_de_los_Suenos-DEMO-linux/README.html",
+		"/home/getmeacafe/Documents/Myspace/animevisto.txt",
+		"/home/getmeacafe/Documents/Myspace/Fanfic/Blog/v3/Kinder Chismeja/personajes.html",
+		"/home/getmeacafe/Documents/template-blog-1.php",
+		"/home/getmeacafe/Documents/ton",
+		"/home/getmeacafe/Desktop/.htaccess",
+		"/home/getmeacafe/Desktop/estudiar.txt",
+		"/home/getmeacafe/Desktop/users",
+		"/home/getmeacafe/phalcon/www/ticket/app/models/Responses.php",
+		"/home/getmeacafe/phalcon/www/ticket/app/config/services.php",
+		"/home/getmeacafe/phalcon/www/ticket/app/controllers/ApiController.php",
+		"/home/getmeacafe/Desktop/renta",
+		"/home/getmeacafe/.cache/.fr-EHK7N3/Teaching Feeling- Ver.1.9.2/index.html",
+		"/home/getmeacafe/.cache/.fr-aX6AST/Teaching Feeling- Ver.1.9.2/start.command",
+		"/home/getmeacafe/.cache/.fr-5aA5s7/Teaching Feeling- Ver.1.9.2/README!!!!!!!!!!!!.txt",
+		"/home/getmeacafe/.cache/.fr-WgLmTQ/Teaching Feeling- Ver.1.9.2/Lista de cosas para decirle a Sylvie.txt",
+		"/home/getmeacafe/Proyectos/Cano/database/seeds/UsersTableSeeder.php",
+		"/home/getmeacafe/Desktop/Comandos PhpStorm.txt",
+		"/home/getmeacafe/Downloads/elnahual_cano.sql",
+		"/home/getmeacafe/phalcon/www/ticket/app/models/Users.php",
+		"/home/getmeacafe/phalcon/www/ticket/app/models/Customers.php",
+		"/home/getmeacafe/phalcon/www/ticket/app/views/tickets/index.volt",
+		"/home/getmeacafe/phalcon/www/ticket/app/models/Tickets.php",
+		"/home/getmeacafe/phalcon/www/invo/app/views/session/index.volt",
+		"/home/getmeacafe/phalcon/www/ticket/app/plugins/SecurityPlugin.php",
+		"/home/getmeacafe/phalcon/www/ticket/app/config/config.php",
+		"/home/getmeacafe/phalcon/www/ticket/app/config/loader.php",
+		"/home/getmeacafe/phalcon/www/invo/app/models/Users.php",
+		"/home/getmeacafe/phalcon/www/invo/app/models/Companies.php",
+		"/home/getmeacafe/phalcon/www/invo/app/models/Contact.php",
+		"/home/getmeacafe/phalcon/www/invo/app/models/ProductTypes.php",
+		"/home/getmeacafe/phalcon/www/invo/app/models/Products.php",
+		"/home/getmeacafe/phalcon/www/ticket/.htaccess",
+		"/home/getmeacafe/phalcon/www/ticket/index.html",
+		"/home/getmeacafe/phalcon/www/ticket/index.php",
+		"/home/getmeacafe/phalcon/www/api/index.php",
+		"/home/getmeacafe/phalcon/www/api/controllers/ApiController.php",
+		"/home/getmeacafe/phalcon/www/api/models/Robots.php",
+		"/home/getmeacafe/phalcon/www/api/models/Responses.php",
+		"/home/getmeacafe/phalcon/www/test/index.php",
+		"/home/getmeacafe/phalcon/www/test/models/Robots.php",
+		"/home/getmeacafe/phalcon/www/ticket/app/controllers/CustomersController.php",
+		"/home/getmeacafe/phalcon/www/ticket/app/controllers/TicketsController.php",
+		"/home/getmeacafe/phalcon/www/ticket/app/controllers/ResponsesController.php",
+		"/home/getmeacafe/phalcon/www/ticket/app/views/responses/index.volt",
+		"/home/getmeacafe/phalcon/www/ticket/app/views/responses/search.volt",
+		"/home/getmeacafe/phalcon/www/ticket/app/views/responses/edit.volt",
+		"/home/getmeacafe/phalcon/www/ticket/app/views/tickets/search.volt",
+		"/home/getmeacafe/Proyectos/Ritmeneo/app/Gallery/BaseGallery.php",
+		"/home/getmeacafe/phalcon/www/ticket/app/views/tickets/edit.volt",
+		"/home/getmeacafe/phalcon/www/ticket/app/views/tickets/new.volt",
+		"/home/getmeacafe/phalcon/www/ticket/app/views/customers/index.volt",
+		"/home/getmeacafe/phalcon/www/ticket/app/forms/UsersForm.php",
+		"/home/getmeacafe/phalcon/www/invo/app/controllers/RegisterController.php",
+		"/home/getmeacafe/phalcon/www/invo/app/controllers/CompaniesController.php",
+		"/home/getmeacafe/phalcon/www/invo/app/forms/CompaniesForm.php",
+		"/home/getmeacafe/Proyectos/Cano/app/Models/Guest.php",
+		"/home/getmeacafe/Proyectos/Cano/app/Models/User.php",
+		"/home/getmeacafe/phalcon/www/ticket/app/views/customers/search.volt",
+		"/home/getmeacafe/phalcon/www/ticket/app/views/session/index.volt",
+		"/home/getmeacafe/phalcon/www/ticket/app/views/layouts/menu.volt",
+		"/home/getmeacafe/phalcon/www/ticket/app/controllers/ControllerBase.php",
+		"/home/getmeacafe/phalcon/www/ticket/app/views/responses/new.volt",
+		"/home/getmeacafe/phalcon/www/ticket/app/forms/ResponsesForm.php",
+		"/home/getmeacafe/phalcon/www/ticket/app/forms/TicketsForm.php",
+		"/home/getmeacafe/phalcon/www/ticket/app/forms/CustomersForm.php",
+		"/home/getmeacafe/phalcon/www/ticket/app/controllers/SessionController.php",
+		"/home/getmeacafe/phalcon/www/ticket/app/controllers/IndexController.php",
+		"/home/getmeacafe/phalcon/www/ticket/schemas/ticket.sql",
+		"/home/getmeacafe/phalcon/www/invo/app/views/invoices/profile.volt",
+		"/home/getmeacafe/phalcon/www/invo/app/views/invoices/index.volt",
+		"/home/getmeacafe/phalcon/www/invo/app/controllers/InvoicesController.php",
+		"/home/getmeacafe/phalcon/www/ticket/app/views/customers/new.volt",
+		"/home/getmeacafe/phalcon/www/ticket/app/views/customers/edit.volt",
+		"/home/getmeacafe/Proyectos/Cano/app/Repositories/RoomRepo.php",
+		"/home/getmeacafe/phalcon/www/invo/app/views/companies/index.volt",
+		"/home/getmeacafe/phalcon/www/ticket/app/views/customers/edit.php",
+		"/home/getmeacafe/phalcon/www/invo/app/views/companies/edit.volt",
+		"/home/getmeacafe/phalcon/www/invo/app/views/companies/search.volt",
+		"/home/getmeacafe/phalcon/www/invo/app/Services.php",
+		"/home/getmeacafe/phalcon/www/invo/app/config/loader.php",
+		"/home/getmeacafe/phalcon/www/invo/app/config/config.ini",
+		"/home/getmeacafe/phalcon/www/invo/app/views/companies/new.volt",
+		"/home/getmeacafe/phalcon/www/ticket/app/library/Elements.php",
+		"/home/getmeacafe/phalcon/www/ticket/app/controllers/ClientesController.php",
+		"/home/getmeacafe/phalcon/www/ticket/app/views/clientes/index.volt",
+		"/home/getmeacafe/phalcon/www/ticket/app/views/login/index.volt",
+		"/home/getmeacafe/phalcon/www/ticket/app/controllers/ErrorsController.php",
+		"/home/getmeacafe/phalcon/www/ticket/app/views/errors/show500.volt",
+		"/home/getmeacafe/phalcon/www/ticket/app/views/errors/show404.volt",
+		"/home/getmeacafe/phalcon/www/ticket/app/views/errors/show401.volt",
+		"/home/getmeacafe/phalcon/www/vokuro/app/config/loader.php",
+		"/home/getmeacafe/phalcon/www/vokuro/app/library/Acl/Acl.php",
+		"/home/getmeacafe/phalcon/www/vokuro/app/config/services.php",
+		"/home/getmeacafe/phalcon/www/vokuro/app/config/routes.php",
+		"/home/getmeacafe/phalcon/www/vokuro/app/config/privateResources.php",
+		"/home/getmeacafe/phalcon/www/vokuro/app/config/config.php",
+		"/home/getmeacafe/phalcon/www/invo/app/plugins/SecurityPlugin.php",
+		"/home/getmeacafe/phalcon/www/invo/app/views/layouts/main.volt",
+		"/home/getmeacafe/phalcon/www/invo/app/controllers/SessionController.php",
+		"/home/getmeacafe/phalcon/www/invo/app/views/register/index.volt",
+		"/home/getmeacafe/phalcon/www/invo/public/index.php",
+		"/home/getmeacafe/phalcon/www/invo/app/forms/RegisterForm.php",
+		"/home/getmeacafe/phalcon/www/invo/app/controllers/ProductsController.php",
+		"/home/getmeacafe/phalcon/www/invo/app/library/Elements.php",
+		"/home/getmeacafe/phalcon/www/ticket/app/views/index/index.volt",
+		"/home/getmeacafe/phalcon/www/ticket/app/models/Guests.php",
+		"/home/getmeacafe/phalcon/www/invo/app/controllers/AboutController.php",
+		"/home/getmeacafe/phalcon/www/invo/app/library/Base/Services.php",
+		"/home/getmeacafe/phalcon/www/ticket/app/views/index.volt",
+		"/home/getmeacafe/phalcon/www/invo/app/controllers/ControllerBase.php",
+		"/home/getmeacafe/phalcon/www/invo/app/views/index/index.volt",
+		"/home/getmeacafe/phalcon/www/invo/app/views/index.volt",
+		"/home/getmeacafe/phalcon/www/invo/app/views/layouts/index.volt",
+		"/home/getmeacafe/phalcon/www/invo/app/views/layouts/about.volt",
+		"/home/getmeacafe/phalcon/www/vokuro/public/index.php",
+		"/home/getmeacafe/phalcon/www/ticket/schemas/createdb.php",
+		"/home/getmeacafe/phalcon/www/vokuro/app/models/Users.php",
+		"/home/getmeacafe/phalcon/www/invo/schemas/createdb.php",
+		"/home/getmeacafe/phalcon/www/test/app/controllers/IndexController.php",
+		"/home/getmeacafe/phalcon/www/test/public/index.php",
+		"/home/getmeacafe/phalcon/www/invo/app/forms/ProductsForm.php",
+		"/home/getmeacafe/phalcon/www/tutorial/public/index.php",
+		"/home/getmeacafe/phalcon/www/tutorial/public/.htaccess",
+		"/home/getmeacafe/phalcon/www/tutorial/app/controllers/SignupController.php"
+	],
+	"find":
+	{
+		"height": 26.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 26.0
+	},
+	"input":
+	{
+		"height": 34.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "incuba.sublime-project",
+	"replace":
+	{
+		"height": 48.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 172.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
