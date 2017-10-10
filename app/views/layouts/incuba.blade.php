@@ -1,6 +1,6 @@
 <!DOCTYPE html>
     <head>
-        <!-- Google Web Fonts================================================== -->
+        <!-- Google Web Fonts===========height================================= -->
         <link href="http://fonts.googleapis.com/css?family=Roboto:100,300,300italic,400,700|Julius+Sans+One|Roboto+Condensed:300,400" rel="stylesheet" type="text/css">
         <!-- Basic Page Needs================================================== -->
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -43,7 +43,7 @@
                     </li>
                 </ul>
                 <h1 id="logo">
-                    <a href="{{url('/')}}">{{HTML::image('accio/images/Logo footer.png','Incubamas') }}</a>
+                    <a href="{{url('/')}}">{{HTML::image('accio/images/incubamas.png','Incubamas', ['height' => '80px']) }}</a>
                 </h1>
                 <a id="responsive-nav-button" class="responsive-nav-button" href="#"></a>
                 <nav id="navigation" class="navigation">
